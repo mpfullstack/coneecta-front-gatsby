@@ -1,5 +1,3 @@
-// https://github.com/reduxjs/redux-toolkit/issues/282
-
 import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
 import logger from 'redux-logger'; // NOTE: Only for dev purpose
 import createSagaMiddleware from 'redux-saga';

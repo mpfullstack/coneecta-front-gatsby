@@ -3,7 +3,7 @@ import {
   professionalProfileUrl
 } from './urls';
 
-const getProfessionalProfile = async id => {
+async function getProfessionalProfile(id) {
   return await SuperFetch.get(professionalProfileUrl.replace(':id', id))
     .then(response => {
       if( response.status >= 400 ) {
@@ -12,8 +12,10 @@ const getProfessionalProfile = async id => {
       }
       return response;
     });
-}
+};
 
-export {
+const api = {
   getProfessionalProfile
-}
+};
+
+export default api;
