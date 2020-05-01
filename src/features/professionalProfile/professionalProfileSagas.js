@@ -1,31 +1,14 @@
 import { all, takeLatest, put, call, fork } from 'redux-saga/effects';
 import { loadProfile, initProfile } from './professionalProfileSlice';
-
-const api = {
-  fetchProfile: () => {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => resolve({
-        details: { name: 'Juan'},
-        services: [{
-          id: 1,
-          name: 'Service I'
-        }, {
-          id: 2,
-          name: 'Service II'
-        }]
-      }), 500);
-    })
-  }
-};
+import { getProfessionalProfile } from '../../api';
 
 function* onLoadProfile() {
-  yield takeLatest(loadProfile, function* () {
-    const profile = yield call(api.fetchProfile);
+  // We receive the professional id in payload
+  yield takeLatest(loadProfile, function* ({ payload }) {
+    const profile = yield call(getProfessionalProfile, payload);
     yield put(initProfile(profile));
   });
 }
-
-export { api };
 
 export default function* () {
   yield all([

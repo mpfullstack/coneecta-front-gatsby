@@ -1,6 +1,12 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { loadProfile } from './professionalProfileSlice';
+import Query from '../../helpers/query';
+import Skeleton from 'react-loading-skeleton';
+import ImageSkeleton from '../../components/imageSkeleton';
+
+// https://github.com/buildo/react-placeholder
+// https://github.com/dvtng/react-loading-skeleton
 
 const mapDispatchToProps = { loadProfile };
 const mapStateToProps = state => {
@@ -9,29 +15,33 @@ const mapStateToProps = state => {
   }
 }
 
-export const ProfessionalProfile = ({ profile, loadProfile, ...rest }) => {
+export const ProfessionalProfile = ({ profile, loadProfile, location }) => {
   useEffect(() => {
-    loadProfile();
-  }, [loadProfile]);
+    const params = Query.getParams(location);
+    if (params.id) {
+      loadProfile(params.id);
+    }
+  }, [loadProfile, location]);
 
-  debugger;
+  const profileDetails = profile.details || {};
+  const profileServices = profile.services.length ? profile.services : null;
 
-  if (profile.details) {
-    return (
-      <div>
-        <p>Name: {profile.details.name}</p>
-        <ul>
-          {
-            profile.services.map(service => {
+  return (
+    <div>
+      <ImageSkeleton url={profileDetails.profilePic} circle={true} width={124} height={124} />
+      <p>Name: {profileDetails.name || <Skeleton width={200} />}</p>
+      <ul>
+        {
+          profileServices ?
+            profileServices.map(service => {
               return <li key={service.id}>{service.name}</li>;
             })
-          }
-        </ul>
-      </div>
-    );
-  } else {
-    return <p>Loading...</p>;
-  }
+            :
+            <Skeleton height={24} count={3} />
+        }
+      </ul>
+    </div>
+  );
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProfessionalProfile);
