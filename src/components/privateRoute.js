@@ -7,7 +7,9 @@ function isLoggedIn() {
 
 const PrivateRoute = ({ component: Component, location, ...rest }) => {
   if (!isLoggedIn() && location.pathname !== `/profile/login`) {
-    navigate("/profile/login")
+    if (typeof(window) === 'object') {
+      navigate("/profile/login");
+    }
     return null;
   }
   return <Component {...rest} />
