@@ -2,7 +2,7 @@ import React from "react"
 import { navigate } from "gatsby"
 
 function isLoggedIn() {
-  return false;
+  return true;
 }
 
 const PrivateRoute = ({ component: Component, location, ...rest }) => {

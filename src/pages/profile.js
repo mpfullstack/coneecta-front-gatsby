@@ -3,6 +3,7 @@ import { Provider } from 'react-redux';
 import { Router } from "@reach/router";
 import store from '../redux/store';
 import Profile from '../features/profile';
+import PaymentConfirmed from '../features/profile/paymentConfirmed';
 import PrivateRoute from '../components/privateRoute';
 import Login from './login';
 
@@ -12,6 +13,7 @@ export default () => {
       <h1>Redux Toolkit Tutorial</h1>
       <Router basepath="/profile">
         <PrivateRoute path="/" component={Profile} />
+        <PrivateRoute path="/payment_confirmed/:id" component={PaymentConfirmed} />
         <Login path="/login" />
       </Router>
     </Provider>

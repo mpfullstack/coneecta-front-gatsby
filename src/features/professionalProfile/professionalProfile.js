@@ -5,6 +5,7 @@ import Query from '../../helpers/query';
 import Skeleton from 'react-loading-skeleton';
 import ImageSkeleton from '../../components/imageSkeleton';
 import { Container, Row, Col } from 'react-bootstrap';
+import ProfessionalServices from './professonalServices';
 
 // https://github.com/buildo/react-placeholder
 // https://github.com/dvtng/react-loading-skeleton
@@ -41,16 +42,12 @@ export const ProfessionalProfile = ({ profile, loadProfile, location }) => {
         </Row>
         <Row className="justify-content-md-center">
           <Col xs="12" md="10">
-            <ul>
-              {
-                profileServices ?
-                  profileServices.map(service => {
-                    return <li key={service.id}>{service.name}</li>;
-                  })
-                  :
-                  <Skeleton height={24} count={3} />
-              }
-            </ul>
+            {
+              profileServices ?
+                <ProfessionalServices services={profileServices} />
+                :
+                <Skeleton height={24} count={3} />
+            }
           </Col>
         </Row>
     </Container>
