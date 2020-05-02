@@ -1,4 +1,4 @@
-const base = 'http://localhost:3000';
+const base = process.env.GATSBY_API_URL;
 const professionalsUrl = `${base}/professionals`;
 const professionalProfileUrl = `${professionalsUrl}/:id`;
 
