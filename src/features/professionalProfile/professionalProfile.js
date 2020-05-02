@@ -4,6 +4,7 @@ import { loadProfile } from './professionalProfileSlice';
 import Query from '../../helpers/query';
 import Skeleton from 'react-loading-skeleton';
 import ImageSkeleton from '../../components/imageSkeleton';
+import { Container, Row, Col } from 'react-bootstrap';
 
 // https://github.com/buildo/react-placeholder
 // https://github.com/dvtng/react-loading-skeleton
@@ -27,20 +28,32 @@ export const ProfessionalProfile = ({ profile, loadProfile, location }) => {
   const profileServices = profile.services.length ? profile.services : null;
 
   return (
-    <div>
-      <ImageSkeleton url={profileDetails.profilePic} circle={true} width={124} height={124} />
-      <p>Name: {profileDetails.name || <Skeleton width={200} />}</p>
-      <ul>
-        {
-          profileServices ?
-            profileServices.map(service => {
-              return <li key={service.id}>{service.name}</li>;
-            })
-            :
-            <Skeleton height={24} count={3} />
-        }
-      </ul>
-    </div>
+    <Container>
+        <Row className="justify-content-md-center text-center">
+          <Col xs="12" md="10">
+            <ImageSkeleton url={profileDetails.profilePic} circle={true} width={124} height={124} />
+          </Col>
+        </Row>
+        <Row className="justify-content-md-center">
+          <Col xs="12" md="10">
+            <p>Name: {profileDetails.name || <Skeleton width={200} />}</p>
+          </Col>
+        </Row>
+        <Row className="justify-content-md-center">
+          <Col xs="12" md="10">
+            <ul>
+              {
+                profileServices ?
+                  profileServices.map(service => {
+                    return <li key={service.id}>{service.name}</li>;
+                  })
+                  :
+                  <Skeleton height={24} count={3} />
+              }
+            </ul>
+          </Col>
+        </Row>
+    </Container>
   );
 }
 
