@@ -10,8 +10,8 @@ export default () => {
   return (
     <Provider store={store()}>
       <h1>Redux Toolkit Tutorial</h1>
-      <Router>
-        <PrivateRoute path="/profile" component={Profile} />
+      <Router basepath="/profile">
+        <PrivateRoute path="/" component={Profile} />
         <Login path="/login" />
       </Router>
     </Provider>
