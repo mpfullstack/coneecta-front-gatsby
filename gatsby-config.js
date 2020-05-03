@@ -1,8 +1,8 @@
 module.exports = {
   siteMetadata: {
-    title: `Gatsby Default Starter`,
-    description: `Kick off your next, great Gatsby project with this default starter. This barebones starter ships with the main Gatsby configuration files you might need.`,
-    author: `@gatsbyjs`,
+    title: `Coneecta`,
+    description: `Plataforma que ayuda a poner en contacto a personas que necesitan profesionales de cualquier materia, mediante clases individuales por videoconferencia o de forma presencial`,
+    author: `@mpfullstack`,
   },
   plugins: [
     `gatsby-plugin-sass`,
