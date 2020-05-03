@@ -2,13 +2,14 @@ import { Link } from 'gatsby';
 import PropTypes from 'prop-types';
 import React from 'react';
 import styled from 'styled-components';
+import theme from '../theme';
 
 const HeaderWrapper = styled.header`
   width: 100%;
   background-color: #00afedd6;
   .header-inner {
     margin: 0 auto;
-    max-width: 900px;
+    max-width: ${theme.SIZES.maxWidth};
     width: 100%;
   }
 `;

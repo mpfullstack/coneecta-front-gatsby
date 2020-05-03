@@ -1,11 +1,20 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useStaticQuery, graphql } from 'gatsby';
 import Header from './header';
-import styled from 'styled-components';
+import styled, { ThemeProvider } from 'styled-components';
+import theme from '../theme';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './layout.scss';
+
+const LayoutWrapper = styled.div`
+  .layout-inner {
+    margin: 0 auto;
+    max-width: ${theme.SIZES.maxWidth};
+    width: 100%;
+  }
+`;
 
 const Layout = ({ children }) => {
   const data = useStaticQuery(graphql`
@@ -18,24 +27,26 @@ const Layout = ({ children }) => {
     }
   `)
 
-  const LayoutWrapper = styled.div`
-    .layout-inner {
-      margin: 0 auto;
-      max-width: 900px;
-      width: 100%;
-    }
-  `;
+  // useState hook to set theme mode
+  const [mode, setThemeMode] = useState('light');
+
+  // useEffect hook to set theme mode background-color style to body element
+  useEffect(() => {
+    document.body.style.backgroundColor = theme.backgroundColor({theme: {mode}});
+  });
 
   return (
-    <LayoutWrapper className='layout'>
-      <Header siteTitle={data.site.siteMetadata.title} />
-      <div className='layout-inner'>
-        <main>{children}</main>
-        <footer>
-          Footer
-        </footer>
-      </div>
-    </LayoutWrapper>
+    <ThemeProvider theme={{ mode: mode }}>
+      <LayoutWrapper className='layout'>
+        <Header siteTitle={data.site.siteMetadata.title} />
+        <div className='layout-inner'>
+          <main>{children}</main>
+          <footer>
+            Footer
+          </footer>
+        </div>
+      </LayoutWrapper>
+    </ThemeProvider>
   )
 }
 
