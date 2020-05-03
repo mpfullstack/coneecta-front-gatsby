@@ -4,6 +4,7 @@ import { useStaticQuery, graphql } from 'gatsby';
 import Header from './header';
 import styled, { ThemeProvider } from 'styled-components';
 import theme from '../theme';
+import '../locales/i18n';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './layout.scss';
