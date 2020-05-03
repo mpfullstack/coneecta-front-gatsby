@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useStaticQuery, graphql } from 'gatsby';
 import Header from './header';
+import styled from 'styled-components';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './layout.scss';
@@ -17,8 +18,16 @@ const Layout = ({ children }) => {
     }
   `)
 
+  const LayoutWrapper = styled.div`
+    .layout-inner {
+      margin: 0 auto;
+      max-width: 900px;
+      width: 100%;
+    }
+  `;
+
   return (
-    <div className='layout'>
+    <LayoutWrapper className='layout'>
       <Header siteTitle={data.site.siteMetadata.title} />
       <div className='layout-inner'>
         <main>{children}</main>
@@ -26,7 +35,7 @@ const Layout = ({ children }) => {
           Footer
         </footer>
       </div>
-    </div>
+    </LayoutWrapper>
   )
 }
 
