@@ -5,7 +5,7 @@ import Query from '../../helpers/query';
 import Skeleton from 'react-loading-skeleton';
 import ImageSkeleton from '../../components/imageSkeleton';
 import { Container, Row, Col } from 'react-bootstrap';
-import ProfessionalServices from './professonalServices';
+import ProfessionalServices from './professionalServices';
 
 // https://github.com/buildo/react-placeholder
 // https://github.com/dvtng/react-loading-skeleton
@@ -26,7 +26,7 @@ export const ProfessionalProfile = ({ profile, loadProfile, location }) => {
   }, [loadProfile, location]);
 
   const profileDetails = profile.details || {};
-  const profileServices = profile.services.length ? profile.services : null;
+  const profileServices = profile.services && profile.services.length ? profile.services : null;
 
   return (
     <Container>
@@ -44,9 +44,13 @@ export const ProfessionalProfile = ({ profile, loadProfile, location }) => {
           <Col xs="12" md="10">
             {
               profileServices ?
-                <ProfessionalServices services={profileServices} />
+                <>
+                  <p>¿Quieres contactar conmigo?</p>
+                  <p>Estos son mis servicios</p>
+                  <ProfessionalServices services={profileServices} />
+                </>
                 :
-                <Skeleton height={24} count={3} />
+                <Skeleton height={24} count={4} />
             }
           </Col>
         </Row>
