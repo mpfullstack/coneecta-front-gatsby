@@ -1,5 +1,9 @@
 import React from 'react';
+import SEO from "../../components/seo"
 
 export default ({ id }) => {
-  return <div>Payment confirmed: {id}</div>
+  return <div>
+    <SEO title="Payment confirmed" />
+    Payment confirmed: {id}
+  </div>
 }

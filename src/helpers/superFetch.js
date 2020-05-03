@@ -1,5 +1,3 @@
-const apiUrl = ''; // NOTE: We might get this from config
-
 const customHeader = () => ({
   'Content-Type': 'application/json',
   'Accept': 'application/json'
@@ -14,7 +12,7 @@ const base = (method, url, data) => {
     options.body =  JSON.stringify(data);
   }
 
-  return fetch(`${apiUrl}${url}`, options)
+  return fetch(`${url}`, options)
     .then(response => response.json())
     .then(res => res)
     .catch(error => ({ error: error }));

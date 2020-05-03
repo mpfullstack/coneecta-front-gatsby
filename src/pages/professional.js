@@ -6,15 +6,15 @@ import { Provider } from 'react-redux';
 import store from '../redux/store';
 import ProfessionalProfile from '../features/professionalProfile';
 
-const Professional = () => (
-  <Layout>
-    <SEO title='Professional' />
+export default () => {
+  return (
     <Provider store={store()}>
-      <Location>
-        {props => <ProfessionalProfile {...props} />}
-      </Location>
+      <Layout>
+        <SEO title='Professional' />
+        <Location>
+          {props => <ProfessionalProfile {...props} />}
+        </Location>
+      </Layout>
     </Provider>
-  </Layout>
-)
-
-export default Professional;
+  );
+};
