@@ -1,12 +1,15 @@
 html {
-  font-family: 'Open Sans';
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
   overflow-y: hidden !important;
 }
 
+html,
 body {
-  font-family: 'Open Sans';
+  font-family: 'Roboto Condensed';
+}
+
+body {
   font-weight: 400;
   margin: 0;
   -webkit-font-smoothing: antialiased;
