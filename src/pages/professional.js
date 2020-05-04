@@ -11,7 +11,7 @@ export default () => {
   const { t } = useTranslation();
 
   return (
-    <Provider store={store()}>
+    <Provider store={store}>
       <Layout>
         <SEO title='Professional' />
         <p>{t('Welcome to Coneecta')}</p>

@@ -10,7 +10,7 @@ import Layout from "../components/layout"
 
 export default () => {
   return (
-    <Provider store={store()}>
+    <Provider store={store}>
       <Layout>
         <Router basepath="/profile">
           <PrivateRoute path="/" component={Profile} />

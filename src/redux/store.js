@@ -15,7 +15,7 @@ if (devMode) {
   middleware.push(logger);
 }
 
-export default (preloadedState = {}) => {
+const createStore = (preloadedState = {}) => {
   const store = configureStore({
     reducer: rootReducer,
     devTools: devMode, // NOTE: Only for dev purpose
@@ -25,3 +25,7 @@ export default (preloadedState = {}) => {
   sagaMiddleware.run(rootSaga);
   return store;
 };
+
+const store = createStore();
+
+export default store;
