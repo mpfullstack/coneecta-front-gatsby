@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { useStaticQuery, graphql } from 'gatsby';
 import Header from './header';
 import styled, { ThemeProvider } from 'styled-components';
 import theme from '../theme';
+import { Alert } from 'react-bootstrap';
+import Modal from './modal';
 import '../locales/i18n';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -17,7 +20,13 @@ const LayoutWrapper = styled.div`
   }
 `;
 
-const Layout = ({ children }) => {
+const mapStateToProps = state => {
+  return {
+    global: state.global
+  }
+}
+
+const Layout = ({ children, global }) => {
   const data = useStaticQuery(graphql`
     query SiteTitleQuery {
       site {
@@ -36,6 +45,15 @@ const Layout = ({ children }) => {
     document.body.style.backgroundColor = theme.backgroundColor({theme: {mode}});
   });
 
+  let alert;
+  if (global.apiError) {
+    alert = <Modal>
+      <Alert variant={'danger'}>
+        {global.apiError.name}
+      </Alert>
+    </Modal>
+  }
+
   return (
     <ThemeProvider theme={{ mode: mode }}>
       <LayoutWrapper className='layout'>
@@ -46,6 +64,7 @@ const Layout = ({ children }) => {
             Footer
           </footer>
         </div>
+        {alert}
       </LayoutWrapper>
     </ThemeProvider>
   )
@@ -55,4 +74,4 @@ Layout.propTypes = {
   children: PropTypes.node.isRequired,
 }
 
-export default Layout
+export default connect(mapStateToProps)(Layout);
