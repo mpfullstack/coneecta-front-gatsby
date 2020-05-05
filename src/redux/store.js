@@ -26,6 +26,30 @@ const createStore = (preloadedState = {}) => {
   return store;
 };
 
+// const _state = {
+//   "profile": {
+//     "collapseProfileHeader": true,
+//     "details": {
+//       "name": "Isabela Reinket",
+//       "profilePic": "/img/profile1.png"
+//     },
+//     "services": [
+//       {
+//         "id": 1,
+//         "name": "Lectura del tarot"
+//       },
+//       {
+//         "id": 2,
+//         "name": "Sesion personalizada"
+//       },
+//       {
+//         "id": 3,
+//         "name": "Analisis astrologico"
+//       }
+//     ]
+//   }
+// };
+
 const store = createStore();
 
 export default store;

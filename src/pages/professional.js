@@ -14,7 +14,6 @@ export default () => {
     <Provider store={store}>
       <Layout>
         <SEO title='Professional' />
-        <p>{t('Welcome to Coneecta')}</p>
         <Location>
           {props => <ProfessionalProfile {...props} />}
         </Location>

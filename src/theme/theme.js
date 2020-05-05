@@ -31,6 +31,11 @@ const backgroundColor = theme('mode', {
   dark: COLORS.superDarkGrey
 });
 
+const backgroundHeaderColor = theme('mode', {
+  light: '#fff',
+  dark: COLORS.superDarkGrey
+});
+
 // Transitions
 // -------------------------------------------------------
 const TRANSITIONS = {
@@ -40,6 +45,7 @@ const TRANSITIONS = {
 export default {
   // Theme functions
   backgroundColor,
+  backgroundHeaderColor,
   // Constants
   COLORS,
   SIZES,

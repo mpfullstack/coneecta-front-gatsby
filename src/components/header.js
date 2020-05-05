@@ -3,25 +3,36 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import styled from 'styled-components';
 import theme from '../theme';
+import Logo from './logo';
+import { Container, Row, Col } from 'react-bootstrap';
 
 const HeaderWrapper = styled.header`
   width: 100%;
-  background-color: #00afedd6;
+  background-color: ${theme.backgroundHeaderColor};
   .header-inner {
+    height: 60px;
     margin: 0 auto;
     max-width: ${theme.SIZES.maxWidth};
     width: 100%;
+    display: flex;
+    align-items: center;
   }
 `;
 
 const Header = ({ siteTitle }) => (
   <HeaderWrapper>
     <div className='header-inner'>
-      <h1 style={{ margin: 0 }}>
-        <Link to='/'>
-          {siteTitle}
-        </Link>
-      </h1>
+      <Container>
+        <Row className='justify-content-center text-center'>
+          <Col xs='12'>
+            <h1 style={{ margin: 0 }}>
+              <Link to='/'>
+                <Logo />
+              </Link>
+            </h1>
+          </Col>
+        </Row>
+      </Container>
     </div>
   </HeaderWrapper>
 )

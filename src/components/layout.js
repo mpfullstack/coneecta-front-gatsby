@@ -11,6 +11,8 @@ import '../locales/i18n';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './layout.scss';
+// Animate CSS
+import 'animate.css';
 
 const LayoutWrapper = styled.div`
   .layout-inner {
