@@ -1,10 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Accordion, Card } from 'react-bootstrap';
+import theme from '../../theme';
 
 const ProfessionalServicesListItem = styled.div`
   margin: 0;
   padding: 0;
+  .card-header {
+    background-color: ${theme.backgroundCardHeaderColor};
+    color: ${theme.textCardHeaderColor};
+  }
 `;
 
 export default ({ service }) => {

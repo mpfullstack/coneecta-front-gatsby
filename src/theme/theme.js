@@ -36,6 +36,16 @@ const backgroundHeaderColor = theme('mode', {
   dark: COLORS.superDarkGrey
 });
 
+const backgroundCardHeaderColor = theme('mode', {
+  light: COLORS.mediumGrey,
+  dark: COLORS.lightGrey
+});
+
+const textCardHeaderColor = theme('mode', {
+  light: COLORS.superLightGrey,
+  dark: COLORS.superDarkGrey
+});
+
 // Transitions
 // -------------------------------------------------------
 const TRANSITIONS = {
@@ -46,6 +56,8 @@ export default {
   // Theme functions
   backgroundColor,
   backgroundHeaderColor,
+  backgroundCardHeaderColor,
+  textCardHeaderColor,
   // Constants
   COLORS,
   SIZES,
