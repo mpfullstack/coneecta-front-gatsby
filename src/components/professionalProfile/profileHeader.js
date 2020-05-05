@@ -6,6 +6,7 @@ import Skeleton from 'react-loading-skeleton';
 import { useTranslation } from 'react-i18next';
 import ImageSkeleton from '../imageSkeleton';
 import ProfileImgWrapper from './profileImgWrapper.styles';
+import Rating from '../rating';
 
 const ProfileHeaderWrapper = styled.div`
   padding: 20px 0 0;
@@ -15,7 +16,7 @@ const ProfileHeaderWrapper = styled.div`
     margin: 20px 0 0;
   }
   .text {
-    height: 60px;
+    height: 50px;
     margin-bottom: 10px;
     display: flex;
     flex-direction: row;
@@ -42,6 +43,12 @@ const ProfileHeader = ({ name, profilePic, rating, collapse }) => {
       <Row className='justify-content-md-center text-center'>
         <Col xs='12' md='10'>
           <h2 className="name">{name || <Skeleton width={200} />}</h2>
+          <Rating
+            name={'rating'}
+            value={3}
+            starCount={5}
+            editing={false}
+          />
         </Col>
       </Row>
       <Row className='text'>
