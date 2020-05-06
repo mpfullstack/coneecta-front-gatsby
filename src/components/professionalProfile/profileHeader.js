@@ -7,13 +7,27 @@ import { useTranslation } from 'react-i18next';
 import ImageSkeleton from '../imageSkeleton';
 import ProfileImgWrapper from './profileImgWrapper.styles';
 import Rating from '../rating';
+import AnimateHeight from 'react-animate-height';
 
 const ProfileHeaderWrapper = styled.div`
   padding: 20px 0 0;
+  .collapse-image {
+    .profile-image {
+      margin-left: 10px;
+      position: absolute;
+    }
+  }
+  .profile-image {
+    margin-top: 10px;
+  }
   .name {
     font-size: 26px;
     text-transform: uppercase;
-    margin: 20px 0 0;
+    margin: 0;
+    transition: all 0.9s ease .7s;
+    &.collapse-name {
+      padding-left: 70px;
+    }
   }
   .text {
     height: 50px;
@@ -32,41 +46,60 @@ const ProfileHeader = ({ name, profilePic, rating, collapse }) => {
   const { t } = useTranslation();
 
   return (
-    <ProfileHeaderWrapper>
-      <Row className='justify-content-md-center text-center'>
-        <Col xs='12' md='10'>
-          <ProfileImgWrapper>
-            <ImageSkeleton url={profilePic} circle={true} width={124} height={124} />
-          </ProfileImgWrapper>
-        </Col>
-      </Row>
-      <Row className='justify-content-md-center text-center'>
-        <Col xs='12' md='10'>
-          <h2 className="name">{name || <Skeleton width={200} />}</h2>
-          <Rating
-            name={'rating'}
-            value={3}
-            starCount={5}
-            editing={false}
-          />
-        </Col>
-      </Row>
-      <Row className='text'>
-        <Col xs='12' md='10'>
-          {collapse ?
-            <Animated animateOnMount={true} animationIn="fadeInDown" isVisible={collapse}>
-              <p>Eliga la modalidad</p>
-            </Animated>
-            : null}
-          {!collapse ?
-            <>
-              <p>{t('Do you want to contact me?')}</p>
-              <p>{t('These are my services')}</p>
-            </>
-            : null}
-        </Col>
-      </Row>
-    </ProfileHeaderWrapper>
+    <AnimateHeight delay={0} duration={ 500 } height={collapse ? 135 : 325}>
+      <ProfileHeaderWrapper>
+        <Row className={!collapse ? 'justify-content-md-center text-center' : 'collapse-image'}>
+          <Col xs='12' md='10'>
+            <ProfileImgWrapper>
+              <AnimateHeight delay={0} duration={ 500 } height={collapse ? 32 : 150}>
+                {collapse ?
+                  <Animated className='profile-image' key="1" animateOnMount={true} animationIn='fadeInLeft' animationInDelay={500}>
+                    <ImageSkeleton url={profilePic} circle={true} width={75} height={75} />
+                  </Animated>
+                  :
+                  <Animated className='profile-image' key="2" animateOnMount={false} animationOut='fadeOutLeft'>
+                    <ImageSkeleton url={profilePic} circle={true} width={124} height={124} />
+                  </Animated>}
+              </AnimateHeight>
+            </ProfileImgWrapper>
+          </Col>
+        </Row>
+        <Row className='justify-content-md-center text-center'>
+          {/* <Col xs={collapse ? {offset: 2} : '12'} md='10'> */}
+          <Col xs='12' md='10'>
+            <h2 className={`name${collapse ? ' collapse-name' : ''}`}>{name || <Skeleton width={200} />}</h2>
+            {rating ?
+              <AnimateHeight delay={600} duration={ 500 } height={collapse ? 0 : 'auto'}>
+                <Animated animateOnMount={false} animationOut='fadeOutRight' isVisible={!collapse} animationOutDelay={300}>
+                  <Rating
+                    name={'rating'}
+                    value={rating}
+                    starCount={5}
+                    editing={false}
+                  />
+                </Animated>
+              </AnimateHeight>
+              : <Skeleton width={100} />
+            }
+            {collapse ?
+              <Animated animateOnMount={true} animationIn='fadeInLeft' animationInDelay={750}>
+                <p>{t('Pick the modality')}</p>
+              </Animated>
+              : null}
+          </Col>
+        </Row>
+        <Row className='text'>
+          <Col xs='12' md='12'>
+            {!collapse ?
+              <>
+                <p>{t('Do you want to contact me?')}</p>
+                <p>{t('These are my services')}</p>
+              </>
+              : null}
+          </Col>
+        </Row>
+      </ProfileHeaderWrapper>
+    </AnimateHeight>
   );
 }
 

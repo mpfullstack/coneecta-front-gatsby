@@ -63,7 +63,6 @@ const Layout = ({ children, global }) => {
         <div className='layout-inner'>
           <main>{children}</main>
           <footer>
-            Footer
           </footer>
         </div>
         {alert}
