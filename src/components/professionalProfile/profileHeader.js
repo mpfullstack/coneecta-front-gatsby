@@ -69,7 +69,7 @@ const ProfileHeader = ({ name, profilePic, rating, collapse }) => {
           <Col xs='12' md='10'>
             <h2 className={`name${collapse ? ' collapse-name' : ''}`}>{name || <Skeleton width={200} />}</h2>
             {rating ?
-              <AnimateHeight delay={600} duration={ 500 } height={collapse ? 0 : 'auto'}>
+              <AnimateHeight delay={500} duration={ 500 } height={collapse ? 0 : 'auto'}>
                 <Animated animateOnMount={false} animationOut='fadeOutRight' isVisible={!collapse} animationOutDelay={300}>
                   <Rating
                     name={'rating'}
@@ -82,7 +82,7 @@ const ProfileHeader = ({ name, profilePic, rating, collapse }) => {
               : <Skeleton width={100} />
             }
             {collapse ?
-              <Animated animateOnMount={true} animationIn='fadeInLeft' animationInDelay={750}>
+              <Animated animateOnMount={true} animationIn='fadeInLeft' animationInDelay={600}>
                 <p>{t('Pick the modality')}</p>
               </Animated>
               : null}
