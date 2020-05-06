@@ -10,13 +10,16 @@ const ProfessionalServicesList = styled.div`
   margin: 0;
 `;
 
-const ProfessionalServices = ({ services, onClick }) => {
+const ProfessionalServices = ({ services, onClick, onSelect }) => {
   return (
     <ProfessionalServicesList onClick={() => onClick ? onClick() : null}>
       <Accordion>
         {
           services.map(service =>
-            <ProfessionalServicesItem service={service}  key={service.id} />)
+            <ProfessionalServicesItem
+              service={service}
+              key={service.id}
+              onSelect={onSelect} />)
         }
       </Accordion>
     </ProfessionalServicesList>

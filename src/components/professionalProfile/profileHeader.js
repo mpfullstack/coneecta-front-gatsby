@@ -23,7 +23,7 @@ const ProfileHeaderWrapper = styled.div`
   .name {
     font-size: 26px;
     text-transform: uppercase;
-    margin: 0;
+    margin: 10px 0 0 0;
     transition: all 0.9s ease .7s;
     &.collapse-name {
       padding-left: 70px;
@@ -40,13 +40,16 @@ const ProfileHeaderWrapper = styled.div`
       margin-bottom: auto;
     }
   }
+  .modality-text {
+    margin-top: 25px;
+  }
 `;
 
 const ProfileHeader = ({ name, profilePic, rating, collapse }) => {
   const { t } = useTranslation();
 
   return (
-    <AnimateHeight delay={0} duration={ 500 } height={collapse ? 135 : 325}>
+    <AnimateHeight delay={0} duration={ 500 } height={collapse ? 155 : 325}>
       <ProfileHeaderWrapper>
         <Row className={!collapse ? 'justify-content-md-center text-center' : 'collapse-image'}>
           <Col xs='12' md='10'>
@@ -83,7 +86,7 @@ const ProfileHeader = ({ name, profilePic, rating, collapse }) => {
             }
             {collapse ?
               <Animated animateOnMount={true} animationIn='fadeInLeft' animationInDelay={600}>
-                <p>{t('Pick the modality')}</p>
+                <p className='modality-text'>{t('Pick the modality')}</p>
               </Animated>
               : null}
           </Col>

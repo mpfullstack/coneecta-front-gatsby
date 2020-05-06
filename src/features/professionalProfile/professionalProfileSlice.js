@@ -5,7 +5,14 @@ const professionalProfileSlice = createSlice({
   initialState: {
     'collapseProfileHeader': false,
 		'details': null,
-    'services': []
+    'services': [],
+    'section': 'services',
+    'booking': { // Here? Or create a new reducer?
+      'id': null, // null if is a new booking
+      'serviceId': null, // Selected service
+      'date': '', // Booking date
+      'time': '' // Booking time
+    }
 	},
   reducers: {
     loadProfile: state => state,
@@ -15,10 +22,18 @@ const professionalProfileSlice = createSlice({
     },
     collapseProfileHeader: state => {
       state.collapseProfileHeader = true;
+    },
+    selectService: (state, action) => {
+      state.booking.serviceId = action.payload;
     }
   }
 });
 
-export const { loadProfile, initProfile, collapseProfileHeader } = professionalProfileSlice.actions
+export const {
+  loadProfile,
+  initProfile,
+  collapseProfileHeader,
+  selectService
+} = professionalProfileSlice.actions
 
 export default professionalProfileSlice.reducer;

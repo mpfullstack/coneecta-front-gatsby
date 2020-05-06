@@ -12,7 +12,7 @@ const ProfessionalServicesListItem = styled.div`
   }
 `;
 
-export default ({ service }) => {
+export default ({ service, onSelect }) => {
   return (
     <ProfessionalServicesListItem>
       <Card>
@@ -20,7 +20,7 @@ export default ({ service }) => {
           {service.name}
         </Accordion.Toggle>
         <Accordion.Collapse eventKey={service.id}>
-          <Card.Body>Service details</Card.Body>
+          <Card.Body onClick={e => onSelect(e, service.id)}>Service details</Card.Body>
         </Accordion.Collapse>
       </Card>
     </ProfessionalServicesListItem>
