@@ -4,5 +4,9 @@
   "These are my services": "Estos son mis servicios",
   "Pick the modality": "Escoge la modalidad que prefieras",
 
-  "name": "Nombre"
+  "name": "Nombre",
+
+  "videoconference": "Video conferencia",
+  "audioconference": "Audio conferencia",
+  "onsite": "A domicilio"
 }

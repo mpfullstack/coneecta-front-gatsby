@@ -4,7 +4,7 @@ const bookingSlice = createSlice({
   name: 'booking',
   initialState: {
 		'id': null, // null if is a new booking
-		'serviceId': 1, // Selected service
+		'serviceId': null, // Selected service
     'modalityType': '', // Modality of the service
 		'date': '', // Booking date
 		'time': '' // Booking time
@@ -13,7 +13,8 @@ const bookingSlice = createSlice({
     // loadBooking: state => state,
     // initBooking: (state, action) => action.payload,
     selectService: (state, action) => {
-      state.serviceId = action.payload;
+      state.serviceId = action.payload.serviceId;
+      state.modalityType = action.payload.modalityType;
     }
   }
 });

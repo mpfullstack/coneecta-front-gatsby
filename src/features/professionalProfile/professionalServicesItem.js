@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Accordion, Card } from 'react-bootstrap';
+import ServiceModalities from './serviceModalities';
 import theme from '../../theme';
 
 const ProfessionalServicesListItem = styled.div`
@@ -20,7 +21,12 @@ export default ({ service, onSelect }) => {
           {service.name}
         </Accordion.Toggle>
         <Accordion.Collapse eventKey={service.id}>
-          <Card.Body onClick={e => onSelect(e, service.id)}>Service details</Card.Body>
+          <Card.Body>
+            <ServiceModalities
+              serviceId={service.id}
+              modalities={service.modalities}
+              onSelect={onSelect} />
+          </Card.Body>
         </Accordion.Collapse>
       </Card>
     </ProfessionalServicesListItem>
