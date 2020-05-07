@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { loadProfile, collapseProfileHeader, selectService } from './professionalProfileSlice';
+import { loadProfile, collapseProfileHeader } from './professionalProfileSlice';
+import { selectService } from '../booking/bookingSlice';
 import Query from '../../helpers/query';
 import Skeleton from 'react-loading-skeleton';
 import { Container, Row, Col } from 'react-bootstrap';
