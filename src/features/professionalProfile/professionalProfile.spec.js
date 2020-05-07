@@ -4,6 +4,7 @@ import { render } from '@testing-library/react';
 import api from '../../api';
 import ProfessionalProfile from './professionalProfile';
 import store from '../../redux/store';
+import '../../locales/i18n';
 
 // Mock api call
 api.getProfessionalProfile = jest.fn().mockImplementation(() => Promise.resolve({
@@ -26,7 +27,7 @@ describe('My Connected React-Redux Component', () => {
   beforeEach(() => {
     // Mock current location query string to make ProfessionalProfile work properly
     const location = { search: '?id=1' };
-    component = <Provider store={store()}>
+    component = <Provider store={store}>
       <ProfessionalProfile location={location} />
     </Provider>
   });
@@ -40,7 +41,7 @@ describe('My Connected React-Redux Component', () => {
     // });
 
     // It also works!
-    expect(await findByText("Name: Pedro")).toBeInTheDocument();
+    expect(await findByText("Pedro")).toBeInTheDocument();
 
     // It also works!
     expect(await findByText("Service II")).toBeInTheDocument();
