@@ -72,8 +72,8 @@ const ProfileHeader = ({ name, profilePic, rating, collapse }) => {
           <Col xs='12' md='10'>
             <h2 className={`name${collapse ? ' collapse-name' : ''}`}>{name || <Skeleton width={200} />}</h2>
             {rating ?
-              <AnimateHeight delay={500} duration={ 500 } height={collapse ? 0 : 'auto'}>
-                <Animated animateOnMount={false} animationOut='fadeOutRight' isVisible={!collapse} animationOutDelay={300}>
+              <AnimateHeight delay={400} duration={500} height={collapse ? 0 : 'auto'}>
+                <Animated animateOnMount={false} animationOut='fadeOutRight' isVisible={!collapse} animationOutDelay={250}>
                   <Rating
                     name={'rating'}
                     value={rating}
