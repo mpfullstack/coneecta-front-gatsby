@@ -1,13 +1,10 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { loadProfile, collapseProfileHeader } from './professionalProfileSlice';
-import { selectService } from '../booking/bookingSlice';
+import { loadProfile } from './professionalProfileSlice';
 import Query from '../../helpers/query';
-import Skeleton from 'react-loading-skeleton';
 import { Container, Row, Col } from 'react-bootstrap';
-import ProfessionalServices from './professionalServices';
-import { useTranslation } from 'react-i18next';
 import ProfileHeader from '../../components/professionalProfile/profileHeader';
+import ProfessionalProfileSection from './professionalProfileSection';
 
 // https://github.com/buildo/react-placeholder
 // https://github.com/dvtng/react-loading-skeleton
@@ -16,7 +13,7 @@ import ProfileHeader from '../../components/professionalProfile/profileHeader';
 // Stars rating component
 // https://www.npmjs.com/package/react-star-rating-component
 
-const mapDispatchToProps = { loadProfile, collapseProfileHeader, selectService };
+const mapDispatchToProps = { loadProfile };
 const mapStateToProps = state => {
   return {
     profile: state.professionalProfile,
@@ -24,9 +21,7 @@ const mapStateToProps = state => {
   }
 }
 
-export const ProfessionalProfile = ({ profile, loadProfile, collapseProfileHeader, selectService, location }) => {
-  const { t } = useTranslation();
-
+export const ProfessionalProfile = ({ profile, loadProfile, location }) => {
   useEffect(() => {
     const params = Query.getParams(location);
     if (params.id) {
@@ -35,24 +30,13 @@ export const ProfessionalProfile = ({ profile, loadProfile, collapseProfileHeade
   }, [loadProfile, location]);
 
   const profileDetails = profile.details || {};
-  const profileServices = profile.services && profile.services.length ? profile.services : null;
-
-  function onSelectService(e, serviceId) {
-    selectService(serviceId);
-    e.stopPropagation();
-  }
 
   return (
     <Container>
       <ProfileHeader {...profileDetails} collapse={profile.collapseProfileHeader} />
       <Row className='justify-content-md-center'>
         <Col xs='12' md='10'>
-          {// TODO: If only one service, show detail
-            profileServices ?
-              <ProfessionalServices services={profileServices} onClick={collapseProfileHeader} onSelect={onSelectService} />
-              :
-              <Skeleton height={24} count={4} />
-          }
+          <ProfessionalProfileSection />
         </Col>
       </Row>
     </Container>

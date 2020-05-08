@@ -6,8 +6,10 @@ const bookingSlice = createSlice({
 		'id': null, // null if is a new booking
 		'serviceId': null, // Selected service
     'modalityType': '', // Modality of the service
-		'date': '', // Booking date
-		'time': '' // Booking time
+    'availableDates': [], // Dates available for the selected service
+    'avaialbleTimes': [], // Times available for the selected service and date
+		'date': '', // Booking date selected
+		'time': '' // Booking time selected
 	},
   reducers: {
     // loadBooking: state => state,
