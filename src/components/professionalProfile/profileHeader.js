@@ -10,7 +10,7 @@ import Rating from '../rating';
 import AnimateHeight from 'react-animate-height';
 
 const ProfileHeaderWrapper = styled.div`
-  padding: 20px 0 0;
+  padding: 10px 0 0;
   .collapse-image {
     .profile-image {
       margin-left: 10px;
@@ -49,7 +49,7 @@ const ProfileHeader = ({ name, profilePic, rating, collapse }) => {
   const { t } = useTranslation();
 
   return (
-    <AnimateHeight delay={0} duration={ 500 } height={collapse ? 155 : 325}>
+    <AnimateHeight delay={0} duration={ 500 } height={collapse ? 145 : 315}>
       <ProfileHeaderWrapper>
         <Row className={!collapse ? 'justify-content-md-center text-center' : 'collapse-image'}>
           <Col xs='12' md='10'>
@@ -70,7 +70,7 @@ const ProfileHeader = ({ name, profilePic, rating, collapse }) => {
         <Row className='justify-content-md-center text-center'>
           {/* <Col xs={collapse ? {offset: 2} : '12'} md='10'> */}
           <Col xs='12' md='10'>
-            <h2 className={`name${collapse ? ' collapse-name' : ''}`}>{name || <Skeleton width={200} />}</h2>
+            <h2 className={`name${collapse ? ' collapse-name' : ''}`}>{name || <Skeleton height={32} width={200} />}</h2>
             {rating ?
               <AnimateHeight delay={400} duration={500} height={collapse ? 0 : 'auto'}>
                 <Animated animateOnMount={false} animationOut='fadeOutRight' isVisible={!collapse} animationOutDelay={250}>
@@ -82,7 +82,7 @@ const ProfileHeader = ({ name, profilePic, rating, collapse }) => {
                   />
                 </Animated>
               </AnimateHeight>
-              : <Skeleton width={100} />
+              : <Skeleton height={28} width={110} />
             }
             {collapse ?
               <Animated animateOnMount={true} animationIn='fadeInLeft' animationInDelay={600}>
