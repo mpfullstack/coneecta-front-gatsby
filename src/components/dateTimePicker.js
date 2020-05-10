@@ -1,8 +1,10 @@
 import React from 'react'
+import styled from 'styled-components';
+import Skeleton from 'react-loading-skeleton';
+import { Button } from 'react-bootstrap';
 import theme from '../theme';
 import DatePicker from './datePicker/datePicker';
 import TimePicker from './timePicker/timePicker';
-import styled from 'styled-components';
 
 const DatePickerWrapper = styled.div`
   .monthYearLabel {
@@ -11,8 +13,9 @@ const DatePickerWrapper = styled.div`
 
   .dateDayItem {
     &.selected {
-      color: ${theme.dateTimePickerColor};
+      background-color: ${theme.dateTimePickerColor};
       border: 2px solid ${theme.dateTimePickerColor};
+      color: ${theme.dateTimePickerSelectedTextColor};
     }
   }
 
@@ -50,23 +53,42 @@ const availableTimes = [
   { value: '15:00', label: '15:00' }
 ];
 
-const DateTimePicker = ({ booking, onSelectDate, onSelectTime }) => {
+const ConfirmButton = ({ date, time, fetchingAvailableDates, fetchingAvailableTimes }) => {
+  if (date && time && !fetchingAvailableDates && !fetchingAvailableTimes) {
+    return <Button variant="primary">Confirmar</Button>;
+  } else {
+    return null;
+  }
+}
 
+const DateTimePicker = ({ booking, onSelectDate, onSelectTime }) => {
+  // TODO: Setup dates and times available properly
   return (
     <>
-      <DatePickerWrapper>
-        <DatePicker
-          getSelectedDay={value => onSelectDate(String(value))}
-          endDate={90}
-          labelFormat={"MMMM yyyy"} />
-      </DatePickerWrapper>
+      {booking.fetchingAvailableDates ?
+        <Skeleton height={140} />
+        :
+        <DatePickerWrapper>
+          <DatePicker
+            getSelectedDay={value => onSelectDate(String(value))}
+            fromDate={new Date(2020, 5, 15)}
+            endDate={90}
+            labelFormat={"MMMM yyyy"} />
+        </DatePickerWrapper>
+      }
 
-      <TimePickerWrapper>
-        <TimePicker
-          valueGroups={{ time: '13:00' }}
-          optionGroups={{ time: availableTimes }}
-          onSelectTime={onSelectTime} />
-      </TimePickerWrapper>
+      {booking.fetchingAvailableTimes ?
+        <Skeleton height={30} count={5} />
+        :
+        <TimePickerWrapper>
+          <TimePicker
+            valueGroups={{ time: '13:00' }}
+            optionGroups={{ time: availableTimes }}
+            onSelectTime={onSelectTime} />
+        </TimePickerWrapper>
+      }
+
+      <ConfirmButton {...booking} />
     </>
   )
 }
