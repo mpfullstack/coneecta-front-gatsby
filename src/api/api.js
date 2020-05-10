@@ -24,10 +24,30 @@ async function getAvailableDates({ serviceId, modalityType}) {
   //     }
   //     return response;
   //   });
+  return new Promise((resolve, reject) => {
+    setTimeout(() => resolve([]), 300);
+  });
+}
+
+async function getAvailableTimes({ date }) {
+  // TODO: Implment call to API
+  // return await SuperFetch.get(professionalProfileUrl.replace(':id', id))
+  //   .then(response => {
+  //     if( response.status >= 400 ) {
+  //       // Handle type of error and translate message to spanish
+  //       // response.message = t(response.message, {}, 'Unexpected error');
+  //     }
+  //     return response;
+  //   });
+  return new Promise((resolve, reject) => {
+    setTimeout(() => resolve([]), 350);
+  });
 }
 
 const api = {
-  getProfessionalProfile
+  getProfessionalProfile,
+  getAvailableDates,
+  getAvailableTimes
 };
 
 export default api;
