@@ -14,6 +14,18 @@ async function getProfessionalProfile(id) {
     });
 };
 
+async function getAvailableDates({ serviceId, modalityType}) {
+  // TODO: Implment call to API
+  // return await SuperFetch.get(professionalProfileUrl.replace(':id', id))
+  //   .then(response => {
+  //     if( response.status >= 400 ) {
+  //       // Handle type of error and translate message to spanish
+  //       // response.message = t(response.message, {}, 'Unexpected error');
+  //     }
+  //     return response;
+  //   });
+}
+
 const api = {
   getProfessionalProfile
 };
