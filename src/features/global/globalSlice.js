@@ -11,10 +11,11 @@ const globalSlice = createSlice({
     },
     hideApiError: state => {
       state.apiError = null;
-    }
+    },
+    handleHeaderClick: state => state
   }
 });
 
-export const { showApiError, hideApiError } = globalSlice.actions
+export const { showApiError, hideApiError, handleHeaderClick } = globalSlice.actions
 
 export default globalSlice.reducer;

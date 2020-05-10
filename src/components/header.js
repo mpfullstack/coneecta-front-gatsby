@@ -19,14 +19,14 @@ const HeaderWrapper = styled.header`
   }
 `;
 
-const Header = ({ siteTitle }) => (
+const Header = ({ siteTitle, handleHeaderClick }) => (
   <HeaderWrapper>
     <div className='header-inner'>
       <Container>
         <Row className='justify-content-center text-center'>
           <Col xs='12'>
             <h1 style={{ margin: 0 }}>
-              <Link to='/'>
+              <Link to='/' onClick={handleHeaderClick}>
                 <Logo />
               </Link>
             </h1>
