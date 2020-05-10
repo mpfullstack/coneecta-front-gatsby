@@ -56,6 +56,16 @@ const dateTimePickerSelectedTextColor = theme('mode', {
   dark: COLORS.superDarkGrey
 });
 
+const primaryButtonColor = theme('mode', {
+  light: COLORS.primary,
+  dark: COLORS.superDarkGrey
+});
+
+const primaryButtonTextColor = theme('mode', {
+  light: '#fff',
+  dark: COLORS.superDarkGrey
+});
+
 // Transitions
 // -------------------------------------------------------
 const TRANSITIONS = {
@@ -70,6 +80,8 @@ export default {
   textCardHeaderColor,
   dateTimePickerColor,
   dateTimePickerSelectedTextColor,
+  primaryButtonColor,
+  primaryButtonTextColor,
   // Constants
   COLORS,
   SIZES,

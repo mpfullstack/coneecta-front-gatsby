@@ -10,7 +10,6 @@ const HeaderWrapper = styled.header`
   width: 100%;
   background-color: ${theme.backgroundHeaderColor};
   .header-inner {
-    height: 60px;
     margin: 0 auto;
     max-width: ${theme.SIZES.maxWidth};
     width: 100%;

@@ -38,7 +38,6 @@
     scrollbar-width: none;
     margin: 7px 0 2px 0px;
     -webkit-overflow-scrolling: touch;
-    padding-bottom: 45px;
 }
 
 .dateListScrollable::-webkit-scrollbar {

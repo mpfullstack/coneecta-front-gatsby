@@ -42,7 +42,7 @@ class TimePicker extends Component {
         optionGroups={optionGroups}
         valueGroups={valueGroups}
         onChange={this.handleChange}
-        height={180} />
+        height={140} />
     );
   }
 }
