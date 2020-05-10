@@ -5,13 +5,14 @@ import { useTranslation } from 'react-i18next';
 import { Animated } from 'react-animated-css';
 import Skeleton from 'react-loading-skeleton';
 import { Row, Col } from 'react-bootstrap';
-import { collapseProfileHeader, changeSection } from './professionalProfileSlice';
+import { changeSection, showService, collapseProfileHeader } from './professionalProfileSlice';
 import { selectService, selectDate, selectTime } from '../booking/bookingSlice';
 import ProfessionalServices from './professionalServices';
 import DateTimePicker from '../../components/dateTimePicker';
 import ServiceCard from '../../components/services/serviceCard';
+import { getServiceById, getServiceByModalityType } from '../../helpers/data';
 
-const mapDispatchToProps = { collapseProfileHeader, selectService, changeSection, selectDate, selectTime };
+const mapDispatchToProps = { selectService, changeSection, selectDate, selectTime, showService, collapseProfileHeader };
 const mapStateToProps = state => {
   return {
     profile: state.professionalProfile,
@@ -36,6 +37,7 @@ const SectionContentWrapper = styled.div`
 const ProfessionalProfileSection = ({
   profile,
   collapseProfileHeader,
+  showService,
   selectService,
   changeSection,
   selectDate,
@@ -58,7 +60,7 @@ const ProfessionalProfileSection = ({
         <Row className='text'>
           <Col xs='12' md='12'>
             {profile.collapseProfileHeader ?
-              <Animated animateOnMount={true} animationIn='fadeInLeft' animationInDelay={600}>
+              <Animated animateOnMount={true} animationIn='fadeInLeft' animationInDelay={350}>
                 <p className='modality-text'>{t('Pick the modality')}</p>
               </Animated>
               :
@@ -69,22 +71,25 @@ const ProfessionalProfileSection = ({
           </Col>
         </Row>
         {profileServices ?
-          <ProfessionalServices services={profileServices} onClick={() =>collapseProfileHeader(true)} onSelect={onSelectService} />
+          <ProfessionalServices services={profileServices}
+            serviceId={profile.showedServiceId}
+            onClick={id => { collapseProfileHeader(true); showService(id); }} onSelect={onSelectService} />
           :
           <Skeleton height={45} count={3} />}
       </>
     );
   } else if (profile.section === 'datePicker') {
+    const service = getServiceById(profile.services, booking.serviceId);
+    const modality = getServiceByModalityType(service, booking.modalityType);
     sectionContent = (
       <>
         <Row>
           <Col>
-            <ServiceCard serviceName={'Some service'} modality={{
-              type: 'videoconference',
-              duration: '40 min',
-              price: '35 €'
-            }}
-            onClick={() => changeSection('serviceList')} />
+            <ServiceCard serviceName={service.name}
+              modalityType={t(modality.type)}
+              duration={modality.duration}
+              price={modality.price}
+              onClick={() => changeSection('serviceList')} />
           </Col>
         </Row>
         <Row className='text'>

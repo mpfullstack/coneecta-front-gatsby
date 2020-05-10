@@ -23,7 +23,7 @@ const ProfileHeaderWrapper = styled.div`
     font-size: 26px;
     text-transform: uppercase;
     margin: 10px 0 0 0;
-    transition: all 0.9s ease .7s;
+    transition: all 0.9s ease .6s;
     &.collapse-name {
       padding-left: 70px;
     }
@@ -32,7 +32,7 @@ const ProfileHeaderWrapper = styled.div`
 
 const ProfileHeader = ({ name, profilePic, rating, collapse }) => {
   return (
-    <AnimateHeight delay={175} duration={ 500 } height={collapse ? 95 : 240}>
+    <AnimateHeight delay={0} duration={ 500 } height={collapse ? 100 : 240}>
       <ProfileHeaderWrapper>
         {/*
         * Profile image
@@ -60,8 +60,8 @@ const ProfileHeader = ({ name, profilePic, rating, collapse }) => {
           <Col xs='12' md='10'>
             <h2 className={`name${collapse ? ' collapse-name' : ''}`}>{name || <Skeleton height={32} width={200} />}</h2>
             {rating ?
-              <AnimateHeight delay={400} duration={500} height={collapse ? 0 : 'auto'}>
-                <Animated animateOnMount={false} animationOut='fadeOutRight' isVisible={!collapse} animationOutDelay={250}>
+              <AnimateHeight delay={0} duration={500} height={collapse ? 0 : 'auto'}>
+                <Animated animateOnMount={false} animationOut='fadeOutRight' isVisible={!collapse} animationOutDelay={0}>
                   <Rating
                     name={'rating'}
                     value={rating}

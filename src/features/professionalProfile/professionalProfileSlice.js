@@ -7,6 +7,7 @@ const professionalProfileSlice = createSlice({
     'collapseProfileHeader': false,
 		'details': null,
     'services': [],
+    'showedServiceId': null, // It indicates which service to show in list of services
     'section': 'serviceList' // serviceList, datePicker
 	},
   reducers: {
@@ -19,6 +20,9 @@ const professionalProfileSlice = createSlice({
     collapseProfileHeader: (state, action) => {
       state.collapseProfileHeader = action.payload;
     },
+    showService: (state, action) => {
+      state.showedServiceId = action.payload;
+    },
     changeSection: (state, action) => {
       state.section = action.payload;
     }
@@ -29,6 +33,7 @@ export const {
   loadProfile,
   initProfile,
   collapseProfileHeader,
+  showService,
   changeSection
 } = professionalProfileSlice.actions
 

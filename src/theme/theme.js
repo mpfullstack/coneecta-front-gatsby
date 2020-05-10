@@ -32,7 +32,7 @@ const backgroundColor = theme('mode', {
 });
 
 const backgroundHeaderColor = theme('mode', {
-  light: '#fff',
+  light: COLORS.superLightGrey,
   dark: COLORS.superDarkGrey
 });
 

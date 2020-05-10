@@ -32,7 +32,7 @@ const ServiceCardWrapper = styled.div`
   }
 `;
 
-const ServiceCard = ({ serviceName, modality, onClick }) => {
+const ServiceCard = ({ serviceName, modalityType, duration, price, onClick }) => {
   return (
     <ServiceCardWrapper>
       <Card onClick={onClick}>
@@ -42,9 +42,9 @@ const ServiceCard = ({ serviceName, modality, onClick }) => {
         </Card.Header>
         <Card.Body>
           <Row>
-            <Col xs='6'>{modality.type}</Col>
-            <Col>{modality.duration}</Col>
-            <Col>{modality.price}</Col>
+            <Col xs='6'>{modalityType}</Col>
+            <Col>{duration}</Col>
+            <Col>{price}</Col>
           </Row>
         </Card.Body>
       </Card>

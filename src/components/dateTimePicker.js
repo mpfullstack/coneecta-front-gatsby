@@ -10,8 +10,8 @@ import TimePicker from './timePicker/timePicker';
 const DateTimePickerWrapper = styled.div`
   .action-buttons {
     position: fixed;
+    left: 0;
     width: 100%;
-    margin-left: -15px;
     bottom: 0;
     display: flex;
     align-content: center;
