@@ -1,18 +1,36 @@
-/**
- * Layout component that queries for data
- * with Gatsby's useStaticQuery component
- *
- * See: https://www.gatsbyjs.org/docs/use-static-query/
- */
+import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { useStaticQuery, graphql } from 'gatsby';
+import Header from './header';
+import styled, { ThemeProvider } from 'styled-components';
+import theme from '../theme';
+import { Alert } from 'react-bootstrap';
+import Modal from './modal';
+import '../locales/i18n';
+import { handleHeaderClick } from '../features/global/globalSlice';
 
-import React from "react"
-import PropTypes from "prop-types"
-import { useStaticQuery, graphql } from "gatsby"
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './layout.scss';
+// Animate CSS
+import 'animate.css';
 
-import Header from "./header"
-import "./layout.css"
+const LayoutWrapper = styled.div`
+  .layout-inner {
+    margin: 0 auto;
+    max-width: ${theme.SIZES.maxWidth};
+    width: 100%;
+  }
+`;
 
-const Layout = ({ children }) => {
+const mapDispatchToProps = { handleHeaderClick };
+const mapStateToProps = state => {
+  return {
+    global: state.global
+  }
+}
+
+const Layout = ({ children, global, handleHeaderClick }) => {
   const data = useStaticQuery(graphql`
     query SiteTitleQuery {
       site {
@@ -23,24 +41,35 @@ const Layout = ({ children }) => {
     }
   `)
 
+  // useState hook to set theme mode
+  const [mode, setThemeMode] = useState('light');
+
+  // useEffect hook to set theme mode background-color style to body element
+  useEffect(() => {
+    document.body.style.backgroundColor = theme.backgroundColor({theme: {mode}});
+  });
+
+  let alert;
+  if (global.apiError) {
+    alert = <Modal>
+      <Alert variant={'danger'}>
+        {global.apiError.name}
+      </Alert>
+    </Modal>
+  }
+
   return (
-    <>
-      <Header siteTitle={data.site.siteMetadata.title} />
-      <div
-        style={{
-          margin: `0 auto`,
-          maxWidth: 960,
-          padding: `0 1.0875rem 1.45rem`,
-        }}
-      >
-        <main>{children}</main>
-        <footer>
-          © {new Date().getFullYear()}, Built with
-          {` `}
-          <a href="https://www.gatsbyjs.org">Gatsby</a>
-        </footer>
-      </div>
-    </>
+    <ThemeProvider theme={{ mode: mode }}>
+      <LayoutWrapper className='layout'>
+        <Header siteTitle={data.site.siteMetadata.title} handleHeaderClick={handleHeaderClick} />
+        <div className='layout-inner'>
+          <main>{children}</main>
+          <footer>
+          </footer>
+        </div>
+        {alert}
+      </LayoutWrapper>
+    </ThemeProvider>
   )
 }
 
@@ -48,4 +77,4 @@ Layout.propTypes = {
   children: PropTypes.node.isRequired,
 }
 
-export default Layout
+export default connect(mapStateToProps, mapDispatchToProps)(Layout);
