@@ -7,9 +7,21 @@ import theme from '../../theme';
 const ProfessionalServicesListItem = styled.div`
   margin: 0;
   padding: 0;
-  .card-header {
-    background-color: ${theme.backgroundCardHeaderColor};
-    color: ${theme.textCardHeaderColor};
+  .card {
+    margin: 5px 0;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    .card-header {
+      -webkit-border-radius: 5px;
+      -moz-border-radius: 5px;
+      border-radius: 5px;
+      background-color: ${theme.backgroundCardHeaderColor};
+      color: ${theme.textCardHeaderColor};
+    }
+    .card-body {
+      padding: 10px 20px;
+    }
   }
 `;
 

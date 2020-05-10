@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 
 const Modalities = styled.div`
   .modality {
-
+    margin: 10px 0;
   }
 `;
 
