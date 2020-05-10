@@ -3,7 +3,7 @@ import theme from 'styled-theming';
 // Colors
 // ------------------------------------------------------
 const COLORS = {
-  primary: '#6cc3bf',
+  primary: '#374e8c',
   superDarkGrey: '#222222',
   darkGrey: '#444444',
   mediumGrey: '#737373',
@@ -46,6 +46,11 @@ const textCardHeaderColor = theme('mode', {
   dark: COLORS.superDarkGrey
 });
 
+const dateTimePickerColor = theme('mode', {
+  light: COLORS.primary,
+  dark: COLORS.superDarkGrey
+});
+
 // Transitions
 // -------------------------------------------------------
 const TRANSITIONS = {
@@ -58,6 +63,7 @@ export default {
   backgroundHeaderColor,
   backgroundCardHeaderColor,
   textCardHeaderColor,
+  dateTimePickerColor,
   // Constants
   COLORS,
   SIZES,
