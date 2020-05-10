@@ -37,7 +37,7 @@ const ProfessionalProfileSection = ({
       profileServices ?
       <ProfessionalServices services={profileServices} onClick={() =>collapseProfileHeader(true)} onSelect={onSelectService} />
       :
-      <Skeleton height={24} count={4} />
+      <Skeleton height={45} count={3} />
     );
   } else if (profile.section === 'datePicker') {
     return (
