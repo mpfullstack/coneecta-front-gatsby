@@ -16,8 +16,8 @@ const professionalProfileSlice = createSlice({
       state.details = action.payload.details;
       state.services = action.payload.services;
     },
-    collapseProfileHeader: state => {
-      state.collapseProfileHeader = true;
+    collapseProfileHeader: (state, action) => {
+      state.collapseProfileHeader = action.payload;
     },
     changeSection: (state, action) => {
       state.section = action.payload;
