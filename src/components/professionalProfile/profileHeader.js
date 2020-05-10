@@ -45,7 +45,7 @@ const ProfileHeaderWrapper = styled.div`
   }
 `;
 
-const ProfileHeader = ({ name, profilePic, rating, collapse }) => {
+const ProfileHeader = ({ name, profilePic, rating, collapse, section }) => {
   const { t } = useTranslation();
 
   return (
@@ -68,7 +68,6 @@ const ProfileHeader = ({ name, profilePic, rating, collapse }) => {
           </Col>
         </Row>
         <Row className='justify-content-md-center text-center'>
-          {/* <Col xs={collapse ? {offset: 2} : '12'} md='10'> */}
           <Col xs='12' md='10'>
             <h2 className={`name${collapse ? ' collapse-name' : ''}`}>{name || <Skeleton height={32} width={200} />}</h2>
             {rating ?
@@ -86,7 +85,11 @@ const ProfileHeader = ({ name, profilePic, rating, collapse }) => {
             }
             {collapse ?
               <Animated animateOnMount={true} animationIn='fadeInLeft' animationInDelay={600}>
-                <p className='modality-text'>{t('Pick the modality')}</p>
+                {section === 'serviceList' ?
+                  <p className='modality-text'>{t('Pick the modality')}</p>
+                  : section === 'datePicker' ?
+                    <p className='modality-text'>{t('When do you want your booking for?')}</p>
+                    : null}
               </Animated>
               : null}
           </Col>

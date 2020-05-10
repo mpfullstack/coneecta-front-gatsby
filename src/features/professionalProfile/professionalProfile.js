@@ -17,7 +17,8 @@ const mapDispatchToProps = { loadProfile };
 const mapStateToProps = state => {
   return {
     profile: state.professionalProfile,
-    global: state.global
+    global: state.global,
+    booking: state.booking
   }
 }
 
@@ -33,7 +34,7 @@ export const ProfessionalProfile = ({ profile, loadProfile, location }) => {
 
   return (
     <Container>
-      <ProfileHeader {...profileDetails} collapse={profile.collapseProfileHeader} />
+      <ProfileHeader {...profileDetails} collapse={profile.collapseProfileHeader} section={profile.section} />
       <Row className='justify-content-md-center'>
         <Col xs='12' md='10'>
           <ProfessionalProfileSection />
