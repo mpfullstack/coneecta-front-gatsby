@@ -37,12 +37,17 @@ const backgroundHeaderColor = theme('mode', {
 });
 
 const backgroundCardHeaderColor = theme('mode', {
-  light: COLORS.mediumGrey,
+  light: COLORS.primary,
   dark: COLORS.lightGrey
 });
 
 const textCardHeaderColor = theme('mode', {
   light: COLORS.superLightGrey,
+  dark: COLORS.superDarkGrey
+});
+
+const borderCardColor = theme('mode', {
+  light: '#eee',
   dark: COLORS.superDarkGrey
 });
 
@@ -77,6 +82,7 @@ export default {
   backgroundColor,
   backgroundHeaderColor,
   backgroundCardHeaderColor,
+  borderCardColor,
   textCardHeaderColor,
   dateTimePickerColor,
   dateTimePickerSelectedTextColor,

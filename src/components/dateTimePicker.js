@@ -107,7 +107,7 @@ const DateTimePicker = ({ booking, onSelectDate, onSelectTime }) => {
       }
 
       {booking.fetchingAvailableTimes ?
-        <Skeleton height={42.5} count={3} />
+        <Skeleton height={95} count={1} />
         :
         <TimePickerWrapper>
           <TimePicker

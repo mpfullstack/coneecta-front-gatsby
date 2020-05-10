@@ -3,9 +3,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, {useEffect, useState} from "react";
 import styles from "./datePicker.module.css"
-// get our fontawesome imports
-import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { ArrowLeft, ArrowRight } from '../../components/icons';
 import {
     addDays,
     addMonths,
@@ -135,13 +133,13 @@ export default function DatePicker({fromDate, endDate, selectDate, getSelectedDa
         <div className={styles.container}>
             <div className={styles.buttonWrapper}>
                 <button className={styles.button} onClick={prevWeek}>
-                    <FontAwesomeIcon icon={faAngleLeft} />
+                    <ArrowLeft />
                 </button>
             </div>
             {renderDays()}
             <div className={styles.buttonWrapper}>
                 <button className={styles.button} onClick={nextWeek}>
-                    <FontAwesomeIcon icon={faAngleRight} />
+                    <ArrowRight />
                 </button>
             </div>
         </div>
