@@ -3,12 +3,13 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { Animated } from 'react-animated-css';
+import Skeleton from 'react-loading-skeleton';
+import { Row, Col } from 'react-bootstrap';
 import { collapseProfileHeader, changeSection } from './professionalProfileSlice';
 import { selectService, selectDate, selectTime } from '../booking/bookingSlice';
-import Skeleton from 'react-loading-skeleton';
 import ProfessionalServices from './professionalServices';
-import { Row, Col } from 'react-bootstrap';
 import DateTimePicker from '../../components/dateTimePicker';
+import ServiceCard from '../../components/services/serviceCard';
 
 const mapDispatchToProps = { collapseProfileHeader, selectService, changeSection, selectDate, selectTime };
 const mapStateToProps = state => {
@@ -76,6 +77,16 @@ const ProfessionalProfileSection = ({
   } else if (profile.section === 'datePicker') {
     sectionContent = (
       <>
+        <Row>
+          <Col>
+            <ServiceCard serviceName={'Some service'} modality={{
+              type: 'videoconference',
+              duration: '40 min',
+              price: '35 €'
+            }}
+            onClick={() => changeSection('serviceList')} />
+          </Col>
+        </Row>
         <Row className='text'>
           <Col xs='12' md='12'>
             <p className='modality-text'>{t('When do you want your booking for?')}</p>

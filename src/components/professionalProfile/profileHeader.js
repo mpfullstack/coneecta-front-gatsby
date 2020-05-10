@@ -32,7 +32,7 @@ const ProfileHeaderWrapper = styled.div`
 
 const ProfileHeader = ({ name, profilePic, rating, collapse }) => {
   return (
-    <AnimateHeight delay={0} duration={ 500 } height={collapse ? 110 : 240}>
+    <AnimateHeight delay={175} duration={ 500 } height={collapse ? 95 : 240}>
       <ProfileHeaderWrapper>
         {/*
         * Profile image
@@ -43,7 +43,7 @@ const ProfileHeader = ({ name, profilePic, rating, collapse }) => {
               <AnimateHeight delay={0} duration={ 500 } height={collapse ? 32 : 150}>
                 {collapse ?
                   <Animated className='profile-image' key="1" animateOnMount={true} animationIn='fadeInLeft' animationInDelay={500}>
-                    <ImageSkeleton url={profilePic} circle={true} width={75} height={75} />
+                    <ImageSkeleton url={profilePic} circle={true} width={65} height={65} />
                   </Animated>
                   :
                   <Animated className='profile-image' key="2" animateOnMount={false} animationOut='fadeOutLeft'>

@@ -12,6 +12,7 @@ const ProfessionalServicesListItem = styled.div`
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     border-radius: 5px;
+    border: 1px solid ${theme.borderCardColor};
     .card-header {
       -webkit-border-radius: 5px;
       -moz-border-radius: 5px;
