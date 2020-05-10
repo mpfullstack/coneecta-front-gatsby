@@ -60,6 +60,9 @@ export default function DatePicker({fromDate, endDate, selectDate, getSelectedDa
                          style={getStyles(addDays(month, j))}
                          key={addDays(month, j)}
                          onClick={() => onDateClick(addDays(month, j))}
+                         onKeyDown={() => null}
+                         role='button'
+                         aria-hidden='true'
                     >
                         <div className={`${styles.dayLabel} dayLabel`}>
                             {capitalise(format(addDays(month, j), dayFormat, { locale: es }))}

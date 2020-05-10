@@ -1,7 +1,6 @@
 import { all, takeLatest, put, fork, select } from 'redux-saga/effects';
 import { handleHeaderClick } from './globalSlice';
 import { changeSection, collapseProfileHeader } from '../professionalProfile/professionalProfileSlice';
-import api from '../../api';
 
 function* onClickHeader() {
   yield takeLatest(handleHeaderClick, function* () {

@@ -143,7 +143,10 @@ class PickerColumn extends Component {
           key={index}
           className={className}
           style={style}
-          onClick={() => this.handleItemClick(option.value)}>{option.label}</div>
+          onClick={() => this.handleItemClick(option.value)}
+          onKeyDown={() => null}
+          role='button'
+          aria-hidden='true'>{option.label}</div>
       );
     });
   }

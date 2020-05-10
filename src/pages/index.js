@@ -1,17 +1,18 @@
 import React, { useEffect } from 'react'
-import { navigate, Link } from 'gatsby'
-import { Provider } from 'react-redux';
-import store from '../redux/store';
-import Layout from '../components/layout'
-import Image from '../components/image'
-import SEO from '../components/seo'
+import { navigate } from 'gatsby'
+// import { navigate, Link } from 'gatsby'
+// import { Provider } from 'react-redux';
+// import store from '../redux/store';
+// import Layout from '../components/layout'
+// import Image from '../components/image'
+// import SEO from '../components/seo'
 
 const IndexPage = () => {
   useEffect(() => {
     navigate('/professional/?id=1');
   });
 
-  return null;
+  return <p></p>;
   /*
   return (
     <Provider store={store}>

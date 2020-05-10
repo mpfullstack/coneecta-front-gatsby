@@ -42,7 +42,7 @@ const Layout = ({ children, global, handleHeaderClick }) => {
   `)
 
   // useState hook to set theme mode
-  const [mode, setThemeMode] = useState('light');
+  const [mode/*, setThemeMode*/] = useState('light');
 
   // useEffect hook to set theme mode background-color style to body element
   useEffect(() => {
