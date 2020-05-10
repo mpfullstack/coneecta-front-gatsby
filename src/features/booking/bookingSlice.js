@@ -20,6 +20,7 @@ const bookingSlice = createSlice({
       state.serviceId = action.payload.serviceId;
       state.modalityType = action.payload.modalityType;
       state.fetchingAvailableDates = true;
+      state.fetchingAvailableTimes = true;
     },
     initAvailableDates: (state, action) => {
       state.availableDates = action.payload;
