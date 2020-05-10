@@ -22,7 +22,7 @@ const mapStateToProps = state => {
   }
 }
 
-export const ProfessionalProfile = ({ profile, loadProfile, location }) => {
+export const ProfessionalProfile = ({ profile, loadProfile, location, booking }) => {
   useEffect(() => {
     const params = Query.getParams(location);
     if (params.id) {
@@ -34,7 +34,7 @@ export const ProfessionalProfile = ({ profile, loadProfile, location }) => {
 
   return (
     <Container>
-      <ProfileHeader {...profileDetails} collapse={profile.collapseProfileHeader} section={profile.section} />
+      <ProfileHeader {...profileDetails} collapse={profile.collapseProfileHeader} />
       <Row className='justify-content-md-center'>
         <Col xs='12' md='10'>
           <ProfessionalProfileSection />

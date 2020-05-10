@@ -3,7 +3,6 @@ import { Row, Col } from 'react-bootstrap';
 import styled from 'styled-components';
 import { Animated } from 'react-animated-css';
 import Skeleton from 'react-loading-skeleton';
-import { useTranslation } from 'react-i18next';
 import ImageSkeleton from '../imageSkeleton';
 import ProfileImgWrapper from './profileImgWrapper.styles';
 import Rating from '../rating';
@@ -29,28 +28,15 @@ const ProfileHeaderWrapper = styled.div`
       padding-left: 70px;
     }
   }
-  .text {
-    height: 50px;
-    margin-bottom: 10px;
-    display: flex;
-    flex-direction: row;
-    align-content: flex-end;
-    text-align: center;
-    p {
-      margin-bottom: auto;
-    }
-  }
-  .modality-text {
-    margin-top: 25px;
-  }
 `;
 
-const ProfileHeader = ({ name, profilePic, rating, collapse, section }) => {
-  const { t } = useTranslation();
-
+const ProfileHeader = ({ name, profilePic, rating, collapse }) => {
   return (
-    <AnimateHeight delay={0} duration={ 500 } height={collapse ? 145 : 315}>
+    <AnimateHeight delay={0} duration={ 500 } height={collapse ? 110 : 240}>
       <ProfileHeaderWrapper>
+        {/*
+        * Profile image
+        * --------------------------------------------------------------- */}
         <Row className={!collapse ? 'justify-content-md-center text-center' : 'collapse-image'}>
           <Col xs='12' md='10'>
             <ProfileImgWrapper>
@@ -67,6 +53,9 @@ const ProfileHeader = ({ name, profilePic, rating, collapse, section }) => {
             </ProfileImgWrapper>
           </Col>
         </Row>
+        {/*
+        * Profile name and rating component
+        * --------------------------------------------------------------- */}
         <Row className='justify-content-md-center text-center'>
           <Col xs='12' md='10'>
             <h2 className={`name${collapse ? ' collapse-name' : ''}`}>{name || <Skeleton height={32} width={200} />}</h2>
@@ -81,27 +70,8 @@ const ProfileHeader = ({ name, profilePic, rating, collapse, section }) => {
                   />
                 </Animated>
               </AnimateHeight>
-              : <Skeleton height={28} width={110} />
+              : <Skeleton height={24} width={110} />
             }
-            {collapse ?
-              <Animated animateOnMount={true} animationIn='fadeInLeft' animationInDelay={600}>
-                {section === 'serviceList' ?
-                  <p className='modality-text'>{t('Pick the modality')}</p>
-                  : section === 'datePicker' ?
-                    <p className='modality-text'>{t('When do you want your booking for?')}</p>
-                    : null}
-              </Animated>
-              : null}
-          </Col>
-        </Row>
-        <Row className='text'>
-          <Col xs='12' md='12'>
-            {!collapse ?
-              <>
-                <p>{t('Do you want to contact me?')}</p>
-                <p>{t('These are my services')}</p>
-              </>
-              : null}
           </Col>
         </Row>
       </ProfileHeaderWrapper>
