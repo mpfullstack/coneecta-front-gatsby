@@ -1,3 +1,5 @@
+// https://github.com/kush-agra/react-horizontal-datepicker
+
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, {useEffect, useState} from "react";
 import styles from "./datePicker.module.css"
@@ -19,10 +21,10 @@ function capitalise(value) {
     return value.charAt(0).toUpperCase() + value.slice(1);
 }
 
-export default function DatePicker({endDate, selectDate, getSelectedDay, labelFormat}) {
-    const [selectedDate, setSelectedDate] = useState(new Date());
+export default function DatePicker({fromDate, endDate, selectDate, getSelectedDay, labelFormat}) {
+    const [selectedDate, setSelectedDate] = useState(fromDate || new Date());
     const firstSection = {marginLeft: '0'};
-    const startDate = new Date();
+    const startDate = fromDate || new Date();
     const lastDate = addDays(startDate, endDate || 90);
     const selectedStyle = {fontWeight:"bold",width:"49px",height:"49px",borderRadius:"50%"};
 
