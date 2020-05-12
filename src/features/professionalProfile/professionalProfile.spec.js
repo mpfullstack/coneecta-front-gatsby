@@ -8,17 +8,47 @@ import '../../locales/i18n';
 
 // Mock api call
 api.getProfessionalProfile = jest.fn().mockImplementation(() => Promise.resolve({
-  details: {
-    name: 'Pedro',
-    profilePic: '/img/profile1.jpg'
+  "id": 1,
+  "details": {
+    "name": "Isabela Reinket",
+    "avatar": "/img/profile1.jpg",
+    "rating": 4,
+    "country": "de",
+    "languages": [
+        "es",
+        "en",
+        "ca"
+    ]
   },
-  services: [{
-    id: 1,
-    name: 'Service I'
-  }, {
-    id: 2,
-    name: 'Service II'
-  }]
+  "services": [
+    {
+      "id": 1,
+      "name": "Lectura del tarot",
+      "modalities": [
+        {
+          "id": 1,
+          "type": "videoconference",
+          "duration": 30,
+          "credits": 123,
+          "credits_in_euros": "12,30"
+        },
+        {
+          "id": 2,
+          "type": "audioconference",
+          "duration": 45,
+          "credits": 123,
+          "credits_in_euros": "12,30"
+        },
+        {
+          "id": 3,
+          "type": "onsite",
+          "duration": 30,
+          "credits": 123,
+          "credits_in_euros": "12,30"
+        }
+      ]
+    }
+  ]
 }));
 
 describe('My Connected React-Redux Component', () => {
@@ -41,9 +71,9 @@ describe('My Connected React-Redux Component', () => {
     // });
 
     // It also works!
-    expect(await findByText("Pedro")).toBeInTheDocument();
+    expect(await findByText("Isabela Reinket")).toBeInTheDocument();
 
     // It also works!
-    expect(await findByText("Service II")).toBeInTheDocument();
+    expect(await findByText("Lectura del tarot")).toBeInTheDocument();
   });
 });
