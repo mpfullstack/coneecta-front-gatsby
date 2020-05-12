@@ -86,7 +86,7 @@ const ConfirmButton = ({ date, time, fetchingAvailableDates, fetchingAvailableTi
   }
   return <Button
     className='confirm-button' variant='primary' size='lg' disabled={disabled}>
-      {t('Confirm')}
+      {t('Book')}
     </Button>;
 }
 
