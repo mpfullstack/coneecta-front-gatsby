@@ -1,8 +1,10 @@
 import React from 'react';
-import { Card, Row, Col } from 'react-bootstrap';
+import { Card } from 'react-bootstrap';
 import styled from 'styled-components';
 import { Edit } from '../icons';
 import theme from '../../theme';
+import { Modality } from './serviceModalities';
+
 
 const ServiceCardWrapper = styled.div`
   .card {
@@ -28,11 +30,19 @@ const ServiceCardWrapper = styled.div`
       font-size: 16px;
       border: 1px solid ${theme.borderCardColor};
       border-radius: 0 0 5px 5px;
+      .modality-item {
+        white-space: nowrap;
+        text-align: right;
+        padding: 5px 15px;
+        &:first-child {
+          text-align: left;
+        }
+      }
     }
   }
 `;
 
-const ServiceCard = ({ serviceName, modalityType, duration, price, onClick }) => {
+const ServiceCard = ({ serviceName, modality, onClick }) => {
   return (
     <ServiceCardWrapper>
       <Card onClick={onClick}>
@@ -41,11 +51,7 @@ const ServiceCard = ({ serviceName, modalityType, duration, price, onClick }) =>
           <Edit />
         </Card.Header>
         <Card.Body>
-          <Row>
-            <Col xs='6'>{modalityType}</Col>
-            <Col>{duration}</Col>
-            <Col>{price}</Col>
-          </Row>
+          <Modality modality={modality} />
         </Card.Body>
       </Card>
     </ServiceCardWrapper>

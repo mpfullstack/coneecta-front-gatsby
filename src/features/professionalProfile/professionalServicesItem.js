@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Accordion, Card } from 'react-bootstrap';
-import ServiceModalities from './serviceModalities';
+import ServiceModalities from '../../components/services/serviceModalities';
 import theme from '../../theme';
 
 const ProfessionalServicesListItem = styled.div`
@@ -21,7 +21,7 @@ const ProfessionalServicesListItem = styled.div`
       color: ${theme.textCardHeaderColor};
     }
     .card-body {
-      padding: 10px 20px;
+      padding: 6px 10px;
     }
   }
 `;

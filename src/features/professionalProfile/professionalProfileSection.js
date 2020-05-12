@@ -86,9 +86,7 @@ const ProfessionalProfileSection = ({
         <Row>
           <Col>
             <ServiceCard serviceName={service.name}
-              modalityType={t(modality.type)}
-              duration={modality.duration}
-              price={modality.price}
+              modality={modality}
               onClick={() => changeSection('serviceList')} />
           </Col>
         </Row>
