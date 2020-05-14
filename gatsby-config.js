@@ -6,6 +6,7 @@ module.exports = {
   },
   plugins: [
     `gatsby-plugin-sass`,
+    `gatsby-plugin-no-sourcemaps`,
     `gatsby-plugin-styled-components`,
     `gatsby-plugin-react-helmet`,
     {
