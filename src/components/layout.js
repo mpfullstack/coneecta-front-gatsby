@@ -8,7 +8,6 @@ import theme from '../theme';
 import { Alert } from 'react-bootstrap';
 import Modal from './modal';
 import '../locales/i18n';
-import { handleHeaderClick } from '../features/global/globalSlice';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './layout.scss';
