@@ -27,6 +27,8 @@ export const ProfessionalProfile = ({ profile, loadProfile, location, booking })
     const params = Query.getParams(location);
     if (params.id) {
       loadProfile(params.id);
+    } else {
+      // TODO: Handle if no professional id is present in URL
     }
   }, [loadProfile, location]);
 
