@@ -24,7 +24,7 @@ const Header = ({ siteTitle }) => (
         <Row className='justify-content-center text-center'>
           <Col xs='12'>
             <h1 style={{ margin: 0 }}>
-              <a target='_blank' href='https://coneecta.com/'>
+              <a target='_blank' href='https://coneecta.com/' rel='noreferrer noopener'>
                 <Logo />
               </a>
             </h1>
