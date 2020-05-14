@@ -39,14 +39,13 @@ const LayoutWrapper = styled.div`
   }
 `;
 
-const mapDispatchToProps = { handleHeaderClick };
 const mapStateToProps = state => {
   return {
     global: state.global
   }
 }
 
-const Layout = ({ children, global, handleHeaderClick }) => {
+const Layout = ({ children, global }) => {
   const data = useStaticQuery(graphql`
     query SiteTitleQuery {
       site {
@@ -77,7 +76,7 @@ const Layout = ({ children, global, handleHeaderClick }) => {
   return (
     <ThemeProvider theme={{ mode: mode }}>
       <LayoutWrapper className='layout'>
-        <Header siteTitle={data.site.siteMetadata.title} handleHeaderClick={handleHeaderClick} />
+        <Header siteTitle={data.site.siteMetadata.title} />
         <div className='layout-inner'>
           <main>{children}</main>
           <footer>
@@ -93,4 +92,4 @@ Layout.propTypes = {
   children: PropTypes.node.isRequired,
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Layout);
+export default connect(mapStateToProps)(Layout);

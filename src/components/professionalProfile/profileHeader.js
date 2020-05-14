@@ -9,7 +9,6 @@ import Rating from '../rating';
 import AnimateHeight from 'react-animate-height';
 
 const ProfileHeaderWrapper = styled.div`
-  padding: 10px 0 0;
   .collapse-image {
     .profile-image {
       margin-left: 10px;
@@ -32,7 +31,7 @@ const ProfileHeaderWrapper = styled.div`
 
 const ProfileHeader = ({ name, avatar, rating, collapse }) => {
   return (
-    <AnimateHeight delay={0} duration={ 500 } height={collapse ? 100 : 240}>
+    <AnimateHeight delay={0} duration={ 500 } height={collapse ? 90 : 240}>
       <ProfileHeaderWrapper>
         {/*
         * Profile image
