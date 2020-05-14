@@ -94,6 +94,26 @@ module.exports = (req, res) => {
           }
         ]
       }
+    ],
+    "reviews": [
+			{
+				"name": "Jhon Doe",
+				"date": "26/01/2020",
+				"rating": 3,
+				"comments": "Pellentesque consequat, nulla a feugiat ultrices, metus urna venenatis lectus, eget efficitur dolor quam vitae elit."
+      },
+      {
+				"name": "Jhon Doe",
+				"date": "26/01/2020",
+				"rating": 3,
+				"comments": "Pellentesque consequat, nulla a feugiat ultrices, metus urna venenatis lectus, eget efficitur dolor quam vitae elit."
+      },
+      {
+				"name": "Jhon Doe",
+				"date": "26/01/2020",
+				"rating": 3,
+				"comments": "Pellentesque consequat, nulla a feugiat ultrices, metus urna venenatis lectus, eget efficitur dolor quam vitae elit."
+      }
     ]
   })
 }
