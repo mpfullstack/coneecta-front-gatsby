@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'gatsby';
 import { Row, Col } from 'react-bootstrap';
 import styled from 'styled-components';
 import { Animated } from 'react-animated-css';
@@ -29,7 +30,7 @@ const ProfileHeaderWrapper = styled.div`
   }
 `;
 
-const ProfileHeader = ({ name, avatar, rating, collapse }) => {
+const ProfileHeader = ({ id, name, avatar, rating, collapse }) => {
   return (
     <AnimateHeight delay={0} duration={ 500 } height={collapse ? 90 : 240}>
       <ProfileHeaderWrapper>
@@ -57,16 +58,19 @@ const ProfileHeader = ({ name, avatar, rating, collapse }) => {
         * --------------------------------------------------------------- */}
         <Row className='justify-content-md-center text-center'>
           <Col xs='12' md='10'>
-            <h2 className={`name${collapse ? ' collapse-name' : ''}`}>{name || <Skeleton height={32} width={200} />}</h2>
+            <Link to={`/professional/?id=${id}`}>
+              <h2 className={`name${collapse ? ' collapse-name' : ''}`}>{name || <Skeleton height={32} width={200} />}</h2>
+            </Link>
             {rating ?
               <AnimateHeight delay={0} duration={500} height={collapse ? 0 : 'auto'}>
                 <Animated animateOnMount={false} animationOut='fadeOutRight' isVisible={!collapse} animationOutDelay={0}>
-                  <Rating
-                    name={'rating'}
-                    value={rating}
-                    starCount={5}
-                    editing={false}
-                  />
+                  <Link to={`/professional-reviews/?id=${id}`}>
+                    <Rating
+                      name={'rating'}
+                      value={rating}
+                      starCount={5}
+                      editing={false} />
+                  </Link>
                 </Animated>
               </AnimateHeight>
               : <Skeleton height={24} width={110} />
