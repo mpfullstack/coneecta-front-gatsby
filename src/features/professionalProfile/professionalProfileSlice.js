@@ -7,6 +7,7 @@ const professionalProfileSlice = createSlice({
     'collapseProfileHeader': false,
 		'details': null,
     'services': [],
+    'reviews': null, // Professional profile reviews
     'showedServiceId': null, // It indicates which service to show in list of services
     'section': 'serviceList' // serviceList, datePicker
 	},
@@ -16,6 +17,7 @@ const professionalProfileSlice = createSlice({
       state.id = action.payload.id;
       state.details = action.payload.details;
       state.services = action.payload.services;
+      state.reviews = action.payload.reviews;
     },
     collapseProfileHeader: (state, action) => {
       state.collapseProfileHeader = action.payload;
