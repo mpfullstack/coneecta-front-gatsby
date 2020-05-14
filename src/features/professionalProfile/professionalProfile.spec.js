@@ -82,7 +82,7 @@ describe('My Connected React-Redux Component', () => {
     fireEvent.click(getByText("Video conferencia"));
 
     await waitFor(() => {
-      expect(getByText("¿Para cuando quieres hacer tu reserva?")).toBeInTheDocument();
+      expect(getByText(/hacer tu reserva/i)).toBeInTheDocument();
       expect(getByText("Reservar")).toBeInTheDocument();
     });
   });
