@@ -23,7 +23,7 @@ export const Modality = ({ modality, onClick }) => {
     <Row className='modality' onClick={onClick}>
       <Col className='modality-item' xs='6'>{t(modality.type)}</Col>
       <Col className='modality-item' xs='2'>{modality.duration} min</Col>
-      <Col className='modality-item' xs='4'>{modality.credits}cr<br />({modality.credits_in_euros}€)</Col>
+      <Col className='modality-item' xs='4'>{modality.credits}cr{/*<br />({modality.credits_in_euros}€)*/}</Col>
     </Row>
   );
 }
