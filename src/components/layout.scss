@@ -1,7 +1,6 @@
 html {
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
-  overflow-y: hidden !important;
 }
 
 html,
@@ -51,6 +50,11 @@ h2,
 h3 {
     margin: .5em 0;
     padding: 0;
+}
+
+h2 {
+  font-size: 20px;
+  text-transform: uppercase;
 }
 
 input,

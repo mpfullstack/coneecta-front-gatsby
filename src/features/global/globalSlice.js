@@ -12,6 +12,8 @@ const globalSlice = createSlice({
     hideApiError: state => {
       state.apiError = null;
     },
+    // TODO: May not be necessary as click event on logo will take user
+    // to coneecta.com page
     handleHeaderClick: state => state
   }
 });

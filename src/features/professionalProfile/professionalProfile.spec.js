@@ -1,6 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { render } from '@testing-library/react';
+import { render, waitFor, fireEvent } from '@testing-library/react';
 import api from '../../api';
 import ProfessionalProfile from './professionalProfile';
 import store from '../../redux/store';
@@ -65,15 +65,25 @@ describe('My Connected React-Redux Component', () => {
   test('Renders professional profile details', async () => {
     const { getByText, findByText } = render(component);
 
-    // It works!
-    // await waitFor(() => {
-    //   expect(getByText("Name: Luis")).toBeInTheDocument();
-    // });
-
-    // It also works!
     expect(await findByText("Isabela Reinket")).toBeInTheDocument();
-
-    // It also works!
     expect(await findByText("Lectura del tarot")).toBeInTheDocument();
+  });
+
+  test('Show professional profile service details on click', async () => {
+    const { getByText } = render(component);
+
+    fireEvent.click(getByText("Lectura del tarot"));
+    expect(getByText("Escoge la modalidad que prefieras")).toBeInTheDocument();
+  });
+
+  test('Show date time picker page for selected service modality', async () => {
+    const { getByText } = render(component);
+
+    fireEvent.click(getByText("Video conferencia"));
+
+    await waitFor(() => {
+      expect(getByText(/hacer tu reserva/i)).toBeInTheDocument();
+      expect(getByText("Reservar")).toBeInTheDocument();
+    });
   });
 });

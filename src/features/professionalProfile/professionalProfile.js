@@ -27,6 +27,8 @@ export const ProfessionalProfile = ({ profile, loadProfile, location, booking })
     const params = Query.getParams(location);
     if (params.id) {
       loadProfile(params.id);
+    } else {
+      // TODO: Handle if no professional id is present in URL
     }
   }, [loadProfile, location]);
 
@@ -34,7 +36,7 @@ export const ProfessionalProfile = ({ profile, loadProfile, location, booking })
 
   return (
     <Container>
-      <ProfileHeader {...profileDetails} collapse={profile.collapseProfileHeader} />
+      <ProfileHeader id={profile.id} {...profileDetails} collapse={profile.collapseProfileHeader} />
       <Row className='justify-content-md-center'>
         <Col xs='12' md='10'>
           <ProfessionalProfileSection />

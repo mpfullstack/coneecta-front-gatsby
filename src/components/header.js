@@ -1,4 +1,3 @@
-import { Link } from 'gatsby';
 import PropTypes from 'prop-types';
 import React from 'react';
 import styled from 'styled-components';
@@ -18,16 +17,16 @@ const HeaderWrapper = styled.header`
   }
 `;
 
-const Header = ({ siteTitle, handleHeaderClick }) => (
+const Header = ({ siteTitle }) => (
   <HeaderWrapper>
     <div className='header-inner'>
       <Container>
         <Row className='justify-content-center text-center'>
           <Col xs='12'>
             <h1 style={{ margin: 0 }}>
-              <Link to='/' onClick={handleHeaderClick}>
+              <a target='_blank' href='https://coneecta.com/' rel='noreferrer noopener'>
                 <Logo />
-              </Link>
+              </a>
             </h1>
           </Col>
         </Row>
