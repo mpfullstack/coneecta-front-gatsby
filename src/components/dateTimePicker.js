@@ -1,4 +1,5 @@
 import React from 'react'
+import { navigate } from 'gatsby';
 import styled from 'styled-components';
 import Skeleton from 'react-loading-skeleton';
 import { Button } from 'react-bootstrap';
@@ -77,20 +78,20 @@ const availableTimes = [
   { value: '15:00', label: '15:00' }
 ];
 
-const ConfirmButton = ({ date, time, fetchingAvailableDates, fetchingAvailableTimes }) => {
+const ConfirmButton = ({ date, time, fetchingAvailableDates, fetchingAvailableTimes, id }) => {
   const { t } = useTranslation();
 
   let disabled = true;
   if (date && time && !fetchingAvailableDates && !fetchingAvailableTimes) {
     disabled = false;
   }
-  return <Button
+  return <Button onClick={() => navigate(`/login${id ? `/?id=${id}` : ''}`)}
     className='confirm-button' variant='primary' size='lg' disabled={disabled}>
       {t('Book')}
     </Button>;
 }
 
-const DateTimePicker = ({ booking, onSelectDate, onSelectTime }) => {
+const DateTimePicker = ({ profile, booking, onSelectDate, onSelectTime }) => {
   // TODO: Setup dates and times available properly
   return (
     <DateTimePickerWrapper>
@@ -118,7 +119,7 @@ const DateTimePicker = ({ booking, onSelectDate, onSelectTime }) => {
       }
 
       <div className='action-buttons'>
-        <ConfirmButton {...booking} />
+        <ConfirmButton {...booking} id={profile.id} />
       </div>
     </DateTimePickerWrapper>
   )
