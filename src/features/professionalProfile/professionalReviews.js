@@ -72,13 +72,15 @@ export const ProfessionalReviews = ({ profile, loadProfile, location }) => {
   const { t } = useTranslation();
 
   useEffect(() => {
-    const params = Query.getParams(location);
-    if (params.id) {
-      loadProfile(params.id);
-    } else {
-      // TODO: Handle if no professional id is present in URL
+    if (!profile.id) {
+      const params = Query.getParams(location);
+      if (params.id) {
+        loadProfile(params.id);
+      } else {
+        // TODO: Handle if no professional id is present in URL
+      }
     }
-  }, [loadProfile, location]);
+  }, [loadProfile, location, profile.id]);
 
   const profileDetails = profile.details || {};
   const profileReviews = profile.reviews || null;

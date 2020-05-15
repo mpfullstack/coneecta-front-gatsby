@@ -97,7 +97,7 @@ const ProfessionalProfileSection = ({
         </Row>
         <Row>
           <Col>
-            <DateTimePicker booking={booking} onSelectDate={selectDate} onSelectTime={selectTime} />
+            <DateTimePicker profile={profile} booking={booking} onSelectDate={selectDate} onSelectTime={selectTime} />
           </Col>
         </Row>
       </>
