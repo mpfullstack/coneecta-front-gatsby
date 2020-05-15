@@ -26,6 +26,11 @@ const SIZES = {
 
 // Theme definitions
 // ------------------------------------------------------
+const textColor = theme('mode', {
+  light: COLORS.darkGrey,
+  dark: COLORS.lightGrey
+});
+
 const backgroundColor = theme('mode', {
   light: COLORS.superLightGrey,
   dark: COLORS.superDarkGrey
@@ -79,6 +84,7 @@ const TRANSITIONS = {
 
 export default {
   // Theme functions
+  textColor,
   backgroundColor,
   backgroundHeaderColor,
   backgroundCardHeaderColor,
