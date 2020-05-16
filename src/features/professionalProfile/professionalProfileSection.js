@@ -48,6 +48,7 @@ const ProfessionalProfileSection = ({
   const profileServices = profile.services && profile.services.length ? profile.services : null;
 
   function onSelectService(e, payload) {
+    collapseProfileHeader(true);
     selectService(payload);
     changeSection('datePicker');
     e.stopPropagation();
@@ -73,7 +74,12 @@ const ProfessionalProfileSection = ({
         {profileServices ?
           <ProfessionalServices services={profileServices}
             serviceId={profile.showedServiceId}
-            onClick={id => { collapseProfileHeader(true); showService(id); }} onSelect={onSelectService} />
+            onClick={id => {
+              if (profile.services.length > 1) {
+                collapseProfileHeader(true);
+                showService(id);
+              }
+            }} onSelect={onSelectService} />
           :
           <Skeleton height={45} count={3} />}
       </>
@@ -97,7 +103,7 @@ const ProfessionalProfileSection = ({
         </Row>
         <Row>
           <Col>
-            <DateTimePicker booking={booking} onSelectDate={selectDate} onSelectTime={selectTime} />
+            <DateTimePicker profile={profile} booking={booking} onSelectDate={selectDate} onSelectTime={selectTime} />
           </Col>
         </Row>
       </>

@@ -9,7 +9,7 @@ const Modalities = styled.div`
     .modality-item {
       white-space: nowrap;
       text-align: right;
-      padding: 0 5px;
+      padding: 5px 15px;
       &:first-child {
         text-align: left;
       }
@@ -21,9 +21,9 @@ export const Modality = ({ modality, onClick }) => {
   const { t } = useTranslation();
   return (
     <Row className='modality' onClick={onClick}>
-      <Col className='modality-item' xs='6'>{t(modality.type)}</Col>
+      <Col className='modality-item' xs='5'>{t(modality.type)}</Col>
       <Col className='modality-item' xs='2'>{modality.duration} min</Col>
-      <Col className='modality-item' xs='4'>{modality.credits}cr{/*<br />({modality.credits_in_euros}€)*/}</Col>
+      <Col className='modality-item' xs='5'>{modality.credits}cr. ({modality.credits_in_euros}€)</Col>
     </Row>
   );
 }

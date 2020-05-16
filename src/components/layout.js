@@ -36,6 +36,10 @@ const LayoutWrapper = styled.div`
     max-width: ${theme.SIZES.maxWidth};
     width: 100%;
   }
+
+  a {
+    color: ${theme.textColor}
+  }
 `;
 
 const mapStateToProps = state => {

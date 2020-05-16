@@ -4,15 +4,15 @@ import SEO from '../components/seo';
 import { Location } from '@reach/router';
 import { Provider } from 'react-redux';
 import store from '../redux/store';
-import Login from '../features/login';
+import ProfessionalProfile from '../features/professionalProfile';
 
 export default () => {
   return (
     <Provider store={store}>
       <Layout>
-        <SEO title='Login' />
+        <SEO title='Professional service' />
         <Location>
-          {props => <Login {...props} />}
+          {props => <ProfessionalProfile {...props} />}
         </Location>
       </Layout>
     </Provider>

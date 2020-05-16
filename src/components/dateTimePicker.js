@@ -1,4 +1,5 @@
 import React from 'react'
+import { navigate } from 'gatsby';
 import styled from 'styled-components';
 import Skeleton from 'react-loading-skeleton';
 import { Button } from 'react-bootstrap';
@@ -6,25 +7,9 @@ import { useTranslation } from 'react-i18next';
 import theme from '../theme';
 import DatePicker from './datePicker/datePicker';
 import TimePicker from './timePicker/timePicker';
+import ActionButtons from '../components/buttons/actionButtons';
 
-const DateTimePickerWrapper = styled.div`
-  .action-buttons {
-    position: fixed;
-    left: 0;
-    width: 100%;
-    bottom: 0;
-    display: flex;
-    align-content: center;
-    align-items: center;
-    flex-direction: row;
-    justify-content: center;
-    .confirm-button {
-      text-transform: uppercase;
-      width: 100%;
-      border-radius: 0;
-    }
-  }
-`;
+const DateTimePickerWrapper = styled.div``;
 
 const DatePickerWrapper = styled.div`
   #container {
@@ -77,20 +62,20 @@ const availableTimes = [
   { value: '15:00', label: '15:00' }
 ];
 
-const ConfirmButton = ({ date, time, fetchingAvailableDates, fetchingAvailableTimes }) => {
+const ConfirmButton = ({ date, time, fetchingAvailableDates, fetchingAvailableTimes, id }) => {
   const { t } = useTranslation();
 
   let disabled = true;
   if (date && time && !fetchingAvailableDates && !fetchingAvailableTimes) {
     disabled = false;
   }
-  return <Button
+  return <Button onClick={() => navigate(`/login${id ? `/?id=${id}` : ''}`)}
     className='confirm-button' variant='primary' size='lg' disabled={disabled}>
       {t('Book')}
     </Button>;
 }
 
-const DateTimePicker = ({ booking, onSelectDate, onSelectTime }) => {
+const DateTimePicker = ({ profile, booking, onSelectDate, onSelectTime }) => {
   // TODO: Setup dates and times available properly
   return (
     <DateTimePickerWrapper>
@@ -111,15 +96,15 @@ const DateTimePicker = ({ booking, onSelectDate, onSelectTime }) => {
         :
         <TimePickerWrapper>
           <TimePicker
-            valueGroups={{}/*{ time: '13:00' }*/}
+            valueGroups={{time: availableTimes.length ? availableTimes[0].value : '' }}
             optionGroups={{ time: availableTimes }}
             onSelectTime={onSelectTime} />
         </TimePickerWrapper>
       }
 
-      <div className='action-buttons'>
-        <ConfirmButton {...booking} />
-      </div>
+      <ActionButtons>
+        <ConfirmButton {...booking} id={profile.id} />
+      </ActionButtons>
     </DateTimePickerWrapper>
   )
 }
