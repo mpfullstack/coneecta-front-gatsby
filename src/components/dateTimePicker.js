@@ -7,25 +7,9 @@ import { useTranslation } from 'react-i18next';
 import theme from '../theme';
 import DatePicker from './datePicker/datePicker';
 import TimePicker from './timePicker/timePicker';
+import ActionButtons from '../components/buttons/actionButtons';
 
-const DateTimePickerWrapper = styled.div`
-  .action-buttons {
-    position: fixed;
-    left: 0;
-    width: 100%;
-    bottom: 0;
-    display: flex;
-    align-content: center;
-    align-items: center;
-    flex-direction: row;
-    justify-content: center;
-    .confirm-button {
-      text-transform: uppercase;
-      width: 100%;
-      border-radius: 0;
-    }
-  }
-`;
+const DateTimePickerWrapper = styled.div``;
 
 const DatePickerWrapper = styled.div`
   #container {
@@ -112,15 +96,15 @@ const DateTimePicker = ({ profile, booking, onSelectDate, onSelectTime }) => {
         :
         <TimePickerWrapper>
           <TimePicker
-            valueGroups={{}/*{ time: '13:00' }*/}
+            valueGroups={{time: availableTimes.length ? availableTimes[0].value : '' }}
             optionGroups={{ time: availableTimes }}
             onSelectTime={onSelectTime} />
         </TimePickerWrapper>
       }
 
-      <div className='action-buttons'>
+      <ActionButtons>
         <ConfirmButton {...booking} id={profile.id} />
-      </div>
+      </ActionButtons>
     </DateTimePickerWrapper>
   )
 }
