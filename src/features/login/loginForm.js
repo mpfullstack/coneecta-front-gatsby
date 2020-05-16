@@ -43,7 +43,7 @@ export default ({ onSubmit, formData }) => {
 
   return (
     <FormWrapper>
-      <Form noValidated validated={!formState.isPristine()} onSubmit={handleSubmit}>
+      <Form validated={!formState.isPristine()} onSubmit={handleSubmit}>
         <Form.Row>
           <Form.Group as={Col} md='4' controlId='email'>
             <Form.Label>E-mail</Form.Label>
