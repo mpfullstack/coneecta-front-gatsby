@@ -26,7 +26,8 @@ export const ProfessionalProfile = ({ profile, loadProfile, location, booking })
   useEffect(() => {
     const params = Query.getParams(location);
     if (params.id) {
-      loadProfile(params.id);
+      loadProfile({id: params.id, sid: params.sid});
+
     } else {
       // TODO: Handle if no professional id is present in URL
     }
