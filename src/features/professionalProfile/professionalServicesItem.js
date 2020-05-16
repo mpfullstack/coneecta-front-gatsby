@@ -21,7 +21,7 @@ const ProfessionalServicesListItem = styled.div`
       color: ${theme.textCardHeaderColor};
     }
     .card-body {
-      padding: 6px 10px;
+      padding: 6px 0px;
     }
   }
 `;
