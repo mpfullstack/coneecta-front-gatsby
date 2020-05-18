@@ -5,6 +5,9 @@ import createSagaMiddleware from 'redux-saga';
 import rootReducer from './reducers';
 import rootSaga from './sagas';
 
+import { persistStore, persistReducer } from 'redux-persist'
+import storage from 'redux-persist/lib/storage' // defaults to localStorage for web
+
 const devMode = process.env.NODE_ENV === 'development';
 
 const sagaMiddleware = createSagaMiddleware();
@@ -15,9 +18,14 @@ if (devMode) {
   middleware.push(logger);
 }
 
+const persistConfig = {
+  key: 'root',
+  storage
+}
+
 const createStore = (preloadedState = {}) => {
   const store = configureStore({
-    reducer: rootReducer,
+    reducer: persistReducer(persistConfig, rootReducer),
     devTools: devMode, // NOTE: Only for dev purpose
     middleware
     // preloadedState
@@ -26,30 +34,9 @@ const createStore = (preloadedState = {}) => {
   return store;
 };
 
-// const _state = {
-//   "profile": {
-//     "collapseProfileHeader": true,
-//     "details": {
-//       "name": "Isabela Reinket",
-//       "profilePic": "/img/profile1.png"
-//     },
-//     "services": [
-//       {
-//         "id": 1,
-//         "name": "Lectura del tarot"
-//       },
-//       {
-//         "id": 2,
-//         "name": "Sesion personalizada"
-//       },
-//       {
-//         "id": 3,
-//         "name": "Analisis astrologico"
-//       }
-//     ]
-//   }
-// };
-
 const store = createStore();
+const persistor = persistStore(store);
+
+export { persistor };
 
 export default store;

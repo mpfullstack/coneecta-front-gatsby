@@ -43,6 +43,7 @@ const TimePickerWrapper = styled.div`
       .picker-item {
         &:first-child {
           font-size: 16px;
+
         }
         &.picker-item-selected {
           color: rgb(55, 78, 140);
