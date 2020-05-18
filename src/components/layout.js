@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { useStaticQuery, graphql } from 'gatsby';
+import { useTranslation } from 'react-i18next';
 import Header from './header';
 import styled, { ThemeProvider } from 'styled-components';
 import theme from '../theme';
@@ -49,6 +50,8 @@ const mapStateToProps = state => {
 }
 
 const Layout = ({ children, global }) => {
+  const { t } = useTranslation();
+
   const data = useStaticQuery(graphql`
     query SiteTitleQuery {
       site {
@@ -71,7 +74,7 @@ const Layout = ({ children, global }) => {
   if (global.apiError) {
     alert = <Modal>
       <Alert variant={'danger'}>
-        {global.apiError.name}
+        {t(global.apiError)}
       </Alert>
     </Modal>
   }
