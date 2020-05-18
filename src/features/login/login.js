@@ -1,17 +1,10 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { loadProfile } from './professionalProfileSlice';
+import { loadProfile } from '../professionalProfile/professionalProfileSlice';
 import Query from '../../helpers/query';
-import { Container, Row, Col } from 'react-bootstrap';
 import ProfileHeader from '../../components/professionalProfile/profileHeader';
-import ProfessionalProfileSection from './professionalProfileSection';
-
-// https://github.com/buildo/react-placeholder
-// https://github.com/dvtng/react-loading-skeleton
-
-
-// Stars rating component
-// https://www.npmjs.com/package/react-star-rating-component
+import { Container, Row, Col } from 'react-bootstrap';
+import LoginForm from './loginForm';
 
 const mapDispatchToProps = { loadProfile };
 const mapStateToProps = state => {
@@ -24,23 +17,25 @@ const mapStateToProps = state => {
 
 export const ProfessionalProfile = ({ profile, loadProfile, location, booking }) => {
   useEffect(() => {
-    const params = Query.getParams(location);
-    if (params.id) {
-      loadProfile({id: params.id, sid: params.sid});
-
-    } else {
-      // TODO: Handle if no professional id is present in URL
+    if (!profile.id) {
+      const params = Query.getParams(location);
+      if (params.id) {
+        loadProfile(params.id);
+      }
     }
-  }, [loadProfile, location]);
+  }, [loadProfile, location, profile.id]);
 
   const profileDetails = profile.details || {};
 
   return (
     <Container>
-      <ProfileHeader id={profile.id} {...profileDetails} collapse={profile.collapseProfileHeader} />
+      {profile.id ?
+        <ProfileHeader id={profile.id} {...profileDetails} collapse={true} />
+        : null}
       <Row className='justify-content-md-center'>
         <Col xs='12' md='10'>
-          <ProfessionalProfileSection />
+          <p>Login</p>
+          <LoginForm />
         </Col>
       </Row>
     </Container>
