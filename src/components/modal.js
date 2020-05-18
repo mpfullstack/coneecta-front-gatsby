@@ -1,5 +1,15 @@
+import React from 'react';
 import ReactDOM from 'react-dom';
 import { useEffect } from 'react';
+import styled from 'styled-components';
+
+const ModalWrapper = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  text-align: center;
+`;
 
 export default ({ children }) => {
   const el = document.createElement('div');
@@ -15,5 +25,6 @@ export default ({ children }) => {
     [el]
   );
 
-  return ReactDOM.createPortal(children, el);
+
+  return ReactDOM.createPortal(<ModalWrapper>{children}</ModalWrapper>, el);
 }
