@@ -14,12 +14,11 @@ const handleFetchResponse = (response, customHandle) => {
     return new Promise((resolve, reject) => {
       resolve(response.json());
     })
-    .then(({name = '', description = ''}) => {
+    .then(({ code }) => {
       return {
         status: response.status,
         error: {
-          name,
-          description
+          code
         }
       };
     })
@@ -27,8 +26,7 @@ const handleFetchResponse = (response, customHandle) => {
       return {
         status: response.status,
         error: {
-          name: 'unexpectedError',
-          description: error
+          code: 'unexpectedError'
         }
       };
     });
