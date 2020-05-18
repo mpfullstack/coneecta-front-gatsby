@@ -40,9 +40,17 @@ const TimePickerWrapper = styled.div`
     margin: 0 auto;
 
     .picker-column {
-        .picker-item.picker-item-selected {
-        color: rgb(55, 78, 140);
-        font-weight: bold;
+      .picker-item {
+        &:first-child {
+          font-size: 16px;
+        }
+        &.picker-item-selected {
+          color: rgb(55, 78, 140);
+          font-weight: bold;
+        }
+        &.picker-item-selected:first-child {
+          font-weight: normal;
+        }
       }
     }
 
@@ -51,16 +59,6 @@ const TimePickerWrapper = styled.div`
     }
   }
 `;
-
-const availableTimes = [
-  { value: '12:00', label: '12:00' },
-  { value: '12:30', label: '12:30' },
-  { value: '13:00', label: '13:00' },
-  { value: '13:30', label: '13:30' },
-  { value: '14:00', label: '14:00' },
-  { value: '14:30', label: '14:30' },
-  { value: '15:00', label: '15:00' }
-];
 
 const ConfirmButton = ({ date, time, fetchingAvailableDates, fetchingAvailableTimes, id }) => {
   const { t } = useTranslation();
@@ -76,6 +74,19 @@ const ConfirmButton = ({ date, time, fetchingAvailableDates, fetchingAvailableTi
 }
 
 const DateTimePicker = ({ profile, booking, onSelectDate, onSelectTime }) => {
+  const { t } = useTranslation();
+
+  const availableTimes = [
+    { value: null, label: t('Select the time') },
+    { value: '12:00', label: '12:00' },
+    { value: '12:30', label: '12:30' },
+    { value: '13:00', label: '13:00' },
+    { value: '13:30', label: '13:30' },
+    { value: '14:00', label: '14:00' },
+    { value: '14:30', label: '14:30' },
+    { value: '15:00', label: '15:00' }
+  ];
+
   // TODO: Setup dates and times available properly
   return (
     <DateTimePickerWrapper>
