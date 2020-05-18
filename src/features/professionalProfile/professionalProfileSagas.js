@@ -8,8 +8,8 @@ function* onLoadProfile() {
   yield takeLatest(loadProfile, function* ({ payload }) {
     const result = yield call(api.getProfessionalProfile, payload.id);
     if (result.error) {
-      yield put(showApiError(result.error));
-      yield delay(5000);
+      yield put(showApiError(result.error.code));
+      yield delay(7000);
       yield put(hideApiError());
     } else {
       if (payload.sid) {
