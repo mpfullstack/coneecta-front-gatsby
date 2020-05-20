@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link } from 'gatsby';
 import { Row, Col } from 'react-bootstrap';
-import styled from 'styled-components';
+import styled, { withTheme } from 'styled-components';
 import { Animated } from 'react-animated-css';
-import Skeleton from 'react-loading-skeleton';
+import Skeleton from '../skeleton';
 import ImageSkeleton from '../imageSkeleton';
 import ProfileImgWrapper from './profileImgWrapper.styles';
 import Rating from '../rating';
@@ -82,4 +82,4 @@ const ProfileHeader = ({ id, name, avatar, rating, collapse }) => {
   );
 }
 
-export default ProfileHeader;
+export default withTheme(ProfileHeader);

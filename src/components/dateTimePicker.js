@@ -1,9 +1,9 @@
 import React from 'react'
 import { navigate } from 'gatsby';
 import styled from 'styled-components';
-import Skeleton from 'react-loading-skeleton';
 import { Button } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
+import Skeleton from '../components/skeleton';
 import theme from '../theme';
 import DatePicker from './datePicker/datePicker';
 import TimePicker from './timePicker/timePicker';
@@ -46,7 +46,7 @@ const TimePickerWrapper = styled.div`
 
         }
         &.picker-item-selected {
-          color: rgb(55, 78, 140);
+          color: ${theme.dateTimePickerColor};
           font-weight: bold;
         }
         &.picker-item-selected:first-child {
@@ -56,7 +56,7 @@ const TimePickerWrapper = styled.div`
     }
 
     .picker-highlight:after, .picker-highlight:before {
-      background-color: rgb(55, 78, 140);
+      background-color: ${theme.dateTimePickerColor};
     }
   }
 `;

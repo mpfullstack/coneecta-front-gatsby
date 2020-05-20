@@ -14,6 +14,10 @@ const HeaderWrapper = styled.header`
     width: 100%;
     display: flex;
     align-items: center;
+    justify-content: center;
+    .title-logo {
+      margin-top: 5px;
+    }
   }
 `;
 
@@ -22,7 +26,7 @@ const Header = ({ siteTitle }) => (
     <div className='header-inner'>
       <Container>
         <Row className='justify-content-center text-center'>
-          <Col xs='12'>
+          <Col xs='12' className='title-logo'>
             <h1 style={{ margin: 0 }}>
               <a target='_blank' href='https://coneecta.com/' rel='noreferrer noopener'>
                 <Logo />

@@ -1,5 +1,5 @@
 import React from 'react';
-import Skeleton from 'react-loading-skeleton';
+import Skeleton from '../components/skeleton';
 import ImageLoader from './imageLoader';
 
 export default ({ url, circle = false, width, height }) => {

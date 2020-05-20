@@ -3,15 +3,21 @@ import theme from 'styled-theming';
 // Colors
 // ------------------------------------------------------
 const COLORS = {
-  primary: '#374e8c',
+  fuchsia: '#ff1f54',
+  darkBlue: '#003855',
+  blue: '#499db4',
+  lightBlue: '#c8f6ee',
+  superLightBlue: '#e9f9f6',
   superDarkGrey: '#222222',
   darkGrey: '#444444',
   mediumGrey: '#737373',
-  lightGrey: '#bbbbbb',
   superLightGrey: '#f9f9f9',
-  purple: '#eeeefc',
-  green: '#e8f5e0'
+  lightGrey: '#bbbbbb'
 }
+
+COLORS.primary = COLORS.darkBlue;
+COLORS.secondary = COLORS.superLightBlue;
+COLORS.titles = COLORS.fuchsia;
 
 // Sizes
 // Ref. https://mediag.com/blog/popular-screen-resolutions-designing-for-all/
@@ -27,53 +33,63 @@ const SIZES = {
 // Theme definitions
 // ------------------------------------------------------
 const textColor = theme('mode', {
-  light: COLORS.darkGrey,
-  dark: COLORS.lightGrey
+  light: COLORS.primary,
+  dark: COLORS.secondary
 });
 
 const backgroundColor = theme('mode', {
-  light: COLORS.superLightGrey,
-  dark: COLORS.superDarkGrey
+  light: COLORS.secondary,
+  dark: COLORS.primary
 });
 
 const backgroundHeaderColor = theme('mode', {
-  light: COLORS.superLightGrey,
-  dark: COLORS.superDarkGrey
+  light: COLORS.secondary,
+  dark: COLORS.primary
 });
 
 const backgroundCardHeaderColor = theme('mode', {
   light: COLORS.primary,
-  dark: COLORS.lightGrey
+  dark: COLORS.secondary
 });
 
 const textCardHeaderColor = theme('mode', {
-  light: COLORS.superLightGrey,
-  dark: COLORS.superDarkGrey
+  light: COLORS.secondary,
+  dark: COLORS.primary
 });
 
 const borderCardColor = theme('mode', {
-  light: '#eee',
-  dark: COLORS.superDarkGrey
+  light: COLORS.lightBlue,
+  dark: COLORS.darkBlue
 });
 
 const dateTimePickerColor = theme('mode', {
   light: COLORS.primary,
-  dark: COLORS.superDarkGrey
+  dark: COLORS.lightBlue
 });
 
 const dateTimePickerSelectedTextColor = theme('mode', {
-  light: '#fff',
-  dark: COLORS.superDarkGrey
+  light: COLORS.lightBlue,
+  dark: COLORS.primary
 });
 
 const primaryButtonColor = theme('mode', {
   light: COLORS.primary,
-  dark: COLORS.superDarkGrey
+  dark: COLORS.fuchsia
 });
 
 const primaryButtonTextColor = theme('mode', {
-  light: '#fff',
-  dark: COLORS.superDarkGrey
+  light: COLORS.lightBlue,
+  dark: COLORS.primary
+});
+
+const skeletonColor = theme('mode', {
+  light: COLORS.lightBlue,
+  dark: COLORS.primary
+});
+
+const skeletonHighlightColor = theme('mode', {
+  light: COLORS.superLightBlue,
+  dark: COLORS.superLightBlue
 });
 
 // Transitions
@@ -94,6 +110,8 @@ export default {
   dateTimePickerSelectedTextColor,
   primaryButtonColor,
   primaryButtonTextColor,
+  skeletonColor,
+  skeletonHighlightColor,
   // Constants
   COLORS,
   SIZES,
