@@ -12,11 +12,13 @@ const COLORS = {
   darkGrey: '#444444',
   mediumGrey: '#737373',
   superLightGrey: '#f9f9f9',
-  lightGrey: '#bbbbbb'
+  lightGrey: '#bbbbbb',
+  superLightPearl: '#fffcf3',
+  lightPearl: '#f9f5e8'
 }
 
-COLORS.primary = COLORS.darkBlue;
-COLORS.secondary = COLORS.superLightBlue;
+COLORS.primary = COLORS.fuchsia;
+COLORS.secondary = COLORS.superLightPearl;
 COLORS.titles = COLORS.fuchsia;
 
 // Sizes
@@ -83,12 +85,12 @@ const primaryButtonTextColor = theme('mode', {
 });
 
 const skeletonColor = theme('mode', {
-  light: COLORS.lightBlue,
+  light: COLORS.lightPearl,
   dark: COLORS.primary
 });
 
 const skeletonHighlightColor = theme('mode', {
-  light: COLORS.superLightBlue,
+  light: COLORS.superLightPearl,
   dark: COLORS.superLightBlue
 });
 
