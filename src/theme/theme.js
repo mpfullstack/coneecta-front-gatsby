@@ -6,7 +6,7 @@ const COLORS = {
   fuchsia: '#ff1f54',
   darkBlue: '#003855',
   blue: '#499db4',
-  lightBlue: '#c8f6ee',
+  lightBlue: '#d7f1ec',
   superLightBlue: '#e9f9f6',
   superDarkGrey: '#222222',
   darkGrey: '#444444',
