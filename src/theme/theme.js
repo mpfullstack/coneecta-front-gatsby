@@ -70,7 +70,7 @@ const dateTimePickerColor = theme('mode', {
 });
 
 const dateTimePickerSelectedTextColor = theme('mode', {
-  light: COLORS.lightBlue,
+  light: COLORS.secondary,
   dark: COLORS.primary
 });
 
@@ -80,7 +80,7 @@ const primaryButtonColor = theme('mode', {
 });
 
 const primaryButtonTextColor = theme('mode', {
-  light: COLORS.lightBlue,
+  light: COLORS.secondary,
   dark: COLORS.primary
 });
 
