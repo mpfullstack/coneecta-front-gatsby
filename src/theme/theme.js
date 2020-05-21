@@ -17,9 +17,9 @@ const COLORS = {
   lightPearl: '#f9f5e8'
 }
 
-COLORS.primary = COLORS.fuchsia;
+COLORS.primary = COLORS.darkBlue;
 COLORS.secondary = COLORS.superLightPearl;
-COLORS.titles = COLORS.fuchsia;
+COLORS.tertiary = COLORS.fuchsia;
 
 // Sizes
 // Ref. https://mediag.com/blog/popular-screen-resolutions-designing-for-all/
@@ -60,12 +60,12 @@ const textCardHeaderColor = theme('mode', {
 });
 
 const borderCardColor = theme('mode', {
-  light: COLORS.lightBlue,
+  light: COLORS.lightPearl,
   dark: COLORS.darkBlue
 });
 
 const dateTimePickerColor = theme('mode', {
-  light: COLORS.primary,
+  light: COLORS.tertiary,
   dark: COLORS.lightBlue
 });
 
@@ -75,8 +75,8 @@ const dateTimePickerSelectedTextColor = theme('mode', {
 });
 
 const primaryButtonColor = theme('mode', {
-  light: COLORS.primary,
-  dark: COLORS.fuchsia
+  light: COLORS.tertiary,
+  dark: COLORS.secondary
 });
 
 const primaryButtonTextColor = theme('mode', {
