@@ -29,7 +29,7 @@ const bookingSlice = createSlice({
     selectDate: (state, action) => {
       state.date = action.payload;
       state.fetchingAvailableTimes = true;
-      state.time = '';
+      // state.time = '';
     },
     initAvailableTimes: (state, action) => {
       state.availableTimes = action.payload;

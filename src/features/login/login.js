@@ -5,6 +5,7 @@ import Query from '../../helpers/query';
 import ProfileHeader from '../../components/professionalProfile/profileHeader';
 import { Container, Row, Col } from 'react-bootstrap';
 import LoginForm from './loginForm';
+import Booking from '../booking';
 
 const mapDispatchToProps = { loadProfile };
 const mapStateToProps = state => {
@@ -20,7 +21,7 @@ export const ProfessionalProfile = ({ profile, loadProfile, location, booking })
     if (!profile.id) {
       const params = Query.getParams(location);
       if (params.id) {
-        loadProfile(params.id);
+        loadProfile({id: params.id});
       }
     }
   }, [loadProfile, location, profile.id]);
@@ -34,7 +35,7 @@ export const ProfessionalProfile = ({ profile, loadProfile, location, booking })
         : null}
       <Row className='justify-content-md-center'>
         <Col xs='12' md='10'>
-          <p>Login</p>
+          <Booking />
           <LoginForm />
         </Col>
       </Row>

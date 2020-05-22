@@ -27,7 +27,6 @@ export const ProfessionalProfile = ({ profile, loadProfile, collapseProfileHeade
     const params = Query.getParams(location);
     if (params.id) {
       loadProfile({id: params.id, sid: params.sid});
-
     } else {
       // TODO: Handle if no professional id is present in URL
     }
