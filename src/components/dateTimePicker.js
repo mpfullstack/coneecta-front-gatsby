@@ -102,6 +102,16 @@ const DateTimePicker = ({ profile, booking, onSelectDate, onSelectTime }) => {
     { value: '15:00', label: '15:00' }
   ];
 
+  function getSelectedTime() {
+    if (booking.time) {
+      return booking.time;
+    } else if (availableTimes.length ) {
+      return availableTimes[0].value;
+    } else {
+      return '';
+    }
+  }
+
   // TODO: Setup dates and times available properly
   return (
     <DateTimePickerWrapper>
@@ -122,7 +132,7 @@ const DateTimePicker = ({ profile, booking, onSelectDate, onSelectTime }) => {
         :
         <TimePickerWrapper>
           <TimePicker
-            valueGroups={{time: availableTimes.length ? availableTimes[0].value : '' }}
+            valueGroups={{time: getSelectedTime() }}
             optionGroups={{ time: availableTimes }}
             onSelectTime={onSelectTime} />
         </TimePickerWrapper>
