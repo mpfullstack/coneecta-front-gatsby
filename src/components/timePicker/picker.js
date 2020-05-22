@@ -225,7 +225,6 @@ export default class Picker extends Component {
     };
     const columnNodes = [];
     for (let name in optionGroups) {
-      debugger;
       columnNodes.push(
         <PickerColumn
           key={name}
