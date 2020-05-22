@@ -29,7 +29,7 @@ const DatePickerWrapper = styled.div`
   }
 
   .svg-inline--fa {
-    color: ${theme.dateTimePickerColor};
+    color: ${theme.dateTimePickerButtonsColor};
     font-size: 32px;
   }
 `;

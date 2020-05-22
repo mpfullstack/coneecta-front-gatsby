@@ -65,6 +65,11 @@ const borderCardColor = theme('mode', {
 });
 
 const dateTimePickerColor = theme('mode', {
+  light: COLORS.primary,
+  dark: COLORS.lightBlue
+});
+
+const dateTimePickerButtonsColor = theme('mode', {
   light: COLORS.tertiary,
   dark: COLORS.lightBlue
 });
@@ -109,6 +114,7 @@ export default {
   borderCardColor,
   textCardHeaderColor,
   dateTimePickerColor,
+  dateTimePickerButtonsColor,
   dateTimePickerSelectedTextColor,
   primaryButtonColor,
   primaryButtonTextColor,
