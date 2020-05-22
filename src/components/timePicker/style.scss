@@ -17,6 +17,35 @@
 
     font-size: 1.2em;
     -webkit-mask-box-image: linear-gradient(to top, transparent, transparent 5%, white 20%, white 80%, transparent 95%, transparent);
+
+    .picker-buttons {
+      position: relative;
+      right: 20%;
+      z-index: -1;
+      .button {
+        border: none;
+        text-decoration: none;
+        cursor: pointer;
+        font-weight: bold;
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+        background-color: transparent;
+        .svg-inline--fa {
+          font-size: 32px;
+        }
+      }
+      .previous-button-container {
+        position: absolute;
+        top: 7%;
+      }
+      .next-button-container {
+        position: absolute;
+        bottom: 7%;
+      }
+    }
   }
 
   .picker-column {

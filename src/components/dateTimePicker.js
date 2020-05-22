@@ -67,6 +67,11 @@ const TimePickerWrapper = styled.div`
     .picker-highlight:after, .picker-highlight:before {
       background-color: ${theme.dateTimePickerColor};
     }
+
+    .svg-inline--fa {
+      color: ${theme.dateTimePickerButtonsColor};
+      font-size: 32px;
+    }
   }
 `;
 

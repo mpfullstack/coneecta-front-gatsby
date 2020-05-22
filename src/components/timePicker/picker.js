@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
+import { ArrowUp, ArrowDown } from '../../components/icons';
 import './style.scss';
 
 class PickerColumn extends Component {
@@ -151,7 +152,16 @@ class PickerColumn extends Component {
     });
   }
 
+  goNext() {
+
+  }
+
+  goPrevious() {
+
+  }
+
   render() {
+    const {options, value} = this.props;
     const translateString = `translate3d(0, ${this.state.scrollerTranslate}px, 0)`;
     const style = {
       MsTransform: translateString,
@@ -164,17 +174,31 @@ class PickerColumn extends Component {
       style.transitionDuration = '0ms';
     }
     return(
-      <div className="picker-column">
-        <div
-          className="picker-scroller"
-          style={style}
-          onTouchStart={this.handleTouchStart}
-          onTouchMove={this.handleTouchMove}
-          onTouchEnd={this.handleTouchEnd}
-          onTouchCancel={this.handleTouchCancel}>
-          {this.renderItems()}
+      <>
+        <div className="picker-column">
+          <div
+            className="picker-scroller"
+            style={style}
+            onTouchStart={this.handleTouchStart}
+            onTouchMove={this.handleTouchMove}
+            onTouchEnd={this.handleTouchEnd}
+            onTouchCancel={this.handleTouchCancel}>
+            {this.renderItems()}
+          </div>
         </div>
-      </div>
+        <div className="picker-buttons">
+          <div className='previous-button-container'>
+            <button className="button" onClick={() => this.goPrevious()}>
+              <ArrowUp />
+            </button>
+          </div>
+          <div className='next-button-container'>
+            <button className="button" onClick={() => this.goNext()}>
+              <ArrowDown />
+            </button>
+          </div>
+        </div>
+      </>
     )
   }
 }
@@ -201,6 +225,7 @@ export default class Picker extends Component {
     };
     const columnNodes = [];
     for (let name in optionGroups) {
+      debugger;
       columnNodes.push(
         <PickerColumn
           key={name}
