@@ -8,21 +8,23 @@ import { Modality } from './serviceModalities';
 
 const ServiceCardWrapper = styled.div`
   .card {
-    margin: 10px 0 15px;
+    margin: 10px 0 10px;
     border: none;
     .card-header {
       padding: 5px;
-      background-color: ${theme.backgroundCardHeaderColor};
-      color: ${theme.textCardHeaderColor};
+      background-color: ${theme.backgroundServiceCardHeaderColor};
+      color: ${theme.textServiceCardHeaderColor};
       .card-title {
         text-align: center;
         font-size: 18px;
         margin-bottom: 0;
+        font-weight: 700;
       }
       .fa-edit {
         position: absolute;
         top: 7px;
         right: 6px;
+        color: ${theme.iconColor};
       }
     }
     .card-body {

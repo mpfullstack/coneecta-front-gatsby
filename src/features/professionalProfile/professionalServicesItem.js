@@ -19,6 +19,7 @@ const ProfessionalServicesListItem = styled.div`
       border-radius: 5px;
       background-color: ${theme.backgroundCardHeaderColor};
       color: ${theme.textCardHeaderColor};
+      font-weight: 700;
     }
     .card-body {
       padding: 6px 0px;

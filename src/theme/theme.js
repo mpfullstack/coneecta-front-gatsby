@@ -6,21 +6,23 @@ const COLORS = {
   fuchsia: '#ff1f54',
   darkBlue: '#003855',
   blue: '#499db4',
-  lightBlue: '#d7f1ec',
+  lightBlue: '#00385525',
   superLightBlue: '#e9f9f6',
   superDarkGrey: '#222222',
   darkGrey: '#444444',
   mediumGrey: '#737373',
   superLightGrey: '#f9f9f9',
   lightGrey: '#bbbbbb',
+  pearl: '#f1e9cd',
   superLightPearl: '#fffcf3',
-  lightPearl: '#f9f5e8'
+  lightPearl: '#f6f2e3'
 }
 
 COLORS.primary = COLORS.darkBlue;
 COLORS.secondary = COLORS.superLightPearl;
 COLORS.tertiary = COLORS.fuchsia;
 COLORS.quaternary = COLORS.lightPearl;
+COLORS.quinary = COLORS.pearl;
 
 // Sizes
 // Ref. https://mediag.com/blog/popular-screen-resolutions-designing-for-all/
@@ -57,6 +59,21 @@ const backgroundCardHeaderColor = theme('mode', {
 
 const textCardHeaderColor = theme('mode', {
   light: COLORS.secondary,
+  dark: COLORS.primary
+});
+
+const backgroundServiceCardHeaderColor = theme('mode', {
+  light: COLORS.lightBlue,
+  dark: COLORS.secondary
+});
+
+const textServiceCardHeaderColor = theme('mode', {
+  light: COLORS.primary,
+  dark: COLORS.primary
+});
+
+const iconColor = theme('mode', {
+  light: COLORS.tertiary,
   dark: COLORS.primary
 });
 
@@ -118,14 +135,17 @@ export default {
   backgroundColor,
   backgroundHeaderColor,
   backgroundCardHeaderColor,
-  borderCardColor,
   textCardHeaderColor,
+  backgroundServiceCardHeaderColor,
+  textServiceCardHeaderColor,
+  borderCardColor,
   dateTimePickerColor,
   dateTimePickerBackgroundColor,
   dateTimePickerButtonsColor,
   dateTimePickerSelectedTextColor,
   primaryButtonColor,
   primaryButtonTextColor,
+  iconColor,
   skeletonColor,
   skeletonHighlightColor,
   // Constants
