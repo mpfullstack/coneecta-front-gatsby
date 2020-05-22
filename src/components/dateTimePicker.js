@@ -12,6 +12,11 @@ import ActionButtons from '../components/buttons/actionButtons';
 const DateTimePickerWrapper = styled.div``;
 
 const DatePickerWrapper = styled.div`
+  border: 1px solid ${theme.dateTimePickerBackgroundColor};
+  border-radius: 5px;
+  background-color: ${theme.dateTimePickerBackgroundColor};
+  margin-bottom: 6px;
+
   #container {
     padding-bottom: 20px;
   }
@@ -35,6 +40,10 @@ const DatePickerWrapper = styled.div`
 `;
 
 const TimePickerWrapper = styled.div`
+  border: 1px solid ${theme.dateTimePickerBackgroundColor};
+  border-radius: 5px;
+  background-color: ${theme.dateTimePickerBackgroundColor};
+
   .picker-container {
     width: 94%;
     margin: 0 auto;
@@ -104,7 +113,7 @@ const DateTimePicker = ({ profile, booking, onSelectDate, onSelectTime }) => {
       }
 
       {booking.fetchingAvailableTimes ?
-        <Skeleton height={95} count={1} />
+        <Skeleton height={110} count={1} />
         :
         <TimePickerWrapper>
           <TimePicker

@@ -8,6 +8,7 @@ import { Container, Row, Col } from 'react-bootstrap';
 const HeaderWrapper = styled.header`
   width: 100%;
   background-color: ${theme.backgroundHeaderColor};
+  height: 48px;
   .header-inner {
     margin: 0 auto;
     max-width: ${theme.SIZES.maxWidth};

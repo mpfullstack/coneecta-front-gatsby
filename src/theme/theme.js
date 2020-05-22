@@ -20,6 +20,7 @@ const COLORS = {
 COLORS.primary = COLORS.darkBlue;
 COLORS.secondary = COLORS.superLightPearl;
 COLORS.tertiary = COLORS.fuchsia;
+COLORS.quaternary = COLORS.lightPearl;
 
 // Sizes
 // Ref. https://mediag.com/blog/popular-screen-resolutions-designing-for-all/
@@ -69,6 +70,12 @@ const dateTimePickerColor = theme('mode', {
   dark: COLORS.lightBlue
 });
 
+const dateTimePickerBackgroundColor = theme('mode', {
+  light: COLORS.quaternary,
+  dark: COLORS.lightBlue
+});
+
+
 const dateTimePickerButtonsColor = theme('mode', {
   light: COLORS.tertiary,
   dark: COLORS.lightBlue
@@ -114,6 +121,7 @@ export default {
   borderCardColor,
   textCardHeaderColor,
   dateTimePickerColor,
+  dateTimePickerBackgroundColor,
   dateTimePickerButtonsColor,
   dateTimePickerSelectedTextColor,
   primaryButtonColor,

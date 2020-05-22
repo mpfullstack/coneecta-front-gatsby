@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'gatsby';
 import { Row, Col } from 'react-bootstrap';
-import styled, { withTheme } from 'styled-components';
+import styled from 'styled-components';
 import { Animated } from 'react-animated-css';
 import Skeleton from '../skeleton';
 import ImageSkeleton from '../imageSkeleton';
@@ -17,22 +17,23 @@ const ProfileHeaderWrapper = styled.div`
     }
   }
   .profile-image {
-    margin-top: 10px;
+    margin-top: 11px;
   }
   .name {
     font-size: 26px;
     text-transform: uppercase;
-    margin: 10px 0 0 0;
-    transition: all 0.9s ease .6s;
+    margin: 14px 0 0 0;
+    transition: padding-left 0.9s ease .6s;
     &.collapse-name {
-      padding-left: 70px;
+      padding-left: 55px;
+      font-size: 22px;
     }
   }
 `;
 
-const ProfileHeader = ({ id, name, avatar, rating, collapse }) => {
+const ProfileHeader = ({ id, name, avatar, rating, collapse, collapseProfileHeader }) => {
   return (
-    <AnimateHeight delay={0} duration={ 500 } height={collapse ? 90 : 240}>
+    <AnimateHeight delay={0} duration={ 500 } height={collapse ? 87 : 240}>
       <ProfileHeaderWrapper>
         {/*
         * Profile image
@@ -40,7 +41,7 @@ const ProfileHeader = ({ id, name, avatar, rating, collapse }) => {
         <Row className={!collapse ? 'justify-content-md-center text-center' : 'collapse-image'}>
           <Col xs='12' md='10'>
             <ProfileImgWrapper>
-              <AnimateHeight delay={0} duration={ 500 } height={collapse ? 32 : 150}>
+              <AnimateHeight delay={0} duration={ 500 } height={collapse ? 1 : 150}>
                 {collapse ?
                   <Animated className='profile-image' key="1" animateOnMount={true} animationIn='fadeInLeft' animationInDelay={500}>
                     <ImageSkeleton url={avatar} circle={true} width={65} height={65} />
@@ -56,22 +57,23 @@ const ProfileHeader = ({ id, name, avatar, rating, collapse }) => {
         {/*
         * Profile name and rating component
         * --------------------------------------------------------------- */}
-        <Row className='justify-content-md-center text-center'>
+        <Row className={`justify-content-md-center text-center${collapse ?  ' collapsed' : ''}`}>
           <Col xs='12' md='10'>
             <Link to={`/professional/?id=${id}`}>
               <h2 className={`name${collapse ? ' collapse-name' : ''}`}>{name || <Skeleton height={32} width={200} />}</h2>
             </Link>
             {rating ?
-              <AnimateHeight delay={0} duration={500} height={collapse ? 0 : 'auto'}>
-                <Animated animateOnMount={false} animationOut='fadeOutRight' isVisible={!collapse} animationOutDelay={0}>
+              <AnimateHeight delay={0} duration={500} height={collapse ? 32 : 'auto'}>
+                {/* <Animated animateOnMount={false} animationOut='fadeOutRight' isVisible={!collapse} animationOutDelay={0}> */}
                   <Link to={`/professional-reviews/?id=${id}`}>
                     <Rating
                       name={'rating'}
                       value={rating}
                       starCount={5}
+                      size={collapse ? 22 : undefined}
                       editing={false} />
                   </Link>
-                </Animated>
+                {/* </Animated> */}
               </AnimateHeight>
               : <Skeleton height={24} width={110} />
             }
@@ -82,4 +84,4 @@ const ProfileHeader = ({ id, name, avatar, rating, collapse }) => {
   );
 }
 
-export default withTheme(ProfileHeader);
+export default ProfileHeader;

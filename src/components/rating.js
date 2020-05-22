@@ -4,14 +4,15 @@ import styled from 'styled-components';
 
 const StartRatingComponentWrapper = styled.div`
   label {
-    font-size: 26px;
+    font-size: ${props => `${props.size}px`};
     margin-bottom: 0;
   }
+
 `;
 
-const Rating = ({ name, value, starCount, editing }) => {
+const Rating = ({ name, value, starCount, editing, size = 26 }) => {
   return (
-    <StartRatingComponentWrapper>
+    <StartRatingComponentWrapper size={size}>
       <StarRatingComponent
         name={name} /* name of the radio input, it is required */
         value={value} /* number of selected icon (`0` - none, `1` - first) */
