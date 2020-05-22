@@ -47,6 +47,26 @@ api.getProfessionalProfile = jest.fn().mockImplementation(() => Promise.resolve(
           "credits_in_euros": "12,30"
         }
       ]
+    },
+    {
+      "id": 2,
+      "name": "Psicologia",
+      "modalities": [
+        {
+          "id": 2,
+          "type": "audioconference",
+          "duration": 45,
+          "credits": 123,
+          "credits_in_euros": "12,30"
+        },
+        {
+          "id": 3,
+          "type": "onsite",
+          "duration": 30,
+          "credits": 123,
+          "credits_in_euros": "12,30"
+        }
+      ]
     }
   ]
 }));
@@ -63,22 +83,26 @@ describe('My Connected React-Redux Component', () => {
   });
 
   test('Renders professional profile details', async () => {
-    const { getByText, findByText } = render(component);
+    const { findByText } = render(component);
 
     expect(await findByText("Isabela Reinket")).toBeInTheDocument();
     expect(await findByText("Lectura del tarot")).toBeInTheDocument();
   });
 
   test('Show professional profile service details on click', async () => {
-    const { getByText } = render(component);
+    const { getByText, findByText } = render(component);
+
+    expect(getByText("Lectura del tarot")).toBeInTheDocument();
 
     fireEvent.click(getByText("Lectura del tarot"));
-    expect(getByText("Escoge la modalidad que prefieras")).toBeInTheDocument();
+
+    expect(getByText(/Escoge la modalidad/i)).toBeInTheDocument();
   });
 
   test('Show date time picker page for selected service modality', async () => {
     const { getByText } = render(component);
 
+    fireEvent.click(getByText("Lectura del tarot"));
     fireEvent.click(getByText("Video conferencia"));
 
     await waitFor(() => {
