@@ -62,7 +62,7 @@ const ProfileHeader = ({ id, name, avatar, rating, collapse, collapseProfileHead
             <Link to={`/professional/?id=${id}`}>
               <h2 className={`name${collapse ? ' collapse-name' : ''}`}>{name || <Skeleton height={32} width={200} />}</h2>
             </Link>
-            {rating ?
+            {!isNaN(parseInt(rating)) ?
               <AnimateHeight delay={0} duration={500} height={collapse ? 32 : 'auto'}>
                 {/* <Animated animateOnMount={false} animationOut='fadeOutRight' isVisible={!collapse} animationOutDelay={0}> */}
                   <Link to={`/professional-reviews/?id=${id}`}>
