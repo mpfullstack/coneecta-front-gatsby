@@ -32,7 +32,7 @@ export const Booking = ({ profile, booking, changeSection }) => {
               <ServiceCard serviceName={service.name}
                 modality={modality}
                 onClick={() => {
-                  changeSection('datePicker');
+                  changeSection('serviceList');
                   navigate(`/professional/?id=${profile.id}`)
                 }} />
               <DateTimeCard
