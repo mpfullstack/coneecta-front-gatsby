@@ -7,7 +7,8 @@
 
   "videoconference": "Video conferencia",
   "audioconference": "Audio conferencia",
-  "onsite": "A domicilio",
+  "online": "Online",
+  "student_home": "A domicilio",
 
   "Book": "Reservar",
 
