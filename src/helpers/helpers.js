@@ -5,6 +5,5 @@ export function capitalise(value) {
 }
 
 export function formatMoney(value) {
-  debugger;
   return numeral(value).format('0.00$');
 }

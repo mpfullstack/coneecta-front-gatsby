@@ -22,15 +22,15 @@ const mapStateToProps = state => {
   }
 }
 
-export const ProfessionalProfile = ({ profile, loadProfile, collapseProfileHeader, location }) => {
+export const ProfessionalProfile = ({ profile, loadProfile, collapseProfileHeader, location, slug }) => {
   useEffect(() => {
     const params = Query.getParams(location);
-    if (params.id) {
-      loadProfile({id: params.id, sid: params.sid});
+    if (slug !== '') {
+      loadProfile({id: slug, sid: params.sid}); // TODO: Get sid from path instead of querystring
     } else {
       // TODO: Handle if no professional id is present in URL
     }
-  }, [loadProfile, location]);
+  }, [loadProfile, location, slug]);
 
   const profileDetails = profile.details || {};
 

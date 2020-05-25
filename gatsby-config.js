@@ -32,7 +32,7 @@ module.exports = {
     },
     {
       resolve: `gatsby-plugin-create-client-paths`,
-      options: { prefixes: [`/profile/*`] },
+      options: { prefixes: [`/profile/*`, `/u/*`] },
     },
     {
       resolve: `gatsby-plugin-prefetch-google-fonts`,

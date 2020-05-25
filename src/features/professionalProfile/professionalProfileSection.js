@@ -21,6 +21,7 @@ const mapStateToProps = state => {
 }
 
 const SectionContentWrapper = styled.div`
+  padding-bottom: 65px;
   .text {
     height: auto;
     margin-bottom: 10px;
