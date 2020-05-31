@@ -6,13 +6,22 @@ import { Animated } from 'react-animated-css';
 import { Row, Col } from 'react-bootstrap';
 import Skeleton from '../../components/skeleton';
 import { changeSection, showService, collapseProfileHeader } from './professionalProfileSlice';
-import { selectService, selectDate, selectTime } from '../booking/bookingSlice';
+import { selectService, selectDate, selectTime, fetchAvailableTimeZones, selectTimeZone } from '../booking/bookingSlice';
 import ProfessionalServices from './professionalServices';
 import DateTimePicker from '../../components/dateTimePicker';
 import ServiceCard from '../../components/services/serviceCard';
 import { getServiceById, getServiceByModalityType } from '../../helpers/data';
 
-const mapDispatchToProps = { selectService, changeSection, selectDate, selectTime, showService, collapseProfileHeader };
+const mapDispatchToProps = {
+  selectService,
+  changeSection,
+  selectDate,
+  selectTime,
+  selectTimeZone,
+  showService,
+  collapseProfileHeader,
+  fetchAvailableTimeZones
+};
 const mapStateToProps = state => {
   return {
     profile: state.professionalProfile,
@@ -21,7 +30,7 @@ const mapStateToProps = state => {
 }
 
 const SectionContentWrapper = styled.div`
-  padding-bottom: 65px;
+  /* padding-bottom: 65px; */
   .text {
     height: auto;
     margin-bottom: 10px;
@@ -41,9 +50,11 @@ const ProfessionalProfileSection = ({
   showService,
   selectService,
   changeSection,
+  selectTimeZone,
   selectDate,
   selectTime,
-  booking
+  booking,
+  fetchAvailableTimeZones
 }) => {
   const { t } = useTranslation();
   const profileServices = profile.services && profile.services.length ? profile.services : null;
@@ -104,7 +115,9 @@ const ProfessionalProfileSection = ({
         </Row>
         <Row>
           <Col>
-            <DateTimePicker profile={profile} booking={booking} onSelectDate={selectDate} onSelectTime={selectTime} />
+            <DateTimePicker profile={profile} booking={booking}
+              onSelectDate={selectDate} onSelectTime={selectTime} onSelectTimeZone={selectTimeZone}
+              fetchAvailableTimeZones={fetchAvailableTimeZones} />
           </Col>
         </Row>
       </>

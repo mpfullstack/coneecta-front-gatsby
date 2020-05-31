@@ -11,6 +11,9 @@ const ActionButtons = styled.div`
   align-items: center;
   flex-direction: row;
   justify-content: center;
+  & > div {
+    width: 100%;
+  }
   .confirm-button {
     text-transform: uppercase;
     width: 100%;

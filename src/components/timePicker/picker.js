@@ -1,7 +1,126 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 import { ArrowUp, ArrowDown } from '../../components/icons';
-import './style.scss';
+import theme from '../../theme';
+
+const PickerWrapper = styled.div`
+  .picker-container {
+    z-index: 10001;
+
+    width: 100%;
+
+    &, *, *:before, *:after {
+      box-sizing: border-box;;
+    }
+
+    .picker-inner {
+      position: relative;
+
+      display: flex;
+      justify-content: center;
+      height: 100%;
+      padding: 0 20px;
+
+      font-size: 1.2em;
+      -webkit-mask-box-image: linear-gradient(to top, transparent, transparent 5%, white 20%, white 80%, transparent 95%, transparent);
+
+      .picker-buttons {
+        position: relative;
+        right: 20%;
+        z-index: -1;
+        .button {
+          border: none;
+          text-decoration: none;
+          cursor: pointer;
+          font-weight: bold;
+          flex-shrink: 0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 0;
+          background-color: transparent;
+          .svg-inline--fa {
+            font-size: 32px;
+          }
+        }
+        .previous-button-container {
+          position: absolute;
+          top: 7%;
+        }
+        .next-button-container {
+          position: absolute;
+          bottom: 7%;
+        }
+      }
+    }
+
+    .picker-column {
+      flex: 1 1;
+
+      position: relative;
+
+      max-height: 100%;
+
+      overflow: hidden;
+      text-align: center;
+
+      .picker-scroller {
+        transition: 300ms;
+        transition-timing-function: ease-out;
+      }
+
+      .picker-item {
+        position: relative;
+
+        padding: 0 10px;
+
+        white-space: nowrap;
+        color: #999999;
+        overflow: hidden;
+        text-overflow: ellipsis;
+
+        &.picker-item-selected {
+          color: #222;
+        }
+      }
+    }
+
+    .picker-highlight {
+      position: absolute;
+      top: 50%;
+      left: 0;
+
+      width: 100%;
+
+      pointer-events: none;
+
+      &:before, &:after {
+        content: ' ';
+        position: absolute;
+        left: 0;
+        right: auto;
+
+        display: block;
+        width: 100%;
+        height: 1px;
+
+        background-color: #d9d9d9;
+        transform: scaleY(0.5);
+      }
+
+      &:before {
+        top: 0;
+        bottom: auto;
+      }
+
+      &:after {
+        bottom: 0;
+        top: auto;
+      }
+    }
+  }
+`;
 
 class PickerColumn extends Component {
   static propTypes = {
@@ -68,8 +187,8 @@ class PickerColumn extends Component {
   };
 
   handleTouchMove = (event) => {
-    // event.preventDefault();
-    // event.stopPropagation();
+    event.preventDefault();
+    event.stopPropagation();
     const touchY = event.targetTouches[0].pageY;
     this.setState(({isMoving, startTouchY, startScrollerTranslate, minTranslate, maxTranslate}) => {
       if (!isMoving) {
@@ -132,6 +251,14 @@ class PickerColumn extends Component {
     }
   };
 
+  isAvailable(option) {
+    if ('available' in option && !option.available) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
   renderItems() {
     const {options, itemHeight, value} = this.props;
     return options.map((option, index) => {
@@ -139,7 +266,8 @@ class PickerColumn extends Component {
         height: itemHeight + 'px',
         lineHeight: itemHeight + 'px'
       };
-      const className = `picker-item${option.value === value ? ' picker-item-selected' : ''}`;
+      let className = `picker-item${option.value === value ? ' picker-item-selected' : ''}`;
+      className += `${!this.isAvailable(option) ? ' picker-item-not-available' : ''}`;
       return (
         <div
           key={index}
@@ -251,9 +379,11 @@ export default class Picker extends Component {
     };
 
     return (
-      <div className="picker-container" style={style}>
-        {this.renderInner()}
-      </div>
+      <PickerWrapper>
+        <div className="picker-container" style={style}>
+          {this.renderInner()}
+        </div>
+      </PickerWrapper>
     );
   }
 }
