@@ -14,8 +14,7 @@ export default ({ onSubmit, formData }) => {
 
   function handleSubmit(e) {
     // onSubmit(formState.values);
-    const values = formState.values;
-    debugger;
+    // const values = formState.values;
     e.preventDefault();
     e.stopPropagation();
   }
@@ -31,15 +30,15 @@ export default ({ onSubmit, formData }) => {
     return valid && requiredValidation;
   }
 
-  function disableForm() {
-    if (formState.isPristine()) {
-      return true;
-    } else if (!isFormValid()) {
-      return true;
-    } else {
-      return false;
-    }
-  }
+  // function disableForm() {
+  //   if (formState.isPristine()) {
+  //     return true;
+  //   } else if (!isFormValid()) {
+  //     return true;
+  //   } else {
+  //     return false;
+  //   }
+  // }
 
   return (
     <FormWrapper>

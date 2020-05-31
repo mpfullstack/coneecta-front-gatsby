@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
-import { Modal, Button } from 'react-bootstrap';
+import { Modal } from 'react-bootstrap';
 import theme from '../../theme';
 import TimePicker from './timePicker';
 import PrimaryButton from '../buttons/primaryButton';
@@ -67,7 +67,8 @@ const TimeZonePicker = ({ timezones, selected, onSelectTimeZone, name, gmt }) =>
 
   return (
     <TimeZonePickerWrapper>
-      <div className='timezone' onClick={() => showModal(!show)}>
+      <div className='timezone' onClick={() => showModal(!show)} role='button' tabIndex={0}
+      onKeyDown={() => null}>
         <span className='item label'>{t('Timezone')}</span>
         <span className='item region'>{name}</span>
         <span className='item gmt'>{gmt}</span>

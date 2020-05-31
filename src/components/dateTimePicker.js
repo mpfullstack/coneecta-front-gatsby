@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { navigate } from 'gatsby';
 import styled from 'styled-components';
-import { Button, Form, Row, Col } from 'react-bootstrap';
+import { Row, Col } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import Skeleton from '../components/skeleton';
 import theme from '../theme';
@@ -80,7 +80,7 @@ const DateTimePicker = ({ profile, booking, onSelectDate, onSelectTime, fetchAva
       onSelectTimeZone(timezone);
     }
     fetchAvailableTimeZones();
-  }, [fetchAvailableTimeZones]);
+  }, [fetchAvailableTimeZones, onSelectTimeZone]);
 
   return (
     <DateTimePickerWrapper>

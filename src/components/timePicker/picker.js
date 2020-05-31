@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { ArrowUp, ArrowDown } from '../../components/icons';
-import theme from '../../theme';
 
 const PickerWrapper = styled.div`
   .picker-container {
@@ -290,7 +289,6 @@ class PickerColumn extends Component {
   }
 
   render() {
-    const {options, value} = this.props;
     const translateString = `translate3d(0, ${this.state.scrollerTranslate}px, 0)`;
     const style = {
       MsTransform: translateString,
