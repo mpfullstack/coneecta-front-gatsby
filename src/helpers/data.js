@@ -51,3 +51,16 @@ export function getAvailableTimes(availableDates, date, defaultTime) {
     return availableTimes;
   }
 }
+
+export function splitTimeZoneName(timezones, timezone) {
+  if (timezone in timezones) {
+    /^(.+)(\[GMT.+)$/gmi.exec(timezones[timezone]);
+    debugger;
+    return {
+      name: RegExp.$1,
+      gmt: RegExp.$2
+    }
+  } else {
+    return {name: '', gmt: ''};
+  }
+}

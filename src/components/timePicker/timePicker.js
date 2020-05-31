@@ -55,18 +55,9 @@ const TimePickerWrapper = styled.div`
 
 
 class TimePicker extends Component {
-  constructor(props) {
-    super(props);
-    const { valueGroups, optionGroups, height = 120 } = props;
-    this.state = {
-      valueGroups,
-      optionGroups,
-      height
-    };
-  }
-
+  // TODO: Improve by checking if update is needed
   // shouldComponentUpdate(nextProps) {
-  //   const { valueGroups } = this.state;
+  //   const { valueGroups } = this.;
   //   if (!nextProps.valueGroups) {
   //     return true;
   //   } else if (nextProps.valueGroups && nextProps.valueGroups.time === valueGroups.time) {
@@ -80,16 +71,12 @@ class TimePicker extends Component {
   handleChange = (name, value) => {
     const { onSelectTime } = this.props;
     onSelectTime(value);
-    this.setState(({valueGroups}) => ({
-      valueGroups: {
-        ...valueGroups,
-        [name]: value
-      }
-    }));
   };
 
   render() {
-    const { optionGroups, valueGroups, height } = this.state;
+    const { optionGroups, valueGroups, height = 120 } = this.props;
+
+    console.log('render', this.props);
 
     return (
       <TimePickerWrapper>

@@ -5,7 +5,14 @@ import { Button, Form, Row, Col } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import Skeleton from '../components/skeleton';
 import theme from '../theme';
-import { getFromDate, getAmountOfDaysToEnd, isDateAvailable, adaptTimeZonesToArray, getAvailableTimes } from '../helpers/data';
+import {
+  getFromDate,
+  getAmountOfDaysToEnd,
+  isDateAvailable,
+  adaptTimeZonesToArray,
+  getAvailableTimes,
+  splitTimeZoneName
+} from '../helpers/data';
 import DatePicker from './datePicker/datePicker';
 import TimePicker from './timePicker/timePicker';
 import TimeZonePicker from './timePicker/timeZonePicker';
@@ -101,12 +108,12 @@ const DateTimePicker = ({ profile, booking, onSelectDate, onSelectTime, fetchAva
             <TimeZonePicker
               timezones={adaptTimeZonesToArray(booking.timezones)}
               selected={booking.timezone}
-              onSelectTimeZone={onSelectTimeZone} />
+              onSelectTimeZone={onSelectTimeZone}
+              {...splitTimeZoneName(booking.timezones, booking.timezone)}/>
           }
           {/* TODO: Add edit icon */}
         </Col>
         <Col xs='6'>
-          {/* TODO: Update times properly when select date and at the beggining */}
           {booking.fetchingAvailableDates ?
             <Skeleton height={121} count={1} />
             :
