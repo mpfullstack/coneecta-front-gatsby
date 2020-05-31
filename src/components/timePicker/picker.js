@@ -148,6 +148,7 @@ class PickerColumn extends Component {
       startScrollerTranslate: 0,
       ...this.computeTranslate(props)
     };
+
   }
 
   componentWillReceiveProps(nextProps) {
@@ -163,7 +164,7 @@ class PickerColumn extends Component {
     if (selectedIndex < 0) {
       // throw new ReferenceError();
       console.warn('Warning: "' + this.props.name+ '" doesn\'t contain an option of "' + value + '".');
-      this.onValueSelected(options[0].value);
+      this.onValueSelected(options[0].value, this.isAvailable(options[0]));
       selectedIndex = 0;
     }
     return {
@@ -173,8 +174,8 @@ class PickerColumn extends Component {
     };
   };
 
-  onValueSelected = (newValue) => {
-    this.props.onChange(this.props.name, newValue);
+  onValueSelected = (newValue, available) => {
+    this.props.onChange(this.props.name, newValue, available);
   };
 
   handleTouchStart = (event) => {
@@ -228,7 +229,7 @@ class PickerColumn extends Component {
       } else {
         activeIndex = - Math.floor((scrollerTranslate - maxTranslate) / itemHeight);
       }
-      this.onValueSelected(options[activeIndex].value);
+      this.onValueSelected(options[activeIndex].value, this.isAvailable(options[activeIndex]));
     }, 0);
   };
 
@@ -245,8 +246,8 @@ class PickerColumn extends Component {
   };
 
   handleItemClick = (option) => {
-    if (option !== this.props.value) {
-      this.onValueSelected(option);
+    if (option.value !== this.props.value) {
+      this.onValueSelected(option.value, this.isAvailable(option));
     }
   };
 
@@ -272,7 +273,7 @@ class PickerColumn extends Component {
           key={index}
           className={className}
           style={style}
-          onClick={() => this.handleItemClick(option.value)}
+          onClick={() => this.handleItemClick(option)}
           onKeyDown={() => null}
           role='button'
           aria-hidden='true'>{option.label}</div>

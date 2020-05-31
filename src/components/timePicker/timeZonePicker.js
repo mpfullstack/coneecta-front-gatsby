@@ -79,7 +79,7 @@ const TimeZonePicker = ({ timezones, selected, onSelectTimeZone, name, gmt }) =>
             valueGroups={{timezones: timezoneSelected }}
             optionGroups={{ timezones: timezones }}
             height={350}
-            onSelectTime={selectTimeZone} />
+            onSelectTime={({ value }) => selectTimeZone(value)} />
             <Modal.Footer>
               <PrimaryButton onClick={handleSelectTimeZone}>
                 {t('Select')}

@@ -68,15 +68,13 @@ class TimePicker extends Component {
   // }
 
   // Update the value in response to user picking event
-  handleChange = (name, value) => {
+  handleChange = (name, value, available) => {
     const { onSelectTime } = this.props;
-    onSelectTime(value);
+    onSelectTime({ value, available });
   };
 
   render() {
     const { optionGroups, valueGroups, height = 120 } = this.props;
-
-    console.log('render', this.props);
 
     return (
       <TimePickerWrapper>

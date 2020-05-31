@@ -11,6 +11,7 @@ const bookingSlice = createSlice({
     'timezone': '', // Selected time zone (By default should be the user browser timezone)
     'date': '', // Booking date selected
     'time': '', // Booking time selected
+    'isTimeAvailable': false, // Indicates if selected time is really available
     'fetchingTimeZones': true,
     'fetchingAvailableDates': true
 	},
@@ -29,7 +30,8 @@ const bookingSlice = createSlice({
       state.date = action.payload;
     },
     selectTime: (state, action) => {
-      state.time = action.payload;
+      state.time = action.payload.value;
+      state.isTimeAvailable = action.payload.available;
     },
     fetchAvailableTimeZones: state => {
       state.fetchingAvailableDates = true;

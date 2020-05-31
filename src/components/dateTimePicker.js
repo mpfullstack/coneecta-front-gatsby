@@ -57,11 +57,11 @@ const DatePickerWrapper = styled.div`
   }
 `;
 
-const ConfirmButton = ({ date, time, fetchingAvailableDates, fetchingAvailableTimes, id }) => {
+const ConfirmButton = ({ date, time, fetchingAvailableDates, id, isTimeAvailable }) => {
   const { t } = useTranslation();
 
   let disabled = true;
-  if (date && time && !fetchingAvailableDates && !fetchingAvailableTimes) {
+  if (date && time && !fetchingAvailableDates && isTimeAvailable) {
     disabled = false;
   }
   return <PrimaryButton onClick={() => navigate(`/login${id ? `/?id=${id}` : ''}`)}
@@ -106,7 +106,7 @@ const DateTimePicker = ({ profile, booking, onSelectDate, onSelectTime, fetchAva
             <Skeleton height={121} count={1} />
             :
             <TimeZonePicker
-              timezones={adaptTimeZonesToArray(booking.timezones)}
+              timezones={adaptTimeZonesToArray(booking.timezones, { value: null, label: t('Select the timezone') })}
               selected={booking.timezone}
               onSelectTimeZone={onSelectTimeZone}
               {...splitTimeZoneName(booking.timezones, booking.timezone)}/>

@@ -28,10 +28,13 @@ export function isDateAvailable(date, availableDates) {
   return (format(date, 'yyyyMMdd') in availableDates);
 }
 
-export function adaptTimeZonesToArray(timezones) {
-  return Object.keys(timezones).map(timezone => {
-    return { value: timezone, label: timezones[timezone] };
-  })
+export function adaptTimeZonesToArray(timezones, defaultTimeZone) {
+  return [
+    defaultTimeZone,
+    ...Object.keys(timezones).map(timezone => {
+      return { value: timezone, label: timezones[timezone] };
+    })
+  ];
 }
 
 export function getAvailableTimes(availableDates, date, defaultTime) {
