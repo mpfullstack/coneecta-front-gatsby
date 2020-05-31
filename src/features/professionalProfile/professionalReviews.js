@@ -7,7 +7,6 @@ import { useTranslation } from 'react-i18next';
 import SEO from '../../components/seo';
 import Skeleton from '../../components/skeleton';
 import Rating from '../../components/rating';
-import Query from '../../helpers/query';
 import ProfileHeader from '../../components/professionalProfile/profileHeader';
 
 const mapDispatchToProps = { loadProfile };
@@ -74,14 +73,13 @@ export const ProfessionalReviews = ({ profile, loadProfile, location, slug, serv
 
   useEffect(() => {
     if (!profile.id) {
-      const params = Query.getParams(location);
       if (slug !== '') {
         loadProfile({id: slug, sid: serviceSlug}); // TODO: Get sid from path instead of querystring
       } else {
         // TODO: Handle if no professional id is present in URL
       }
     }
-  }, [loadProfile, location, profile.id]);
+  }, [loadProfile, location, profile.id, slug, serviceSlug]);
 
   const profileDetails = profile.details || {};
   const profileReviews = profile.reviews || null;

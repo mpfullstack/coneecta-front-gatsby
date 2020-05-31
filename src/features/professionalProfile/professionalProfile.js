@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { loadProfile, collapseProfileHeader } from './professionalProfileSlice';
 import SEO from '../../components/seo';
-import Query from '../../helpers/query';
 import { Container, Row, Col } from 'react-bootstrap';
 import ProfileHeader from '../../components/professionalProfile/profileHeader';
 import ProfessionalProfileSection from './professionalProfileSection';
@@ -30,7 +29,7 @@ export const ProfessionalProfile = ({ profile, loadProfile, collapseProfileHeade
     } else {
       // TODO: Handle if no professional id is present in URL
     }
-  }, [loadProfile, location, slug]);
+  }, [loadProfile, location, slug, serviceSlug]);
 
   const profileDetails = profile.details || {};
 
