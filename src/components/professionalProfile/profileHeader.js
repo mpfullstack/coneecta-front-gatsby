@@ -31,7 +31,7 @@ const ProfileHeaderWrapper = styled.div`
   }
 `;
 
-const ProfileHeader = ({ id, name, avatar, rating, collapse, collapseProfileHeader }) => {
+const ProfileHeader = ({ id, slug, serviceSlug, name, avatar, rating, collapse }) => {
   return (
     <AnimateHeight delay={0} duration={ 500 } height={collapse ? 87 : 240}>
       <ProfileHeaderWrapper>
@@ -59,13 +59,13 @@ const ProfileHeader = ({ id, name, avatar, rating, collapse, collapseProfileHead
         * --------------------------------------------------------------- */}
         <Row className={`justify-content-md-center text-center${collapse ?  ' collapsed' : ''}`}>
           <Col xs='12' md='10'>
-            <Link to={`/professional/?id=${id}`}>
+            <Link to={`/u/${slug}${serviceSlug ? `/${serviceSlug}` : ''}`}>
               <h2 className={`name${collapse ? ' collapse-name' : ''}`}>{name || <Skeleton height={32} width={200} />}</h2>
             </Link>
             {!isNaN(parseInt(rating)) ?
               <AnimateHeight delay={0} duration={500} height={collapse ? 32 : 'auto'}>
                 {/* <Animated animateOnMount={false} animationOut='fadeOutRight' isVisible={!collapse} animationOutDelay={0}> */}
-                  <Link to={`/professional-reviews/?id=${id}`}>
+                  <Link to={`/u/${slug}/reviews`}>
                     <Rating
                       name={'rating'}
                       value={rating}

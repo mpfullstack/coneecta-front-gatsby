@@ -4,7 +4,8 @@ import { connect } from 'react-redux';
 import { loadProfile } from './professionalProfileSlice';
 import { Container, Row, Col } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
-import Skeleton from 'react-loading-skeleton';
+import SEO from '../../components/seo';
+import Skeleton from '../../components/skeleton';
 import Rating from '../../components/rating';
 import Query from '../../helpers/query';
 import ProfileHeader from '../../components/professionalProfile/profileHeader';
@@ -68,14 +69,14 @@ const Review = ({ review = null }) => {
   );
 }
 
-export const ProfessionalReviews = ({ profile, loadProfile, location }) => {
+export const ProfessionalReviews = ({ profile, loadProfile, location, slug, serviceSlug }) => {
   const { t } = useTranslation();
 
   useEffect(() => {
     if (!profile.id) {
       const params = Query.getParams(location);
-      if (params.id) {
-        loadProfile(params.id);
+      if (slug !== '') {
+        loadProfile({id: slug, sid: serviceSlug}); // TODO: Get sid from path instead of querystring
       } else {
         // TODO: Handle if no professional id is present in URL
       }
@@ -87,7 +88,8 @@ export const ProfessionalReviews = ({ profile, loadProfile, location }) => {
 
   return (
     <Container>
-      <ProfileHeader id={profile.id} {...profileDetails} collapse={true} />
+      <SEO title={t('Professional reviews')} />
+      <ProfileHeader id={profile.id} {...profileDetails} collapse={true} slug={slug} serviceSlug={serviceSlug} />
       <Row>
         <Col>
           <h2>{t('Reviews')}</h2>

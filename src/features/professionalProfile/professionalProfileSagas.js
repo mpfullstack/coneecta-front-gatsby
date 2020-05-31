@@ -13,6 +13,8 @@ function* onLoadProfile() {
       yield put(hideApiError());
     } else {
       if (payload.sid) {
+        // TODO: sid is the service slug, we should find the corresponding service id for this
+        // service slug in the profile
         yield put(showService(Number(payload.sid)));
         result.services = result.services.filter(
           service => Number(service.id) === Number(payload.sid)

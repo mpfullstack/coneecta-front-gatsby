@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { loadProfile, collapseProfileHeader } from './professionalProfileSlice';
+import SEO from '../../components/seo';
 import Query from '../../helpers/query';
 import { Container, Row, Col } from 'react-bootstrap';
 import ProfileHeader from '../../components/professionalProfile/profileHeader';
@@ -22,11 +23,10 @@ const mapStateToProps = state => {
   }
 }
 
-export const ProfessionalProfile = ({ profile, loadProfile, collapseProfileHeader, location, slug }) => {
+export const ProfessionalProfile = ({ profile, loadProfile, collapseProfileHeader, location, slug, serviceSlug }) => {
   useEffect(() => {
-    const params = Query.getParams(location);
     if (slug !== '') {
-      loadProfile({id: slug, sid: params.sid}); // TODO: Get sid from path instead of querystring
+      loadProfile({id: slug, sid: serviceSlug}); // TODO: Get sid from path instead of querystring
     } else {
       // TODO: Handle if no professional id is present in URL
     }
@@ -36,7 +36,8 @@ export const ProfessionalProfile = ({ profile, loadProfile, collapseProfileHeade
 
   return (
     <Container>
-      <ProfileHeader id={profile.id} {...profileDetails}
+      <SEO title='Professional' />
+      <ProfileHeader id={profile.id} slug={slug} serviceSlug={serviceSlug} {...profileDetails}
         collapse={profile.collapseProfileHeader} collapseProfileHeader={collapseProfileHeader} />
       <Row className='justify-content-md-center'>
         <Col xs='12' md='10'>
