@@ -73,7 +73,7 @@ const ProfessionalProfileSection = ({
         <Row className='text'>
           <Col xs='12' md='12'>
             {profile.collapseProfileHeader ?
-              <Animated animateOnMount={true} animationIn='fadeInLeft' animationInDelay={350}>
+              <Animated animateOnMount={true} animationIn='fadeIn' animationInDelay={350}>
                 <p className='modality-text'>{t('Pick the modality')}</p>
               </Animated>
               :

@@ -20,5 +20,7 @@
   "unavailable_profile": "Lo sentimos, este perfil no está disponible",
 
   "Select the timezone": "Selecciona la zona horaria",
-  "Select the time": "Selecciona la hora"
+  "Select the time": "Selecciona la hora",
+
+  "lowAvailabilityMessage": "Horario de baja disponibilidad, es posible que el profesional no pueda aceptar tu reserva."
 }

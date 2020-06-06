@@ -259,6 +259,25 @@ class PickerColumn extends Component {
     }
   }
 
+  renderItem({ option, index, className, style }) {
+    const { onRenderItem } = this.props;
+    debugger;
+    const item = <div
+      key={index}
+      className={className}
+      style={style}
+      onClick={() => this.handleItemClick(option)}
+      onKeyDown={() => null}
+      role='button'
+      aria-hidden='true'>{option.label}</div>;
+
+    let customItemRender = null;
+    if (onRenderItem) {
+      customItemRender = onRenderItem(option, this.isAvailable(option));
+    }
+    return <div className='picker-item-wrapper'>{item}{customItemRender}</div>;
+  }
+
   renderItems() {
     const {options, itemHeight, value} = this.props;
     return options.map((option, index) => {
@@ -268,16 +287,7 @@ class PickerColumn extends Component {
       };
       let className = `picker-item${option.value === value ? ' picker-item-selected' : ''}`;
       className += `${!this.isAvailable(option) ? ' picker-item-not-available' : ''}`;
-      return (
-        <div
-          key={index}
-          className={className}
-          style={style}
-          onClick={() => this.handleItemClick(option)}
-          onKeyDown={() => null}
-          role='button'
-          aria-hidden='true'>{option.label}</div>
-      );
+      return this.renderItem({option, index, className, style});
     });
   }
 
@@ -346,7 +356,7 @@ export default class Picker extends Component {
   };
 
   renderInner() {
-    const {optionGroups, valueGroups, itemHeight, height, onChange} = this.props;
+    const {optionGroups, valueGroups, itemHeight, height, onChange, onRenderItem} = this.props;
     const highlightStyle = {
       height: itemHeight,
       marginTop: -(itemHeight / 2)
@@ -361,7 +371,8 @@ export default class Picker extends Component {
           value={valueGroups[name]}
           itemHeight={itemHeight}
           columnHeight={height}
-          onChange={onChange} />
+          onChange={onChange}
+          onRenderItem={onRenderItem} />
       );
     }
     return (

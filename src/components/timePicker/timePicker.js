@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import Picker from './picker';
 import theme from '../../theme';
+import { LowAvailability } from '../icons';
 
 const TimePickerWrapper = styled.div`
+  position: relative;
   border: 1px solid ${theme.dateTimePickerBackgroundColor};
   border-radius: 5px;
   background-color: ${theme.dateTimePickerBackgroundColor};
@@ -19,25 +21,21 @@ const TimePickerWrapper = styled.div`
     }
 
     .picker-column {
-      .picker-item {
-        text-align: center;
-        &:first-child {
-          font-size: 16px;
+      .picker-item-wrapper {
+        position: relative;
+        .picker-item {
+          text-align: center;
+          &:first-child {
+            font-size: 16px;
 
-        }
-        &.picker-item-selected {
-          color: ${theme.dateTimePickerColor};
-          font-weight: bold;
-        }
-        &.picker-item-selected:first-child {
-          font-weight: normal;
-        }
-        &.picker-item-not-available {
-          opacity: .3;
-          /*&:after {
-            content: 'ND';
-            position: absolute;
-          }*/
+          }
+          &.picker-item-selected {
+            color: ${theme.dateTimePickerColor};
+            font-weight: bold;
+          }
+          &.picker-item-not-available {
+            opacity: .4;
+          }
         }
       }
     }
@@ -49,6 +47,14 @@ const TimePickerWrapper = styled.div`
     .svg-inline--fa {
       color: ${theme.dateTimePickerButtonsColor};
       font-size: 32px;
+    }
+  }
+  .low-availability {
+    position: absolute;
+    left: 14px;
+    top: 41%;
+    .svg-inline--fa {
+      font-size: 16px;
     }
   }
 `;
@@ -74,7 +80,7 @@ class TimePicker extends Component {
   };
 
   render() {
-    const { optionGroups, valueGroups, height = 120 } = this.props;
+    const { optionGroups, valueGroups, showAvailabilityIcon, isTimeAvailable, height = 120 } = this.props;
 
     return (
       <TimePickerWrapper>
@@ -83,6 +89,11 @@ class TimePicker extends Component {
           valueGroups={valueGroups}
           onChange={this.handleChange}
           height={height} />
+
+          {showAvailabilityIcon && !isTimeAvailable ?
+            <div className='low-availability'>
+              <LowAvailability />
+            </div> : null}
       </TimePickerWrapper>
     );
   }

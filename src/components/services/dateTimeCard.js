@@ -10,7 +10,7 @@ const DateTimeCardWrapper = styled.div`
   }
 `;
 
-const DateTimeCard = ({ date, time, onClick }) => {
+const DateTimeCard = ({ date, time, timezone, onClick }) => {
   return (
     <DateTimeCardWrapper>
       <CardWrapper>
@@ -20,7 +20,7 @@ const DateTimeCard = ({ date, time, onClick }) => {
             <Edit />
           </Card.Header>
           <Card.Body>
-            {time}
+            {time} {timezone}
           </Card.Body>
         </Card>
       </CardWrapper>

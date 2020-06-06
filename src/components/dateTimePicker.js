@@ -18,11 +18,16 @@ import TimePicker from './timePicker/timePicker';
 import TimeZonePicker from './timePicker/timeZonePicker';
 import ActionButtons from '../components/buttons/actionButtons';
 import PrimaryButton from '../components/buttons/primaryButton';
+import BookingReview from './bookingReview';
 
 const DateTimePickerWrapper = styled.div`
-  .timezone-container {
-    padding-right: 0;
-    margin-bottom: 6px;
+  padding-bottom: 60px;
+  .timezone-row-wrapper {
+    min-height: 133px;
+    .timezone-container {
+      padding-right: 0;
+      margin-bottom: 6px;
+    }
   }
 `;
 
@@ -47,7 +52,7 @@ const DatePickerWrapper = styled.div`
       color: ${theme.dateTimePickerSelectedTextColor};
     }
     &.not-available {
-      opacity: .3;
+      opacity: .4;
     }
   }
 
@@ -57,11 +62,11 @@ const DatePickerWrapper = styled.div`
   }
 `;
 
-const ConfirmButton = ({ date, time, fetchingAvailableDates, id, isTimeAvailable }) => {
+const ConfirmButton = ({ date, time, fetchingAvailableDates, id }) => {
   const { t } = useTranslation();
 
   let disabled = true;
-  if (date && time && !fetchingAvailableDates && isTimeAvailable) {
+  if (date && time && !fetchingAvailableDates) {
     disabled = false;
   }
   return <PrimaryButton onClick={() => navigate(`/login${id ? `/?id=${id}` : ''}`)}
@@ -100,7 +105,7 @@ const DateTimePicker = ({ profile, booking, onSelectDate, onSelectTime, fetchAva
           }
         </Col>
       </Row>
-      <Row>
+      <Row className='timezone-row-wrapper'>
         <Col xs='6' className='timezone-container'>
           {booking.fetchingTimeZones ?
             <Skeleton height={121} count={1} />
@@ -120,8 +125,15 @@ const DateTimePicker = ({ profile, booking, onSelectDate, onSelectTime, fetchAva
             <TimePicker
               valueGroups={{time: booking.time || '' }}
               optionGroups={{ time: getAvailableTimes(booking.availableDates, booking.date, { value: null, label: t('Select the time') }) }}
-              onSelectTime={onSelectTime} />
+              onSelectTime={onSelectTime}
+              showAvailabilityIcon={true}
+              isTimeAvailable={booking.isTimeAvailable} />
           }
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          <BookingReview booking={booking} />
         </Col>
       </Row>
       <ActionButtons>

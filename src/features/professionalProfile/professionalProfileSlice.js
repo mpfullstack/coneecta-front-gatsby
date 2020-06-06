@@ -17,7 +17,46 @@ const professionalProfileSlice = createSlice({
       state.id = action.payload.id;
       state.details = action.payload.details;
       state.services = action.payload.services;
-      state.reviews = action.payload.reviews;
+      // state.reviews = action.payload.reviews;
+      // NOTE: Temp fix
+      state.reviews = [
+        {
+          "name": "Jhon Doe",
+          "date": "26/01/2020",
+          "rating": 3,
+          "comments": "Pellentesque consequat, nulla a feugiat ultrices, metus urna venenatis lectus, eget efficitur dolor quam vitae elit."
+        },
+        {
+          "name": "Jhon Doe",
+          "date": "26/01/2020",
+          "rating": 3,
+          "comments": "Pellentesque consequat, nulla a feugiat ultrices, metus urna venenatis lectus, eget efficitur dolor quam vitae elit."
+        },
+        {
+          "name": "Jhon Doe",
+          "date": "26/01/2020",
+          "rating": 3,
+          "comments": "Pellentesque consequat, nulla a feugiat ultrices, metus urna venenatis lectus, eget efficitur dolor quam vitae elit."
+        },
+        {
+          "name": "Jhon Doe",
+          "date": "26/01/2020",
+          "rating": 3,
+          "comments": "Pellentesque consequat, nulla a feugiat ultrices, metus urna venenatis lectus, eget efficitur dolor quam vitae elit."
+        },
+        {
+          "name": "Jhon Doe",
+          "date": "26/01/2020",
+          "rating": 3,
+          "comments": "Pellentesque consequat, nulla a feugiat ultrices, metus urna venenatis lectus, eget efficitur dolor quam vitae elit."
+        },
+        {
+          "name": "Jhon Doe",
+          "date": "26/01/2020",
+          "rating": 3,
+          "comments": "Pellentesque consequat, nulla a feugiat ultrices, metus urna venenatis lectus, eget efficitur dolor quam vitae elit."
+        }
+      ]
     },
     collapseProfileHeader: (state, action) => {
       state.collapseProfileHeader = action.payload;
