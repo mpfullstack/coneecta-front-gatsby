@@ -3,8 +3,11 @@ import {
   initAvailableDates,
   initAvailableTimeZones,
   selectTimeZone,
+  selectDate,
+  selectTime,
   fetchAvailableTimeZones
 } from './bookingSlice';
+import { getFirstAvailableTime } from '../../helpers/data';
 import { showApiError, hideApiError } from '../global/globalSlice';
 import api from '../../api';
 
@@ -39,9 +42,21 @@ function* onSelectTimeZone() {
   });
 }
 
+function* onSelectDate() {
+  // We have the selected date on payload
+  yield takeLatest(selectDate, function* ({ payload }) {
+    const { booking } = yield select();
+    if (!booking.time) {
+      const time = getFirstAvailableTime(booking.availableDates, booking.date);
+      yield put(selectTime({ value: time, available: time ? true : false }));
+    }
+  });
+}
+
 export default function* () {
   yield all([
     fork(onSelectTimeZone),
-    fork(onFetchAvailableTimeZones)
+    fork(onFetchAvailableTimeZones),
+    fork(onSelectDate)
   ])
 };

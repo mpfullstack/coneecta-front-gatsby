@@ -261,7 +261,6 @@ class PickerColumn extends Component {
 
   renderItem({ option, index, className, style }) {
     const { onRenderItem } = this.props;
-    debugger;
     const item = <div
       key={index}
       className={className}

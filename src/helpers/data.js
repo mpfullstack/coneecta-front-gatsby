@@ -66,3 +66,22 @@ export function splitTimeZoneName(timezones, timezone) {
     return {name: '', gmt: ''};
   }
 }
+
+export function getFirstAvailableTime(availableDates, date) {
+  if (date) {
+    const times = availableDates[format(new Date(date), 'yyyyMMdd')];
+    let now = new Date();
+    now.setHours(0);
+    now.setMinutes(0);
+    const splittedTimes = times.split('');
+    for(let i=0; i<splittedTimes.length; i++) {
+      if (Number(splittedTimes[i]) === 1) {
+        break;
+      }
+      now = addMinutes(now, 30);
+    }
+    return format(now, 'HH:mm');
+  } else {
+    return '';
+  }
+}

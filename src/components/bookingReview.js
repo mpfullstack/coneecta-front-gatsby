@@ -28,15 +28,19 @@ const BookingReviewWrapper = styled.div`
 const BookingReview = ({ booking }) => {
   const { t } = useTranslation();
 
-  return (
-    <BookingReviewWrapper>
-      <p className='availability centered'>
-        {!booking.isTimeAvailable ? <><LowAvailability /> <span className='msg'>{t('lowAvailabilityMessage')}</span></> : null}
-      </p>
-      <p className='centered'>Reserva para el <strong>{format(new Date(booking.date), "EEEE d 'de' MMMM 'de' yyyy", { locale: es })}</strong>
-      {` `}a las <strong className='block'>{booking.time} ({booking.timezone})</strong></p>
-    </BookingReviewWrapper>
-  )
+  if (booking.date && booking.time) {
+    return (
+      <BookingReviewWrapper>
+        <p className='availability centered'>
+          {!booking.isTimeAvailable ? <><LowAvailability /> <span className='msg'>{t('lowAvailabilityMessage')}</span></> : null}
+        </p>
+        <p className='centered'>Reserva para el <strong>{format(new Date(booking.date), "EEEE d 'de' MMMM 'de' yyyy", { locale: es })}</strong>
+        {` `}a las <strong className='block'>{booking.time} ({booking.timezone})</strong></p>
+      </BookingReviewWrapper>
+    )
+  } else {
+    return null;
+  }
 }
 
 export default BookingReview;
