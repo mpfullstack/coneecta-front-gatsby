@@ -25,7 +25,7 @@ const mapStateToProps = state => {
 export const ProfessionalProfile = ({ profile, loadProfile, collapseProfileHeader, location, slug, serviceSlug }) => {
   useEffect(() => {
     if (slug !== '') {
-      loadProfile({id: slug, sid: serviceSlug}); // TODO: Get sid from path instead of querystring
+      loadProfile({id: slug, sid: serviceSlug});
     } else {
       // TODO: Handle if no professional id is present in URL
     }

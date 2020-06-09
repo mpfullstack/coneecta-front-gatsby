@@ -4,7 +4,7 @@ import { showApiError, hideApiError } from '../global/globalSlice';
 import api from '../../api';
 
 function* onLoadProfile() {
-  // We receive the professional id (id) an optionally service id (sid) in payload
+  // We receive the professional id (id) an optionally service slug (sid) in payload
   yield takeLatest(loadProfile, function* ({ payload }) {
     const result = yield call(api.getProfessionalProfile, payload.id);
     if (result.error) {
@@ -13,12 +13,14 @@ function* onLoadProfile() {
       yield put(hideApiError());
     } else {
       if (payload.sid) {
-        // TODO: sid is the service slug, we should find the corresponding service id for this
+        // sid is the service slug, we should find the corresponding service id for this
         // service slug in the profile
-        yield put(showService(Number(payload.sid)));
         result.services = result.services.filter(
-          service => Number(service.id) === Number(payload.sid)
+          service => service.slug === payload.sid
         );
+        if (result.services.length) {
+          yield put(showService(result.services[0].id));
+        }
       } else if (result.services.length === 1) {
         yield put(showService(Number(result.services[0].id)));
       }
