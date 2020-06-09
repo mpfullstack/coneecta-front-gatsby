@@ -7,6 +7,7 @@ import { formatMoney } from '../../helpers/helpers';
 const Modalities = styled.div`
   .modality {
     margin: 10px 0;
+    cursor: pointer;
     .modality-item {
       white-space: nowrap;
       text-align: right;

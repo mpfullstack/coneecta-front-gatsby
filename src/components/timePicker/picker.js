@@ -71,6 +71,7 @@ const PickerWrapper = styled.div`
 
       .picker-item {
         position: relative;
+        cursor: pointer;
 
         padding: 0 10px;
 

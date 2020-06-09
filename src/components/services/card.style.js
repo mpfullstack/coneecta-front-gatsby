@@ -3,6 +3,7 @@ import theme from '../../theme';
 
 export default styled.div`
   .card {
+    cursor: pointer;
     margin: 10px 0 10px;
     border: none;
     .card-header {

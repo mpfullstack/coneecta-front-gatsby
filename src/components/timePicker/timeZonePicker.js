@@ -11,6 +11,7 @@ const TimeZonePickerWrapper = styled.div`
   border-radius: 5px;
   background-color: ${theme.dateTimePickerBackgroundColor};
   .timezone {
+    cursor: pointer;
     height: 120px;
     .item {
       display: block;

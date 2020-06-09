@@ -7,7 +7,9 @@ import Skeleton from '../skeleton';
 import ImageSkeleton from '../imageSkeleton';
 import ProfileImgWrapper from './profileImgWrapper.styles';
 import Rating from '../rating';
+import theme from '../../theme';
 import AnimateHeight from 'react-animate-height';
+import { isDevice } from '../../helpers/helpers';
 
 const ProfileHeaderWrapper = styled.div`
   .collapse-image {
@@ -24,36 +26,54 @@ const ProfileHeaderWrapper = styled.div`
     text-transform: uppercase;
     margin: 14px 0 0 0;
     transition: padding-left 0.9s ease .6s;
-    &.collapse-name {
-      padding-left: 55px;
-      font-size: 22px;
+    @media only screen and (max-width: ${theme.SIZES.M}) {
+      &.collapse-name {
+        padding-left: 55px;
+        font-size: 22px;
+      }
     }
+  }
+  .desktop {
+    margin-top: 20px;
+  }
+  .dv-star-rating {
+    cursor: pointer;
   }
 `;
 
-const ProfileHeader = ({ id, slug, serviceSlug, name, avatar, rating, collapse }) => {
+const ProfileHeader = ({ slug, serviceSlug, name, avatar, rating, collapse }) => {
   return (
-    <AnimateHeight delay={0} duration={ 500 } height={collapse ? 87 : 240}>
+    <AnimateHeight delay={0} duration={ 500 } height={isDevice() && collapse ? 87 : 240}>
       <ProfileHeaderWrapper>
         {/*
         * Profile image
         * --------------------------------------------------------------- */}
-        <Row className={!collapse ? 'justify-content-md-center text-center' : 'collapse-image'}>
-          <Col xs='12' md='10'>
-            <ProfileImgWrapper>
-              <AnimateHeight delay={0} duration={ 500 } height={collapse ? 1 : 150}>
-                {collapse ?
-                  <Animated className='profile-image' key="1" animateOnMount={true} animationIn='fadeInLeft' animationInDelay={500}>
-                    <ImageSkeleton url={avatar} circle={true} width={65} height={65} />
-                  </Animated>
-                  :
-                  <Animated className='profile-image' key="2" animateOnMount={false} animationOut='fadeOutLeft'>
-                    <ImageSkeleton url={avatar} circle={true} width={124} height={124} />
-                  </Animated>}
-              </AnimateHeight>
-            </ProfileImgWrapper>
-          </Col>
-        </Row>
+        {isDevice() ?
+          <Row className={!collapse ? 'justify-content-md-center text-center' : 'collapse-image'}>
+            <Col xs='12' md='10'>
+              <ProfileImgWrapper>
+                <AnimateHeight delay={0} duration={ 500 } height={collapse ? 1 : 150}>
+                  {collapse ?
+                    <Animated className='profile-image' key="1" animateOnMount={true} animationIn='fadeInLeft' animationInDelay={500}>
+                      <ImageSkeleton url={avatar} circle={true} width={65} height={65} />
+                    </Animated>
+                    :
+                    <Animated className='profile-image' key="2" animateOnMount={false} animationOut='fadeOutLeft'>
+                      <ImageSkeleton url={avatar} circle={true} width={124} height={124} />
+                    </Animated>}
+                </AnimateHeight>
+              </ProfileImgWrapper>
+            </Col>
+          </Row>
+          :
+          <Row className={'justify-content-md-center text-center desktop'}>
+            <Col xs='12' md='10'>
+              <ProfileImgWrapper>
+                <ImageSkeleton url={avatar} circle={true} width={124} height={124} />
+              </ProfileImgWrapper>
+            </Col>
+          </Row>
+        }
         {/*
         * Profile name and rating component
         * --------------------------------------------------------------- */}

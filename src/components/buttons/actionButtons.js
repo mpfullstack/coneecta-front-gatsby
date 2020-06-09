@@ -1,11 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
+import theme from '../../theme';
 
 const ActionButtons = styled.div`
-  position: fixed;
-  left: 0;
-  width: 100%;
-  bottom: 0;
+  @media only screen and (max-width: ${theme.SIZES.M}) {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+  }
   display: flex;
   align-content: center;
   align-items: center;
@@ -16,7 +19,12 @@ const ActionButtons = styled.div`
   }
   .confirm-button {
     text-transform: uppercase;
-    width: 100%;
+    width: 50%;
+    margin: 0 auto;
+    display: block;
+    @media only screen and (max-width: ${theme.SIZES.M}) {
+      width: 100%;
+    }
     border-radius: 0;
   }
 `;

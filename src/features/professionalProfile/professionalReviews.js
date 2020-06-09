@@ -90,16 +90,16 @@ export const ProfessionalReviews = ({ profile, loadProfile, loadProfileReviews, 
   const profileReviews = profile.reviews || null;
 
   return (
-    <Container>
+    <Container fluid>
       <SEO title={t('Professional reviews')} />
       <ProfileHeader id={profile.id} {...profileDetails} collapse={true} slug={slug} serviceSlug={serviceSlug} />
-      <Row>
-        <Col>
+      <Row className={`justify-content-md-center`}>
+       <Col xs='12' md='10'>
           <h2>{t('Reviews')}</h2>
         </Col>
       </Row>
-      <Row>
-        <Col>
+      <Row className={`justify-content-md-center`}>
+       <Col xs='12' md='10'>
           {profileReviews ?
             profileReviews.map((review, i) => <Review key={`review-${i}`} review={review} />)
             :

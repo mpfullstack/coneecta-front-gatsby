@@ -21,7 +21,7 @@ import PrimaryButton from '../components/buttons/primaryButton';
 import BookingReview from './bookingReview';
 
 const DateTimePickerWrapper = styled.div`
-  padding-bottom: 60px;
+  padding-bottom: 40px;
   .timezone-row-wrapper {
     min-height: 133px;
     .timezone-container {
