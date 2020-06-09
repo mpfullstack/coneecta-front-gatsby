@@ -85,3 +85,24 @@ export function getFirstAvailableTime(availableDates, date) {
     return '';
   }
 }
+
+export function isTimeAvailable(availableDates, date, time) {
+  let available = false;
+  if (date) {
+    const times = availableDates[format(new Date(date), 'yyyyMMdd')];
+    let now = new Date();
+    now.setHours(0);
+    now.setMinutes(0);
+    const splittedTimes = times.split('');
+    for(let i=0; i<splittedTimes.length; i++) {
+      if (time === format(now, 'HH:mm')) {
+        available = Number(splittedTimes[i]) === 1;
+        break;
+      }
+      now = addMinutes(now, 30);
+    }
+    return available;
+  } else {
+    return available;
+  }
+}

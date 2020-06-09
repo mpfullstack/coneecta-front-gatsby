@@ -7,7 +7,7 @@ import {
   selectTime,
   fetchAvailableTimeZones
 } from './bookingSlice';
-import { getFirstAvailableTime } from '../../helpers/data';
+import { getFirstAvailableTime, isTimeAvailable } from '../../helpers/data';
 import { showApiError, hideApiError } from '../global/globalSlice';
 import api from '../../api';
 
@@ -49,6 +49,9 @@ function* onSelectDate() {
     if (!booking.time) {
       const time = getFirstAvailableTime(booking.availableDates, booking.date);
       yield put(selectTime({ value: time, available: time ? true : false }));
+    } else {
+      const available = isTimeAvailable(booking.availableDates, booking.date, booking.time);
+      yield put(selectTime({ value: booking.time, available }));
     }
   });
 }
