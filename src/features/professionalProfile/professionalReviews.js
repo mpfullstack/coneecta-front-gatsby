@@ -1,7 +1,9 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
-import { loadProfile } from './professionalProfileSlice';
+import { format } from 'date-fns';
+import { es } from 'date-fns/locale';
+import { loadProfile, loadProfileReviews } from './professionalProfileSlice';
 import { Container, Row, Col } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import SEO from '../../components/seo';
@@ -9,11 +11,12 @@ import Skeleton from '../../components/skeleton';
 import Rating from '../../components/rating';
 import ProfileHeader from '../../components/professionalProfile/profileHeader';
 
-const mapDispatchToProps = { loadProfile };
+const mapDispatchToProps = { loadProfile, loadProfileReviews };
 const mapStateToProps = state => {
   return {
     profile: state.professionalProfile,
-    global: state.global
+    global: state.global,
+    reviews: state.professionalProfile ? state.professionalProfile.reviews : null
   }
 }
 const ReviewWrapper = styled.div`
@@ -48,8 +51,8 @@ const Review = ({ review = null }) => {
       <div className='name-date'>
         {review ?
           <>
-            <span className='name'>{review.name}</span>
-            <span className='date'>{review.date}</span>
+            <span className='name'>{review.author.name}</span>
+            <span className='date'>{format(new Date(review.date), "d 'de' LLLL 'de' yyyy", { locale: es })}</span>
           </>
           : <Skeleton width={'55%'} height={30} />}
       </div>
@@ -68,18 +71,20 @@ const Review = ({ review = null }) => {
   );
 }
 
-export const ProfessionalReviews = ({ profile, loadProfile, location, slug, serviceSlug }) => {
+export const ProfessionalReviews = ({ profile, loadProfile, loadProfileReviews, reviews, location, slug, serviceSlug }) => {
   const { t } = useTranslation();
 
   useEffect(() => {
     if (!profile.id) {
       if (slug !== '') {
-        loadProfile({id: slug, sid: serviceSlug}); // TODO: Get sid from path instead of querystring
+        loadProfile({id: slug, sid: serviceSlug}); // Get sid from path instead of querystring
       } else {
         // TODO: Handle if no professional id is present in URL
       }
+    } else if (!reviews) {
+      loadProfileReviews({id: profile.id});
     }
-  }, [loadProfile, location, profile.id, slug, serviceSlug]);
+  }, [loadProfile, loadProfileReviews, location, profile.id, reviews, slug, serviceSlug]);
 
   const profileDetails = profile.details || {};
   const profileReviews = profile.reviews || null;

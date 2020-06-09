@@ -1,5 +1,5 @@
 import { all, takeLatest, put, call, fork, delay } from 'redux-saga/effects';
-import { loadProfile, initProfile, showService } from './professionalProfileSlice';
+import { loadProfile, initProfile, loadProfileReviews, initProfileReviews, showService } from './professionalProfileSlice';
 import { showApiError, hideApiError } from '../global/globalSlice';
 import api from '../../api';
 
@@ -29,8 +29,22 @@ function* onLoadProfile() {
   });
 }
 
+function* onLoadProfileReviews() {
+  yield takeLatest(loadProfileReviews, function* ({ payload }) {
+    const result = yield call(api.getProfessionalProfileReviews, payload.id);
+    if (result.error) {
+      yield put(showApiError(result.error.code));
+      yield delay(7000);
+      yield put(hideApiError());
+    } else {
+      yield put(initProfileReviews(result));
+    }
+  });
+}
+
 export default function* () {
   yield all([
-    fork(onLoadProfile)
+    fork(onLoadProfile),
+    fork(onLoadProfileReviews)
   ])
 };
