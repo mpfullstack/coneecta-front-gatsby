@@ -18,7 +18,7 @@ const Edit = () => <FontAwesomeIcon icon={faEdit} />;
 const ExclamationCircle = () => <FontAwesomeIcon icon={faExclamationCircle} />;
 
 
-const LowAvailabilityWrapper = styled.div`
+const LowAvailabilityWrapper = styled.span`
   display: inline;
   .svg-inline--fa {
     color: #f19e1f;
