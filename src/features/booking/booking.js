@@ -38,6 +38,7 @@ export const Booking = ({ profile, booking, changeSection }) => {
               <DateTimeCard
                 date={capitalise(format(new Date(booking.date), "EEEE dd 'de' LLLL 'de' yyyy", { locale: es }))}
                 time={booking.time}
+                timezone={booking.timezone}
                 onClick={() => {
                   changeSection('datePicker');
                   navigate(`/professional/?id=${profile.id}`)

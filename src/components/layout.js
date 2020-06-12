@@ -9,6 +9,7 @@ import theme from '../theme';
 import { Alert } from 'react-bootstrap';
 import Modal from './modal';
 import '../locales/i18n';
+import { isDevice } from '../helpers/helpers';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './layout.scss';
@@ -16,26 +17,14 @@ import './layout.scss';
 import 'animate.css';
 
 const LayoutWrapper = styled.div`
-  .btn-primary {
-    background-color: ${theme.primaryButtonColor};
-    border-color: ${theme.primaryButtonColor};
-    color: ${theme.primaryButtonTextColor};
-    &:focus,
-    &:active,
-    &:not(:disabled):not(.disabled):active:focus,
-    &.show>.btn-primary.dropdown-toggle:focus,
-    &:not(:disabled):not(.disabled).active,
-    &:not(:disabled):not(.disabled):active,
-    &.show>.btn-primary.dropdown-toggle {
-      background-color: ${theme.primaryButtonColor};
-      box-shadow: 0 0 0 0.2rem ${theme.primaryButtonColor}80;
-    }
-  }
-
   .layout-inner {
     margin: 0 auto;
     max-width: ${theme.SIZES.maxWidth};
     width: 100%;
+    background-color: ${theme.backgroundColor};
+    @media only screen and (min-width: ${theme.SIZES.M}) {
+      min-height: 94vh;
+    }
   }
 
   a {
@@ -67,7 +56,11 @@ const Layout = ({ children, global }) => {
 
   // useEffect hook to set theme mode background-color style to body element
   useEffect(() => {
-    document.body.style.backgroundColor = theme.backgroundColor({theme: {mode}});
+    if (isDevice()) {
+      document.body.style.backgroundColor = theme.backgroundColor({theme: {mode}});
+    } else {
+      document.body.style.backgroundColor = '#fffff';
+    }
   });
 
   let alert;

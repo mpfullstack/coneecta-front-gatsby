@@ -2,10 +2,12 @@ import React from 'react';
 import styled from 'styled-components';
 import { Row, Col } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
+import { formatMoney } from '../../helpers/helpers';
 
 const Modalities = styled.div`
   .modality {
     margin: 10px 0;
+    cursor: pointer;
     .modality-item {
       white-space: nowrap;
       text-align: right;
@@ -23,10 +25,11 @@ export const Modality = ({ modality, onClick }) => {
     <Row className='modality' onClick={onClick}>
       <Col className='modality-item' xs='5'>{t(modality.type)}</Col>
       <Col className='modality-item' xs='2'>{modality.duration} min</Col>
-      <Col className='modality-item' xs='5'>{modality.credits}cr. ({modality.credits_in_euros}€)</Col>
+      <Col className='modality-item' xs='5'>{modality.credits}cr. ({formatMoney(modality.credits_in_euros)})</Col>
     </Row>
   );
 }
+
 
 const ServiceModalities = ({ serviceId, modalities, onSelect }) => {
   return (

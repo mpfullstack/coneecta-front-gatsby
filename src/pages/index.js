@@ -9,7 +9,7 @@ import { navigate } from 'gatsby'
 
 const IndexPage = () => {
   useEffect(() => {
-    navigate('/professional/?id=1');
+    navigate('/u/javimarrero');
   });
 
   return <p></p>;

@@ -6,21 +6,21 @@ const bookingSlice = createSlice({
 		'id': null, // null if is a new booking
 		'serviceId': null, // Selected service
     'modalityType': '', // Modality of the service
+    'timezones': [], // Time zones available to choose
     'availableDates': [], // Dates available for the selected service
-    'availableTimes': [], // Times available for the selected service and date
+    'timezone': '', // Selected time zone (By default should be the user browser timezone)
     'date': '', // Booking date selected
-    'fetchingAvailableDates': true,
     'time': '', // Booking time selected
-    'fetchingAvailableTimes': true
+    'isTimeAvailable': false, // Indicates if selected time is really available
+    'fetchingTimeZones': true,
+    'fetchingAvailableDates': true
 	},
   reducers: {
-    // loadBooking: state => state,
-    // initBooking: (state, action) => action.payload,
     selectService: (state, action) => {
       state.serviceId = action.payload.serviceId;
       state.modalityType = action.payload.modalityType;
       state.fetchingAvailableDates = true;
-      state.fetchingAvailableTimes = true;
+      state.fetchingTimeZones = true;
     },
     initAvailableDates: (state, action) => {
       state.availableDates = action.payload;
@@ -28,15 +28,22 @@ const bookingSlice = createSlice({
     },
     selectDate: (state, action) => {
       state.date = action.payload;
-      state.fetchingAvailableTimes = true;
-      // state.time = '';
-    },
-    initAvailableTimes: (state, action) => {
-      state.availableTimes = action.payload;
-      state.fetchingAvailableTimes = false;
     },
     selectTime: (state, action) => {
-      state.time = action.payload;
+      state.time = action.payload.value;
+      state.isTimeAvailable = action.payload.available;
+    },
+    fetchAvailableTimeZones: state => {
+      state.fetchingAvailableDates = true;
+      state.fetchingTimeZones = true;
+    },
+    initAvailableTimeZones: (state, action) => {
+      state.timezones = action.payload;
+      state.fetchingTimeZones = false;
+    },
+    selectTimeZone: (state, action) => {
+      state.timezone = action.payload;
+      state.fetchingAvailableDates = true;
     }
   }
 });
@@ -46,7 +53,9 @@ export const {
   selectDate,
   selectTime,
   initAvailableDates,
-  initAvailableTimes
+  selectTimeZone,
+  fetchAvailableTimeZones,
+  initAvailableTimeZones
 } = bookingSlice.actions
 
 export default bookingSlice.reducer;

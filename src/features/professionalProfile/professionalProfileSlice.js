@@ -17,7 +17,10 @@ const professionalProfileSlice = createSlice({
       state.id = action.payload.id;
       state.details = action.payload.details;
       state.services = action.payload.services;
-      state.reviews = action.payload.reviews;
+    },
+    loadProfileReviews: state => {},
+    initProfileReviews: (state, action) => {
+      state.reviews = action.payload;
     },
     collapseProfileHeader: (state, action) => {
       state.collapseProfileHeader = action.payload;
@@ -36,7 +39,9 @@ export const {
   initProfile,
   collapseProfileHeader,
   showService,
-  changeSection
+  changeSection,
+  loadProfileReviews,
+  initProfileReviews
 } = professionalProfileSlice.actions
 
 export default professionalProfileSlice.reducer;

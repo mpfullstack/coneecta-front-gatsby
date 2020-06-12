@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { loadProfile } from '../professionalProfile/professionalProfileSlice';
-import Query from '../../helpers/query';
 import ProfileHeader from '../../components/professionalProfile/profileHeader';
 import { Container, Row, Col } from 'react-bootstrap';
 import LoginForm from './loginForm';
@@ -16,15 +15,14 @@ const mapStateToProps = state => {
   }
 }
 
-export const ProfessionalProfile = ({ profile, loadProfile, location, booking }) => {
+export const ProfessionalProfile = ({ profile, loadProfile, location, slug }) => {
   useEffect(() => {
     if (!profile.id) {
-      const params = Query.getParams(location);
-      if (params.id) {
-        loadProfile({id: params.id});
+      if (slug !== '') {
+        loadProfile({id: slug});
       }
     }
-  }, [loadProfile, location, profile.id]);
+  }, [loadProfile, location, profile.id, slug]);
 
   const profileDetails = profile.details || {};
 

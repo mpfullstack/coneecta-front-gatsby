@@ -7,8 +7,12 @@ import { Container, Row, Col } from 'react-bootstrap';
 
 const HeaderWrapper = styled.header`
   width: 100%;
-  background-color: ${theme.backgroundHeaderColor};
+  background-color: '#fff';
+  height: 55px;
+  @media only screen and (max-width: ${theme.SIZES.M}) {
   height: 48px;
+    background-color: ${theme.backgroundHeaderColor};
+  }
   .header-inner {
     margin: 0 auto;
     max-width: ${theme.SIZES.maxWidth};

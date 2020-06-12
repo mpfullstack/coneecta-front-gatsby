@@ -19,7 +19,7 @@ function capitalise(value) {
     return value.charAt(0).toUpperCase() + value.slice(1);
 }
 
-export default function DatePicker({fromDate, endDate, selectDate, getSelectedDay, labelFormat}) {
+export default function DatePicker({fromDate, endDate, selectDate, getSelectedDay, labelFormat, isDateAvailable}) {
     const [selectedDate, setSelectedDate] = useState(fromDate || new Date());
     const firstSection = {marginLeft: '0'};
     const startDate = fromDate || new Date();
@@ -41,8 +41,39 @@ export default function DatePicker({fromDate, endDate, selectDate, getSelectedDa
         }
     };
 
+    function renderDay(month, j) {
+      const dayFormat = "E";
+      const dateFormat = "d";
+      const currentDate = addDays(month, j);
+      let classNames = '';
+      let isAvailable = true;
+      if (isDateAvailable) {
+        isAvailable = isDateAvailable(currentDate);
+      }
+      if (!isAvailable) {
+        classNames = ` not-available`;
+      }
+      return (
+        <div id={`${getId(addDays(startDate, j))}`}
+              className={`${styles.dateDayItem} dateDayItem${isSameDay(addDays(month, j), selectedDate) ? ' selected' : ''}${classNames}`}
+              style={getStyles(addDays(month, j))}
+              key={addDays(month, j)}
+              onClick={() => onDateClick(addDays(month, j))}
+              onKeyDown={() => null}
+              role='button'
+              aria-hidden='true'
+        >
+            <div className={`${styles.dayLabel} dayLabel`}>
+                {capitalise(format(addDays(month, j), dayFormat, { locale: es }))}
+            </div>
+            <div className={`${styles.dateLabel} dateLabel`}>
+                {format(addDays(month, j), dateFormat, { locale: es })}
+            </div>
+        </div>
+      );
+    }
+
     function renderDays() {
-        const dayFormat = "E";
         const dateFormat = "d";
         const months = [];
         let days = [];
@@ -52,24 +83,7 @@ export default function DatePicker({fromDate, endDate, selectDate, getSelectedDa
             start = i === 0 ? Number(format(startDate, dateFormat, { locale: es })) - 1 : 0;
             end = i === differenceInMonths(lastDate, startDate) ? Number(format(lastDate, "d")) : Number(format(lastDayOfMonth(month), "d"));
             for (let j = start; j < end; j++) {
-                days.push(
-                    <div id={`${getId(addDays(startDate, j))}`}
-                         className={`${styles.dateDayItem} dateDayItem${isSameDay(addDays(month, j), selectedDate) ? ' selected' : ''}`}
-                         style={getStyles(addDays(month, j))}
-                         key={addDays(month, j)}
-                         onClick={() => onDateClick(addDays(month, j))}
-                         onKeyDown={() => null}
-                         role='button'
-                         aria-hidden='true'
-                    >
-                        <div className={`${styles.dayLabel} dayLabel`}>
-                            {capitalise(format(addDays(month, j), dayFormat, { locale: es }))}
-                        </div>
-                        <div className={`${styles.dateLabel} dateLabel`}>
-                            {format(addDays(month, j), dateFormat, { locale: es })}
-                        </div>
-                    </div>
-                );
+                days.push(renderDay(month, j));
             }
             months.push(
                 <div className={`${styles.monthContainer} monthYearLabelContainer`} key={month}>

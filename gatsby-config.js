@@ -1,4 +1,5 @@
 module.exports = {
+  pathPrefix: `/reservas`,
   siteMetadata: {
     title: `Coneecta`,
     description: `Plataforma que ayuda a poner en contacto a personas que necesitan profesionales de cualquier materia, mediante clases individuales por videoconferencia o de forma presencial`,
@@ -32,7 +33,7 @@ module.exports = {
     },
     {
       resolve: `gatsby-plugin-create-client-paths`,
-      options: { prefixes: [`/profile/*`] },
+      options: { prefixes: [`/profile/*`, `/u/*`] },
     },
     {
       resolve: `gatsby-plugin-prefetch-google-fonts`,

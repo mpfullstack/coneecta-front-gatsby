@@ -10,7 +10,7 @@ const StartRatingComponentWrapper = styled.div`
 
 `;
 
-const Rating = ({ name, value, starCount, editing, size = 26 }) => {
+const Rating = ({ name, value = 0, starCount, editing, size = 26 }) => {
   return (
     <StartRatingComponentWrapper size={size}>
       <StarRatingComponent

@@ -12,7 +12,7 @@ const devMode = process.env.NODE_ENV === 'development';
 
 const sagaMiddleware = createSagaMiddleware();
 
-const middleware = [...getDefaultMiddleware({ thunk: false }), sagaMiddleware];
+const middleware = [...getDefaultMiddleware({ serializableCheck: false, thunk: false }), sagaMiddleware];
 
 if (devMode) {
   middleware.push(logger);

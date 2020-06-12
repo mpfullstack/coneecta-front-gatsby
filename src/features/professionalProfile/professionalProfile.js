@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { loadProfile, collapseProfileHeader } from './professionalProfileSlice';
-import Query from '../../helpers/query';
+import SEO from '../../components/seo';
 import { Container, Row, Col } from 'react-bootstrap';
 import ProfileHeader from '../../components/professionalProfile/profileHeader';
 import ProfessionalProfileSection from './professionalProfileSection';
@@ -22,21 +22,21 @@ const mapStateToProps = state => {
   }
 }
 
-export const ProfessionalProfile = ({ profile, loadProfile, collapseProfileHeader, location }) => {
+export const ProfessionalProfile = ({ profile, loadProfile, collapseProfileHeader, location, slug, serviceSlug }) => {
   useEffect(() => {
-    const params = Query.getParams(location);
-    if (params.id) {
-      loadProfile({id: params.id, sid: params.sid});
+    if (slug !== '') {
+      loadProfile({id: slug, sid: serviceSlug});
     } else {
       // TODO: Handle if no professional id is present in URL
     }
-  }, [loadProfile, location]);
+  }, [loadProfile, location, slug, serviceSlug]);
 
   const profileDetails = profile.details || {};
 
   return (
     <Container>
-      <ProfileHeader id={profile.id} {...profileDetails}
+      <SEO title='Professional' />
+      <ProfileHeader id={profile.id} slug={slug} serviceSlug={serviceSlug} {...profileDetails}
         collapse={profile.collapseProfileHeader} collapseProfileHeader={collapseProfileHeader} />
       <Row className='justify-content-md-center'>
         <Col xs='12' md='10'>

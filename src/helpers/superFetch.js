@@ -1,6 +1,7 @@
 const customHeader = () => ({
   'Content-Type': 'application/json',
   'Accept': 'application/json'
+  // 'Authorization': 'Basic Y29uZWVjdGE6R0FxZWVrN1J5TDZZNGI3eg==' // TODO: Only for dev
 });
 
 const handleFetchResponse = (response, customHandle) => {
