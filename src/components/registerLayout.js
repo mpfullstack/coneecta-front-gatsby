@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
+import { Link } from 'gatsby';
 import { connect } from 'react-redux';
-import { loadProfile } from '../professionalProfile/professionalProfileSlice';
-import ProfileHeader from '../../components/professionalProfile/profileHeader';
+import { loadProfile } from '../features/professionalProfile/professionalProfileSlice';
+import ProfileHeader from './professionalProfile/profileHeader';
 import { Container, Row, Col } from 'react-bootstrap';
-import LoginForm from './loginForm';
-import Booking from '../booking';
-import Query from '../../helpers/query';
+import Booking from '../features/booking/booking';
+import Query from '../helpers/query';
 
 const mapDispatchToProps = { loadProfile };
 const mapStateToProps = state => {
@@ -16,7 +16,7 @@ const mapStateToProps = state => {
   }
 }
 
-export const ProfessionalProfile = ({ profile, loadProfile, location }) => {
+export const RegisterLayout = ({ profile, loadProfile, location, children }) => {
   // TODO: Check if it work on build production as location is not ready
   const slug = Query.getParams(location).slug;
 
@@ -38,11 +38,15 @@ export const ProfessionalProfile = ({ profile, loadProfile, location }) => {
       <Row className='justify-content-md-center'>
         <Col xs='12' md='10'>
           <Booking slug={slug} />
-          <LoginForm />
+          <nav>
+            <Link to={`/login?slug=${slug}`}>Login</Link>
+            <Link to={`/signup?slug=${slug}`}>Sign Up</Link>
+          </nav>
+          {children}
         </Col>
       </Row>
     </Container>
   );
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProfessionalProfile);
+export default connect(mapStateToProps, mapDispatchToProps)(RegisterLayout);

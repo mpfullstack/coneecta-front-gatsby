@@ -32,11 +32,7 @@ export default () => {
     });
     let requiredFields = ['email', 'password'];
     let requiredValidation = requiredFields.every(fieldname => {
-      if (formState.touched[fieldname]) {
-        return (fieldname in formState.validity) && formState.validity[fieldname];
-      } else {
-        return true;
-      }
+      return (fieldname in formState.validity) && formState.validity[fieldname];
     });
     return valid && requiredValidation;
   }
@@ -72,13 +68,13 @@ export default () => {
             })} />
         </RBForm.Row>
         <RBForm.Row>
-          <FormControl label={t('password')}  name={'password'} error={getError('password')} isValid={isValid('password')}
+          <FormControl label={t('password')} name={'password'} error={getError('password')} isValid={isValid('password')}
             {...input.password({
               name: 'password',
               validate: validatePassword
             })} />
         </RBForm.Row>
-        {isFormValid(formState) ?
+        {!formState.isPristine() && isFormValid(formState) ?
           <ActionButtons>
             <Button type='submit' className='confirm-button'>Login</Button>
           </ActionButtons>

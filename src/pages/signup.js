@@ -5,16 +5,16 @@ import { Location } from '@reach/router';
 import { Provider } from 'react-redux';
 import store, { persistor } from '../redux/store';
 import { PersistGate } from 'redux-persist/integration/react';
-import Login from '../features/loginSignUp/login';
+import SignUp from '../features/loginSignUp/signup';
 
 export default () => {
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <Layout>
-          <SEO title='Login' />
+          <SEO title='SignUp' />
           <Location>
-            {props => <Login {...props} />}
+            {props => <SignUp {...props} />}
           </Location>
         </Layout>
       </PersistGate>
