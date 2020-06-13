@@ -12,7 +12,7 @@ export default () => {
   return (
     <Provider store={store}>
       <Layout>
-        <Router basepath="/profile">
+      <Router basepath={`${process.env.PATH_PREFIX}/profile`}>
           <PrivateRoute path="/" component={Profile} />
           <PrivateRoute path="/payment_confirmed/:id" component={PaymentConfirmed} />
           <Login path="/login" />

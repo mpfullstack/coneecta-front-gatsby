@@ -12,7 +12,7 @@ export default () => {
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <Layout>
-          <Router basepath="/u">
+          <Router basepath={`${process.env.PATH_PREFIX}/u`}>
             <ProfessionalProfile path='/:slug' />
             <ProfessionalReviews path='/:slug/reviews' />
             <ProfessionalProfile path='/:slug/:serviceSlug' />

@@ -1,5 +1,9 @@
+require("dotenv").config({
+  path: `.env.${process.env.NODE_ENV}`,
+})
+
 module.exports = {
-  pathPrefix: `/reservas`,
+  pathPrefix: process.env.PATH_PREFIX,
   siteMetadata: {
     title: `Coneecta`,
     description: `Plataforma que ayuda a poner en contacto a personas que necesitan profesionales de cualquier materia, mediante clases individuales por videoconferencia o de forma presencial`,
