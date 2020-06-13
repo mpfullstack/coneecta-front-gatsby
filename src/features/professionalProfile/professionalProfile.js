@@ -40,7 +40,7 @@ export const ProfessionalProfile = ({ profile, loadProfile, collapseProfileHeade
         collapse={profile.collapseProfileHeader} collapseProfileHeader={collapseProfileHeader} />
       <Row className='justify-content-md-center'>
         <Col xs='12' md='10'>
-          <ProfessionalProfileSection />
+          <ProfessionalProfileSection slug={slug} />
         </Col>
       </Row>
     </Container>

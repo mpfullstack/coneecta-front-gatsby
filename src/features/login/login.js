@@ -5,6 +5,7 @@ import ProfileHeader from '../../components/professionalProfile/profileHeader';
 import { Container, Row, Col } from 'react-bootstrap';
 import LoginForm from './loginForm';
 import Booking from '../booking';
+import Query from '../../helpers/query';
 
 const mapDispatchToProps = { loadProfile };
 const mapStateToProps = state => {
@@ -15,10 +16,13 @@ const mapStateToProps = state => {
   }
 }
 
-export const ProfessionalProfile = ({ profile, loadProfile, location, slug }) => {
+export const ProfessionalProfile = ({ profile, loadProfile, location }) => {
+  // TODO: Check if it work on build production as location is not ready
+  const slug = Query.getParams(location).slug;
+
   useEffect(() => {
-    if (!profile.id) {
-      if (slug !== '') {
+    if (slug !== '') {
+      if (!profile.id) {
         loadProfile({id: slug});
       }
     }
@@ -29,11 +33,11 @@ export const ProfessionalProfile = ({ profile, loadProfile, location, slug }) =>
   return (
     <Container>
       {profile.id ?
-        <ProfileHeader id={profile.id} {...profileDetails} collapse={true} />
+        <ProfileHeader id={profile.id} slug={slug} {...profileDetails} collapse={true} />
         : null}
       <Row className='justify-content-md-center'>
         <Col xs='12' md='10'>
-          <Booking />
+          <Booking slug={slug} />
           <LoginForm />
         </Col>
       </Row>

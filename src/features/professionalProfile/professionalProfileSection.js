@@ -54,7 +54,8 @@ const ProfessionalProfileSection = ({
   selectDate,
   selectTime,
   booking,
-  fetchAvailableTimeZones
+  fetchAvailableTimeZones,
+  slug
 }) => {
   const { t } = useTranslation();
   const profileServices = profile.services && profile.services.length ? profile.services : null;
@@ -115,7 +116,7 @@ const ProfessionalProfileSection = ({
         </Row>
         <Row>
           <Col>
-            <DateTimePicker profile={profile} booking={booking}
+            <DateTimePicker profile={profile} booking={booking} slug={slug}
               onSelectDate={selectDate} onSelectTime={selectTime} onSelectTimeZone={selectTimeZone}
               fetchAvailableTimeZones={fetchAvailableTimeZones} />
           </Col>
