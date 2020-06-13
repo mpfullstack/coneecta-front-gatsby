@@ -1,10 +1,18 @@
+require("dotenv").config({
+  path: `.env.${process.env.NODE_ENV}`,
+})
+
 module.exports = {
+  pathPrefix: process.env.PATH_PREFIX,
   siteMetadata: {
-    title: `Gatsby Default Starter`,
-    description: `Kick off your next, great Gatsby project with this default starter. This barebones starter ships with the main Gatsby configuration files you might need.`,
-    author: `@gatsbyjs`,
+    title: `Coneecta`,
+    description: `Plataforma que ayuda a poner en contacto a personas que necesitan profesionales de cualquier materia, mediante clases individuales por videoconferencia o de forma presencial`,
+    author: `@mpfullstack`,
   },
   plugins: [
+    `gatsby-plugin-sass`,
+    `gatsby-plugin-no-sourcemaps`,
+    `gatsby-plugin-styled-components`,
     `gatsby-plugin-react-helmet`,
     {
       resolve: `gatsby-source-filesystem`,
@@ -18,15 +26,41 @@ module.exports = {
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: `gatsby-starter-default`,
-        short_name: `starter`,
+        name: `Coneecta`,
+        short_name: `Coneecta`,
         start_url: `/`,
-        background_color: `#663399`,
-        theme_color: `#663399`,
+        background_color: `#003855`,
+        theme_color: `#003855`,
         display: `minimal-ui`,
         icon: `src/images/gatsby-icon.png`, // This path is relative to the root of the site.
       },
     },
+    {
+      resolve: `gatsby-plugin-create-client-paths`,
+      options: { prefixes: [`/profile/*`, `/u/*`] },
+    },
+    {
+      resolve: `gatsby-plugin-prefetch-google-fonts`,
+      options: {
+        fonts: [
+          {
+            family: `Roboto Condensed`,
+            subsets: [`latin`],
+            variants: [`300`, `400`, `700`]
+          },
+          {
+            family: `Roboto`,
+            subsets: [`latin`],
+            variants: [`300`, `400`, `400italic`, `700`]
+          },
+          {
+            family: `Lato`,
+            subsets: [`latin`],
+            variants: [`300`, `400`, `700`]
+          }
+        ]
+      }
+    }
     // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.dev/offline
     // `gatsby-plugin-offline`,

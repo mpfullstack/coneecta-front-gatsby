@@ -1,0 +1,94 @@
+html {
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+
+html,
+body {
+  font-family: 'Roboto Condensed';
+}
+
+body {
+  font-weight: 400;
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html,
+body
+ul,
+ol,
+a,
+div,
+address,
+section,
+article,
+nav {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    img {
+        border: none;
+        display: inline-block;
+    }
+}
+
+ul,
+ol {
+    list-style-type: none;
+    box-sizing: border-box;
+}
+
+a {
+    text-decoration: none !important;
+    outline: 0;
+}
+
+h1,
+h2,
+h3 {
+    margin: .5em 0;
+    padding: 0;
+}
+
+h2 {
+  font-size: 20px;
+  text-transform: uppercase;
+}
+
+input,
+select {
+    outline: none;
+    width: 100%;
+    border: none;
+    border-radius: 0px;
+    box-sizing: border-box;
+    outline:none;
+    &:required,
+    &:invalid {
+        box-shadow: none;
+    }
+}
+
+button {
+    outline: none;
+    outline-style: none;
+}
+
+*:focus {
+    outline: 0 !important;
+}
+
+button::-moz-focus-inner {
+  border: 0;    /*removes dotted lines around buttons*/
+}
+
+/* Layout styles */
+.layout {
+  width: 100%;
+}
+
+.modal-content {
+  border: none;
+}
