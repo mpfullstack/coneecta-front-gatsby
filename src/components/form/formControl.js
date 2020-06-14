@@ -1,11 +1,11 @@
 import React from 'react';
 import { Col, Form as RBForm } from 'react-bootstrap';
 
-export default ({ label, name, error, isValid, ...rest}) => {
+export default ({ label, placeholder, name, error, isValid, as = 'input', children = null, ...rest}) => {
   return (
     <RBForm.Group as={Col} md='4' controlId={name}>
-      {/* <RBForm.Label></RBForm.Label> */}
-      <RBForm.Control placeholder={label} {...isValid} {...rest} />
+      {label ? <RBForm.Label>{label}</RBForm.Label> : null}
+      <RBForm.Control placeholder={placeholder} {...isValid} as={as} {...rest}>{children}</RBForm.Control>
       <RBForm.Control.Feedback type={isValid.isValid ? 'valid' : 'invalid'}>
         {error}
       </RBForm.Control.Feedback>
