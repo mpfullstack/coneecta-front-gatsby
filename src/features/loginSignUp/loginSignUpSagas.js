@@ -7,7 +7,6 @@ import api from '../../api';
 
 function* onSignUp() {
   yield takeLatest(signUp, function* ({ payload }) {
-    debugger;
     const result = yield call(api.signUp, payload);
     if (result.error) {
       yield put(showApiError(result.error));

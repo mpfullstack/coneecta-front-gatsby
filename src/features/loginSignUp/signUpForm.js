@@ -15,7 +15,8 @@ const mapDispatchToProps = { signUp };
 const mapStateToProps = state => {
   return {
     timezone: state.booking.timezone,
-    timezones: state.booking.timezones
+    timezones: state.booking.timezones,
+    signUpStatus: state.loginSignUp.signUpStatus
   }
 }
 
@@ -28,7 +29,7 @@ const FormWrapper = styled.div`
   }
 `;
 
-const SignUpForm = ({ signUp, timezones, timezone }) => {
+const SignUpForm = ({ signUp, timezones, timezone, signUpStatus }) => {
   const { t } = useTranslation();
   const formData = {
     name: '',
@@ -40,7 +41,6 @@ const SignUpForm = ({ signUp, timezones, timezone }) => {
   };
 
   function isFormValid(formState) {
-    debugger;
     let valid =  Object.keys(formState.validity).every(key => {
       return formState.validity[key];
     });
@@ -128,7 +128,7 @@ const SignUpForm = ({ signUp, timezones, timezone }) => {
                 })
               }
             }>
-              {t('signmeup')}
+              {signUpStatus === 'loading' ? t('signingmeup') : t('signmeup')}
           </PrimaryButton>
         </ActionButtons>
       </FormWrapper>

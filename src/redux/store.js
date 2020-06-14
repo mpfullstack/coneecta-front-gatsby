@@ -20,7 +20,8 @@ if (devMode) {
 
 const persistConfig = {
   key: 'root',
-  storage
+  storage,
+  blacklist: ['loginSignUp']
 }
 
 const createStore = (preloadedState = {}) => {
