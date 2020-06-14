@@ -19,13 +19,24 @@
 
   "unavailable_profile": "Lo sentimos, este perfil no está disponible",
 
+  "login": "Acceso",
+  "loginme": "Acceder",
+  "signup": "Registro",
+  "signmeup": "Registrarme",
+
   "Select the timezone": "Selecciona la zona horaria",
   "Select the time": "Selecciona la hora",
 
   "lowAvailabilityMessage": "Horario de baja disponibilidad, es posible que el profesional no pueda aceptar tu reserva.",
 
+  "name": "Nombre",
   "email": "Correo electrónico",
   "password": "Contraseña",
+  "newsletterSignUp": "Deseo recibir información comercial relacionada con mis intereses",
+  "accept": "Acepto la",
+  "privacyPolicy": "política de privacidad",
+  "ofConeecta": "de Coneecta",
+  "mustAcceptPrivacyPolicy": "Debes aceptar la política de privacidad",
 
   "isRequired": "Este campo es obligatorio",
   "wrongEmailFormat": "El formato del correo electrónico no es válido"

@@ -1,10 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
-import { Button, Form as RBForm } from 'react-bootstrap';
+import { Form as RBForm } from 'react-bootstrap';
 import Form from '../../components/form';
 import FormControl from '../../components/form/formControl';
 import ActionButtons from '../../components/buttons/actionButtons';
+import PrimaryButton from '../../components/buttons/primaryButton';
 import { validateEmail, validatePassword } from '../../helpers/validators';
 
 const FormWrapper = styled.div`
@@ -74,11 +75,11 @@ export default () => {
               validate: validatePassword
             })} />
         </RBForm.Row>
-        {!formState.isPristine() && isFormValid(formState) ?
-          <ActionButtons>
-            <Button type='submit' className='confirm-button'>Login</Button>
-          </ActionButtons>
-          : null}
+        <ActionButtons>
+          <PrimaryButton onClick={() => null} className='confirm-button' variant='primary' size='lg' disabled={!isFormValid(formState)}>
+            {t('loginme')}
+          </PrimaryButton>
+        </ActionButtons>
       </FormWrapper>
     );
   }

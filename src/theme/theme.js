@@ -123,6 +123,16 @@ const skeletonHighlightColor = theme('mode', {
   dark: COLORS.superLightBlue
 });
 
+const inputBorderColorFocus = theme('mode', {
+  light: COLORS.quinary,
+  dark: COLORS.superLightBlue
+});
+
+const inputBoxShadowColorFocus = theme('mode', {
+  light: `${COLORS.quinary}90`,
+  dark: COLORS.superLightBlue
+});
+
 // Transitions
 // -------------------------------------------------------
 const TRANSITIONS = {
@@ -148,6 +158,8 @@ export default {
   iconColor,
   skeletonColor,
   skeletonHighlightColor,
+  inputBorderColorFocus,
+  inputBoxShadowColorFocus,
   // Constants
   COLORS,
   SIZES,
