@@ -1,30 +1,48 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import styled from 'styled-components';
+import i18n from '../../locales/i18n';
 import { useTranslation } from 'react-i18next';
 import { Form as RBForm } from 'react-bootstrap';
 import Form from '../../components/form';
+import { login } from './loginSignUpSlice';
 import FormControl from '../../components/form/formControl';
 import ActionButtons from '../../components/buttons/actionButtons';
 import PrimaryButton from '../../components/buttons/primaryButton';
 import { validateEmail, validatePassword } from '../../helpers/validators';
 
+const mapDispatchToProps = { login };
+const mapStateToProps = ({ booking, loginSignUp }) => {
+  return {
+    timezone: booking.timezone,
+    timezones: booking.timezones,
+    loginStatus: loginSignUp.loginStatus,
+    loginErrors: loginSignUp.loginErrors.map(error => ({
+      field: error.field,
+      error: i18n.t(error.error)
+    }))
+  }
+}
+
 const FormWrapper = styled.div`
   padding-bottom: 100px;
+  .privacy-policy {
+    &.invalid-feedback {
+      display: inline-block;
+    }
+  }
 `;
 
-export default () => {
+const LoginForm = ({ login, timezones, timezone, loginStatus, loginErrors }) => {
+  const { t } = useTranslation();
   const formData = {
     email: '',
     password: ''
   };
 
-  const { t } = useTranslation();
-
-  function handleSubmit(e) {
-    // onSubmit(formState.values);
-    // const values = formState.values;
-    e.preventDefault();
-    e.stopPropagation();
+  const fieldValidators = {
+    'email': validateEmail,
+    'password': validatePassword
   }
 
   function isFormValid(formState) {
@@ -33,21 +51,36 @@ export default () => {
     });
     let requiredFields = ['email', 'password'];
     let requiredValidation = requiredFields.every(fieldname => {
-      return (fieldname in formState.validity) && formState.validity[fieldname];
+      if (fieldname in formState.errors) {
+        return false;
+      } else if (fieldname in fieldValidators && typeof fieldValidators[fieldname] === 'function') {
+        return fieldValidators[fieldname](formState.values[fieldname]) === undefined;
+      } else {
+        return false;
+      }
     });
     return valid && requiredValidation;
   }
 
   function renderForm(formState, input) {
-    function isValid(name) {
+    function isValid(name, valdidateFunc) {
       if (formState.isPristine()) {
         return {};
       } else {
-        let valid = formState.validity[name];
-        return {
-          isInvalid: !valid,
-          isValid: valid
-        };
+        if (name in formState.errors) {
+          return {
+            isInvalid: true,
+            isValid: false
+          };
+        } else if (typeof valdidateFunc === 'function') {
+          let valid = valdidateFunc(formState.values[name]);
+          return {
+            isInvalid: valid !== undefined,
+            isValid: valid === undefined
+          };
+        } else {
+          return {}
+        }
       }
     }
 
@@ -62,22 +95,23 @@ export default () => {
     return (
       <FormWrapper>
         <RBForm.Row>
-          <FormControl label={t('email')} name={'email'} error={getError('email')} isValid={isValid('email')}
+          <FormControl placeholder={t('email')} name={'email'} error={getError('email')} isValid={isValid('email', validateEmail)}
             {...input.email({
               name: 'email',
               validate: validateEmail
             })} />
         </RBForm.Row>
         <RBForm.Row>
-          <FormControl label={t('password')} name={'password'} error={getError('password')} isValid={isValid('password')}
+          <FormControl placeholder={t('password')} name={'password'} error={getError('password')} isValid={isValid('password', validatePassword)}
             {...input.password({
               name: 'password',
               validate: validatePassword
             })} />
         </RBForm.Row>
         <ActionButtons>
-          <PrimaryButton onClick={() => null} className='confirm-button' variant='primary' size='lg' disabled={!isFormValid(formState)}>
-            {t('loginme')}
+          <PrimaryButton className='confirm-button' variant='primary' size='lg' disabled={!isFormValid(formState)}
+            onClick={() => login({...formState.values})}>
+              {loginStatus === 'loading' ? t('loggingme') : t('logmein')}
           </PrimaryButton>
         </ActionButtons>
       </FormWrapper>
@@ -85,6 +119,8 @@ export default () => {
   }
 
   return (
-    <Form onSubmit={handleSubmit} formData={formData} renderForm={renderForm} isFormValid={isFormValid} />
+    <Form formData={formData} renderForm={renderForm} isFormValid={isFormValid} errors={loginErrors} />
   );
 };
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);

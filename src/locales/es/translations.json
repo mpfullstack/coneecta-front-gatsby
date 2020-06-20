@@ -20,7 +20,8 @@
   "unavailable_profile": "Lo sentimos, este perfil no está disponible",
 
   "login": "Acceso",
-  "loginme": "Acceder",
+  "logmein": "Acceder",
+  "loggingmein": "Accediendo...",
   "signup": "Registro",
   "signmeup": "Registrarme",
   "signingmeup": "Registrando...",
@@ -41,5 +42,7 @@
 
   "isRequired": "Este campo es obligatorio",
   "wrongEmailFormat": "El formato del correo electrónico no es válido",
-  "_unique": "El correo electrónico ya está registrado"
+  "_unique": "El correo electrónico ya está registrado",
+
+  "unexpectedError": "Lo sentimos, se ha producido un error con la conexión. Vuelve a intentarlo o recarga la página."
 }

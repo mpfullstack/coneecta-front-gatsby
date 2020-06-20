@@ -4,12 +4,14 @@ const professionalProfileUrl = `${professionalsUrl}?slug=:slug`;
 const professionalProfileReviewsUrl = `${base}/reviews?profile=:id`;
 const availableDatesUrl = `${base}/availability?timezone=:timezone&service=:serviceId`
 const timeZonesUrl = `${base}/timezones`;
-const signUpUrl = `${base}/signup`
+const loginUrl = `${base}/login`;
+const signUpUrl = `${base}/signup`;
 
 export {
   professionalProfileUrl,
   availableDatesUrl,
   timeZonesUrl,
   professionalProfileReviewsUrl,
+  loginUrl,
   signUpUrl
 };

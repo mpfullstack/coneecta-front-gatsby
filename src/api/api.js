@@ -1,7 +1,7 @@
 import SuperFetch from '../helpers/superFetch';
 import {
   professionalProfileUrl, timeZonesUrl, availableDatesUrl, professionalProfileReviewsUrl,
-  signUpUrl
+  loginUrl, signUpUrl
 } from './urls';
 
 async function getProfessionalProfile(slug) {
@@ -22,6 +22,10 @@ async function getProfessionalProfileReviews(id) {
   return await SuperFetch.get(professionalProfileReviewsUrl.replace(':id', id));
 };
 
+async function login(data) {
+  return await SuperFetch.post(loginUrl, data);
+};
+
 async function signUp(data) {
   return await SuperFetch.post(signUpUrl, data);
 };
@@ -31,6 +35,7 @@ const api = {
   getAvailableTimezones,
   getAvailableDates,
   getProfessionalProfileReviews,
+  login,
   signUp
 };
 

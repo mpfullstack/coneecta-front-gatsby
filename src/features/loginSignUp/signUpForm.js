@@ -32,6 +32,11 @@ const FormWrapper = styled.div`
       display: inline-block;
     }
   }
+  .form-check-label {
+    a {
+      text-decoration: underline;
+    }
+  }
 `;
 
 const SignUpForm = ({ signUp, timezones, timezone, signUpStatus, signUpErrors }) => {

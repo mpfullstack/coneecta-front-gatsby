@@ -3,13 +3,13 @@ import styled from 'styled-components';
 import { Link } from 'gatsby';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
-import { loadProfile } from '../features/professionalProfile/professionalProfileSlice';
+import { loadProfessionalProfile } from '../features/professionalProfile/professionalProfileSlice';
 import ProfileHeader from './professionalProfile/profileHeader';
 import { Container, Row, Col } from 'react-bootstrap';
 import Booking from '../features/booking/booking';
 import Query from '../helpers/query';
 
-const mapDispatchToProps = { loadProfile };
+const mapDispatchToProps = { loadProfessionalProfile };
 const mapStateToProps = state => {
   return {
     profile: state.professionalProfile,
@@ -42,7 +42,7 @@ const RegisterWrapper = styled.div`
   }
 `;
 
-export const RegisterLayout = ({ profile, loadProfile, location, children }) => {
+export const RegisterLayout = ({ profile, loadProfessionalProfile, location, children }) => {
   // TODO: Check if it work on build production as location is not ready
   const slug = Query.getParams(location).slug;
   const { t } = useTranslation();
@@ -50,10 +50,10 @@ export const RegisterLayout = ({ profile, loadProfile, location, children }) => 
   useEffect(() => {
     if (slug !== '') {
       if (!profile.id) {
-        loadProfile({id: slug});
+        loadProfessionalProfile({id: slug});
       }
     }
-  }, [loadProfile, location, profile.id, slug]);
+  }, [loadProfessionalProfile, location, profile.id, slug]);
 
   const profileDetails = profile.details || {};
 

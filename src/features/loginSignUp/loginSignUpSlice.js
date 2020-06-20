@@ -3,11 +3,25 @@ import { createSlice } from '@reduxjs/toolkit'
 const loginSignUpSlice = createSlice({
   name: 'loginSignUp',
   initialState: {
-		'loginStatus': 'idle', // Login status: idle, loading, error
+    'loginStatus': 'idle', // Login status: idle, loading, error
+    'loginErrors': [], // Holds an array of errors in login form fields
     'signUpStatus': 'idle', // SignUp status: idle, loading, error
-    'signUpErrors': [] // Holds an array of errors of fields form
+    'signUpErrors': [] // Holds an array of errors in signup form fields
 	},
   reducers: {
+    login: state => {
+      state.loginStatus = 'loading';
+    },
+    loggedIn: state => {
+      state.loginStatus = 'idle';
+    },
+    loginError: (state, action) => {
+      state.loginStatus = 'error';
+      state.loginErrors = action.payload;
+    },
+    resetLoginStatus: state => {
+      state.loginStatus = 'idle';
+    },
     signUp: state => {
       state.signUpStatus = 'loading';
     },
@@ -17,14 +31,22 @@ const loginSignUpSlice = createSlice({
     signUpError: (state, action) => {
       state.signUpStatus = 'error';
       state.signUpErrors = action.payload;
+    },
+    resetSignUpStatus: state => {
+      state.signUpStatus = 'idle';
     }
   }
 });
 
 export const {
+  login,
+  loggedIn,
+  loginError,
+  resetLoginStatus,
   signUp,
   signedUp,
-  signUpError
+  signUpError,
+  resetSignUpStatus
 } = loginSignUpSlice.actions
 
 export default loginSignUpSlice.reducer;

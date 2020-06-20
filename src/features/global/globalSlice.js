@@ -7,7 +7,8 @@ const globalSlice = createSlice({
 	},
   reducers: {
     showApiError: (state, action) => {
-      state.apiError = action.payload;
+      const { code } = action.payload;
+      state.apiError = code || action.payload;
     },
     hideApiError: state => {
       state.apiError = null;
@@ -19,5 +20,7 @@ const globalSlice = createSlice({
 });
 
 export const { showApiError, hideApiError, handleHeaderClick } = globalSlice.actions
+
+export const API_ERROR_DURATION = 10000;
 
 export default globalSlice.reducer;

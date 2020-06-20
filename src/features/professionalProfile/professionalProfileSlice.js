@@ -12,13 +12,13 @@ const professionalProfileSlice = createSlice({
     'section': 'serviceList' // serviceList, datePicker
 	},
   reducers: {
-    loadProfile: state => state,
+    loadProfessionalProfile: state => state,
     initProfile: (state, action) => {
       state.id = action.payload.id;
       state.details = action.payload.details;
       state.services = action.payload.services;
     },
-    loadProfileReviews: state => {},
+    loadProfessionalProfileReviews: state => {},
     initProfileReviews: (state, action) => {
       state.reviews = action.payload;
     },
@@ -35,12 +35,12 @@ const professionalProfileSlice = createSlice({
 });
 
 export const {
-  loadProfile,
+  loadProfessionalProfile,
   initProfile,
   collapseProfileHeader,
   showService,
   changeSection,
-  loadProfileReviews,
+  loadProfessionalProfileReviews,
   initProfileReviews
 } = professionalProfileSlice.actions
 

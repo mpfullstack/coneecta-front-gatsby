@@ -1,5 +1,5 @@
 import { all, takeLatest, put, call, fork } from 'redux-saga/effects';
-import { loadProfile, initProfile } from './profileSlice';
+import { loadProfessionalProfile, initProfile } from './profileSlice';
 
 const api = {
   fetchProfile: () => {
@@ -19,7 +19,7 @@ const api = {
 };
 
 function* onLoadProfile() {
-  yield takeLatest(loadProfile, function* () {
+  yield takeLatest(loadProfessionalProfile, function* () {
     const profile = yield call(api.fetchProfile);
     yield put(initProfile(profile));
   });
