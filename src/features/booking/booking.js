@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { navigate } from '@reach/router';
+import { navigate } from 'gatsby';
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
 import { Row, Col } from 'react-bootstrap';

@@ -1,5 +1,7 @@
 import { all, takeLatest, put, call, fork, delay } from 'redux-saga/effects';
+import Query from '../../helpers/query';
 import { navigate } from 'gatsby';
+import { login as loginUser } from '../../helpers/authentication';
 import {
   login, loggedIn, loginError, signUp, signedUp, signUpError,
   resetLoginStatus, resetSignUpStatus
@@ -27,7 +29,9 @@ function* onLogin() {
       // Handle login OK
       yield put(loggedIn());
       yield put(initProfile(result));
-      yield navigate('/profile/payment');
+      yield loginUser();
+      const params = Query.getParams(window.location);
+      yield navigate(`/profile/payment?slug=${params.slug}`);
     }
   });
 }
@@ -48,7 +52,10 @@ function* onSignUp() {
       // Handle singup OK
       yield put(signedUp());
       yield put(initProfile(result));
-      yield navigate('/profile/payment');
+      yield loginUser();
+      debugger;
+      const params = Query.getParams(window.location);
+      yield navigate(`/profile/payment?slug=${params.slug}`);
     }
   });
 }

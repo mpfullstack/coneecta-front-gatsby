@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
-import { Link } from 'gatsby';
+import { isLoggedIn } from '../helpers/authentication';
+import { Link, navigate } from 'gatsby';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { loadProfessionalProfile } from '../features/professionalProfile/professionalProfileSlice';
@@ -10,11 +11,11 @@ import Booking from '../features/booking/booking';
 import Query from '../helpers/query';
 
 const mapDispatchToProps = { loadProfessionalProfile };
-const mapStateToProps = state => {
+const mapStateToProps = ({ professionalProfile, booking, global }) => {
   return {
-    profile: state.professionalProfile,
-    global: state.global,
-    booking: state.booking
+    professionalProfile,
+    global,
+    booking
   }
 }
 
@@ -42,20 +43,23 @@ const RegisterWrapper = styled.div`
   }
 `;
 
-export const RegisterLayout = ({ profile, loadProfessionalProfile, location, children }) => {
+export const RegisterLayout = ({ professionalProfile, loadProfessionalProfile, location, children }) => {
   // TODO: Check if it work on build production as location is not ready
   const slug = Query.getParams(location).slug;
   const { t } = useTranslation();
 
   useEffect(() => {
-    if (slug !== '') {
-      if (!profile.id) {
+    // If user is logged in, navigate to /profile/payment
+    if (isLoggedIn()) {
+      navigate(`/profile/payment?slug=${slug}`);
+    } else if (slug !== '') {
+      if (!professionalProfile.id) {
         loadProfessionalProfile({id: slug});
       }
     }
-  }, [loadProfessionalProfile, location, profile.id, slug]);
+  }, [loadProfessionalProfile, location, professionalProfile.id, slug]);
 
-  const profileDetails = profile.details || {};
+  const profileDetails = professionalProfile.details || {};
 
   function getClassName(section) {
     if (location.pathname.indexOf(section) !== -1) {
@@ -68,8 +72,8 @@ export const RegisterLayout = ({ profile, loadProfessionalProfile, location, chi
   return (
     <RegisterWrapper>
       <Container>
-        {profile.id ?
-          <ProfileHeader id={profile.id} slug={slug} {...profileDetails} collapse={true} />
+        {professionalProfile.id ?
+          <ProfileHeader id={professionalProfile.id} slug={slug} {...profileDetails} collapse={true} />
           : null}
         <Row className='justify-content-md-center'>
           <Col xs='12' md='10'>

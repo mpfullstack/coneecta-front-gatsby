@@ -69,7 +69,7 @@ const ConfirmButton = ({ date, time, fetchingAvailableDates, slug }) => {
   if (date && time && !fetchingAvailableDates) {
     disabled = false;
   }
-  return <PrimaryButton onClick={() => navigate(`/login${slug ? `?slug=${slug}` : ''}`)}
+  return <PrimaryButton onClick={() => navigate(`/profile/payment${slug ? `?slug=${slug}` : ''}`)}
     className='confirm-button' variant='primary' size='lg' disabled={disabled}>
       {t('Book')}
   </PrimaryButton>;

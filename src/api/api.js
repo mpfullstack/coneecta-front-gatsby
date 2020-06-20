@@ -2,6 +2,7 @@ import SuperFetch from '../helpers/superFetch';
 import {
   professionalProfileUrl, timeZonesUrl, availableDatesUrl, professionalProfileReviewsUrl,
   loginUrl, signUpUrl
+  //  profileUrl
 } from './urls';
 
 async function getProfessionalProfile(slug) {
@@ -30,13 +31,34 @@ async function signUp(data) {
   return await SuperFetch.post(signUpUrl, data);
 };
 
+async function getProfile() {
+  // TODO: Faking profile
+  return {details: null};
+  // return {
+  //   details: {
+  //     "name": "Marc",
+  //     "email": "markkus.80@gmail.com",
+  //     "timezone": "Europe/Madrid",
+  //     "newsletter_subscriber": false,
+  //     "role": "client",
+  //     "enabled": 1,
+  //     "preferred_language": "es",
+  //     "created": "2020-06-13T18:11:39+0000",
+  //     "modified": "2020-06-13T18:11:39+0000",
+  //     "id": 911
+  //   }
+  // };
+  // return await SuperFetch.post(profileUrl, { details: data });
+}
+
 const api = {
   getProfessionalProfile,
   getAvailableTimezones,
   getAvailableDates,
   getProfessionalProfileReviews,
   login,
-  signUp
+  signUp,
+  getProfile
 };
 
 export default api;

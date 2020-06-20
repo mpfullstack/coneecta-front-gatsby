@@ -1,6 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { Router, Redirect } from "@reach/router";
+import { Router } from "@reach/router";
 import { PersistGate } from 'redux-persist/integration/react';
 import store, { persistor } from '../redux/store';
 import Profile from '../features/profile';
