@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { loadProfile, collapseProfileHeader } from './professionalProfileSlice';
+import { loadProfessionalProfile, collapseProfileHeader } from './professionalProfileSlice';
 import SEO from '../../components/seo';
 import { Container, Row, Col } from 'react-bootstrap';
 import ProfileHeader from '../../components/professionalProfile/profileHeader';
@@ -13,7 +13,7 @@ import ProfessionalProfileSection from './professionalProfileSection';
 // Stars rating component
 // https://www.npmjs.com/package/react-star-rating-component
 
-const mapDispatchToProps = { loadProfile, collapseProfileHeader };
+const mapDispatchToProps = { loadProfessionalProfile, collapseProfileHeader };
 const mapStateToProps = state => {
   return {
     profile: state.professionalProfile,
@@ -22,14 +22,14 @@ const mapStateToProps = state => {
   }
 }
 
-export const ProfessionalProfile = ({ profile, loadProfile, collapseProfileHeader, location, slug, serviceSlug }) => {
+export const ProfessionalProfile = ({ profile, loadProfessionalProfile, collapseProfileHeader, location, slug, serviceSlug }) => {
   useEffect(() => {
     if (slug !== '') {
-      loadProfile({id: slug, sid: serviceSlug});
+      loadProfessionalProfile({id: slug, sid: serviceSlug});
     } else {
       // TODO: Handle if no professional id is present in URL
     }
-  }, [loadProfile, location, slug, serviceSlug]);
+  }, [loadProfessionalProfile, location, slug, serviceSlug]);
 
   const profileDetails = profile.details || {};
 
@@ -40,7 +40,7 @@ export const ProfessionalProfile = ({ profile, loadProfile, collapseProfileHeade
         collapse={profile.collapseProfileHeader} collapseProfileHeader={collapseProfileHeader} />
       <Row className='justify-content-md-center'>
         <Col xs='12' md='10'>
-          <ProfessionalProfileSection />
+          <ProfessionalProfileSection slug={slug} />
         </Col>
       </Row>
     </Container>

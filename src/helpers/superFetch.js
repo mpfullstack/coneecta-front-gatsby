@@ -15,12 +15,10 @@ const handleFetchResponse = (response, customHandle) => {
     return new Promise((resolve, reject) => {
       resolve(response.json());
     })
-    .then(({ code }) => {
+    .then((responseError) => {
       return {
         status: response.status,
-        error: {
-          code
-        }
+        error: responseError
       };
     })
     .catch(error => {
@@ -79,7 +77,7 @@ const base = (method, url, data, customHandle, customOptions) => {
       return {
         status: error.status,
         error: {
-          name: 'unexpectedError',
+          code: 'unexpectedError',
           description: error
         }
       };

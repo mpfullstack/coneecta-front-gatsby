@@ -62,20 +62,20 @@ const DatePickerWrapper = styled.div`
   }
 `;
 
-const ConfirmButton = ({ date, time, fetchingAvailableDates, id }) => {
+const ConfirmButton = ({ date, time, fetchingAvailableDates, slug }) => {
   const { t } = useTranslation();
 
   let disabled = true;
   if (date && time && !fetchingAvailableDates) {
     disabled = false;
   }
-  return <PrimaryButton onClick={() => navigate(`/login${id ? `/?id=${id}` : ''}`)}
+  return <PrimaryButton onClick={() => navigate(`/profile/payment${slug ? `?slug=${slug}` : ''}`)}
     className='confirm-button' variant='primary' size='lg' disabled={disabled}>
       {t('Book')}
   </PrimaryButton>;
 }
 
-const DateTimePicker = ({ profile, booking, onSelectDate, onSelectTime, fetchAvailableTimeZones, onSelectTimeZone }) => {
+const DateTimePicker = ({ profile, booking, onSelectDate, onSelectTime, fetchAvailableTimeZones, onSelectTimeZone, slug }) => {
   const { t } = useTranslation();
 
   useEffect(() => {
@@ -137,7 +137,7 @@ const DateTimePicker = ({ profile, booking, onSelectDate, onSelectTime, fetchAva
         </Col>
       </Row>
       <ActionButtons>
-        <ConfirmButton {...booking} id={profile.id} />
+        <ConfirmButton {...booking} slug={slug} />
       </ActionButtons>
     </DateTimePickerWrapper>
   )

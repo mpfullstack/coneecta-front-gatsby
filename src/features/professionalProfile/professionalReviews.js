@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
-import { loadProfile, loadProfileReviews } from './professionalProfileSlice';
+import { loadProfessionalProfile, loadProfessionalProfileReviews } from './professionalProfileSlice';
 import { Container, Row, Col } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import SEO from '../../components/seo';
@@ -11,7 +11,7 @@ import Skeleton from '../../components/skeleton';
 import Rating from '../../components/rating';
 import ProfileHeader from '../../components/professionalProfile/profileHeader';
 
-const mapDispatchToProps = { loadProfile, loadProfileReviews };
+const mapDispatchToProps = { loadProfessionalProfile, loadProfessionalProfileReviews };
 const mapStateToProps = state => {
   return {
     profile: state.professionalProfile,
@@ -71,20 +71,20 @@ const Review = ({ review = null }) => {
   );
 }
 
-export const ProfessionalReviews = ({ profile, loadProfile, loadProfileReviews, reviews, location, slug, serviceSlug }) => {
+export const ProfessionalReviews = ({ profile, loadProfessionalProfile, loadProfessionalProfileReviews, reviews, location, slug, serviceSlug }) => {
   const { t } = useTranslation();
 
   useEffect(() => {
     if (!profile.id) {
       if (slug !== '') {
-        loadProfile({id: slug, sid: serviceSlug}); // Get sid from path instead of querystring
+        loadProfessionalProfile({id: slug, sid: serviceSlug}); // Get sid from path instead of querystring
       } else {
         // TODO: Handle if no professional id is present in URL
       }
     } else if (!reviews) {
-      loadProfileReviews({id: profile.id});
+      loadProfessionalProfileReviews({id: profile.id});
     }
-  }, [loadProfile, loadProfileReviews, location, profile.id, reviews, slug, serviceSlug]);
+  }, [loadProfessionalProfile, loadProfessionalProfileReviews, location, profile.id, reviews, slug, serviceSlug]);
 
   const profileDetails = profile.details || {};
   const profileReviews = profile.reviews || null;

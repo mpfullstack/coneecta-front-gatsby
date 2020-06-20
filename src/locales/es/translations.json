@@ -19,8 +19,30 @@
 
   "unavailable_profile": "Lo sentimos, este perfil no está disponible",
 
+  "login": "Acceso",
+  "logmein": "Acceder",
+  "loggingmein": "Accediendo...",
+  "signup": "Registro",
+  "signmeup": "Registrarme",
+  "signingmeup": "Registrando...",
+
   "Select the timezone": "Selecciona la zona horaria",
   "Select the time": "Selecciona la hora",
 
-  "lowAvailabilityMessage": "Horario de baja disponibilidad, es posible que el profesional no pueda aceptar tu reserva."
+  "lowAvailabilityMessage": "Horario de baja disponibilidad, es posible que el profesional no pueda aceptar tu reserva.",
+
+  "name": "Nombre",
+  "email": "Correo electrónico",
+  "password": "Contraseña",
+  "newsletterSignUp": "Deseo recibir información comercial relacionada con mis intereses",
+  "accept": "Acepto la",
+  "privacyPolicy": "política de privacidad",
+  "ofConeecta": "de Coneecta",
+  "mustAcceptPrivacyPolicy": "Debes aceptar la política de privacidad",
+
+  "isRequired": "Este campo es obligatorio",
+  "wrongEmailFormat": "El formato del correo electrónico no es válido",
+  "_unique": "El correo electrónico ya está registrado",
+
+  "unexpectedError": "Lo sentimos, se ha producido un error con la conexión. Vuelve a intentarlo o recarga la página."
 }

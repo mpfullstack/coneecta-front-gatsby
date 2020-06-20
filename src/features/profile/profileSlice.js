@@ -3,21 +3,20 @@ import { createSlice } from '@reduxjs/toolkit'
 const profileSlice = createSlice({
   name: 'profile',
   initialState: {
-		'details': null,
-    'services': []
+    'status': 'pending',
+		'details': null
 	},
   reducers: {
-    loadProfile: state => state,
-    initProfile: (state, action) => {
-      state.details = action.payload.details;
-      state.services = action.payload.services;
+    loadProfile: state => {
+      state.status = 'loading';
     },
-    loadProfileServices(state, action) {
-      return action.payload;
+    initProfile: (state, action) => {
+      state.status = 'loaded';
+      state.details = action.payload
     }
   }
 });
 
-export const { loadProfile, loadProfileServices, initProfile } = profileSlice.actions
+export const { loadProfile, initProfile } = profileSlice.actions;
 
 export default profileSlice.reducer;

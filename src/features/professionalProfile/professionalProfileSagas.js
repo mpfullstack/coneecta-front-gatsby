@@ -1,11 +1,11 @@
 import { all, takeLatest, put, call, fork, delay } from 'redux-saga/effects';
-import { loadProfile, initProfile, loadProfileReviews, initProfileReviews, showService } from './professionalProfileSlice';
+import { loadProfessionalProfile, initProfile, loadProfessionalProfileReviews, initProfileReviews, showService } from './professionalProfileSlice';
 import { showApiError, hideApiError } from '../global/globalSlice';
 import api from '../../api';
 
-function* onLoadProfile() {
+function* onLoadProfessionalProfile() {
   // We receive the professional id (id) an optionally service slug (sid) in payload
-  yield takeLatest(loadProfile, function* ({ payload }) {
+  yield takeLatest(loadProfessionalProfile, function* ({ payload }) {
     const result = yield call(api.getProfessionalProfile, payload.id);
     if (result.error) {
       yield put(showApiError(result.error.code));
@@ -29,8 +29,8 @@ function* onLoadProfile() {
   });
 }
 
-function* onLoadProfileReviews() {
-  yield takeLatest(loadProfileReviews, function* ({ payload }) {
+function* onLoadProfessionalProfileReviews() {
+  yield takeLatest(loadProfessionalProfileReviews, function* ({ payload }) {
     const result = yield call(api.getProfessionalProfileReviews, payload.id);
     if (result.error) {
       yield put(showApiError(result.error.code));
@@ -44,7 +44,7 @@ function* onLoadProfileReviews() {
 
 export default function* () {
   yield all([
-    fork(onLoadProfile),
-    fork(onLoadProfileReviews)
+    fork(onLoadProfessionalProfile),
+    fork(onLoadProfessionalProfileReviews)
   ])
 };
