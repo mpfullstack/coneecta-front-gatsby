@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { useFormState } from 'react-use-form-state';
 import theme from '../../theme';
@@ -22,8 +22,14 @@ const FormWrapper = styled.div`
   }
 `;
 
-const Form = ({ onSubmit, formData, renderForm }) => {
+const Form = ({ onSubmit, formData, renderForm, errors = [] }) => {
   const [formState, input] = useFormState(formData);
+
+  useEffect(() => {
+    errors.forEach(error => {
+      formState.setFieldError(error.field, error.error);
+    })
+  }, [errors, formState]);
 
   function handleSubmit(e) {
     if (typeof onSubmit === 'function') {

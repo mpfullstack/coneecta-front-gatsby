@@ -21,7 +21,7 @@ export function validateName(value) {
 }
 
 export function validatePrivacyPolicy(value) {
-  if (value === false) {
+  if (value !== true) {
     return 'mustAcceptPrivacyPolicy';
   }
 }

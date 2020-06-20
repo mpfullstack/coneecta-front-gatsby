@@ -19,6 +19,10 @@ const PrimaryButtonWrapper = styled.div`
       background-color: ${theme.primaryButtonColor};
       box-shadow: 0 0 0 0.2rem ${theme.primaryButtonColor}80;
     }
+    &.disabled, &:disabled {
+      background-color: ${theme.primaryDisabledButtonColor};
+      border-color: ${theme.primaryDisabledButtonColor};
+    }
   }
 `;
 

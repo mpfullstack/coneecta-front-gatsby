@@ -91,3 +91,7 @@ button::-moz-focus-inner {
 .modal-content {
   border: none;
 }
+
+.btn.disabled, .btn:disabled {
+  opacity: 1;
+}

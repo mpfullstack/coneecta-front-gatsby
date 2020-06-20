@@ -40,5 +40,6 @@
   "mustAcceptPrivacyPolicy": "Debes aceptar la política de privacidad",
 
   "isRequired": "Este campo es obligatorio",
-  "wrongEmailFormat": "El formato del correo electrónico no es válido"
+  "wrongEmailFormat": "El formato del correo electrónico no es válido",
+  "_unique": "El correo electrónico ya está registrado"
 }

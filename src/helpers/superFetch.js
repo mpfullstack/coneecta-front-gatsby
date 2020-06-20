@@ -15,12 +15,10 @@ const handleFetchResponse = (response, customHandle) => {
     return new Promise((resolve, reject) => {
       resolve(response.json());
     })
-    .then(({ code }) => {
+    .then((responseError) => {
       return {
         status: response.status,
-        error: {
-          code
-        }
+        error: responseError
       };
     })
     .catch(error => {

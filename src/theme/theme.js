@@ -4,6 +4,7 @@ import theme from 'styled-theming';
 // ------------------------------------------------------
 const COLORS = {
   fuchsia: '#ff1f54',
+  fuchsiaLight: '#ff9bb3',
   darkBlue: '#003855',
   blue: '#499db4',
   lightBlue: '#00385525',
@@ -21,6 +22,7 @@ const COLORS = {
 COLORS.primary = COLORS.darkBlue;
 COLORS.secondary = COLORS.superLightPearl;
 COLORS.tertiary = COLORS.fuchsia;
+COLORS.tertiaryLight = COLORS.fuchsiaLight;
 COLORS.quaternary = COLORS.lightPearl;
 COLORS.quinary = COLORS.pearl;
 
@@ -113,6 +115,11 @@ const primaryButtonTextColor = theme('mode', {
   dark: COLORS.primary
 });
 
+const primaryDisabledButtonColor = theme('mode', {
+  light: COLORS.tertiaryLight,
+  dark: COLORS.secondary
+});
+
 const skeletonColor = theme('mode', {
   light: COLORS.lightPearl,
   dark: COLORS.primary
@@ -155,6 +162,7 @@ export default {
   dateTimePickerSelectedTextColor,
   primaryButtonColor,
   primaryButtonTextColor,
+  primaryDisabledButtonColor,
   iconColor,
   skeletonColor,
   skeletonHighlightColor,

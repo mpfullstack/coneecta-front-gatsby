@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
+import i18n from '../../locales/i18n';
 import { useTranslation } from 'react-i18next';
 import { Form as RBForm } from 'react-bootstrap';
 import Form from '../../components/form';
@@ -12,11 +13,15 @@ import { adaptTimeZonesToArray } from '../../helpers/data';
 import { validateName, validateEmail, validatePassword, validatePrivacyPolicy } from '../../helpers/validators';
 
 const mapDispatchToProps = { signUp };
-const mapStateToProps = state => {
+const mapStateToProps = ({ booking, loginSignUp }) => {
   return {
-    timezone: state.booking.timezone,
-    timezones: state.booking.timezones,
-    signUpStatus: state.loginSignUp.signUpStatus
+    timezone: booking.timezone,
+    timezones: booking.timezones,
+    signUpStatus: loginSignUp.signUpStatus,
+    signUpErrors: loginSignUp.signUpErrors.map(error => ({
+      field: error.field,
+      error: i18n.t(error.error)
+    }))
   }
 }
 
@@ -29,7 +34,7 @@ const FormWrapper = styled.div`
   }
 `;
 
-const SignUpForm = ({ signUp, timezones, timezone, signUpStatus }) => {
+const SignUpForm = ({ signUp, timezones, timezone, signUpStatus, signUpErrors }) => {
   const { t } = useTranslation();
   const formData = {
     name: '',
@@ -40,27 +45,49 @@ const SignUpForm = ({ signUp, timezones, timezone, signUpStatus }) => {
     privacy_policy: false
   };
 
+  const fieldValidators = {
+    'name': validateName,
+    'email': validateEmail,
+    'password': validatePassword,
+    'privacy_policy': validatePrivacyPolicy
+  }
+
   function isFormValid(formState) {
     let valid =  Object.keys(formState.validity).every(key => {
       return formState.validity[key];
     });
     let requiredFields = ['name', 'email', 'password', 'privacy_policy'];
     let requiredValidation = requiredFields.every(fieldname => {
-      return (fieldname in formState.validity) && formState.validity[fieldname];
+      if (fieldname in formState.errors) {
+        return false;
+      } else if (fieldname in fieldValidators && typeof fieldValidators[fieldname] === 'function') {
+        return fieldValidators[fieldname](formState.values[fieldname]) === undefined;
+      } else {
+        return false;
+      }
     });
     return valid && requiredValidation;
   }
 
   function renderForm(formState, input) {
-    function isValid(name) {
+    function isValid(name, valdidateFunc) {
       if (formState.isPristine()) {
         return {};
       } else {
-        let valid = formState.validity[name];
-        return {
-          isInvalid: !valid,
-          isValid: valid
-        };
+        if (name in formState.errors) {
+          return {
+            isInvalid: true,
+            isValid: false
+          };
+        } else if (typeof valdidateFunc === 'function') {
+          let valid = valdidateFunc(formState.values[name]);
+          return {
+            isInvalid: valid !== undefined,
+            isValid: valid === undefined
+          };
+        } else {
+          return {}
+        }
       }
     }
 
@@ -75,28 +102,28 @@ const SignUpForm = ({ signUp, timezones, timezone, signUpStatus }) => {
     return (
       <FormWrapper>
         <RBForm.Row>
-          <FormControl placeholder={t('name')} name={'name'} error={getError('name')} isValid={isValid('name')}
+          <FormControl placeholder={t('name')} name={'name'} error={getError('name')} isValid={isValid('name', validateName)}
             {...input.text({
               name: 'name',
               validate: validateName
             })} />
         </RBForm.Row>
         <RBForm.Row>
-          <FormControl placeholder={t('email')} name={'email'} error={getError('email')} isValid={isValid('email')}
+          <FormControl placeholder={t('email')} name={'email'} error={getError('email')} isValid={isValid('email', validateEmail)}
             {...input.email({
               name: 'email',
               validate: validateEmail
             })} />
         </RBForm.Row>
         <RBForm.Row>
-          <FormControl placeholder={t('password')} name={'password'} error={getError('password')} isValid={isValid('password')}
+          <FormControl placeholder={t('password')} name={'password'} error={getError('password')} isValid={isValid('password', validatePassword)}
             {...input.password({
               name: 'password',
               validate: validatePassword
             })} />
         </RBForm.Row>
         <RBForm.Row>
-          <FormControl as='select' name={'timezone'} error={getError('timezone')} isValid={isValid('password')}
+          <FormControl as='select' name={'timezone'} error={getError('timezone')} isValid={isValid('timezone')}
             {...input.select('timezone')}>
               {adaptTimeZonesToArray(timezones, { value: null, label: t('Select the timezone') }).map(
                 tz => <option key={tz.value} value={tz.value}>{tz.label}</option>
@@ -110,12 +137,11 @@ const SignUpForm = ({ signUp, timezones, timezone, signUpStatus }) => {
         </RBForm.Row>
         <RBForm.Row>
           <RBForm.Check {...input.checkbox({
-              name: 'privacy_policy',
-              validate: validatePrivacyPolicy
+              name: 'privacy_policy'
             })}
             id='privacy_policy'
             label={<div>{t('accept')} <a href="http://coneecta.com">{t('privacyPolicy')}</a> {t('ofConeecta')}</div>} />
-          {!formState.isPristine() && !isValid('privacy_policy').isValid ?
+          {!formState.isPristine() && !isValid('privacy_policy', validatePrivacyPolicy).isValid ?
             <span className='privacy-policy invalid-feedback'>{t('mustAcceptPrivacyPolicy')}</span> : null}
         </RBForm.Row>
         <ActionButtons>
@@ -136,7 +162,7 @@ const SignUpForm = ({ signUp, timezones, timezone, signUpStatus }) => {
   }
 
   return (
-    <Form formData={formData} renderForm={renderForm} isFormValid={isFormValid} />
+    <Form formData={formData} renderForm={renderForm} isFormValid={isFormValid} errors={signUpErrors} />
   );
 };
 
