@@ -10,6 +10,7 @@ import SEO from '../../components/seo';
 import Skeleton from '../../components/skeleton';
 import Rating from '../../components/rating';
 import ProfileHeader from '../../components/professionalProfile/profileHeader';
+import Pagination from '../../components/pagination';
 
 const mapDispatchToProps = { loadProfessionalProfile, loadProfessionalProfileReviews };
 const mapStateToProps = state => {
@@ -71,6 +72,8 @@ const Review = ({ review = null }) => {
   );
 }
 
+
+
 export const ProfessionalReviews = ({ profile, loadProfessionalProfile, loadProfessionalProfileReviews, reviews, location, slug, serviceSlug }) => {
   const { t } = useTranslation();
 
@@ -87,7 +90,8 @@ export const ProfessionalReviews = ({ profile, loadProfessionalProfile, loadProf
   }, [loadProfessionalProfile, loadProfessionalProfileReviews, location, profile.id, reviews, slug, serviceSlug]);
 
   const profileDetails = profile.details || {};
-  const profileReviews = profile.reviews || null;
+  const profileReviewsPagination = reviews ? reviews.pagination : null;
+  const profileReviews = reviews ? reviews.items : null;
 
   return (
     <Container fluid>
@@ -105,6 +109,15 @@ export const ProfessionalReviews = ({ profile, loadProfessionalProfile, loadProf
             :
             Array.from({length: 3}).map((u, i) => <Review key={`review-${i}`} />)
           }
+        </Col>
+      </Row>
+      <Row className={`justify-content-md-center`} style={{marginTop: '30px'}}>
+        <Col xs='12' md='10'>
+          {profileReviewsPagination ?
+            <Pagination
+              pages={profileReviewsPagination.total_pages}
+              currentPage={profileReviewsPagination.current_page}
+              onPaginationClick={page => console.log(page)} /> : <Skeleton height={25} />}
         </Col>
       </Row>
     </Container>
