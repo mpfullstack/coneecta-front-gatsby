@@ -53,7 +53,6 @@ function* onSignUp() {
       yield put(signedUp());
       yield put(initProfile(result));
       yield loginUser();
-      debugger;
       const params = Query.getParams(window.location);
       yield navigate(`/profile/payment?slug=${params.slug}`);
     }
