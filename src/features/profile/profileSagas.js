@@ -17,11 +17,7 @@ function* onLoadProfile() {
         yield put(hideApiError());
       }
     } else {
-      if (result.details) {
-        yield put(initProfile(result.details));
-      } else {
-        yield navigate('/login');
-      }
+      yield put(initProfile(result));
     }
   });
 }
