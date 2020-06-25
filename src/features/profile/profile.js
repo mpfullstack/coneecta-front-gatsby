@@ -1,9 +1,21 @@
 import React from 'react';
-import SEO from "../../components/seo"
+import { Location } from '@reach/router';
+import ProfileLayout from '../../components/profileLayout';
+import SEO from "../../components/seo";
 
-export default () => {
-  return <div>
-    <SEO title="Profile page" />
-    <p>Profile</p>
-  </div>
+const Profile = () => {
+  return (
+    <Location>
+      {props => {
+        return (
+          <ProfileLayout {...props}>
+            <SEO title="Profile" />
+            <p>Profile page</p>
+          </ProfileLayout>
+        );
+      }}
+    </Location>
+  );
 }
+
+export default Profile;
