@@ -3,13 +3,14 @@ import { navigate } from 'gatsby';
 import { loadProfile, initProfile } from './profileSlice';
 import { showApiError, hideApiError, API_ERROR_DURATION } from '../global/globalSlice';
 import api from '../../api';
+import { logout } from '../../helpers/authentication';
 
 function* onLoadProfile() {
   yield takeLatest(loadProfile, function* ({ payload }) {
     const result = yield call(api.getProfile);
-    debugger;
     if (result.error) {
       if (result.status === 403) {
+        yield logout();
         yield navigate('/login');
       } else {
         yield put(showApiError(result.error));
