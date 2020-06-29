@@ -1,9 +1,18 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import SEO from '../../components/seo';
 import { Container, Row, Col } from 'react-bootstrap';
 import { CheckCircle, InfoCircle, Envelope } from '../../components/icons/icons';
+
+const mapDispatchToProps = {};
+const mapStateToProps = ({ profile, payment }) => {
+  return {
+    profile,
+    payment
+  }
+}
 
 const PaymentConfirmedWrapper = styled.div`
   .fa-check-circle {
@@ -57,4 +66,4 @@ const PaymentConfirmed = ({ id }) => {
   );
 }
 
-export default PaymentConfirmed;
+export default connect(mapStateToProps, mapDispatchToProps)(PaymentConfirmed);
