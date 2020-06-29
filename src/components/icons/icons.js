@@ -7,7 +7,10 @@ import {
   faAngleUp,
   faAngleDown,
   faEdit,
-  faExclamationCircle
+  faExclamationCircle,
+  faCheckCircle,
+  faInfoCircle,
+  faEnvelope
  } from "@fortawesome/free-solid-svg-icons";
 
 const ArrowLeft = () => <FontAwesomeIcon icon={faAngleLeft} />;
@@ -16,6 +19,9 @@ const ArrowUp = () => <FontAwesomeIcon icon={faAngleUp} />;
 const ArrowDown = () => <FontAwesomeIcon icon={faAngleDown} />;
 const Edit = () => <FontAwesomeIcon icon={faEdit} />;
 const ExclamationCircle = () => <FontAwesomeIcon icon={faExclamationCircle} />;
+const CheckCircle = () => <FontAwesomeIcon icon={faCheckCircle} />;
+const InfoCircle = () => <FontAwesomeIcon icon={faInfoCircle} />;
+const Envelope = () => <FontAwesomeIcon icon={faEnvelope} />;
 
 
 const LowAvailabilityWrapper = styled.span`
@@ -39,5 +45,8 @@ export {
   ArrowDown,
   Edit,
   ExclamationCircle,
-  LowAvailability
+  LowAvailability,
+  CheckCircle,
+  InfoCircle,
+  Envelope
 }
