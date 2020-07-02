@@ -7,6 +7,7 @@ const timeZonesUrl = `${base}/timezones`;
 const loginUrl = `${base}/login`;
 const signUpUrl = `${base}/signup`;
 const profileUrl = `${base}/user`;
+const reserveUrl = `${base}/reserve`
 
 export {
   professionalProfileUrl,
@@ -15,5 +16,6 @@ export {
   professionalProfileReviewsUrl,
   loginUrl,
   signUpUrl,
-  profileUrl
+  profileUrl,
+  reserveUrl
 };
