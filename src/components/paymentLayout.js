@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
-import { useTranslation } from 'react-i18next';
+// import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { loadProfessionalProfile } from '../features/professionalProfile/professionalProfileSlice';
 import ProfileHeader from './professionalProfile/profileHeader';
@@ -23,7 +23,7 @@ const PaymentWrapper = styled.div`
 export const PaymentLayout = ({ professionalProfile, loadProfessionalProfile, location, children }) => {
   // TODO: Check if it work on build production as location is not ready
   const slug = Query.getParams(location).slug;
-  const { t } = useTranslation();
+  // const { t } = useTranslation();
 
   useEffect(() => {
     if (slug !== '') {

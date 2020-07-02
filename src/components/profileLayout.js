@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
-import { useTranslation } from 'react-i18next';
+// import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { loadProfile } from '../features/profile/profileSlice';
 import { Container, Row, Col } from 'react-bootstrap';
@@ -17,7 +17,7 @@ const PaymentWrapper = styled.div`
 `;
 
 export const ProfileLayout = ({ profile, loadProfile, location, children }) => {
-  const { t } = useTranslation();
+  // const { t } = useTranslation();
 
   useEffect(() => {
     if (!profile.details) {
@@ -25,7 +25,7 @@ export const ProfileLayout = ({ profile, loadProfile, location, children }) => {
     }
   }, [loadProfile, profile]);
 
-  const userProfile = profile.details || null;
+  // const userProfile = profile.details || null;
 
   return (
     <PaymentWrapper>

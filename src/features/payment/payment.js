@@ -8,7 +8,7 @@ import { getServiceById, getServiceByModalityType } from '../../helpers/data';
 import { pay, reserve } from './paymentSlice';
 import PaymentLayout from '../../components/paymentLayout';
 import Credits from './credits';
-import BuyCredits from './buyCredits';
+// import BuyCredits from './buyCredits';
 import PaymentButton from './paymentButton';
 import SEO from "../../components/seo";
 

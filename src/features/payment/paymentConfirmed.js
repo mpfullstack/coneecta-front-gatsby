@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
-import { useTranslation } from 'react-i18next';
+// import { useTranslation } from 'react-i18next';
 import SEO from '../../components/seo';
 import { Container, Row, Col } from 'react-bootstrap';
 import { CheckCircle, InfoCircle, Envelope } from '../../components/icons/icons';
@@ -34,7 +34,7 @@ const PaymentConfirmedWrapper = styled.div`
 `;
 
 const PaymentConfirmed = ({ id }) => {
-  const { t } = useTranslation();
+  // const { t } = useTranslation();
 
   return (
     <PaymentConfirmedWrapper>
