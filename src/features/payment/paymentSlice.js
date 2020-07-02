@@ -7,6 +7,9 @@ const paymentSlice = createSlice({
 		'details': null
 	},
   reducers: {
+    reserve: state => {
+      state.status = 'processing';
+    },
     pay: state => {
       state.status = 'processing';
     },
@@ -16,6 +19,6 @@ const paymentSlice = createSlice({
   }
 });
 
-export const { pay, success } = paymentSlice.actions;
+export const { reserve, pay, success } = paymentSlice.actions;
 
 export default paymentSlice.reducer;

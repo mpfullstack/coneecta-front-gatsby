@@ -5,7 +5,7 @@ export function getAuthMechanism() {
 }
 
 export function isLoggedIn() {
-  return sessionStorage.getItem('loggedin');
+  return String(sessionStorage.getItem('loggedin')) === 'true';
 }
 
 export function login() {
