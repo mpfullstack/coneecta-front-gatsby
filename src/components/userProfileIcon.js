@@ -33,7 +33,9 @@ const UserProfileIconWrapper = styled.div`
         border-color: transparent;
       }
       &.btn-primary:not(:disabled):not(.disabled).active:focus,
-      &.btn-primary:not(:disabled):not(.disabled):active:focus {
+      &.btn-primary:not(:disabled):not(.disabled):active:focus
+      &:focus,
+      &.btn-primary:focus {
         box-shadow: none;
       }
     }
