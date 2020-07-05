@@ -5,6 +5,7 @@ const professionalProfileReviewsUrl = `${base}/reviews?profile=:id`;
 const availableDatesUrl = `${base}/availability?timezone=:timezone&service=:serviceId`
 const timeZonesUrl = `${base}/timezones`;
 const loginUrl = `${base}/login`;
+const logoutUrl = `${base}/logout`;
 const signUpUrl = `${base}/signup`;
 const profileUrl = `${base}/user`;
 const reserveUrl = `${base}/reserve`
@@ -17,5 +18,6 @@ export {
   loginUrl,
   signUpUrl,
   profileUrl,
-  reserveUrl
+  reserveUrl,
+  logoutUrl
 };
