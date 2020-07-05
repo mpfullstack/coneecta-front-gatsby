@@ -1,7 +1,7 @@
 import { all, takeLatest, put, call, fork, delay } from 'redux-saga/effects';
 import { navigate } from 'gatsby';
 import { pay, reserve, success, failed } from './paymentSlice';
-// import { showApiError, hideApiError, API_ERROR_DURATION } from '../global/globalSlice';
+import { showApiError, hideApiError, API_ERROR_DURATION } from '../global/globalSlice';
 import api from '../../api';
 // import { logout } from '../../helpers/authentication';
 
