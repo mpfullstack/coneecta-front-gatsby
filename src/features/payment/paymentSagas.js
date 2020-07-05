@@ -1,6 +1,6 @@
 import { all, takeLatest, put, call, fork, delay } from 'redux-saga/effects';
 import { navigate } from 'gatsby';
-import { pay, reserve, success } from './paymentSlice';
+import { pay, reserve, success, failed } from './paymentSlice';
 // import { showApiError, hideApiError, API_ERROR_DURATION } from '../global/globalSlice';
 import api from '../../api';
 // import { logout } from '../../helpers/authentication';
@@ -31,15 +31,10 @@ function* onReserve() {
   yield takeLatest(reserve, function* ({ payload }) {
     const result = yield call(api.reserve, payload);
     if (result.error) {
-      // TODO: Handle error
-      if (result.status === 403) {
-        // yield logout();
-        // yield navigate('/login');
-      } else {
-        // yield put(showApiError(result.error));
-        // yield delay(API_ERROR_DURATION);
-        // yield put(hideApiError());
-      }
+      yield put(showApiError(result.error));
+      yield delay(API_ERROR_DURATION);
+      yield put(hideApiError());
+      yield put(failed());
     } else {
       yield put(success());
       yield navigate('/profile/payment_confirmed/someid');

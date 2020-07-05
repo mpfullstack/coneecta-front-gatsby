@@ -15,10 +15,13 @@ const paymentSlice = createSlice({
     },
     success: state => {
       state.status = 'pending';
+    },
+    failed: state => {
+      state.status = 'pending';
     }
   }
 });
 
-export const { reserve, pay, success } = paymentSlice.actions;
+export const { reserve, pay, success, failed } = paymentSlice.actions;
 
 export default paymentSlice.reducer;

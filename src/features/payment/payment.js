@@ -38,7 +38,7 @@ const Payment = ({ payment, directReserve, creditsToPay = '', availableCredits =
     return {
       'service': booking.serviceId,
       'modality': booking.modalityType,
-      'datetime': `${format(new Date(booking.date), 'yyyymmdd')}${booking.time}`
+      'datetime': `${format(new Date(booking.date), 'yyyyMMdd')}${booking.time.replace(':','')}`
     };
   }
 
