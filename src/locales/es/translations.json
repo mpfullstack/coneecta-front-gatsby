@@ -51,5 +51,6 @@
   "_unique": "El correo electrónico ya está registrado",
   "invalid_authentication_data": "Los datos son incorrectos",
 
-  "unexpectedError": "Lo sentimos, se ha producido un error con la conexión. Vuelve a intentarlo o recarga la página."
+  "unexpectedError": "Lo sentimos, se ha producido un error con la conexión. Vuelve a intentarlo o recarga la página.",
+  "invalid_reservation_data": "Los datos de la reserva no son válidos."
 }
