@@ -3,7 +3,7 @@ import { navigate } from 'gatsby';
 import { loadProfile, initProfile } from './profileSlice';
 import { showApiError } from '../global/globalSlice';
 import api from '../../api';
-import { logout } from '../../helpers/authentication';
+import { login, logout } from '../../helpers/authentication';
 
 function* onLoadProfile() {
   yield takeLatest(loadProfile, function* ({ payload }) {
@@ -11,11 +11,12 @@ function* onLoadProfile() {
     if (result.error) {
       if (result.status === 403) {
         yield logout();
-        yield navigate('/login');
+        // yield navigate('/login');
       } else {
         yield put(showApiError(result.error));
       }
     } else {
+      yield login();
       yield put(initProfile(result));
     }
   });

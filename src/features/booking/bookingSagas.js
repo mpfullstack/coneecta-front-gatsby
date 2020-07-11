@@ -5,7 +5,9 @@ import {
   selectTimeZone,
   selectDate,
   selectTime,
-  fetchAvailableTimeZones
+  fetchAvailableTimeZones,
+  getTimeLimits,
+  setTimeLimits
 } from './bookingSlice';
 import { getFirstAvailableTime, isTimeAvailable } from '../../helpers/data';
 import { showApiError } from '../global/globalSlice';
@@ -51,10 +53,21 @@ function* onSelectDate() {
   });
 }
 
+function* onRequestTimeLimits() {
+  yield takeLatest(getTimeLimits, function* () {
+    const result = yield call(api.getTimeLimits);
+    if (result.error) {
+    } else {
+      yield put(setTimeLimits(result));
+    }
+  });
+}
+
 export default function* () {
   yield all([
     fork(onSelectTimeZone),
     fork(onFetchAvailableTimeZones),
-    fork(onSelectDate)
+    fork(onSelectDate),
+    fork(onRequestTimeLimits)
   ])
 };

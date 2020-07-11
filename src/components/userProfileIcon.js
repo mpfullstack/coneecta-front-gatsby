@@ -5,14 +5,18 @@ import { Dropdown } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { UserCircle } from './icons';
 import theme from '../theme';
+import { isLoggedIn } from '../helpers/authentication';
 import { logout } from '../features/loginSignUp/loginSignUpSlice';
 
 const mapDispatchToProps = {
   logout
 };
 
-const mapStateToProps = state => {
-  return {}
+const mapStateToProps = ({ profile }) => {
+  const profileDetails = profile.details || null;
+  return {
+    profileDetails
+  }
 };
 
 const UserProfileIconWrapper = styled.div`
@@ -49,22 +53,26 @@ const UserProfileIconWrapper = styled.div`
   }
 `;
 
-const UserProfileIcon = ({ logout }) => {
+const UserProfileIcon = ({ profileDetails, logout }) => {
   const { t } = useTranslation();
 
-  return (
-    <UserProfileIconWrapper>
-      <Dropdown>
-        <Dropdown.Toggle id='user-profile-icon'>
-          <UserCircle />
-        </Dropdown.Toggle>
+  if (isLoggedIn() && profileDetails) {
+    return (
+      <UserProfileIconWrapper>
+        <Dropdown>
+          <Dropdown.Toggle id='user-profile-icon'>
+            <UserCircle />
+          </Dropdown.Toggle>
 
-        <Dropdown.Menu>
-          <Dropdown.Item onClick={logout}>{t('logout').toUpperCase()}</Dropdown.Item>
-        </Dropdown.Menu>
-      </Dropdown>
-    </UserProfileIconWrapper>
-  );
+          <Dropdown.Menu>
+            <Dropdown.Item onClick={logout}>{t('logout').toUpperCase()}</Dropdown.Item>
+          </Dropdown.Menu>
+        </Dropdown>
+      </UserProfileIconWrapper>
+    );
+  } else {
+    return null;
+  }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserProfileIcon);
