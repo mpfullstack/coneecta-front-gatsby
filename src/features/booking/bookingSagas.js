@@ -1,4 +1,4 @@
-import { all, takeLatest, put, call, fork, delay, select } from 'redux-saga/effects';
+import { all, takeLatest, put, call, fork, select } from 'redux-saga/effects';
 import {
   initAvailableDates,
   initAvailableTimeZones,
@@ -8,16 +8,13 @@ import {
   fetchAvailableTimeZones
 } from './bookingSlice';
 import { getFirstAvailableTime, isTimeAvailable } from '../../helpers/data';
-import { showApiError, hideApiError } from '../global/globalSlice';
+import { showApiError } from '../global/globalSlice';
 import api from '../../api';
 
 function* onFetchAvailableTimeZones() {
   yield takeLatest(fetchAvailableTimeZones, function* () {
     const result = yield call(api.getAvailableTimezones);
     if (result.error) {
-      yield put(showApiError(result.error));
-      yield delay(5000);
-      yield put(hideApiError());
     } else {
       yield put(initAvailableTimeZones(result));
     }
@@ -34,8 +31,6 @@ function* onSelectTimeZone() {
     });
     if (result.error) {
       yield put(showApiError(result.error));
-      yield delay(5000);
-      yield put(hideApiError());
     } else {
       yield put(initAvailableDates(result));
     }

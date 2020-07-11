@@ -1,4 +1,4 @@
-import { all, takeLatest, put, call, fork, delay } from 'redux-saga/effects';
+import { all, takeLatest, put, call, fork } from 'redux-saga/effects';
 import Query from '../../helpers/query';
 import { navigate } from 'gatsby';
 import { login as loginUser, logout as logoutUser } from '../../helpers/authentication';
@@ -7,7 +7,7 @@ import {
   resetLoginStatus, resetSignUpStatus
 } from './loginSignUpSlice';
 import { initProfile } from '../profile/profileSlice';
-import { showApiError, hideApiError, API_ERROR_DURATION } from '../global/globalSlice';
+import { showApiError } from '../global/globalSlice';
 import api from '../../api';
 
 function* onLogin() {
@@ -22,8 +22,6 @@ function* onLogin() {
       } else {
         yield put(resetLoginStatus());
         yield put(showApiError(result.error));
-        yield delay(API_ERROR_DURATION);
-        yield put(hideApiError());
       }
     } else {
       // Handle login OK
@@ -45,8 +43,6 @@ function* onSignUp() {
       } else {
         yield put(resetSignUpStatus());
         yield put(showApiError(result.error));
-        yield delay(API_ERROR_DURATION);
-        yield put(hideApiError());
       }
     } else {
       // Handle singup OK
@@ -64,8 +60,6 @@ function* onLogout() {
     const result = yield call(api.logout);
     if (result.error) {
       yield put(showApiError(result.error));
-      yield delay(API_ERROR_DURATION);
-      yield put(hideApiError());
     } else {
       // Handle logout OK
       yield logoutUser();
