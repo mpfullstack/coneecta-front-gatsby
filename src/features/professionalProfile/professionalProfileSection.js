@@ -1,31 +1,32 @@
 import React from 'react';
+import { navigate } from 'gatsby';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { Animated } from 'react-animated-css';
-import { Row, Col } from 'react-bootstrap';
+import { Row, Col, Modal } from 'react-bootstrap';
 import Skeleton from '../../components/skeleton';
 import { changeSection, showService, collapseProfileHeader } from './professionalProfileSlice';
-import { selectService, selectDate, selectTime, fetchAvailableTimeZones, selectTimeZone } from '../booking/bookingSlice';
+import { selectService, hideCancelSessionAlert } from '../booking/bookingSlice';
 import ProfessionalServices from './professionalServices';
 import DateTimePicker from '../../components/dateTimePicker';
 import ServiceCard from '../../components/services/serviceCard';
+import PrimaryButton from '../../components/buttons/primaryButton';
+import SecondaryButton from '../../components/buttons/secondaryButton';
 import { getServiceById, getServiceByModalityType } from '../../helpers/data';
 
 const mapDispatchToProps = {
   selectService,
   changeSection,
-  selectDate,
-  selectTime,
-  selectTimeZone,
   showService,
   collapseProfileHeader,
-  fetchAvailableTimeZones
+  hideCancelSessionAlert
 };
 const mapStateToProps = state => {
   return {
     profile: state.professionalProfile,
-    booking: state.booking
+    booking: state.booking,
+    cancelSessionHoursLimit: state.booking.timelimits.cancel_session / 60 / 60
   }
 }
 
@@ -44,18 +45,24 @@ const SectionContentWrapper = styled.div`
   }
 `;
 
+const ModalWrapper = styled.div`
+  .modal-footer {
+    *:first-child {
+      margin-right: auto;
+    }
+  }
+`;
+
 const ProfessionalProfileSection = ({
   profile,
   collapseProfileHeader,
   showService,
   selectService,
   changeSection,
-  selectTimeZone,
-  selectDate,
-  selectTime,
   booking,
-  fetchAvailableTimeZones,
-  slug
+  slug,
+  cancelSessionHoursLimit,
+  hideCancelSessionAlert
 }) => {
   const { t } = useTranslation();
   const profileServices = profile.services && profile.services.length ? profile.services : null;
@@ -116,11 +123,27 @@ const ProfessionalProfileSection = ({
         </Row>
         <Row>
           <Col>
-            <DateTimePicker profile={profile} booking={booking} slug={slug}
-              onSelectDate={selectDate} onSelectTime={selectTime} onSelectTimeZone={selectTimeZone}
-              fetchAvailableTimeZones={fetchAvailableTimeZones} />
+            <DateTimePicker slug={slug} />
           </Col>
         </Row>
+        <Modal dialogClassName='cancel-session-alert' show={booking.showCancelSessionAlert}>
+          <ModalWrapper>
+            <Modal.Body>
+              {t('cancelSessionAlert', { hours: cancelSessionHoursLimit })}
+            </Modal.Body>
+            <Modal.Footer>
+              <SecondaryButton onClick={hideCancelSessionAlert}>
+                {t('cancel')}
+              </SecondaryButton>
+              <PrimaryButton onClick={() => {
+                hideCancelSessionAlert();
+                navigate(`/profile/payment${slug ? `?slug=${slug}` : ''}`);
+              }}>
+                {t('continue')}
+              </PrimaryButton>
+            </Modal.Footer>
+          </ModalWrapper>
+        </Modal>
       </>
     );
   }
