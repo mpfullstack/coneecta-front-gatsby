@@ -50,7 +50,7 @@ async function getTimeLimits(data) {
   if (!cacheStore.get(key)) {
     cacheStore.put(key, await SuperFetch.get(timeLimitsUrl), 1000 * 60 * 10); // Expires in 10 minuts
   }
-  return cacheStore.get(key);
+  return cacheStore.get(key).value;
 }
 
 const api = {

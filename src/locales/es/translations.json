@@ -52,5 +52,9 @@
   "invalid_authentication_data": "Los datos son incorrectos",
 
   "unexpectedError": "Lo sentimos, se ha producido un error con la conexión. Vuelve a intentarlo o recarga la página.",
-  "invalid_reservation_data": "Los datos de la reserva no son válidos."
+  "invalid_reservation_data": "Los datos de la reserva no son válidos.",
+
+  "cancel": "Cancelar",
+  "continue": "Continuar",
+  "cancelSessionAlert": "Estas realizando una reserva con menos de {{hours}} horas de antelación. Ten en cuenta que para esta reserva no se admitirán cambios de fecha y su cancelación tendrá penalización."
 }

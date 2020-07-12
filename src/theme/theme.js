@@ -94,7 +94,6 @@ const boxBackgroundColor = theme('mode', {
   dark: COLORS.lightBlue
 });
 
-
 const dateTimePickerButtonsColor = theme('mode', {
   light: COLORS.tertiary,
   dark: COLORS.lightBlue
@@ -117,6 +116,21 @@ const primaryButtonTextColor = theme('mode', {
 
 const primaryDisabledButtonColor = theme('mode', {
   light: COLORS.tertiaryLight,
+  dark: COLORS.secondary
+});
+
+const secondaryButtonColor = theme('mode', {
+  light: COLORS.lightGrey,
+  dark: COLORS.secondary
+});
+
+const secondaryButtonTextColor = theme('mode', {
+  light: COLORS.superLightGrey,
+  dark: COLORS.primary
+});
+
+const secondaryDisabledButtonColor = theme('mode', {
+  light: COLORS.superLightGrey,
   dark: COLORS.secondary
 });
 
@@ -163,6 +177,9 @@ export default {
   primaryButtonColor,
   primaryButtonTextColor,
   primaryDisabledButtonColor,
+  secondaryButtonColor,
+  secondaryButtonTextColor,
+  secondaryDisabledButtonColor,
   iconColor,
   skeletonColor,
   skeletonHighlightColor,
