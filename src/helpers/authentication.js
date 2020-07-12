@@ -1,5 +1,11 @@
+export const COOKIE = 1;
+
+export function getAuthMechanism() {
+  return COOKIE;
+}
+
 export function isLoggedIn() {
-  return sessionStorage.getItem('loggedin');
+  return String(sessionStorage.getItem('loggedin')) === 'true';
 }
 
 export function login() {

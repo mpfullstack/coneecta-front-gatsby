@@ -89,7 +89,7 @@ const dateTimePickerColor = theme('mode', {
   dark: COLORS.lightBlue
 });
 
-const dateTimePickerBackgroundColor = theme('mode', {
+const boxBackgroundColor = theme('mode', {
   light: COLORS.quaternary,
   dark: COLORS.lightBlue
 });
@@ -157,7 +157,7 @@ export default {
   textServiceCardHeaderColor,
   borderCardColor,
   dateTimePickerColor,
-  dateTimePickerBackgroundColor,
+  boxBackgroundColor,
   dateTimePickerButtonsColor,
   dateTimePickerSelectedTextColor,
   primaryButtonColor,

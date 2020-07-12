@@ -1,13 +1,13 @@
-import { all, takeLatest, put, call, fork, delay } from 'redux-saga/effects';
+import { all, takeLatest, put, call, fork } from 'redux-saga/effects';
 import Query from '../../helpers/query';
 import { navigate } from 'gatsby';
-import { login as loginUser } from '../../helpers/authentication';
+import { login as loginUser, logout as logoutUser } from '../../helpers/authentication';
 import {
-  login, loggedIn, loginError, signUp, signedUp, signUpError,
+  login, logout, loggedIn, loginError, signUp, signedUp, signUpError,
   resetLoginStatus, resetSignUpStatus
 } from './loginSignUpSlice';
 import { initProfile } from '../profile/profileSlice';
-import { showApiError, hideApiError, API_ERROR_DURATION } from '../global/globalSlice';
+import { showApiError } from '../global/globalSlice';
 import api from '../../api';
 
 function* onLogin() {
@@ -22,8 +22,6 @@ function* onLogin() {
       } else {
         yield put(resetLoginStatus());
         yield put(showApiError(result.error));
-        yield delay(API_ERROR_DURATION);
-        yield put(hideApiError());
       }
     } else {
       // Handle login OK
@@ -45,17 +43,27 @@ function* onSignUp() {
       } else {
         yield put(resetSignUpStatus());
         yield put(showApiError(result.error));
-        yield delay(API_ERROR_DURATION);
-        yield put(hideApiError());
       }
     } else {
       // Handle singup OK
       yield put(signedUp());
       yield put(initProfile(result));
       yield loginUser();
-      debugger;
       const params = Query.getParams(window.location);
       yield navigate(`/profile/payment?slug=${params.slug}`);
+    }
+  });
+}
+
+function* onLogout() {
+  yield takeLatest(logout, function* ({ payload }) {
+    const result = yield call(api.logout);
+    if (result.error) {
+      yield put(showApiError(result.error));
+    } else {
+      // Handle logout OK
+      yield logoutUser();
+      yield navigate(`/login`);
     }
   });
 }
@@ -63,6 +71,7 @@ function* onSignUp() {
 export default function* () {
   yield all([
     fork(onLogin),
-    fork(onSignUp)
+    fork(onSignUp),
+    fork(onLogout)
   ])
 };

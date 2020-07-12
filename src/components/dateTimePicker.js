@@ -32,9 +32,9 @@ const DateTimePickerWrapper = styled.div`
 `;
 
 const DatePickerWrapper = styled.div`
-  border: 1px solid ${theme.dateTimePickerBackgroundColor};
+  border: 1px solid ${theme.boxBackgroundColor};
   border-radius: 5px;
-  background-color: ${theme.dateTimePickerBackgroundColor};
+  background-color: ${theme.boxBackgroundColor};
   margin-bottom: 6px;
 
   #container {

@@ -20,11 +20,17 @@
   "unavailable_profile": "Lo sentimos, este perfil no está disponible",
 
   "login": "Acceso",
+  "logout": "Cerrar sesión",
   "logmein": "Acceder",
   "loggingmein": "Accediendo...",
   "signup": "Registro",
   "signmeup": "Registrarme",
   "signingmeup": "Registrando...",
+  "pay": "Pagar",
+  "processingPayment": "Procesando...",
+
+  "toClickOn": "Al hacer clic en",
+  "willProcessYourBooking": "procesaremos tu reserva descontando los créditos del saldo disponible en tu cuenta.",
 
   "Select the timezone": "Selecciona la zona horaria",
   "Select the time": "Selecciona la hora",
@@ -43,6 +49,8 @@
   "isRequired": "Este campo es obligatorio",
   "wrongEmailFormat": "El formato del correo electrónico no es válido",
   "_unique": "El correo electrónico ya está registrado",
+  "invalid_authentication_data": "Los datos son incorrectos",
 
-  "unexpectedError": "Lo sentimos, se ha producido un error con la conexión. Vuelve a intentarlo o recarga la página."
+  "unexpectedError": "Lo sentimos, se ha producido un error con la conexión. Vuelve a intentarlo o recarga la página.",
+  "invalid_reservation_data": "Los datos de la reserva no son válidos."
 }

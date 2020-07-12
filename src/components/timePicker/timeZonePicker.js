@@ -7,9 +7,9 @@ import TimePicker from './timePicker';
 import PrimaryButton from '../buttons/primaryButton';
 
 const TimeZonePickerWrapper = styled.div`
-  border: 1px solid ${theme.dateTimePickerBackgroundColor};
+  border: 1px solid ${theme.boxBackgroundColor};
   border-radius: 5px;
-  background-color: ${theme.dateTimePickerBackgroundColor};
+  background-color: ${theme.boxBackgroundColor};
   .timezone {
     cursor: pointer;
     height: 120px;
@@ -49,7 +49,7 @@ const TimeZoneModalWrapper = styled.div`
     }
   }
   .modal-footer {
-    background-color: ${theme.dateTimePickerBackgroundColor};
+    background-color: ${theme.boxBackgroundColor};
     border-top: none;
     justify-content: center;
   }

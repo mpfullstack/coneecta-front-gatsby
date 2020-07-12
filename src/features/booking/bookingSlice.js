@@ -13,7 +13,8 @@ const bookingSlice = createSlice({
     'time': '', // Booking time selected
     'isTimeAvailable': false, // Indicates if selected time is really available
     'fetchingTimeZones': true,
-    'fetchingAvailableDates': true
+    'fetchingAvailableDates': true,
+    'timelimits': {} // Some time limits to take into account on booking actions
 	},
   reducers: {
     selectService: (state, action) => {
@@ -44,6 +45,10 @@ const bookingSlice = createSlice({
     selectTimeZone: (state, action) => {
       state.timezone = action.payload;
       state.fetchingAvailableDates = true;
+    },
+    getTimeLimits: () => {},
+    setTimeLimits: (state, action) => {
+      state.timelimits = action.payload;
     }
   }
 });
@@ -55,7 +60,9 @@ export const {
   initAvailableDates,
   selectTimeZone,
   fetchAvailableTimeZones,
-  initAvailableTimeZones
+  initAvailableTimeZones,
+  getTimeLimits,
+  setTimeLimits
 } = bookingSlice.actions
 
 export default bookingSlice.reducer;

@@ -9,6 +9,7 @@ const ModalWrapper = styled.div`
   left: 0;
   width: 100%;
   text-align: center;
+  z-index: 100000;
 `;
 
 export default ({ children }) => {
