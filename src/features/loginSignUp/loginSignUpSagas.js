@@ -6,7 +6,7 @@ import {
   login, logout, loggedIn, loginError, signUp, signedUp, signUpError,
   resetLoginStatus, resetSignUpStatus
 } from './loginSignUpSlice';
-import { initProfile } from '../profile/profileSlice';
+import { initProfile, resetProfile } from '../profile/profileSlice';
 import { showApiError } from '../global/globalSlice';
 import api from '../../api';
 
@@ -62,6 +62,7 @@ function* onLogout() {
       yield put(showApiError(result.error));
     } else {
       // Handle logout OK
+      yield put(resetProfile());
       yield logoutUser();
       yield navigate(`/login`);
     }
