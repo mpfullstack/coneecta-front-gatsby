@@ -23,10 +23,12 @@ const mapDispatchToProps = {
   hideCancelSessionAlert
 };
 const mapStateToProps = state => {
+  const booking = state.booking;
   return {
     profile: state.professionalProfile,
-    booking: state.booking,
-    cancelSessionHoursLimit: state.booking.timelimits.cancel_session / 60 / 60
+    booking,
+    cancelSessionHoursLimit: booking && booking.timelimits ?
+      booking.timelimits.cancel_session / 60 / 60 : 24
   }
 }
 

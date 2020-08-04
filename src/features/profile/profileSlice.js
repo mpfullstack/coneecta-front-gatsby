@@ -13,10 +13,14 @@ const profileSlice = createSlice({
     initProfile: (state, action) => {
       state.status = 'loaded';
       state.details = action.payload
+    },
+    resetProfile: state => {
+      state.status = 'pending';
+      state.details = null;
     }
   }
 });
 
-export const { loadProfile, initProfile } = profileSlice.actions;
+export const { loadProfile, initProfile, resetProfile } = profileSlice.actions;
 
 export default profileSlice.reducer;
