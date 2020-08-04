@@ -23,17 +23,13 @@ async function getAvailableDates({ timezone, serviceId }) {
 }
 
 async function getProfessionalProfileReviews({ id, page = 1 }) {
-  const key = 'professionalReviews';
-  if (!cacheStore.get(key)) {
-    cacheStore.put(
-      key,
-      await SuperFetch.get(professionalProfileReviewsUrl
-        .replace(':id', id)
-        .replace(':page', page)),
-      CACHE_EXPIRATION
-    );
+  const url = professionalProfileReviewsUrl
+    .replace(':id', id)
+    .replace(':page', page);
+  if (!cacheStore.get(url)) {
+    cacheStore.put(url, await SuperFetch.get(url), CACHE_EXPIRATION);
   }
-  return cacheStore.get(key).value;
+  return cacheStore.get(url).value;
 };
 
 async function login(data) {
