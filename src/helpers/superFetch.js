@@ -1,3 +1,5 @@
+import { getAuthMechanism, COOKIE } from "./authentication";
+
 const customHeader = () => ({
   'Content-Type': 'application/json',
   'Accept': 'application/json'
@@ -45,9 +47,9 @@ const base = (method, url, data, customHandle, customOptions) => {
   //   options.headers.Authorization = `JWT ${sessionStorage.getItem('idToken')}`;
   // }
 
-  // if (siteConfig.authMechanism === authentication.COOKIE) {
-  //   options.credentials = 'same-origin';
-  // }
+  if (getAuthMechanism() === COOKIE) {
+    options.credentials = 'same-origin';
+  }
 
   // Set body request
   if (data) {

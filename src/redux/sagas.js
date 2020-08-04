@@ -4,6 +4,7 @@ import professionalProfileSagas from '../features/professionalProfile/profession
 import bookingSagas from '../features/booking/bookingSagas';
 import loginSingUpSagas from '../features/loginSignUp/loginSignUpSagas';
 import profileSagas from '../features/profile/profileSagas';
+import paymentSagas from '../features/payment/paymentSagas';
 
 export default function* rootSaga() {
   yield all([
@@ -11,6 +12,7 @@ export default function* rootSaga() {
     professionalProfileSagas(),
     bookingSagas(),
     loginSingUpSagas(),
-    profileSagas()
+    profileSagas(),
+    paymentSagas()
   ]);
 }

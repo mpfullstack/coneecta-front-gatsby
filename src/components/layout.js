@@ -15,6 +15,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './layout.scss';
 // Animate CSS
 import 'animate.css';
+import { hideApiError } from '../features/global/globalSlice';
 
 const LayoutWrapper = styled.div`
   .layout-inner {
@@ -32,13 +33,16 @@ const LayoutWrapper = styled.div`
   }
 `;
 
+const mapDispatchToProps = {
+  hideApiError
+};
 const mapStateToProps = state => {
   return {
     global: state.global
   }
 }
 
-const Layout = ({ children, global }) => {
+const Layout = ({ children, global, hideApiError }) => {
   const { t } = useTranslation();
 
   const data = useStaticQuery(graphql`
@@ -66,7 +70,7 @@ const Layout = ({ children, global }) => {
   let alert;
   if (global.apiError) {
     alert = <Modal>
-      <Alert variant={'danger'}>
+      <Alert variant={'danger'} onClose={hideApiError} dismissible>
         {t(global.apiError)}
       </Alert>
     </Modal>
@@ -91,4 +95,4 @@ Layout.propTypes = {
   children: PropTypes.node.isRequired,
 }
 
-export default connect(mapStateToProps)(Layout);
+export default connect(mapStateToProps, mapDispatchToProps)(Layout);

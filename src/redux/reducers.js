@@ -4,11 +4,13 @@ import professionalProfileReducer from '../features/professionalProfile/professi
 import profileReducer from '../features/profile/profileSlice';
 import bookingReducer from '../features/booking/bookingSlice';
 import loginSignUpReducer from '../features/loginSignUp/loginSignUpSlice';
+import paymentReducer from '../features/payment/paymentSlice';
 
 export default combineReducers({
   global: globalSliceReducer,
   professionalProfile: professionalProfileReducer,
   profile: profileReducer,
   booking: bookingReducer,
-  loginSignUp: loginSignUpReducer
+  loginSignUp: loginSignUpReducer,
+  payment: paymentReducer
 });

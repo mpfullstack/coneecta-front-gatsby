@@ -1,19 +1,21 @@
-import { all, takeLatest, put, call, fork, delay } from 'redux-saga/effects';
+import { all, takeLatest, put, call, fork } from 'redux-saga/effects';
 import { loadProfile, initProfile } from './profileSlice';
-import { showApiError, hideApiError, API_ERROR_DURATION } from '../global/globalSlice';
+import { showApiError } from '../global/globalSlice';
 import api from '../../api';
+import { login, logout } from '../../helpers/authentication';
 
 function* onLoadProfile() {
   yield takeLatest(loadProfile, function* ({ payload }) {
     const result = yield call(api.getProfile);
     if (result.error) {
-      yield put(showApiError(result.error));
-      yield delay(API_ERROR_DURATION);
-      yield put(hideApiError());
+      if (result.status === 403) {
+        yield logout();
+      } else {
+        yield put(showApiError(result.error));
+      }
     } else {
-      // TODO: Is user in session?
-      yield put(initProfile(result.details));
-      // TODO: Is not in session?
+      yield login();
+      yield put(initProfile(result));
     }
   });
 }

@@ -1,4 +1,5 @@
 import { differenceInDays, format, addMinutes } from 'date-fns'
+import { utcToZonedTime } from 'date-fns-tz'
 
 export function getServiceById(services, id) {
   return services.find(service => service.id === id);
@@ -104,5 +105,27 @@ export function isTimeAvailable(availableDates, date, time) {
     return available;
   } else {
     return available;
+  }
+}
+
+/**
+ *
+ * @param {Date} date Date of the booking
+ * @param {String} time Time of the booking 'hh:MM'
+ * @param {String} timezone Current user's timezone
+ * @param {Number} cancelSession Number of seconds before limit time with free cancellation
+ */
+export function isWithinCancellationLimits(date, time, timezone, cancelSession) {
+  // Calculate if user is booking within the time limit free cancellation
+  const times = time.split(':');
+  date.setHours(times[0]);
+  date.setMinutes(times[1]);
+  const bookingDate = utcToZonedTime(date, timezone);
+  const now = utcToZonedTime(new Date(), timezone);
+  const hoursDiff = (bookingDate - now) / 1000 / 60 / 60;
+  if (hoursDiff < (cancelSession / 60 / 60)) {
+    return true;
+  } else {
+    return false;
   }
 }
