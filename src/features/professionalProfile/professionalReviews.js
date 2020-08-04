@@ -72,22 +72,21 @@ const Review = ({ review = null }) => {
   );
 }
 
-
-
 export const ProfessionalReviews = ({ profile, loadProfessionalProfile, loadProfessionalProfileReviews, reviews, location, slug, serviceSlug }) => {
   const { t } = useTranslation();
+  const profileId = profile.id;
 
   useEffect(() => {
-    if (!profile.id) {
+    if (!profileId) {
       if (slug !== '') {
         loadProfessionalProfile({id: slug, sid: serviceSlug}); // Get sid from path instead of querystring
       } else {
         // TODO: Handle if no professional id is present in URL
       }
-    } else if (!reviews) {
-      loadProfessionalProfileReviews({id: profile.id});
+    } else {
+      loadProfessionalProfileReviews({id: profileId});
     }
-  }, [loadProfessionalProfile, loadProfessionalProfileReviews, location, profile.id, reviews, slug, serviceSlug]);
+  }, [loadProfessionalProfile, loadProfessionalProfileReviews, profileId, slug, serviceSlug]);
 
   const profileDetails = profile.details || {};
   const profileReviewsPagination = reviews ? reviews.pagination : null;
@@ -96,7 +95,7 @@ export const ProfessionalReviews = ({ profile, loadProfessionalProfile, loadProf
   return (
     <Container fluid>
       <SEO title={t('Professional reviews')} />
-      <ProfileHeader id={profile.id} {...profileDetails} collapse={true} slug={slug} serviceSlug={serviceSlug} />
+      <ProfileHeader id={profileId} {...profileDetails} collapse={true} slug={slug} serviceSlug={serviceSlug} />
       <Row className={`justify-content-md-center`}>
        <Col xs='12' md='10'>
           <h2>{t('Reviews')}</h2>
@@ -107,7 +106,7 @@ export const ProfessionalReviews = ({ profile, loadProfessionalProfile, loadProf
           {profileReviews ?
             profileReviews.map((review, i) => <Review key={`review-${i}`} review={review} />)
             :
-            Array.from({length: 3}).map((u, i) => <Review key={`review-${i}`} />)
+            Array.from({length: 10}).map((u, i) => <Review key={`review-${i}`} />)
           }
         </Col>
       </Row>
@@ -117,7 +116,7 @@ export const ProfessionalReviews = ({ profile, loadProfessionalProfile, loadProf
             <Pagination
               pages={profileReviewsPagination.total_pages}
               currentPage={profileReviewsPagination.current_page}
-              onPaginationClick={page => console.log(page)} /> : <Skeleton height={25} />}
+              onPaginationClick={page => loadProfessionalProfileReviews({id: profileId, page})} /> : <Skeleton height={25} />}
         </Col>
       </Row>
     </Container>

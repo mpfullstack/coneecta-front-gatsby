@@ -29,7 +29,7 @@ function* onLoadProfessionalProfile() {
 
 function* onLoadProfessionalProfileReviews() {
   yield takeLatest(loadProfessionalProfileReviews, function* ({ payload }) {
-    const result = yield call(api.getProfessionalProfileReviews, payload.id);
+    const result = yield call(api.getProfessionalProfileReviews, payload);
     if (result.error) {
       yield put(showApiError(result.error.code));
     } else {
