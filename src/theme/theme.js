@@ -154,6 +154,16 @@ const inputBoxShadowColorFocus = theme('mode', {
   dark: COLORS.superLightBlue
 });
 
+const borderDropdownItemColor = theme('mode', {
+  light: COLORS.quinary,
+  dark: COLORS.superLightBlue
+});
+
+const iconDropdownItemColor = theme('mode', {
+  light: COLORS.primary,
+  dark: COLORS.superLightBlue
+});
+
 // Transitions
 // -------------------------------------------------------
 const TRANSITIONS = {
@@ -185,6 +195,8 @@ export default {
   skeletonHighlightColor,
   inputBorderColorFocus,
   inputBoxShadowColorFocus,
+  borderDropdownItemColor,
+  iconDropdownItemColor,
   // Constants
   COLORS,
   SIZES,

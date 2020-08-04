@@ -4,6 +4,7 @@ import { Router } from "@reach/router";
 import { PersistGate } from 'redux-persist/integration/react';
 import store, { persistor } from '../redux/store';
 import Profile from '../features/profile';
+import ProfileData from '../features/profile/profileData';
 import PaymentConfirmed from '../features/payment/paymentConfirmed';
 import Payment from '../features/payment';
 import PrivateRoute from '../components/privateRoute';
