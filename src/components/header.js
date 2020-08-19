@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import theme from '../theme';
 import Logo from './logo';
 import { Container, Row, Col } from 'react-bootstrap';
-import UserProfileIcon from './userProfileIcon';
+import UserProfileMenu from './userProfileMenu';
 
 const HeaderWrapper = styled.header`
   width: 100%;
@@ -42,8 +42,7 @@ const Header = ({ siteTitle }) => (
         </Row>
       </Container>
     </div>
-    {/* {isLoggedIn() ? <UserProfileIcon /> : null} */}
-    <UserProfileIcon />
+    <UserProfileMenu />
   </HeaderWrapper>
 )
 

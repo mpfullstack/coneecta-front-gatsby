@@ -20,7 +20,7 @@ const mapStateToProps = ({ profile }) => {
   }
 };
 
-const UserProfileIconWrapper = styled.div`
+const UserProfileMenuWrapper = styled.div`
   z-index: 1;
   position: fixed;
   top: 0;
@@ -88,12 +88,12 @@ const MenuItem = ({ to, text, icon }) => {
   );
 }
 
-const UserProfileIcon = ({ profileDetails, logout }) => {
+const UserProfileMenu = ({ profileDetails, logout }) => {
   const { t } = useTranslation();
 
   if (isLoggedIn() && profileDetails) {
     return (
-      <UserProfileIconWrapper>
+      <UserProfileMenuWrapper>
         <Dropdown>
           <Dropdown.Toggle id='user-profile-icon'>
             <UserCircle />
@@ -108,11 +108,11 @@ const UserProfileIcon = ({ profileDetails, logout }) => {
             <Dropdown.Item onClick={logout}><Logout />{t('logout').toUpperCase()}</Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
-      </UserProfileIconWrapper>
+      </UserProfileMenuWrapper>
     );
   } else {
     return null;
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(UserProfileIcon);
+export default connect(mapStateToProps, mapDispatchToProps)(UserProfileMenu);
