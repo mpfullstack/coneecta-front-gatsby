@@ -39,20 +39,6 @@ const Form = ({ onSubmit, formData, renderForm, errors = [] }) => {
     }
   }
 
-  // function disableForm() {
-  //   if (formState.isPristine()) {
-  //     return true;
-  //   } else if( typeof isFormValid === 'function') {
-  //     if (!isFormValid(formState)) {
-  //       return true;
-  //     } else {
-  //       return false;
-  //     }
-  //   } else {
-  //     return false;
-  //   }
-  // }
-
   return (
     <FormWrapper>
       <form onSubmit={handleSubmit}>
