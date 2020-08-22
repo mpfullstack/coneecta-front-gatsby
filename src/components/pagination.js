@@ -15,16 +15,16 @@ const PaginationWrapper = styled.div`
     background-color: transparent;
     padding: 0;
     margin: 0 4px;
-    height: 20px;
+    height: 28px;
     width: 30px;
     .svg-inline--fa {
-      font-size: 20px;
+      font-size: 28px;
     }
   }
   .pages {
     .pages-item {
       margin: 0 2px;
-      font-size: 14px;
+      font-size: 16px;
     }
   }
 `;
