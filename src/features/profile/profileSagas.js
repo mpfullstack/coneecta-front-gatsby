@@ -1,5 +1,5 @@
 import { all, takeLatest, put, call, fork } from 'redux-saga/effects';
-import { loadProfile, initProfile } from './profileSlice';
+import { loadProfile, initProfile, loadSessions, initSessions, sessionsLoaded } from './profileSlice';
 import { showApiError } from '../global/globalSlice';
 import api from '../../api';
 import { login, logout } from '../../helpers/authentication';
@@ -20,8 +20,25 @@ function* onLoadProfile() {
   });
 }
 
+function* onLoadSessions() {
+  yield takeLatest(loadSessions, function* ({ payload = {} }) {
+    const result = yield call(api.getSessions, payload);
+    if (result.error) {
+      if (result.status === 403) {
+        yield logout();
+      } else {
+        yield put(showApiError(result.error));
+      }
+    } else {
+      yield put(initSessions(result));
+      yield put(sessionsLoaded());
+    }
+  });
+}
+
 export default function* () {
   yield all([
-    fork(onLoadProfile)
+    fork(onLoadProfile),
+    fork(onLoadSessions)
   ])
 };
