@@ -2,7 +2,7 @@ import PureCache from 'pure-cache';
 import SuperFetch from '../helpers/superFetch';
 import {
   professionalProfileUrl, timeZonesUrl, availableDatesUrl, professionalProfileReviewsUrl,
-  loginUrl, signUpUrl, profileUrl, reserveUrl, logoutUrl, timeLimitsUrl
+  loginUrl, signUpUrl, profileUrl, reserveUrl, logoutUrl, timeLimitsUrl, sessionsUrl
 } from './urls';
 
 const CACHE_EXPIRATION = 1000 * 60 * 10; // Expires in 10 minutes
@@ -60,6 +60,10 @@ async function getTimeLimits(data) {
   return cacheStore.get(key).value;
 }
 
+async function getSessions({ page = 1 }) {
+  return await SuperFetch.get(sessionsUrl.replace(':page', page));
+}
+
 const api = {
   getProfessionalProfile,
   getAvailableTimezones,
@@ -70,7 +74,8 @@ const api = {
   getProfile,
   reserve,
   logout,
-  getTimeLimits
+  getTimeLimits,
+  getSessions
 };
 
 export default api;

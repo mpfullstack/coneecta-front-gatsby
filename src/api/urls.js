@@ -9,7 +9,8 @@ const logoutUrl = `${base}/logout`;
 const signUpUrl = `${base}/signup`;
 const profileUrl = `${base}/user`;
 const reserveUrl = `${base}/reserve`;
-const timeLimitsUrl = `${base}/timelimits`
+const timeLimitsUrl = `${base}/timelimits`;
+const sessionsUrl = `${base}/sessions?page=:page`;
 
 export {
   professionalProfileUrl,
@@ -21,5 +22,6 @@ export {
   profileUrl,
   reserveUrl,
   logoutUrl,
-  timeLimitsUrl
+  timeLimitsUrl,
+  sessionsUrl
 };
