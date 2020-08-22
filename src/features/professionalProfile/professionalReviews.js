@@ -102,7 +102,7 @@ export const ProfessionalReviews = ({ profile, loadProfessionalProfile, loadProf
         </Col>
       </Row>
       <Row className={`justify-content-md-center`}>
-       <Col xs='12' md='10'>
+        <Col xs='12' md='10'>
           {profileReviews ?
             profileReviews.map((review, i) => <Review key={`review-${i}`} review={review} />)
             :
