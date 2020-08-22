@@ -98,7 +98,7 @@ const UserProfileMenu = ({ profileDetails, logout }) => {
           <Dropdown.Toggle id='user-profile-icon'>
             <UserCircle />
           </Dropdown.Toggle>
-          <Dropdown.Menu rootCloseEvent='click'>
+          <Dropdown.Menu rootCloseEvent='click' onClick={() => document.body.click()}>
             <MenuItem
               icon={<User />} to='/profile' text={t('personalData').toUpperCase()} />
             <MenuItem
