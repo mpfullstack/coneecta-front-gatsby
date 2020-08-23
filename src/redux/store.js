@@ -22,7 +22,7 @@ if (devMode) {
 const createStore = (preloadedState = {}) => {
   const store = configureStore({
     reducer: combineReducers({
-      global: persistReducer({ key: 'global', storage }, rootReducer.global),
+      global: rootReducer.global,
       professionalProfile: persistReducer({ key: 'professionalProfile', storage }, rootReducer.professionalProfile),
       profile: persistReducer({ key: 'profile', version: 1, storage }, rootReducer.profile),
       booking: persistReducer({ key: 'booking', storage }, rootReducer.booking),
