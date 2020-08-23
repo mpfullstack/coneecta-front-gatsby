@@ -1,8 +1,10 @@
 import PureCache from 'pure-cache';
 import SuperFetch from '../helpers/superFetch';
 import {
-  professionalProfileUrl, timeZonesUrl, availableDatesUrl, professionalProfileReviewsUrl,
-  loginUrl, signUpUrl, profileUrl, reserveUrl, logoutUrl, timeLimitsUrl, sessionsUrl, sessionDetailUrl
+  professionalProfileUrl, timeZonesUrl, availableDatesUrl,
+  professionalProfileReviewsUrl, loginUrl, signUpUrl, profileUrl,
+  reserveUrl, logoutUrl, timeLimitsUrl, sessionsUrl, sessionDetailUrl,
+  sessionActionsUrl
 } from './urls';
 
 const CACHE_EXPIRATION = 1000 * 60 * 10; // Expires in 10 minutes
@@ -68,6 +70,13 @@ async function getSessionDetail(id) {
   return await SuperFetch.get(sessionDetailUrl.replace(':id', id));
 }
 
+async function performSessionAction({ action, id }) {
+  return await SuperFetch.post(
+    sessionActionsUrl.replace(':action', action),
+    { id: Number(id) }
+  );
+}
+
 
 const api = {
   getProfessionalProfile,
@@ -81,7 +90,8 @@ const api = {
   logout,
   getTimeLimits,
   getSessions,
-  getSessionDetail
+  getSessionDetail,
+  performSessionAction
 };
 
 export default api;
