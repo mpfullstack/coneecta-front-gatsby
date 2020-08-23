@@ -11,7 +11,7 @@ const profileUrl = `${base}/user`;
 const reserveUrl = `${base}/reserve`;
 const timeLimitsUrl = `${base}/timelimits`;
 const sessionsUrl = `${base}/sessions?page=:page`;
-const sessionDetailUrl = `${base}/sessions?id=:id`;
+const sessionDetailUrl = `${base}/sessions/detail?id=:id`;
 const sessionActionsUrl = `${base}/sessions/:action`;
 
 export {
