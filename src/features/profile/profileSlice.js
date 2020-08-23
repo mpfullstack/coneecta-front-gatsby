@@ -6,6 +6,7 @@ const profileSlice = createSlice({
     'status': 'pending',
     'details': null,
     'sessions': null,
+    'sessionDetail': null,
     'loadingSessions': true
 	},
   reducers: {
@@ -28,13 +29,20 @@ const profileSlice = createSlice({
     },
     initSessions: (state, action) => {
       state.sessions = action.payload;
+    },
+    loadSessionDetail: state => {
+      state.loadingSessions = true;
+    },
+    initSessionDetail: (state, action) => {
+      state.sessionDetail = action.payload;
     }
   }
 });
 
 export const {
   loadProfile, initProfile, resetProfile,
-  loadSessions, initSessions, sessionsLoaded
+  loadSessions, initSessions, sessionsLoaded,
+  loadSessionDetail, initSessionDetail
 } = profileSlice.actions;
 
 export default profileSlice.reducer;

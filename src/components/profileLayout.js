@@ -15,6 +15,7 @@ const mapStateToProps = ({ profile, global }) => {
 
 const ProfileLayoutWrapper = styled.div`
   .title {
+    font-weight: 800;
     margin-top: 20px;
     font-size: 20px;
     text-transform: uppercase;
