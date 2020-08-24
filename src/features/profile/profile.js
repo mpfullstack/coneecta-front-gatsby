@@ -1,16 +1,23 @@
 import React from 'react';
 import { Location } from '@reach/router';
-import ProfileLayout from '../../components/profileLayout';
+import { Row, Col } from 'react-bootstrap';
 import SEO from "../../components/seo";
+import ProfileLayout from '../../components/profileLayout';
+import UserForm from './userForm';
 
-const Profile = () => {
+const ProfileBookings = ({ id }) => {
   return (
     <Location>
       {props => {
         return (
           <ProfileLayout {...props}>
-            <SEO title="Profile" />
-            <p>Profile page</p>
+            <SEO title="Datos personales" />
+            <h1 className='title'>Datos personales</h1>
+            <Row className={`justify-content-md-center`} style={{marginTop: '30px'}}>
+              <Col xs='12' md='10'>
+                <UserForm />
+              </Col>
+            </Row>
           </ProfileLayout>
         );
       }}
@@ -18,4 +25,4 @@ const Profile = () => {
   );
 }
 
-export default Profile;
+export default ProfileBookings;
