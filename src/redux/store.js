@@ -1,4 +1,5 @@
 import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
+import { combineReducers } from 'redux';
 import logger from 'redux-logger'; // NOTE: Only for dev purpose
 import createSagaMiddleware from 'redux-saga';
 
@@ -18,15 +19,16 @@ if (devMode) {
   middleware.push(logger);
 }
 
-const persistConfig = {
-  key: 'root',
-  storage,
-  blacklist: ['loginSignUp']
-}
-
 const createStore = (preloadedState = {}) => {
   const store = configureStore({
-    reducer: persistReducer(persistConfig, rootReducer),
+    reducer: combineReducers({
+      global: rootReducer.global,
+      professionalProfile: persistReducer({ key: 'professionalProfile', storage }, rootReducer.professionalProfile),
+      profile: persistReducer({ key: 'profile', version: 1, storage }, rootReducer.profile),
+      booking: persistReducer({ key: 'booking', storage }, rootReducer.booking),
+      loginSignUp: rootReducer.loginSignUp,
+      payment: persistReducer({ key: 'payment', storage }, rootReducer.payment)
+    }),
     devTools: devMode, // NOTE: Only for dev purpose
     middleware
     // preloadedState

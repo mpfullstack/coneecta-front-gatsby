@@ -60,5 +60,9 @@
 
   "cancel": "Cancelar",
   "continue": "Continuar",
-  "cancelSessionAlert": "Estas realizando una reserva con menos de {{hours}} horas de antelación. Ten en cuenta que para esta reserva no se admitirán cambios de fecha y su cancelación tendrá penalización."
+  "cancelSessionAlert": "Estas realizando una reserva con menos de {{hours}} horas de antelación. Ten en cuenta que para esta reserva no se admitirán cambios de fecha y su cancelación tendrá penalización.",
+
+  "accept_modification": "Aceptar modificación",
+  "cancel_session": "Cancelar reserva",
+  "suggest_modification": "Sugerir modificación"
 }

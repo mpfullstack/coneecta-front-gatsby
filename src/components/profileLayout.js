@@ -13,11 +13,17 @@ const mapStateToProps = ({ profile, global }) => {
   }
 }
 
-const PaymentWrapper = styled.div`
+const ProfileLayoutWrapper = styled.div`
+  .title {
+    font-weight: 800;
+    margin-top: 20px;
+    font-size: 20px;
+    text-transform: uppercase;
+    text-align: center;
+  }
 `;
 
-export const ProfileLayout = ({ profile, loadProfile, location, children }) => {
-  // const { t } = useTranslation();
+export const ProfileLayout = ({ profile, loadProfile, children }) => {
 
   useEffect(() => {
     if (!profile.details) {
@@ -25,10 +31,8 @@ export const ProfileLayout = ({ profile, loadProfile, location, children }) => {
     }
   }, [loadProfile, profile]);
 
-  // const userProfile = profile.details || null;
-
   return (
-    <PaymentWrapper>
+    <ProfileLayoutWrapper>
       <Container>
         <Row className='justify-content-md-center'>
           <Col xs='12' md='10'>
@@ -36,7 +40,7 @@ export const ProfileLayout = ({ profile, loadProfile, location, children }) => {
           </Col>
         </Row>
       </Container>
-    </PaymentWrapper>
+    </ProfileLayoutWrapper>
   );
 }
 

@@ -16,7 +16,9 @@ const COLORS = {
   lightGrey: '#bbbbbb',
   pearl: '#f1e9cd',
   superLightPearl: '#fffcf3',
-  lightPearl: '#f6f2e3'
+  lightPearl: '#f6f2e3',
+  green: '#178530',
+  yellow: '#b79c0a'
 }
 
 COLORS.primary = COLORS.darkBlue;
@@ -164,6 +166,21 @@ const iconDropdownItemColor = theme('mode', {
   dark: COLORS.superLightBlue
 });
 
+const approvedStatusColor = theme('mode', {
+  light: COLORS.green,
+  dark: COLORS.green
+});
+
+const unapprovedStatusColor = theme('mode', {
+  light: COLORS.yellow,
+  dark: COLORS.yellow
+});
+
+const statusTextColor = theme('mode', {
+  light: COLORS.lightPearl,
+  dark: COLORS.darkGrey
+});
+
 // Transitions
 // -------------------------------------------------------
 const TRANSITIONS = {
@@ -197,6 +214,9 @@ export default {
   inputBoxShadowColorFocus,
   borderDropdownItemColor,
   iconDropdownItemColor,
+  approvedStatusColor,
+  statusTextColor,
+  unapprovedStatusColor,
   // Constants
   COLORS,
   SIZES,
