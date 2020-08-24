@@ -70,10 +70,13 @@ async function getSessionDetail(id) {
   return await SuperFetch.get(sessionDetailUrl.replace(':id', id));
 }
 
-async function performSessionAction({ action, id }) {
+async function performSessionAction({ action, id, data = {} }) {
   return await SuperFetch.post(
     sessionActionsUrl.replace(':action', action),
-    { id: Number(id) }
+    {
+      id: Number(id),
+      ...data
+    }
   );
 }
 

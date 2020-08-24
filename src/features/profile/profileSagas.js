@@ -66,7 +66,7 @@ function* onPerformSessionAction() {
         yield put(showApiError(result.error));
       }
     } else {
-
+      // TODO: Handle response based on the action performed and result
     }
   });
 }

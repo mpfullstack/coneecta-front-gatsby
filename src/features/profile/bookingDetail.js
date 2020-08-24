@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { Row, Col } from 'react-bootstrap';
 import SEO from "../../components/seo";
+import { useTranslation } from 'react-i18next';
 import { loadSessionDetail, performSessionAction } from './profileSlice';
 import Skeleton from '../../components/skeleton';
 import BookingItem from './bookingItem';
@@ -24,13 +25,15 @@ const BookingActionsWrapper = styled.div`
 `;
 
 const BookingActions = ({ actions, id, performAction }) => {
+  const { t } = useTranslation();
+
   return (
     <BookingActionsWrapper>
       {actions ?
         actions.map(action => {
           return (
             <PrimaryButton onClick={() => performAction({ action, id })}>
-              {action}
+              {t(action)}
             </PrimaryButton>
           )
         })
