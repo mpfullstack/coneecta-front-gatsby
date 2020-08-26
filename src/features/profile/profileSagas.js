@@ -4,16 +4,17 @@ import {
   initSessions, sessionsLoaded, loadSessionDetail,
   initSessionDetail, performSessionAction, saveProfile
 } from './profileSlice';
+import { logout } from '../loginSignUp/loginSignUpSlice';
 import { showApiError } from '../global/globalSlice';
 import api from '../../api';
-import { login, logout } from '../../helpers/authentication';
+import { login } from '../../helpers/authentication';
 
 function* onLoadProfile() {
   yield takeLatest(loadProfile, function* ({ payload }) {
     const result = yield call(api.getProfile);
     if (result.error) {
       if (result.status === 403) {
-        yield logout();
+        yield put(logout());
       } else {
         yield put(showApiError(result.error));
       }
@@ -29,7 +30,7 @@ function* onLoadSessions() {
     const result = yield call(api.getSessions, payload);
     if (result.error) {
       if (result.status === 403) {
-        yield logout();
+        yield put(logout());
       } else {
         yield put(showApiError(result.error));
       }
@@ -45,7 +46,7 @@ function* onLoadSessionDetail() {
     const result = yield call(api.getSessionDetail, payload);
     if (result.error) {
       if (result.status === 403) {
-        yield logout();
+        yield put(logout());
       } else {
         yield put(showApiError(result.error));
       }
@@ -61,7 +62,7 @@ function* onPerformSessionAction() {
     const result = yield call(api.performSessionAction, payload);
     if (result.error) {
       if (result.status === 403) {
-        yield logout();
+        yield put(logout());
       } else {
         yield put(showApiError(result.error));
       }
@@ -76,7 +77,7 @@ function* onSaveProfile() {
     const result = yield call(api.saveProfile, payload);
     if (result.error) {
       if (result.status === 403) {
-        yield logout();
+        yield put(logout());
       } else {
         yield put(showApiError(result.error));
       }

@@ -22,6 +22,9 @@ const profileSlice = createSlice({
     resetProfile: state => {
       state.status = 'pending';
       state.details = null;
+      state.sessions = null;
+      state.sessionDetail = null;
+      state.formStatus = 'idle';
     },
     loadSessions: state => {
       state.loadingSessions = true;
