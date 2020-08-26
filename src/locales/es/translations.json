@@ -64,5 +64,7 @@
 
   "accept_modification": "Aceptar modificación",
   "cancel_session": "Cancelar reserva",
-  "suggest_modification": "Sugerir modificación"
+  "suggest_modification": "Sugerir modificación",
+  "save": "Guardar",
+  "saving": "Guardando..."
 }

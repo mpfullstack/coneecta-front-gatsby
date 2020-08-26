@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
-import i18n from '../../locales/i18n';
 import { useTranslation } from 'react-i18next';
 import { Form as RBForm } from 'react-bootstrap';
+import { saveProfile } from './profileSlice';
 import Form from '../../components/form';
 import FormControl from '../../components/form/formControl';
 import ActionButtons from '../../components/buttons/actionButtons';
@@ -11,12 +11,18 @@ import PrimaryButton from '../../components/buttons/primaryButton';
 import { adaptTimeZonesToArray } from '../../helpers/data';
 import { validateName, validateEmail, validatePassword } from '../../helpers/validators';
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = { saveProfile };
 const mapStateToProps = ({ profile, booking }) => {
+  const { name, email, password, timezone } = profile.details || {};
+  const formData = {
+    name,
+    email,
+    password,
+    timezone
+  };
   return {
-    formData: profile.details || {},
-    formStatus: 'idle',
-    timezone: booking.timezone,
+    formData,
+    formStatus: profile.formStatus,
     timezones: booking.timezones
   }
 }
@@ -35,13 +41,12 @@ const FormWrapper = styled.div`
   }
 `;
 
-const UserForm = ({ formData, timezone, timezones, formStatus }) => {
+const UserForm = ({ formData, timezones, formStatus, saveProfile }) => {
   const { t } = useTranslation();
 
   const fieldValidators = {
     'name': validateName,
-    'email': validateEmail,
-    'password': validatePassword
+    'email': validateEmail
   }
 
   function isFormValid(formState) {
@@ -108,10 +113,9 @@ const UserForm = ({ formData, timezone, timezones, formStatus }) => {
             })} />
         </RBForm.Row>
         <RBForm.Row>
-          <FormControl placeholder={t('password')} name={'password'} error={getError('password')} isValid={isValid('password', validatePassword)}
+          <FormControl placeholder={t('password')} name={'password'} error={getError('password')} isValid={isValid('password')}
             {...input.password({
-              name: 'password',
-              validate: validatePassword
+              name: 'password'
             })} />
         </RBForm.Row>
         <RBForm.Row>
@@ -124,10 +128,7 @@ const UserForm = ({ formData, timezone, timezones, formStatus }) => {
         </RBForm.Row>
         <ActionButtons>
           <PrimaryButton className='confirm-button' variant='primary' size='lg' disabled={!isFormValid(formState)}
-            onClick={() => {
-                // TODO: Handle submit form
-              }
-            }>
+            onClick={() => saveProfile({ ...formState.values })}>
               {formStatus === 'loading' ? t('saving') : t('save')}
           </PrimaryButton>
         </ActionButtons>
