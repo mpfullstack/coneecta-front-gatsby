@@ -9,7 +9,7 @@ import FormControl from '../../components/form/formControl';
 import ActionButtons from '../../components/buttons/actionButtons';
 import PrimaryButton from '../../components/buttons/primaryButton';
 import { adaptTimeZonesToArray } from '../../helpers/data';
-import { validateName, validateEmail, validatePassword, validatePrivacyPolicy } from '../../helpers/validators';
+import { validateName, validateEmail, validatePassword } from '../../helpers/validators';
 
 const mapDispatchToProps = {};
 const mapStateToProps = ({ profile, booking }) => {
@@ -48,7 +48,7 @@ const UserForm = ({ formData, timezone, timezones, formStatus }) => {
     let valid =  Object.keys(formState.validity).every(key => {
       return formState.validity[key];
     });
-    let requiredFields = ['name', 'email', 'password'];
+    let requiredFields = ['name', 'email'];
     let requiredValidation = requiredFields.every(fieldname => {
       if (fieldname in formState.errors) {
         return false;
