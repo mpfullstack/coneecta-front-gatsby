@@ -128,6 +128,7 @@ const ProfessionalProfileSection = ({
             <DateTimePicker slug={slug} />
           </Col>
         </Row>
+        {/* TODO: Wrap it into a component to reuse it in BookingDetailAction */}
         <Modal dialogClassName='cancel-session-alert' show={booking.showCancelSessionAlert}>
           <ModalWrapper>
             <Modal.Body>

@@ -81,31 +81,37 @@ const DatePickerWrapper = styled.div`
   }
 `;
 
-function confirmBooking({ slug, timelimits, timezone, date, time, showAlert }) {
+function confirmBooking({ slug, timelimits, timezone, date, time, showAlert, onConfirm }) {
   if (isWithinCancellationLimits(new Date(date), time, timezone, timelimits.cancel_session)) {
     // Show cancellation alert before continue
     showAlert();
   } else { // Continue as normal
-    navigate(`/profile/payment${slug ? `?slug=${slug}` : ''}`);
+    if (typeof onConfirm === 'function' ) {
+      onConfirm();
+    } else {
+      navigate(`/profile/payment${slug ? `?slug=${slug}` : ''}`);
+    }
   }
 }
 
-const ConfirmButton = ({ date, time, fetchingAvailableDates, slug, timezone, timelimits, showAlert }) => {
+const ConfirmButton = ({ date, time, fetchingAvailableDates, slug, timezone, timelimits, showAlert, onConfirm, text }) => {
   const { t } = useTranslation();
 
   let disabled = true;
   if (date && time && !fetchingAvailableDates) {
     disabled = false;
   }
-  return <PrimaryButton onClick={() => confirmBooking({ slug, date, time, timezone, timelimits, showAlert })}
+  return <PrimaryButton
+    onClick={() => confirmBooking({ slug, date, time, timezone, timelimits, showAlert, onConfirm })}
     className='confirm-button' variant='primary' size='lg' disabled={disabled}>
-      {t('Book')}
+      {text || t('Book')}
   </PrimaryButton>;
 }
 
 const DateTimePicker = ({
   booking, selectDate, selectTime, fetchAvailableTimeZones,
-  showCancelSessionAlert, selectTimeZone, slug
+  showCancelSessionAlert, selectTimeZone, slug, onConfirm,
+  onConfirmButtonText = ''
 }) => {
   const { t } = useTranslation();
 
@@ -168,7 +174,7 @@ const DateTimePicker = ({
         </Col>
       </Row>
       <ActionButtons>
-        <ConfirmButton {...booking} slug={slug} showAlert={showCancelSessionAlert} />
+        <ConfirmButton {...booking} slug={slug} showAlert={showCancelSessionAlert} onConfirm={onConfirm} text={onConfirmButtonText} />
       </ActionButtons>
     </DateTimePickerWrapper>
   )

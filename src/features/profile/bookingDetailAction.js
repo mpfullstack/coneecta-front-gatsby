@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { loadSessionDetail, performSessionAction } from './profileSlice';
 import DateTimePicker from '../../components/dateTimePicker';
 
-const mapDispatchToProps = { performSessionAction };
+const mapDispatchToProps = { loadSessionDetail, performSessionAction };
 const mapStateToProps = ({ profile }) => {
   return {}
 }
@@ -14,7 +14,7 @@ const mapStateToProps = ({ profile }) => {
 const BookingDetailActionWrapper = styled.div`
 `;
 
-const BookingDetailAction = ({ id, action, performSessionAction }) => {
+const BookingDetailAction = ({ id, action, loadSessionDetail, performSessionAction }) => {
   const { t } = useTranslation();
 
   useEffect(() => {
@@ -26,7 +26,9 @@ const BookingDetailAction = ({ id, action, performSessionAction }) => {
       return (
         <div>
           <p>{t('When do you want to change your booking for?')}</p>
-          <DateTimePicker />
+          <DateTimePicker onConfirm={() => {
+            debugger;
+          }} onConfirmButtonText={t('Confirm')} />
         </div>
       );
     }
