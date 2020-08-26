@@ -80,6 +80,9 @@ async function performSessionAction({ action, id, data = {} }) {
   );
 }
 
+async function saveProfile(data) {
+  // TODO: Implement
+}
 
 const api = {
   getProfessionalProfile,
@@ -94,7 +97,8 @@ const api = {
   getTimeLimits,
   getSessions,
   getSessionDetail,
-  performSessionAction
+  performSessionAction,
+  saveProfile
 };
 
 export default api;
