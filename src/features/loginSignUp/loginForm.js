@@ -111,7 +111,7 @@ const LoginForm = ({ login, timezones, timezone, loginStatus, loginErrors }) => 
         <ActionButtons>
           <PrimaryButton className='confirm-button' variant='primary' size='lg' disabled={!isFormValid(formState)}
             onClick={() => login({...formState.values})}>
-              {loginStatus === 'loading' ? t('loggingme') : t('logmein')}
+              {loginStatus === 'loading' ? t('loggingmein') : t('logmein')}
           </PrimaryButton>
         </ActionButtons>
       </FormWrapper>
