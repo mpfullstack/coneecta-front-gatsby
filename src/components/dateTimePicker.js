@@ -35,7 +35,6 @@ const mapDispatchToProps = {
 };
 const mapStateToProps = state => {
   return {
-    profile: state.professionalProfile,
     booking: state.booking
   }
 }
@@ -84,7 +83,7 @@ const DatePickerWrapper = styled.div`
 
 function confirmBooking({ slug, timelimits, timezone, date, time, showAlert }) {
   if (isWithinCancellationLimits(new Date(date), time, timezone, timelimits.cancel_session)) {
-    // TODO: Show cancellation alert before continue
+    // Show cancellation alert before continue
     showAlert();
   } else { // Continue as normal
     navigate(`/profile/payment${slug ? `?slug=${slug}` : ''}`);
