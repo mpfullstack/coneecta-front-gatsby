@@ -36,7 +36,16 @@ const BookingDetailAction = ({
         <div>
           <p>{t('When do you want to change your booking for?')}</p>
           <DateTimePicker onConfirm={() => {
-            debugger;
+            // TODO: Move to a function and use it below in AlertPopUp
+            const payload = {
+              id,
+              action: 'suggest_modification',
+              data: {
+                start: '',
+                comments: ''
+              }
+            };
+            performSessionAction(payload);
           }} onConfirmButtonText={t('Confirm')} />
         </div>
       );
