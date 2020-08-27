@@ -4,17 +4,26 @@ import styled from 'styled-components';
 import { Row, Col } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { loadSessionDetail, performSessionAction } from './profileSlice';
+import { hideCancelSessionAlert } from '../booking/bookingSlice';
 import DateTimePicker from '../../components/dateTimePicker';
+import AlertPopUp from '../../components/alertPopUp';
 
-const mapDispatchToProps = { loadSessionDetail, performSessionAction };
-const mapStateToProps = ({ profile }) => {
-  return {}
+const mapDispatchToProps = { loadSessionDetail, performSessionAction, hideCancelSessionAlert };
+const mapStateToProps = ({ booking }) => {
+  return {
+    showCancelSessionAlert: booking ? booking.showCancelSessionAlert : false,
+    cancelSessionHoursLimit: booking && booking.timelimits ?
+      booking.timelimits.cancel_session / 60 / 60 : 24
+  }
 }
 
 const BookingDetailActionWrapper = styled.div`
 `;
 
-const BookingDetailAction = ({ id, action, loadSessionDetail, performSessionAction }) => {
+const BookingDetailAction = ({
+  id, action, loadSessionDetail, performSessionAction,
+  cancelSessionHoursLimit, hideCancelSessionAlert, showCancelSessionAlert
+}) => {
   const { t } = useTranslation();
 
   useEffect(() => {
@@ -41,6 +50,23 @@ const BookingDetailAction = ({ id, action, loadSessionDetail, performSessionActi
           {renderAction(action)}
         </Col>
       </Row>
+      <AlertPopUp
+        className='cancel-session-alert'
+        show={showCancelSessionAlert}
+        body={t('cancelSessionAlert', { hours: cancelSessionHoursLimit })}
+        onCancel={hideCancelSessionAlert}
+        onAccept={() => {
+          // TODO: Build payload properly session id, start and comments
+          const payload = {
+            id,
+            action: 'suggest_modification',
+            data: {
+              start: '',
+              comments: ''
+            }
+          };
+          performSessionAction(payload);
+        }} />
     </BookingDetailActionWrapper>
   );
 }

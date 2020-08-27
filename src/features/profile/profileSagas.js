@@ -59,6 +59,7 @@ function* onLoadSessionDetail() {
 
 function* onPerformSessionAction() {
   yield takeLatest(performSessionAction, function* ({ payload }) {
+    debugger;
     const result = yield call(api.performSessionAction, payload);
     if (result.error) {
       if (result.status === 403) {
