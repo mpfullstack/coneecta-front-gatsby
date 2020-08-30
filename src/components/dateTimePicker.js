@@ -125,7 +125,7 @@ const DateTimePicker = ({
   }, [fetchAvailableTimeZones, selectTimeZone]);
 
   return (
-    <DateTimePickerWrapper>
+    <DateTimePickerWrapper className='date-time-picker-container'>
       <Row>
         <Col>
           {booking.fetchingAvailableDates ?
