@@ -68,5 +68,7 @@
   "cancel_session": "Cancelar reserva",
   "suggest_modification": "Sugerir modificación",
   "save": "Guardar",
-  "saving": "Guardando..."
+  "saving": "Guardando...",
+
+  "leaveSomeComments": "Deja aquí tu comentario"
 }
