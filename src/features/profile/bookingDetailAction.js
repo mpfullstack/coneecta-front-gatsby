@@ -25,6 +25,9 @@ const BookingDetailActionWrapper = styled.div`
   .date-time-picker-container {
     padding-bottom: 0;
   }
+  .detail-text {
+    text-align: center;
+  }
 `;
 
 const BookingDetailAction = ({
@@ -54,12 +57,19 @@ const BookingDetailAction = ({
     if (action === 'modify') {
       return (
         <div>
-          <p>{t('When do you want to change your booking for?')}</p>
+          <p className='detail-text'>{t('When do you want to change your booking for?')}</p>
           <DateTimePicker
             timeZoneDisabled={true}
             onConfirm={() => performSessionAction(buildPayload('suggest_modification'))}
             onConfirmButtonText={t('Confirm')} />
           <FormControl label={t('leaveSomeComments')} name={'comments'} as='textarea' />
+        </div>
+      );
+    } else if (action === 'success') {
+      return (
+        <div>
+          <p className='detail-text'><strong>Tu solicitud ha sido enviada</strong></p>
+          <p className='detail-text'>Estamos a la espera de la confirmación del profesional.</p>
         </div>
       );
     }

@@ -1,4 +1,5 @@
 import { all, takeLatest, put, call, fork } from 'redux-saga/effects';
+import { navigate } from 'gatsby';
 import {
   loadProfile, initProfile, loadSessions,
   initSessions, sessionsLoaded, loadSessionDetail,
@@ -68,6 +69,7 @@ function* onPerformSessionAction() {
       }
     } else {
       // TODO: Handle response based on the action performed and result
+      yield navigate(`/profile/bookings/${payload.id}/success`);
     }
   });
 }
