@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { Row, Col } from 'react-bootstrap';
@@ -35,10 +35,6 @@ const BookingDetailAction = ({
   cancelSessionHoursLimit, hideCancelSessionAlert, showCancelSessionAlert
 }) => {
   const { t } = useTranslation();
-
-  useEffect(() => {
-    loadSessionDetail(id);
-  }, [loadSessionDetail, id]);
 
   function buildPayload(actionToPerform) {
     if (actionToPerform === 'suggest_modification') {
