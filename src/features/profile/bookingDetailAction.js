@@ -56,6 +56,7 @@ const BookingDetailAction = ({
         <div>
           <p>{t('When do you want to change your booking for?')}</p>
           <DateTimePicker
+            timeZoneDisabled={true}
             onConfirm={() => performSessionAction(buildPayload('suggest_modification'))}
             onConfirmButtonText={t('Confirm')} />
           <FormControl label={t('leaveSomeComments')} name={'comments'} as='textarea' />

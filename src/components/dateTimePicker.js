@@ -111,7 +111,7 @@ const ConfirmButton = ({ date, time, fetchingAvailableDates, slug, timezone, tim
 const DateTimePicker = ({
   booking, selectDate, selectTime, fetchAvailableTimeZones,
   showCancelSessionAlert, selectTimeZone, slug, onConfirm,
-  onConfirmButtonText = ''
+  onConfirmButtonText = '', timeZoneDisabled = false
 }) => {
   const { t } = useTranslation();
 
@@ -148,6 +148,7 @@ const DateTimePicker = ({
             <Skeleton height={121} count={1} />
             :
             <TimeZonePicker
+              disabled={timeZoneDisabled}
               timezones={adaptTimeZonesToArray(booking.timezones, { value: null, label: t('Select the timezone') })}
               selected={booking.timezone}
               onSelectTimeZone={selectTimeZone}
