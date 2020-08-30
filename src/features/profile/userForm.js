@@ -1,26 +1,29 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
-import i18n from '../../locales/i18n';
 import { useTranslation } from 'react-i18next';
 import { Form as RBForm } from 'react-bootstrap';
+import { saveProfile } from './profileSlice';
 import Form from '../../components/form';
-import { login } from './loginSignUpSlice';
 import FormControl from '../../components/form/formControl';
 import ActionButtons from '../../components/buttons/actionButtons';
 import PrimaryButton from '../../components/buttons/primaryButton';
-import { validateEmail, validatePassword } from '../../helpers/validators';
+import { adaptTimeZonesToArray } from '../../helpers/data';
+import { validateName, validateEmail } from '../../helpers/validators';
 
-const mapDispatchToProps = { login };
-const mapStateToProps = ({ booking, loginSignUp }) => {
+const mapDispatchToProps = { saveProfile };
+const mapStateToProps = ({ profile, booking }) => {
+  const { name, email, password, timezone } = profile.details || {};
+  const formData = {
+    name,
+    email,
+    password,
+    timezone
+  };
   return {
-    timezone: booking.timezone,
-    timezones: booking.timezones,
-    loginStatus: loginSignUp.loginStatus,
-    loginErrors: loginSignUp.loginErrors.map(error => ({
-      field: error.field,
-      error: i18n.t(error.error)
-    }))
+    formData,
+    formStatus: profile.formStatus,
+    timezones: booking.timezones
   }
 }
 
@@ -31,25 +34,26 @@ const FormWrapper = styled.div`
       display: inline-block;
     }
   }
+  .form-check-label {
+    a {
+      text-decoration: underline;
+    }
+  }
 `;
 
-const LoginForm = ({ login, timezones, timezone, loginStatus, loginErrors }) => {
+const UserForm = ({ formData, timezones, formStatus, saveProfile }) => {
   const { t } = useTranslation();
-  const formData = {
-    email: '',
-    password: ''
-  };
 
   const fieldValidators = {
-    'email': validateEmail,
-    'password': validatePassword
+    'name': validateName,
+    'email': validateEmail
   }
 
   function isFormValid(formState) {
     let valid =  Object.keys(formState.validity).every(key => {
       return formState.validity[key];
     });
-    let requiredFields = ['email', 'password'];
+    let requiredFields = ['name', 'email'];
     let requiredValidation = requiredFields.every(fieldname => {
       if (fieldname in formState.errors) {
         return false;
@@ -95,6 +99,13 @@ const LoginForm = ({ login, timezones, timezone, loginStatus, loginErrors }) => 
     return (
       <FormWrapper>
         <RBForm.Row>
+          <FormControl placeholder={t('name')} name={'name'} error={getError('name')} isValid={isValid('name', validateName)}
+            {...input.text({
+              name: 'name',
+              validate: validateName
+            })} />
+        </RBForm.Row>
+        <RBForm.Row>
           <FormControl placeholder={t('email')} name={'email'} error={getError('email')} isValid={isValid('email', validateEmail)}
             {...input.email({
               name: 'email',
@@ -102,16 +113,23 @@ const LoginForm = ({ login, timezones, timezone, loginStatus, loginErrors }) => 
             })} />
         </RBForm.Row>
         <RBForm.Row>
-          <FormControl placeholder={t('password')} name={'password'} error={getError('password')} isValid={isValid('password', validatePassword)}
+          <FormControl placeholder={t('password')} name={'password'} error={getError('password')} isValid={isValid('password')}
             {...input.password({
-              name: 'password',
-              validate: validatePassword
+              name: 'password'
             })} />
+        </RBForm.Row>
+        <RBForm.Row>
+          <FormControl as='select' name={'timezone'} error={getError('timezone')} isValid={isValid('timezone')}
+            {...input.select('timezone')}>
+              {adaptTimeZonesToArray(timezones, { value: null, label: t('Select the timezone') }).map(
+                tz => <option key={tz.value} value={tz.value}>{tz.label}</option>
+              )}
+          </FormControl>
         </RBForm.Row>
         <ActionButtons>
           <PrimaryButton className='confirm-button' variant='primary' size='lg' disabled={!isFormValid(formState)}
-            onClick={() => login({...formState.values})}>
-              {loginStatus === 'loading' ? t('loggingmein') : t('logmein')}
+            onClick={() => saveProfile({ ...formState.values })}>
+              {formStatus === 'loading' ? t('saving') : t('save')}
           </PrimaryButton>
         </ActionButtons>
       </FormWrapper>
@@ -119,8 +137,8 @@ const LoginForm = ({ login, timezones, timezone, loginStatus, loginErrors }) => 
   }
 
   return (
-    <Form formData={formData} renderForm={renderForm} isFormValid={isFormValid} errors={loginErrors} />
+    <Form formData={formData} renderForm={renderForm} isFormValid={isFormValid} errors={[]} />
   );
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);
+export default connect(mapStateToProps, mapDispatchToProps)(UserForm);

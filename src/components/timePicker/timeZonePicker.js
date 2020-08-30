@@ -55,7 +55,7 @@ const TimeZoneModalWrapper = styled.div`
   }
 `;
 
-const TimeZonePicker = ({ timezones, selected, onSelectTimeZone, name, gmt }) => {
+const TimeZonePicker = ({ timezones, selected, onSelectTimeZone, name, gmt, disabled }) => {
   const { t } = useTranslation();
 
   const [show, showModal] = useState(false);
@@ -68,7 +68,7 @@ const TimeZonePicker = ({ timezones, selected, onSelectTimeZone, name, gmt }) =>
 
   return (
     <TimeZonePickerWrapper>
-      <div className='timezone' onClick={() => showModal(!show)} role='button' tabIndex={0}
+      <div className='timezone' onClick={() => disabled ? null : showModal(!show)} role='button' tabIndex={0}
       onKeyDown={() => null}>
         <span className='item label'>{t('Timezone')}</span>
         <span className='item region'>{name}</span>

@@ -4,6 +4,7 @@
   "These are my services": "Estos son mis servicios",
   "Pick the modality": "Escoge la modalidad que prefieras",
   "When do you want your booking for?": "¿Para cuando quieres hacer tu reserva?",
+  "When do you want to change your booking for?": "¿Para cuando quieres cambiar tu reserva?",
 
   "videoconference": "Video conferencia",
   "audioconference": "Audio conferencia",
@@ -11,6 +12,7 @@
   "student_home": "A domicilio",
 
   "Book": "Reservar",
+  "Confirm": "Confirmar",
   "Timezone": "Zona horaria",
   "Select": "Seleccionar",
 
@@ -64,5 +66,9 @@
 
   "accept_modification": "Aceptar modificación",
   "cancel_session": "Cancelar reserva",
-  "suggest_modification": "Sugerir modificación"
+  "suggest_modification": "Sugerir modificación",
+  "save": "Guardar",
+  "saving": "Guardando...",
+
+  "leaveSomeComments": "Deja aquí tu comentario"
 }

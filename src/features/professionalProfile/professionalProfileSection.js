@@ -4,16 +4,15 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { Animated } from 'react-animated-css';
-import { Row, Col, Modal } from 'react-bootstrap';
+import { Row, Col } from 'react-bootstrap';
 import Skeleton from '../../components/skeleton';
 import { changeSection, showService, collapseProfileHeader } from './professionalProfileSlice';
 import { selectService, hideCancelSessionAlert } from '../booking/bookingSlice';
 import ProfessionalServices from './professionalServices';
 import DateTimePicker from '../../components/dateTimePicker';
 import ServiceCard from '../../components/services/serviceCard';
-import PrimaryButton from '../../components/buttons/primaryButton';
-import SecondaryButton from '../../components/buttons/secondaryButton';
 import { getServiceById, getServiceByModalityType } from '../../helpers/data';
+import AlertPopUp from '../../components/alertPopUp';
 
 const mapDispatchToProps = {
   selectService,
@@ -43,14 +42,6 @@ const SectionContentWrapper = styled.div`
     text-align: center;
     p {
       margin-bottom: auto;
-    }
-  }
-`;
-
-const ModalWrapper = styled.div`
-  .modal-footer {
-    *:first-child {
-      margin-right: auto;
     }
   }
 `;
@@ -128,24 +119,15 @@ const ProfessionalProfileSection = ({
             <DateTimePicker slug={slug} />
           </Col>
         </Row>
-        <Modal dialogClassName='cancel-session-alert' show={booking.showCancelSessionAlert}>
-          <ModalWrapper>
-            <Modal.Body>
-              {t('cancelSessionAlert', { hours: cancelSessionHoursLimit })}
-            </Modal.Body>
-            <Modal.Footer>
-              <SecondaryButton onClick={hideCancelSessionAlert}>
-                {t('cancel')}
-              </SecondaryButton>
-              <PrimaryButton onClick={() => {
-                hideCancelSessionAlert();
-                navigate(`/profile/payment${slug ? `?slug=${slug}` : ''}`);
-              }}>
-                {t('continue')}
-              </PrimaryButton>
-            </Modal.Footer>
-          </ModalWrapper>
-        </Modal>
+        <AlertPopUp
+          className='cancel-session-alert'
+          show={booking.showCancelSessionAlert}
+          body={t('cancelSessionAlert', { hours: cancelSessionHoursLimit })}
+          onCancel={hideCancelSessionAlert}
+          onAccept={() => {
+            hideCancelSessionAlert();
+            navigate(`/profile/payment${slug ? `?slug=${slug}` : ''}`);
+          }} />
       </>
     );
   }

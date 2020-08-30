@@ -19,6 +19,7 @@ export default () => {
             <PrivateRoute path="/" component={Profile} />
             <PrivateRoute path="/bookings" component={ProfileBookings} />
             <PrivateRoute path="/bookings/:id" component={ProfileBookings} />
+            <PrivateRoute path="/bookings/:id/:action" component={ProfileBookings} />
             <PrivateRoute path="/payment" component={Payment} />
             <PrivateRoute path="/payment_confirmed/:id" component={PaymentConfirmed} />
           </Router>

@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { navigate } from 'gatsby';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { Row, Col } from 'react-bootstrap';
@@ -8,6 +9,7 @@ import { loadSessionDetail, performSessionAction } from './profileSlice';
 import Skeleton from '../../components/skeleton';
 import BookingItem from './bookingItem';
 import PrimaryButton from '../../components/buttons/primaryButton';
+import BookingDetailAction from './bookingDetailAction';
 
 const mapDispatchToProps = { loadSessionDetail, performSessionAction };
 const mapStateToProps = ({ profile }) => {
@@ -32,7 +34,13 @@ const BookingActions = ({ actions, id, performAction }) => {
       {actions ?
         actions.map(action => {
           return (
-            <PrimaryButton onClick={() => performAction({ action, id })}>
+            <PrimaryButton onClick={() => {
+              if (action === 'suggest_modification') {
+                navigate(`/profile/bookings/${id}/modify`);
+              } else {
+                performAction({ action, id });
+              }
+            }}>
               {t(action)}
             </PrimaryButton>
           )
@@ -52,7 +60,7 @@ const BookingDetailWrapper = styled.div`
   }
 `;
 
-const BookingDetail = ({ id, sessionDetail, loading, loadSessionDetail, performSessionAction }) => {
+const BookingDetail = ({ id, action, sessionDetail, loading, loadSessionDetail, performSessionAction }) => {
   useEffect(() => {
     loadSessionDetail(id);
   }, [loadSessionDetail, id]);
@@ -70,22 +78,27 @@ const BookingDetail = ({ id, sessionDetail, loading, loadSessionDetail, performS
           <BookingItem session={session} linkable={false} />
         </Col>
       </Row>
-      <Row className={`justify-content-md-center`}>
-        <Col xs='12' md='10'>
-          <div className='advices'>
-            {advices ?
-              advices.map((advice, i) => <p className='advice-item' key={`advice_${i}`}>{advice}</p>)
-              :
-              loading ? <Skeleton height={100} /> : null
-            }
-          </div>
-        </Col>
-      </Row>
-      <Row className={`justify-content-md-center`}>
-        <Col xs='12' md='10'>
-          <BookingActions id={id} actions={actions} performAction={payload => performSessionAction(payload)} />
-        </Col>
-      </Row>
+      {action
+        ?
+          <Row className={`justify-content-md-center`}>
+            <Col xs='12' md='10'>
+              <BookingDetailAction id={id} action={action} />
+            </Col>
+          </Row>
+        :
+          <Row className={`justify-content-md-center`}>
+            <Col xs='12' md='10'>
+              <div className='advices'>
+                {advices ?
+                  advices.map((advice, i) => <p className='advice-item' key={`advice_${i}`}>{advice}</p>)
+                  :
+                  loading ? <Skeleton height={100} /> : null
+                }
+              </div>
+              <BookingActions id={id} actions={actions} performAction={payload => performSessionAction(payload)} />
+            </Col>
+          </Row>
+        }
     </BookingDetailWrapper>
   );
 }
