@@ -4,13 +4,13 @@ import styled from 'styled-components';
 import { Row, Col } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { format } from 'date-fns';
-import { loadSessionDetail, performSessionAction } from './profileSlice';
+import { performSessionAction } from './profileSlice';
 import { hideCancelSessionAlert } from '../booking/bookingSlice';
 import DateTimePicker from '../../components/dateTimePicker';
 import AlertPopUp from '../../components/alertPopUp';
 import FormControl from '../../components/form/formControl';
 
-const mapDispatchToProps = { loadSessionDetail, performSessionAction, hideCancelSessionAlert };
+const mapDispatchToProps = { performSessionAction, hideCancelSessionAlert };
 const mapStateToProps = ({ booking }) => {
   return {
     booking,
@@ -31,7 +31,7 @@ const BookingDetailActionWrapper = styled.div`
 `;
 
 const BookingDetailAction = ({
-  id, action, loadSessionDetail, performSessionAction, booking,
+  id, action, performSessionAction, booking,
   cancelSessionHoursLimit, hideCancelSessionAlert, showCancelSessionAlert
 }) => {
   const { t } = useTranslation();

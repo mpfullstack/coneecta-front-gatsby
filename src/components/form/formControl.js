@@ -4,6 +4,7 @@ import { Col, Form as RBForm } from 'react-bootstrap';
 import theme from '../../theme';
 
 const FormControlWrapper = styled.div`
+  width: 100%;
   .form-control:focus {
       border-color: ${theme.inputBorderColorFocus};
       box-shadow: 0 0 0 0.2rem ${theme.inputBoxShadowColorFocus};

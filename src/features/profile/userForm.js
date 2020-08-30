@@ -9,7 +9,7 @@ import FormControl from '../../components/form/formControl';
 import ActionButtons from '../../components/buttons/actionButtons';
 import PrimaryButton from '../../components/buttons/primaryButton';
 import { adaptTimeZonesToArray } from '../../helpers/data';
-import { validateName, validateEmail, validatePassword } from '../../helpers/validators';
+import { validateName, validateEmail } from '../../helpers/validators';
 
 const mapDispatchToProps = { saveProfile };
 const mapStateToProps = ({ profile, booking }) => {
