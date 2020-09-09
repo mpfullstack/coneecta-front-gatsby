@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { navigate } from 'gatsby';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
+import parse from 'html-react-parser';
 import { Row, Col } from 'react-bootstrap';
 import SEO from "../../components/seo";
 import { useTranslation } from 'react-i18next';
@@ -90,7 +91,7 @@ const BookingDetail = ({ id, action, sessionDetail, loading, loadSessionDetail, 
             <Col xs='12' md='10'>
               <div className='advices'>
                 {advices ?
-                  advices.map((advice, i) => <p className='advice-item' key={`advice_${i}`}>{advice}</p>)
+                  advices.map((advice, i) => <p className='advice-item' key={`advice_${i}`}>{parse(advice)}</p>)
                   :
                   loading ? <Skeleton height={100} /> : null
                 }
