@@ -9,15 +9,14 @@ import FormControl from '../../components/form/formControl';
 import ActionButtons from '../../components/buttons/actionButtons';
 import PrimaryButton from '../../components/buttons/primaryButton';
 import { adaptTimeZonesToArray } from '../../helpers/data';
-import { validateName, validateEmail } from '../../helpers/validators';
+import { validateName } from '../../helpers/validators';
 
 const mapDispatchToProps = { saveProfile };
 const mapStateToProps = ({ profile, booking }) => {
-  const { name, email, password, timezone } = profile.details || {};
+  const { name, email, timezone } = profile.details || {};
   const formData = {
     name,
     email,
-    password,
     timezone
   };
   return {
@@ -34,6 +33,9 @@ const FormWrapper = styled.div`
       display: inline-block;
     }
   }
+  .form-data-email {
+    margin: 0 0 25px 15px;
+  }
   .form-check-label {
     a {
       text-decoration: underline;
@@ -45,15 +47,14 @@ const UserForm = ({ formData, timezones, formStatus, saveProfile }) => {
   const { t } = useTranslation();
 
   const fieldValidators = {
-    'name': validateName,
-    'email': validateEmail
+    'name': validateName
   }
 
   function isFormValid(formState) {
     let valid =  Object.keys(formState.validity).every(key => {
       return formState.validity[key];
     });
-    let requiredFields = ['name', 'email'];
+    let requiredFields = ['name'];
     let requiredValidation = requiredFields.every(fieldname => {
       if (fieldname in formState.errors) {
         return false;
@@ -106,17 +107,7 @@ const UserForm = ({ formData, timezones, formStatus, saveProfile }) => {
             })} />
         </RBForm.Row>
         <RBForm.Row>
-          <FormControl placeholder={t('email')} name={'email'} error={getError('email')} isValid={isValid('email', validateEmail)}
-            {...input.email({
-              name: 'email',
-              validate: validateEmail
-            })} />
-        </RBForm.Row>
-        <RBForm.Row>
-          <FormControl placeholder={t('password')} name={'password'} error={getError('password')} isValid={isValid('password')}
-            {...input.password({
-              name: 'password'
-            })} />
+          <p className='form-data-email'>{formData.email}</p>
         </RBForm.Row>
         <RBForm.Row>
           <FormControl as='select' name={'timezone'} error={getError('timezone')} isValid={isValid('timezone')}
