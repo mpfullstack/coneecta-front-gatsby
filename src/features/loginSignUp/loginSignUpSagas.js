@@ -59,7 +59,8 @@ function* onLogout() {
   yield takeLatest(logout, function* ({ payload }) {
     const result = yield call(api.logout);
     if (result.error) {
-      yield put(showApiError(result.error));
+      // TODO: Handle error.
+      // NOTE: We do nothing so far.
     } else {
       // Handle logout OK
       yield put(resetProfile());
