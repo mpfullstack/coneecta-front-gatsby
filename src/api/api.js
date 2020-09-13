@@ -4,7 +4,7 @@ import {
   professionalProfileUrl, timeZonesUrl, availableDatesUrl,
   professionalProfileReviewsUrl, loginUrl, signUpUrl, profileUrl,
   reserveUrl, logoutUrl, timeLimitsUrl, sessionsUrl, sessionDetailUrl,
-  sessionActionsUrl
+  sessionActionsUrl, saveProfileUrl
 } from './urls';
 
 const CACHE_EXPIRATION = 1000 * 60 * 10; // Expires in 10 minutes
@@ -81,7 +81,7 @@ async function performSessionAction({ action, id, data = {} }) {
 }
 
 async function saveProfile(data) {
-  // TODO: Implement
+  return await SuperFetch.post(saveProfileUrl, data);
 }
 
 const api = {

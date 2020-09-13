@@ -102,6 +102,68 @@ const UserForm = ({ formData, timezones, formStatus, saveProfile }) => {
       }
     }
 
+    function findAttribute(items, type, attribute = 'long_name') {
+      if (items) {
+        const foundItem = items.find(item => {
+          if (item.types.includes(type)) {
+            return item;
+          }
+        });
+        if (foundItem) {
+          return foundItem[attribute];
+        } else {
+          return '';
+        }
+      } else {
+        return '';
+      }
+    }
+
+    function setAddressValues(place) {
+      const streetName = findAttribute(place.address_components, 'route');
+      const streetNumber = findAttribute(place.address_components, 'street_number');
+      const city = findAttribute(place.address_components, 'locality');
+      const province = findAttribute(place.address_components, 'administrative_area_level_2');
+      const postalCode = findAttribute(place.address_components, 'postal_code');
+      const countryCode = findAttribute(place.address_components, 'country', 'short_name');
+      formState.setField('street_name', streetName);
+      formState.setField('street_number', streetNumber);
+      formState.setField('city', city);
+      formState.setField('province', province);
+      formState.setField('postal_code', postalCode);
+      formState.setField('country_code', countryCode);
+      formState.setField('location_lat', place.geometry.location.lat());
+      formState.setField('location_long', place.geometry.location.lng());
+      // {
+      //   "name": "John Doe",
+      //   "timezone": "America/La_Paz",
+      //   "street_name": "Calle Granada",
+      //   "street_number":"153",
+      //   "city": "La Paz",
+      //   "province": "La Paz",
+      //   "postal_code": "35265",
+      //   "floor": "3",
+      //   "door": "1",
+      //   "extra": "cerca del metro la paz",
+      //   "country_code": "BOL",
+      //   "location_lat": "41.4231351",
+      //   "location_long": "2.1811372"
+      // }
+      // * street_name
+      // * street_number
+      // * city
+      // * province
+      // * postal_code
+      // floor
+      // door
+      // extra
+      // * country_code
+      // location_lat (numérico con "." como separador decimal)
+      // location_long (numérico con "." como separador decimal)
+
+
+    }
+
     return (
       <FormWrapper>
         <RBForm.Row>
@@ -125,7 +187,7 @@ const UserForm = ({ formData, timezones, formStatus, saveProfile }) => {
         <RBForm.Row className='google-places-container'>
           <Autocomplete
             onPlaceSelected={(place) => {
-              console.log(place);
+              setAddressValues(place);
             }}
             types={['address']}
             placeholder={t('typeYourAddress')}

@@ -13,6 +13,7 @@ const timeLimitsUrl = `${base}/timelimits`;
 const sessionsUrl = `${base}/sessions?page=:page`;
 const sessionDetailUrl = `${base}/sessions/detail?id=:id`;
 const sessionActionsUrl = `${base}/sessions/:action`;
+const saveProfileUrl = `${profileUrl}/update`;
 
 export {
   professionalProfileUrl,
@@ -22,6 +23,7 @@ export {
   loginUrl,
   signUpUrl,
   profileUrl,
+  saveProfileUrl,
   reserveUrl,
   logoutUrl,
   timeLimitsUrl,
