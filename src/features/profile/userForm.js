@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
+import Autocomplete from 'react-google-autocomplete';
 import { useTranslation } from 'react-i18next';
 import { Form as RBForm } from 'react-bootstrap';
 import { saveProfile } from './profileSlice';
@@ -40,6 +41,10 @@ const FormWrapper = styled.div`
     a {
       text-decoration: underline;
     }
+  }
+  .google-places-container {
+    padding-left: 15px;
+    padding-right: 15px;
   }
 `;
 
@@ -116,6 +121,16 @@ const UserForm = ({ formData, timezones, formStatus, saveProfile }) => {
                 tz => <option key={tz.value} value={tz.value}>{tz.label}</option>
               )}
           </FormControl>
+        </RBForm.Row>
+        <RBForm.Row className='google-places-container'>
+          <Autocomplete
+            onPlaceSelected={(place) => {
+              console.log(place);
+            }}
+            types={['address']}
+            placeholder={t('typeYourAddress')}
+            className='form-control'
+          />
         </RBForm.Row>
         <ActionButtons>
           <PrimaryButton className='confirm-button' variant='primary' size='lg' disabled={!isFormValid(formState)}
