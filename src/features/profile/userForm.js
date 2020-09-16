@@ -107,6 +107,8 @@ const UserForm = ({ formData, timezones, formStatus, saveProfile }) => {
         const foundItem = items.find(item => {
           if (item.types.includes(type)) {
             return item;
+          } else {
+            return null;
           }
         });
         if (foundItem) {
@@ -134,6 +136,7 @@ const UserForm = ({ formData, timezones, formStatus, saveProfile }) => {
       formState.setField('country_code', countryCode);
       formState.setField('location_lat', place.geometry.location.lat());
       formState.setField('location_long', place.geometry.location.lng());
+
       // {
       //   "name": "John Doe",
       //   "timezone": "America/La_Paz",
