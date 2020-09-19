@@ -3,23 +3,29 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 import Autocomplete from 'react-google-autocomplete';
 import { useTranslation } from 'react-i18next';
-import { Form as RBForm } from 'react-bootstrap';
+import { Form as RBForm, Col } from 'react-bootstrap';
 import { saveProfile } from './profileSlice';
 import Form from '../../components/form';
 import FormControl from '../../components/form/formControl';
 import ActionButtons from '../../components/buttons/actionButtons';
 import PrimaryButton from '../../components/buttons/primaryButton';
 import { adaptTimeZonesToArray } from '../../helpers/data';
-import { validateName } from '../../helpers/validators';
+import { validateName, validateRequired } from '../../helpers/validators';
 
 const mapDispatchToProps = { saveProfile };
 const mapStateToProps = ({ profile, booking }) => {
-  const { name, email, timezone } = profile.details || {};
+  const { name, email, timezone, locations } = profile.details || {};
+  let location = {};
+  if (locations && locations.length) {
+    location = locations[0];
+  }
   const formData = {
     name,
     email,
-    timezone
+    timezone,
+    ...location
   };
+  debugger;
   return {
     formData,
     formStatus: profile.formStatus,
@@ -29,6 +35,9 @@ const mapStateToProps = ({ profile, booking }) => {
 
 const FormWrapper = styled.div`
   padding-bottom: 100px;
+  .form-label {
+    margin-top: 15px;
+  }
   .privacy-policy {
     &.invalid-feedback {
       display: inline-block;
@@ -52,16 +61,27 @@ const UserForm = ({ formData, timezones, formStatus, saveProfile }) => {
   const { t } = useTranslation();
 
   const fieldValidators = {
-    'name': validateName
-  }
+    'name': validateName,
+    'timezone': validateName,
+    'street_name': validateRequired,
+    'street_number': validateRequired,
+    'province': validateRequired,
+    'country': validateRequired,
+    'postal_code': validateRequired,
+    'city': validateRequired,
+    'floor': validateRequired
+  };
 
   function isFormValid(formState) {
     let valid =  Object.keys(formState.validity).every(key => {
       return formState.validity[key];
     });
-    let requiredFields = ['name'];
+    let requiredFields = [
+      'name', 'timezone', 'street_name', 'street_number', 'province', 'country',
+      'postal_code', 'city', 'floor'
+    ];
     let requiredValidation = requiredFields.every(fieldname => {
-      if (fieldname in formState.errors) {
+      if (fieldname in formState.errors && formState.errors[fieldname] !== undefined) {
         return false;
       } else if (fieldname in fieldValidators && typeof fieldValidators[fieldname] === 'function') {
         return fieldValidators[fieldname](formState.values[fieldname]) === undefined;
@@ -77,11 +97,16 @@ const UserForm = ({ formData, timezones, formStatus, saveProfile }) => {
       if (formState.isPristine()) {
         return {};
       } else {
-        if (name in formState.errors) {
+        if (name in formState.errors && formState.errors[name] !== undefined) {
           return {
             isInvalid: true,
             isValid: false
           };
+        } else if (name in formState.errors && formState.errors[name] === undefined) {
+            return {
+              isInvalid: false,
+              isValid: true
+            };
         } else if (typeof valdidateFunc === 'function') {
           let valid = valdidateFunc(formState.values[name]);
           return {
@@ -127,50 +152,23 @@ const UserForm = ({ formData, timezones, formStatus, saveProfile }) => {
       const city = findAttribute(place.address_components, 'locality');
       const province = findAttribute(place.address_components, 'administrative_area_level_2');
       const postalCode = findAttribute(place.address_components, 'postal_code');
+      const country = findAttribute(place.address_components, 'country');
       const countryCode = findAttribute(place.address_components, 'country', 'short_name');
       formState.setField('street_name', streetName);
       formState.setField('street_number', streetNumber);
       formState.setField('city', city);
       formState.setField('province', province);
       formState.setField('postal_code', postalCode);
+      formState.setField('country', country);
       formState.setField('country_code', countryCode);
       formState.setField('location_lat', place.geometry.location.lat());
       formState.setField('location_long', place.geometry.location.lng());
-
-      // {
-      //   "name": "John Doe",
-      //   "timezone": "America/La_Paz",
-      //   "street_name": "Calle Granada",
-      //   "street_number":"153",
-      //   "city": "La Paz",
-      //   "province": "La Paz",
-      //   "postal_code": "35265",
-      //   "floor": "3",
-      //   "door": "1",
-      //   "extra": "cerca del metro la paz",
-      //   "country_code": "BOL",
-      //   "location_lat": "41.4231351",
-      //   "location_long": "2.1811372"
-      // }
-      // * street_name
-      // * street_number
-      // * city
-      // * province
-      // * postal_code
-      // floor
-      // door
-      // extra
-      // * country_code
-      // location_lat (numérico con "." como separador decimal)
-      // location_long (numérico con "." como separador decimal)
-
-
     }
 
     return (
       <FormWrapper>
         <RBForm.Row>
-          <FormControl placeholder={t('name')} name={'name'} error={getError('name')} isValid={isValid('name', validateName)}
+          <FormControl label={t('name')} name={'name'} error={getError('name')} isValid={isValid('name', validateName)}
             {...input.text({
               name: 'name',
               validate: validateName
@@ -180,7 +178,7 @@ const UserForm = ({ formData, timezones, formStatus, saveProfile }) => {
           <p className='form-data-email'>{formData.email}</p>
         </RBForm.Row>
         <RBForm.Row>
-          <FormControl as='select' name={'timezone'} error={getError('timezone')} isValid={isValid('timezone')}
+          <FormControl label={t('Timezone')} as='select' name={'timezone'} error={getError('timezone')} isValid={isValid('timezone')}
             {...input.select('timezone')}>
               {adaptTimeZonesToArray(timezones, { value: null, label: t('Select the timezone') }).map(
                 tz => <option key={tz.value} value={tz.value}>{tz.label}</option>
@@ -188,6 +186,7 @@ const UserForm = ({ formData, timezones, formStatus, saveProfile }) => {
           </FormControl>
         </RBForm.Row>
         <RBForm.Row className='google-places-container'>
+          <label className='form-label'>{t('typeAddressToSearch')}</label>
           <Autocomplete
             onPlaceSelected={(place) => {
               setAddressValues(place);
@@ -197,6 +196,82 @@ const UserForm = ({ formData, timezones, formStatus, saveProfile }) => {
             className='form-control'
           />
         </RBForm.Row>
+        <RBForm.Row>
+          <Col xs='8'>
+            <FormControl label={t('streetName')} name={'street_name'} error={getError('street_name')}
+              isValid={isValid('street_name')}
+              {...input.text({
+                name: 'street_name',
+                validate: validateRequired
+              })} />
+          </Col>
+          <Col xs='4'>
+            <FormControl label={t('streetNumber')} name={'street_number'} error={getError('street_number')}
+              isValid={isValid('street_number')}
+              {...input.text({
+                name: 'street_number',
+                validate: validateRequired
+              })} />
+          </Col>
+        </RBForm.Row>
+        <RBForm.Row>
+          <Col xs='6'>
+            <FormControl label={t('province')} name={'province'} error={getError('province')}
+              isValid={isValid('province')}
+              {...input.text({
+                name: 'province',
+                validate: validateRequired
+              })} />
+          </Col>
+          <Col xs='6'>
+            <FormControl label={t('country')} name={'country'} error={getError('country')}
+              isValid={isValid('country')}
+              {...input.text({
+                name: 'country',
+                validate: validateRequired
+              })} />
+          </Col>
+        </RBForm.Row>
+        <RBForm.Row>
+          <Col xs='4'>
+            <FormControl label={t('postalCode')} name={'postal_code'} error={getError('postal_code')}
+              isValid={isValid('postal_code')}
+              {...input.text({
+                name: 'postal_code',
+                validate: validateRequired
+              })} />
+          </Col>
+          <Col xs='8'>
+            <FormControl label={t('city')} name={'city'} error={getError('city')}
+              isValid={isValid('city')}
+              {...input.text({
+                name: 'city',
+                validate: validateRequired
+              })} />
+          </Col>
+        </RBForm.Row>
+        <RBForm.Row>
+          <Col xs='4'>
+            <FormControl label={t('floor')} name={'floor'} error={getError('floor')}
+              isValid={isValid('floor')}
+              {...input.text({
+                name: 'floor',
+                validate: validateRequired
+              })} />
+          </Col>
+          <Col xs='4'>
+            <FormControl label={t('door')} name={'door'} error={getError('door')}
+              {...input.text({
+                name: 'door'
+              })} />
+          </Col>
+        </RBForm.Row>
+        <RBForm.Row>
+          <FormControl label={t('comments')} name={'extra'} as='textarea' {...input.textarea({
+            name: 'extra'
+          })} />
+        </RBForm.Row>
+
         <ActionButtons>
           <PrimaryButton className='confirm-button' variant='primary' size='lg' disabled={!isFormValid(formState)}
             onClick={() => saveProfile({ ...formState.values })}>

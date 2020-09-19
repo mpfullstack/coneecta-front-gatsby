@@ -71,6 +71,18 @@
   "saving": "Guardando...",
 
   "leaveSomeComments": "Deja aquí tu comentario",
+  "comments": "Comentarios",
 
-  "typeYourAddress": "Introduce tu dirección"
+  "typeYourAddress": "Introduce tu dirección",
+
+  "streetName": "Nombre de la vía",
+  "streetNumber": "Número",
+  "province": "Provincia",
+  "country": "País",
+  "postalCode": "Código postal",
+  "city": "Ciudad",
+  "floor": "Planta/piso",
+  "door": "Puerta",
+
+  "typeAddressToSearch": "Escribe la dirección completa que quieres añadir e intentaremos encontrarla."
 }
