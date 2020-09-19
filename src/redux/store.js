@@ -24,10 +24,10 @@ const createStore = (preloadedState = {}) => {
     reducer: combineReducers({
       global: rootReducer.global,
       professionalProfile: persistReducer({ key: 'professionalProfile', storage }, rootReducer.professionalProfile),
-      profile: persistReducer({ key: 'profile', version: 1, storage }, rootReducer.profile),
+      profile: rootReducer.profile,
       booking: persistReducer({ key: 'booking', storage }, rootReducer.booking),
       loginSignUp: rootReducer.loginSignUp,
-      payment: persistReducer({ key: 'payment', storage }, rootReducer.payment)
+      payment: rootReducer.payment
     }),
     devTools: devMode, // NOTE: Only for dev purpose
     middleware
