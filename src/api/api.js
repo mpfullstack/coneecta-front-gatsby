@@ -4,7 +4,7 @@ import {
   professionalProfileUrl, timeZonesUrl, availableDatesUrl,
   professionalProfileReviewsUrl, loginUrl, signUpUrl, profileUrl,
   reserveUrl, logoutUrl, timeLimitsUrl, sessionsUrl, sessionDetailUrl,
-  sessionActionsUrl, saveProfileUrl
+  sessionActionsUrl, saveProfileUrl, countriesUrl
 } from './urls';
 
 const CACHE_EXPIRATION = 1000 * 60 * 10; // Expires in 10 minutes
@@ -62,6 +62,14 @@ async function getTimeLimits(data) {
   return cacheStore.get(key).value;
 }
 
+async function getCountries(data) {
+  const key = 'countries';
+  if (!cacheStore.get(key)) {
+    cacheStore.put(key, await SuperFetch.get(countriesUrl), 1000 * 60 * 60); // One hour expiration
+  }
+  return cacheStore.get(key).value;
+}
+
 async function getSessions({ page = 1 }) {
   return await SuperFetch.get(sessionsUrl.replace(':page', page));
 }
@@ -98,7 +106,8 @@ const api = {
   getSessions,
   getSessionDetail,
   performSessionAction,
-  saveProfile
+  saveProfile,
+  getCountries
 };
 
 export default api;

@@ -14,6 +14,7 @@ const sessionsUrl = `${base}/sessions?page=:page`;
 const sessionDetailUrl = `${base}/sessions/detail?id=:id`;
 const sessionActionsUrl = `${base}/sessions/:action`;
 const saveProfileUrl = `${profileUrl}/update`;
+const countriesUrl = `${base}/countries`;
 
 export {
   professionalProfileUrl,
@@ -29,5 +30,6 @@ export {
   timeLimitsUrl,
   sessionsUrl,
   sessionDetailUrl,
-  sessionActionsUrl
+  sessionActionsUrl,
+  countriesUrl
 };
