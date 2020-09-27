@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import Autocomplete from 'react-google-autocomplete';
+import i18n from '../../locales/i18n';
 import { useTranslation } from 'react-i18next';
 import { Form as RBForm, Col } from 'react-bootstrap';
 import { saveProfile } from './profileSlice';
@@ -29,7 +30,11 @@ const mapStateToProps = ({ global, profile, booking }) => {
   return {
     formData,
     formStatus: profile.formStatus,
-    timezones: booking.timezones
+    timezones: booking.timezones,
+    profileErrors: profile.profileErrors.map(error => ({
+      field: error.field,
+      error: i18n.t(error.error)
+    }))
   }
 }
 
@@ -57,7 +62,7 @@ const FormWrapper = styled.div`
   }
 `;
 
-const UserForm = ({ formData, timezones, formStatus, saveProfile }) => {
+const UserForm = ({ formData, timezones, formStatus, saveProfile, profileErrors }) => {
   const { t } = useTranslation();
 
   const fieldValidators = {
@@ -265,8 +270,10 @@ const UserForm = ({ formData, timezones, formStatus, saveProfile }) => {
           </Col>
           <Col xs='4'>
             <FormControl label={t('door')} name={'door'} error={getError('door')}
+              isValid={isValid('door')}
               {...input.text({
-                name: 'door'
+                name: 'door',
+                validate: validateRequired
               })} />
           </Col>
         </RBForm.Row>
@@ -287,7 +294,7 @@ const UserForm = ({ formData, timezones, formStatus, saveProfile }) => {
   }
 
   return (
-    <Form formData={formData} renderForm={renderForm} isFormValid={isFormValid} errors={[]} />
+    <Form formData={formData} renderForm={renderForm} isFormValid={isFormValid} errors={profileErrors} />
   );
 };
 

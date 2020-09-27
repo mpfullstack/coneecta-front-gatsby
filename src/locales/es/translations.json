@@ -56,6 +56,8 @@
   "wrongEmailFormat": "El formato del correo electrónico no es válido",
   "_unique": "El correo electrónico ya está registrado",
   "invalid_authentication_data": "Los datos son incorrectos",
+  "invalid_timezone": "La zona horaria es incorrecta",
+  "_empty": "Este campo es obligatorio",
 
   "unexpectedError": "Lo sentimos, se ha producido un error con la conexión. Vuelve a intentarlo o recarga la página.",
   "invalid_reservation_data": "Los datos de la reserva no son válidos.",

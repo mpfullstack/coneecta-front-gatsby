@@ -4,7 +4,7 @@ import {
   loadProfile, initProfile, loadSessions,
   initSessions, sessionsLoaded, loadSessionDetail,
   initSessionDetail, performSessionAction, saveProfile,
-  profileUpdated
+  profileUpdated, saveProfileError
 } from './profileSlice';
 import { logout } from '../loginSignUp/loginSignUpSlice';
 import { showApiError, updateCountries } from '../global/globalSlice';
@@ -85,8 +85,8 @@ function* onSaveProfile() {
     if (result.error) {
       if (result.status === 403) {
         yield put(logout());
-      } else {
-        yield put(showApiError(result.error));
+      } else if (result.error.code === 'invalid_user_data') {
+        yield put(saveProfileError(result.error.details));
       }
     } else {
       // Handle response
