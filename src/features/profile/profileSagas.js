@@ -6,7 +6,7 @@ import {
   initSessionDetail, performSessionAction, saveProfile
 } from './profileSlice';
 import { logout } from '../loginSignUp/loginSignUpSlice';
-import { showApiError } from '../global/globalSlice';
+import { showApiError, updateCountries } from '../global/globalSlice';
 import api from '../../api';
 import { login } from '../../helpers/authentication';
 
@@ -20,6 +20,10 @@ function* onLoadProfile() {
         yield put(showApiError(result.error));
       }
     } else {
+      const countriesResult = yield call(api.getCountries);
+      if (!countriesResult.error) {
+        yield put(updateCountries(countriesResult));
+      }
       yield login();
       yield put(initProfile(result));
     }

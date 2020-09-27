@@ -129,3 +129,16 @@ export function isWithinCancellationLimits(date, time, timezone, cancelSession) 
     return false;
   }
 }
+
+export function getCountryByCode(countries, code) {
+  return countries.find(country => country.code === code);
+}
+
+export function getCountryNameByCode(countries, code) {
+  const country = getCountryByCode(countries, code);
+  if (country) {
+    return country.name;
+  } else {
+    return '';
+  }
+}

@@ -9,11 +9,11 @@ import Form from '../../components/form';
 import FormControl from '../../components/form/formControl';
 import ActionButtons from '../../components/buttons/actionButtons';
 import PrimaryButton from '../../components/buttons/primaryButton';
-import { adaptTimeZonesToArray } from '../../helpers/data';
+import { adaptTimeZonesToArray, getCountryNameByCode } from '../../helpers/data';
 import { validateName, validateRequired } from '../../helpers/validators';
 
 const mapDispatchToProps = { saveProfile };
-const mapStateToProps = ({ profile, booking }) => {
+const mapStateToProps = ({ global, profile, booking }) => {
   const { name, email, timezone, locations } = profile.details || {};
   let location = {};
   if (locations && locations.length) {
@@ -23,9 +23,9 @@ const mapStateToProps = ({ profile, booking }) => {
     name,
     email,
     timezone,
-    ...location
+    ...location,
+    country: getCountryNameByCode(global.countries, location.country_code)
   };
-  debugger;
   return {
     formData,
     formStatus: profile.formStatus,
