@@ -176,7 +176,10 @@ const UserForm = ({ formData, timezones, formStatus, saveProfile }) => {
             })} />
         </RBForm.Row>
         <RBForm.Row>
-          <p className='form-data-email'>{formData.email}</p>
+          <FormControl label={t('email')} name={'email'} disabled={true}
+            {...input.text({
+              name: 'email'
+            })} />
         </RBForm.Row>
         <RBForm.Row>
           <FormControl label={t('Timezone')} as='select' name={'timezone'} error={getError('timezone')} isValid={isValid('timezone')}
