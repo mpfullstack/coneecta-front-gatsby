@@ -46,6 +46,10 @@ const profileSlice = createSlice({
     },
     saveProfile: state => {
       state.formStatus = 'loading';
+    },
+    profileUpdated: (state, action) => {
+      state.details = action.payload;
+      state.formStatus = 'idle';
     }
   }
 });
@@ -54,7 +58,7 @@ export const {
   loadProfile, initProfile, resetProfile,
   loadSessions, initSessions, sessionsLoaded,
   loadSessionDetail, initSessionDetail,
-  performSessionAction, saveProfile
+  performSessionAction, saveProfile, profileUpdated
 } = profileSlice.actions;
 
 export default profileSlice.reducer;

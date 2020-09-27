@@ -24,7 +24,7 @@ const mapStateToProps = ({ global, profile, booking }) => {
     email,
     timezone,
     ...location,
-    country: getCountryNameByCode(global.countries, location.country_code)
+    country: location ? getCountryNameByCode(global.countries, location.country_code) : ''
   };
   return {
     formData,
@@ -69,7 +69,8 @@ const UserForm = ({ formData, timezones, formStatus, saveProfile }) => {
     'country': validateRequired,
     'postal_code': validateRequired,
     'city': validateRequired,
-    'floor': validateRequired
+    'floor': validateRequired,
+    'door': validateRequired
   };
 
   function isFormValid(formState) {
@@ -78,7 +79,7 @@ const UserForm = ({ formData, timezones, formStatus, saveProfile }) => {
     });
     let requiredFields = [
       'name', 'timezone', 'street_name', 'street_number', 'province', 'country',
-      'postal_code', 'city', 'floor'
+      'postal_code', 'city', 'floor', 'door'
     ];
     let requiredValidation = requiredFields.every(fieldname => {
       if (fieldname in formState.errors && formState.errors[fieldname] !== undefined) {

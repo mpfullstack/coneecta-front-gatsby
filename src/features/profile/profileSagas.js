@@ -3,7 +3,8 @@ import { navigate } from 'gatsby';
 import {
   loadProfile, initProfile, loadSessions,
   initSessions, sessionsLoaded, loadSessionDetail,
-  initSessionDetail, performSessionAction, saveProfile
+  initSessionDetail, performSessionAction, saveProfile,
+  profileUpdated
 } from './profileSlice';
 import { logout } from '../loginSignUp/loginSignUpSlice';
 import { showApiError, updateCountries } from '../global/globalSlice';
@@ -88,8 +89,8 @@ function* onSaveProfile() {
         yield put(showApiError(result.error));
       }
     } else {
-      // TODO: Handle response
-      // debugger;
+      // Handle response
+      yield put(profileUpdated(result));
     }
   });
 }
