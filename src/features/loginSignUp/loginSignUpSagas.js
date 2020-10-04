@@ -7,7 +7,7 @@ import {
   resetLoginStatus, resetSignUpStatus
 } from './loginSignUpSlice';
 import { initProfile, resetProfile } from '../profile/profileSlice';
-import { showApiError } from '../global/globalSlice';
+import { showApiError, updateCountries } from '../global/globalSlice';
 import api from '../../api';
 
 function* onLogin() {
@@ -24,6 +24,10 @@ function* onLogin() {
         yield put(showApiError(result.error));
       }
     } else {
+      const countriesResult = yield call(api.getCountries);
+      if (!countriesResult.error) {
+        yield put(updateCountries(countriesResult));
+      }
       // Handle login OK
       yield put(loggedIn());
       yield put(initProfile(result));

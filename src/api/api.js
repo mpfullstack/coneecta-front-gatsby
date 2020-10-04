@@ -57,7 +57,8 @@ async function reserve(data) {
 async function getTimeLimits(data) {
   const key = 'timelimits';
   if (!cacheStore.get(key)) {
-    cacheStore.put(key, await SuperFetch.get(timeLimitsUrl), CACHE_EXPIRATION);
+    const data = await SuperFetch.get(timeLimitsUrl);
+    cacheStore.put(key, data, CACHE_EXPIRATION);
   }
   return cacheStore.get(key).value;
 }
@@ -65,7 +66,8 @@ async function getTimeLimits(data) {
 async function getCountries(data) {
   const key = 'countries';
   if (!cacheStore.get(key)) {
-    cacheStore.put(key, await SuperFetch.get(countriesUrl), 1000 * 60 * 60); // One hour expiration
+    const data = await SuperFetch.get(countriesUrl);
+    cacheStore.put(key, data, 1000 * 60 * 60); // One hour expiration
   }
   return cacheStore.get(key).value;
 }
