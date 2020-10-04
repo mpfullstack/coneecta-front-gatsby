@@ -3,9 +3,10 @@ import styled from 'styled-components';
 // import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { loadProfile } from '../features/profile/profileSlice';
+import { getTimeLimits } from '../features/booking/bookingSlice';
 import { Container, Row, Col } from 'react-bootstrap';
 
-const mapDispatchToProps = { loadProfile };
+const mapDispatchToProps = { loadProfile, getTimeLimits };
 const mapStateToProps = ({ profile, global }) => {
   return {
     profile,
@@ -23,13 +24,14 @@ const ProfileLayoutWrapper = styled.div`
   }
 `;
 
-export const ProfileLayout = ({ profile, loadProfile, children }) => {
+export const ProfileLayout = ({ profile, loadProfile, children, getTimeLimits }) => {
 
   useEffect(() => {
     if (!profile.details) {
       loadProfile();
     }
-  }, [loadProfile, profile]);
+    getTimeLimits();
+  }, [loadProfile, profile, getTimeLimits]);
 
   return (
     <ProfileLayoutWrapper>
