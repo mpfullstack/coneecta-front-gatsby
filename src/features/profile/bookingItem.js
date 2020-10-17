@@ -38,6 +38,7 @@ const BookingItemWrapper = styled.div`
     &.finalized { background-color: ${theme.finalizedStatusColor}; }
     &.cancelled { background-color: ${theme.deaultStatusColor}; }
     &.claimed { background-color: ${theme.claimedStatusColor}; }
+  }
   .text {
     font-size: 17px;
     color: ${theme.textColor};
@@ -69,10 +70,18 @@ const BookingItem = ({ linkable = true, session = null }) => {
       </>
     );
 
+    let link = '';
+    if (linkable) {
+      link = `/profile/bookings/${session.id}`;
+      if (session.status === 'unreviewed') {
+        link += '/review';
+      }
+    }
+
     return (
       <BookingItemWrapper>
         {linkable ?
-          <Link to={`/profile/bookings/${session.id}`}>
+          <Link to={link}>
             {item}
           </Link>
         : item}

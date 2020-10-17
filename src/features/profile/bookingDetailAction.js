@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { Row, Col } from 'react-bootstrap';
@@ -9,6 +9,8 @@ import { hideCancelSessionAlert } from '../booking/bookingSlice';
 import DateTimePicker from '../../components/dateTimePicker';
 import AlertPopUp from '../../components/alertPopUp';
 import FormControl from '../../components/form/formControl';
+import RatingReview from './ratingReview';
+import PrimaryButton from '../../components/buttons/primaryButton';
 
 const mapDispatchToProps = { performSessionAction, hideCancelSessionAlert };
 const mapStateToProps = ({ booking }) => {
@@ -35,18 +37,25 @@ const BookingDetailAction = ({
   cancelSessionHoursLimit, hideCancelSessionAlert, showCancelSessionAlert
 }) => {
   const { t } = useTranslation();
+  let ratingReviewValue;
 
   function buildPayload(actionToPerform) {
+    const payload = {
+      id: Number(id),
+      action: actionToPerform
+    };
     if (actionToPerform === 'suggest_modification') {
-      return {
-        id,
-        action: actionToPerform,
-        data: {
-          start: `${format(new Date(booking.date), 'yyyyMMdd')}${booking.time.replace(':','')}`,
-          comments: document.getElementById('comments').value
-        }
+      payload.data = {
+        start: `${format(new Date(booking.date), 'yyyyMMdd')}${booking.time.replace(':','')}`,
+        comments: document.getElementById('comments').value
       };
+    } else if (actionToPerform === 'review_session') {
+      payload.data = {
+        rating: Number(ratingReviewValue),
+        comments: document.getElementById('comments').value
+      }
     }
+    return payload;
   }
 
   function renderAction(action) {
@@ -59,6 +68,18 @@ const BookingDetailAction = ({
             onConfirm={() => performSessionAction(buildPayload('suggest_modification'))}
             onConfirmButtonText={t('Confirm')} />
           <FormControl label={t('leaveSomeComments')} name={'comments'} as='textarea' />
+        </div>
+      );
+    } else if (action === 'review') {
+      return (
+        <div>
+          <p className='detail-text'><strong>{t('How was your booking?')}</strong></p>
+          <p className='detail-text'>{t('Leave your review')}</p>
+          <RatingReview onChange={value => ratingReviewValue = value } />
+          <FormControl label={t('leaveSomeComments')} name={'comments'} as='textarea' />
+          <PrimaryButton onClick={() => performSessionAction(buildPayload('review_session'))}>
+              {t('Send review')}
+          </PrimaryButton>
         </div>
       );
     } else if (action === 'success') {
