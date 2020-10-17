@@ -8,7 +8,7 @@ import ProfileBookings from '../features/profile/profileBookings';
 import PaymentConfirmed from '../features/payment/paymentConfirmed';
 import Payment from '../features/payment';
 import PrivateRoute from '../components/privateRoute';
-import Layout from "../components/layout"
+import Layout from '../components/layout';
 
 export default () => {
   return (

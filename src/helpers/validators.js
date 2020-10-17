@@ -20,6 +20,12 @@ export function validateName(value) {
   }
 }
 
+export function validateRequired(value) {
+  if (!value) {
+    return 'isRequired';
+  }
+}
+
 export function validatePrivacyPolicy(value) {
   if (value !== true) {
     return 'mustAcceptPrivacyPolicy';

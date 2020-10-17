@@ -4,7 +4,7 @@ import {
   professionalProfileUrl, timeZonesUrl, availableDatesUrl,
   professionalProfileReviewsUrl, loginUrl, signUpUrl, profileUrl,
   reserveUrl, logoutUrl, timeLimitsUrl, sessionsUrl, sessionDetailUrl,
-  sessionActionsUrl
+  sessionActionsUrl, saveProfileUrl, countriesUrl
 } from './urls';
 
 const CACHE_EXPIRATION = 1000 * 60 * 10; // Expires in 10 minutes
@@ -57,7 +57,17 @@ async function reserve(data) {
 async function getTimeLimits(data) {
   const key = 'timelimits';
   if (!cacheStore.get(key)) {
-    cacheStore.put(key, await SuperFetch.get(timeLimitsUrl), CACHE_EXPIRATION);
+    const data = await SuperFetch.get(timeLimitsUrl);
+    cacheStore.put(key, data, CACHE_EXPIRATION);
+  }
+  return cacheStore.get(key).value;
+}
+
+async function getCountries(data) {
+  const key = 'countries';
+  if (!cacheStore.get(key)) {
+    const data = await SuperFetch.get(countriesUrl);
+    cacheStore.put(key, data, 1000 * 60 * 60); // One hour expiration
   }
   return cacheStore.get(key).value;
 }
@@ -81,7 +91,7 @@ async function performSessionAction({ action, id, data = {} }) {
 }
 
 async function saveProfile(data) {
-  // TODO: Implement
+  return await SuperFetch.post(saveProfileUrl, data);
 }
 
 const api = {
@@ -98,7 +108,8 @@ const api = {
   getSessions,
   getSessionDetail,
   performSessionAction,
-  saveProfile
+  saveProfile,
+  getCountries
 };
 
 export default api;

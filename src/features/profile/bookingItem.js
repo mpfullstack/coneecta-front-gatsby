@@ -30,13 +30,14 @@ const BookingItemWrapper = styled.div`
     font-weight: 800;
     font-size: 16px;
     margin-bottom: 10px;
-    &.approved {
-      background-color: ${theme.approvedStatusColor};
-    }
-    &.unapproved {
-      background-color: ${theme.unapprovedStatusColor};
-    }
-  }
+    background-color: ${theme.deaultStatusColor};
+    &.approved { background-color: ${theme.approvedStatusColor}; }
+    &.unapproved { background-color: ${theme.unapprovedStatusColor}; }
+    &.progress { background-color: ${theme.progressStatusColor}; }
+    &.unreviewed { background-color: ${theme.unreviewedStatusColor}; }
+    &.finalized { background-color: ${theme.finalizedStatusColor}; }
+    &.cancelled { background-color: ${theme.deaultStatusColor}; }
+    &.claimed { background-color: ${theme.claimedStatusColor}; }
   .text {
     font-size: 17px;
     color: ${theme.textColor};

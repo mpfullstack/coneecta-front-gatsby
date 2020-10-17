@@ -83,7 +83,10 @@ const BookingDetailAction = ({
         show={showCancelSessionAlert}
         body={t('cancelSessionAlert', { hours: cancelSessionHoursLimit })}
         onCancel={hideCancelSessionAlert}
-        onAccept={() => performSessionAction(buildPayload('suggest_modification'))} />
+        onAccept={() => {
+          hideCancelSessionAlert();
+          performSessionAction(buildPayload('suggest_modification'))
+        }} />
     </BookingDetailActionWrapper>
   );
 }

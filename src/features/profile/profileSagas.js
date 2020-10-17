@@ -3,10 +3,11 @@ import { navigate } from 'gatsby';
 import {
   loadProfile, initProfile, loadSessions,
   initSessions, sessionsLoaded, loadSessionDetail,
-  initSessionDetail, performSessionAction, saveProfile
+  initSessionDetail, performSessionAction, saveProfile,
+  profileUpdated, saveProfileError
 } from './profileSlice';
 import { logout } from '../loginSignUp/loginSignUpSlice';
-import { showApiError } from '../global/globalSlice';
+import { showApiError, updateCountries } from '../global/globalSlice';
 import api from '../../api';
 import { login } from '../../helpers/authentication';
 
@@ -20,6 +21,10 @@ function* onLoadProfile() {
         yield put(showApiError(result.error));
       }
     } else {
+      const countriesResult = yield call(api.getCountries);
+      if (!countriesResult.error) {
+        yield put(updateCountries(countriesResult));
+      }
       yield login();
       yield put(initProfile(result));
     }
@@ -80,11 +85,12 @@ function* onSaveProfile() {
     if (result.error) {
       if (result.status === 403) {
         yield put(logout());
-      } else {
-        yield put(showApiError(result.error));
+      } else if (result.error.code === 'invalid_user_data') {
+        yield put(saveProfileError(result.error.details));
       }
     } else {
-      // TODO: Handle response
+      // Handle response
+      yield put(profileUpdated(result));
     }
   });
 }
