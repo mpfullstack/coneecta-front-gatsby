@@ -5,16 +5,17 @@ import { Location } from '@reach/router';
 import { Row, Col } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { getServiceById, getServiceByModalityType } from '../../helpers/data';
-import { pay, reserve } from './paymentSlice';
+import { checkout, reserve, updateCredits } from './paymentSlice';
 import PaymentLayout from '../../components/paymentLayout';
 import Credits from './credits';
-// import BuyCredits from './buyCredits';
+import BuyCredits from './buyCredits';
 import PaymentButton from './paymentButton';
 import SEO from "../../components/seo";
 
 const mapDispatchToProps = {
-  pay,
-  reserve
+  checkout,
+  reserve,
+  updateCredits
 };
 const mapStateToProps = ({ profile, payment, booking, professionalProfile }) => {
   const serviceModality = getServiceByModalityType(
@@ -22,16 +23,25 @@ const mapStateToProps = ({ profile, payment, booking, professionalProfile }) => 
     booking.modalityType
   );
   const profileDetails = profile.details || {};
+  let defaultCredits;
+  if (profileDetails.credits < serviceModality.credits) {
+    defaultCredits = serviceModality.credits - profileDetails.credits;
+  }
   return {
     booking,
     payment,
     availableCredits: profileDetails.credits,
     creditsToPay: serviceModality.credits,
+    defaultCredits,
+    creditsToBuy: payment.credits,
     directReserve: profileDetails.credits >= serviceModality.credits ? true : false
   }
 }
 
-const Payment = ({ payment, directReserve, creditsToPay = '', availableCredits = '', pay, reserve, booking }) => {
+const Payment = ({
+  payment, directReserve, creditsToPay = '', availableCredits = '',
+  defaultCredits, creditsToBuy, checkout, reserve, booking, updateCredits
+}) => {
   const { t } = useTranslation();
 
   function buildReservationData() {
@@ -42,6 +52,28 @@ const Payment = ({ payment, directReserve, creditsToPay = '', availableCredits =
     };
   }
 
+  function renderPaymentOption() {
+    if (directReserve) {
+      return (
+        <Row style={{marginTop: '40px'}}>
+          <Col>
+            {t('toClickOn')} <strong>{t('pay').toLowerCase()}</strong> {t('willProcessYourBooking')}
+          </Col>
+        </Row>
+      );
+    } else {
+      return (
+        <Row>
+          <Col>
+            <BuyCredits credits={creditsToBuy} defaultCredits={defaultCredits} onChange={
+              e => updateCredits(e.target.value)
+            }/>
+          </Col>
+        </Row>
+      );
+    }
+  }
+
   return (
     <Location>
       {props => {
@@ -49,17 +81,12 @@ const Payment = ({ payment, directReserve, creditsToPay = '', availableCredits =
           <PaymentLayout {...props}>
             <SEO title="Pagar" />
             <Credits toPay={creditsToPay} available={availableCredits} />
-            {/* <BuyCredits /> */}
-            <Row style={{marginTop: '40px'}}>
-              <Col>
-                {t('toClickOn')} <strong>{t('pay').toLowerCase()}</strong> {t('willProcessYourBooking')}
-              </Col>
-            </Row>
+            {renderPaymentOption()}
             <PaymentButton status={payment.status} onClick={() => {
               if (directReserve) {
                 reserve(buildReservationData());
               } else {
-                pay(buildReservationData());
+                checkout(creditsToBuy);
               }
             }}/>
           </PaymentLayout>

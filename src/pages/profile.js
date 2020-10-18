@@ -7,6 +7,7 @@ import Profile from '../features/profile';
 import ProfileBookings from '../features/profile/profileBookings';
 import PaymentConfirmed from '../features/payment/paymentConfirmed';
 import Payment from '../features/payment';
+import PaymentCheckout from '../features/payment/paymentCheckout';
 import PrivateRoute from '../components/privateRoute';
 import Layout from '../components/layout';
 
@@ -21,6 +22,7 @@ export default () => {
             <PrivateRoute path="/bookings/:id" component={ProfileBookings} />
             <PrivateRoute path="/bookings/:id/:action" component={ProfileBookings} />
             <PrivateRoute path="/payment" component={Payment} />
+            <PrivateRoute path="/payment_checkout" component={PaymentCheckout} />
             <PrivateRoute path="/payment_confirmed/:id" component={PaymentConfirmed} />
           </Router>
         </Layout>
