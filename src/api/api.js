@@ -4,7 +4,7 @@ import {
   professionalProfileUrl, timeZonesUrl, availableDatesUrl,
   professionalProfileReviewsUrl, loginUrl, signUpUrl, profileUrl,
   reserveUrl, logoutUrl, timeLimitsUrl, sessionsUrl, sessionDetailUrl,
-  sessionActionsUrl, saveProfileUrl, countriesUrl
+  sessionActionsUrl, saveProfileUrl, countriesUrl, checkoutUrl
 } from './urls';
 
 const CACHE_EXPIRATION = 1000 * 60 * 10; // Expires in 10 minutes
@@ -94,6 +94,14 @@ async function saveProfile(data) {
   return await SuperFetch.post(saveProfileUrl, data);
 }
 
+async function checkout({ credits }) {
+  return await SuperFetch.post(checkoutUrl,
+    {
+      credits
+    }
+  );
+}
+
 const api = {
   getProfessionalProfile,
   getAvailableTimezones,
@@ -103,6 +111,7 @@ const api = {
   signUp,
   getProfile,
   reserve,
+  checkout,
   logout,
   getTimeLimits,
   getSessions,
