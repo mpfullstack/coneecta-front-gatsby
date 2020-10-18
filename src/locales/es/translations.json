@@ -5,6 +5,9 @@
   "Pick the modality": "Escoge la modalidad que prefieras",
   "When do you want your booking for?": "¿Para cuando quieres hacer tu reserva?",
   "When do you want to change your booking for?": "¿Para cuando quieres cambiar tu reserva?",
+  "How was your booking?": "¿Qué tal ha estado la sesión?",
+  "Leave your review": "Déjanos tu valoración",
+  "Send review": "Enviar valoración",
 
   "videoconference": "Video conferencia",
   "audioconference": "Audio conferencia",
@@ -69,6 +72,10 @@
   "accept_modification": "Aceptar modificación",
   "cancel_session": "Cancelar reserva",
   "suggest_modification": "Sugerir modificación",
+  "unavailable_session": "Sesión no disponible",
+  "operation_not_allowed": "Acción no permitida",
+  "not_valid_parameters": "Parámetros no válidos",
+  "unexpected_error": "Lo sentimos, se ha producido un error con la conexión. Vuelve a intentarlo o recarga la página.",
   "save": "Guardar",
   "saving": "Guardando...",
 
