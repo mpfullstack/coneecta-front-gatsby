@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { Row, Col } from 'react-bootstrap';
@@ -29,6 +29,10 @@ const BookingDetailActionWrapper = styled.div`
   }
   .detail-text {
     text-align: center;
+  }
+  .action-button {
+    display: flex;
+    justify-content: center;
   }
 `;
 
@@ -77,9 +81,11 @@ const BookingDetailAction = ({
           <p className='detail-text'>{t('Leave your review')}</p>
           <RatingReview onChange={value => ratingReviewValue = value } />
           <FormControl label={t('leaveSomeComments')} name={'comments'} as='textarea' />
-          <PrimaryButton onClick={() => performSessionAction(buildPayload('review_session'))}>
+          <div className='action-button'>
+            <PrimaryButton onClick={() => performSessionAction(buildPayload('review_session'))}>
               {t('Send review')}
-          </PrimaryButton>
+            </PrimaryButton>
+          </div>
         </div>
       );
     } else if (action === 'success') {
@@ -87,6 +93,13 @@ const BookingDetailAction = ({
         <div>
           <p className='detail-text'><strong>Tu solicitud ha sido enviada</strong></p>
           <p className='detail-text'>Estamos a la espera de la confirmación del profesional.</p>
+        </div>
+      );
+    } else if (action === 'review_session_success') {
+      return (
+        <div>
+          <p className='detail-text'><strong>Tu valoración ha sido enviada</strong></p>
+          <p className='detail-text'>Muchas gracias</p>
         </div>
       );
     }

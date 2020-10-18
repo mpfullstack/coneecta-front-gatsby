@@ -74,7 +74,13 @@ function* onPerformSessionAction() {
       }
     } else {
       // TODO: Handle response based on the action performed and result
-      yield navigate(`/profile/bookings/${payload.id}/success`);
+      const { action } = payload;
+      if (action === 'review_session') {
+        yield put(loadSessionDetail(payload.id));
+        yield navigate(`/profile/bookings/${payload.id}/review_session_success`);
+      } else {
+        yield navigate(`/profile/bookings/${payload.id}/success`);
+      }
     }
   });
 }

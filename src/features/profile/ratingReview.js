@@ -10,9 +10,15 @@ const RatingReview = ({ defaultValue = 5, ref, onChange }) => {
       starCount={5}
       size={42}
       editing={true}
-      onStarClick={nextValue => {
-        setValue(nextValue);
-        onChange(nextValue);
+      onStarClick={(nextValue, prevValue) => {
+        if (prevValue === nextValue) {
+          const value = Math.max(0, nextValue-1);
+          setValue(value);
+          onChange(value);
+        } else {
+          setValue(nextValue);
+          onChange(nextValue);
+        }
       }}
       ref={ref} />
   );

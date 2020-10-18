@@ -3,11 +3,12 @@ import StarRatingComponent from 'react-star-rating-component';
 import styled from 'styled-components';
 
 const StartRatingComponentWrapper = styled.div`
+  display: flex;
+  justify-content: center;
   label {
     font-size: ${props => `${props.size}px`};
     margin-bottom: 0;
   }
-
 `;
 
 const Rating = ({ name, value = 0, starCount, editing, size = 26, onStarClick }) => {
