@@ -3,24 +3,27 @@ import styled from 'styled-components';
 // import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { loadProfessionalProfile } from '../features/professionalProfile/professionalProfileSlice';
+import { loadProfile } from '../features/profile/profileSlice';
+import { getTimeLimits } from '../features/booking/bookingSlice';
 import ProfileHeader from './professionalProfile/profileHeader';
 import { Container, Row, Col } from 'react-bootstrap';
 import Booking from '../features/booking/booking';
 import Query from '../helpers/query';
 
-const mapDispatchToProps = { loadProfessionalProfile };
-const mapStateToProps = ({ professionalProfile, booking, global }) => {
+const mapDispatchToProps = { loadProfessionalProfile, loadProfile, getTimeLimits };
+const mapStateToProps = ({ professionalProfile, booking, global, profile }) => {
   return {
     professionalProfile,
     global,
-    booking
+    booking,
+    profile
   }
 }
 
 const PaymentWrapper = styled.div`
 `;
 
-export const PaymentLayout = ({ professionalProfile, loadProfessionalProfile, location, children }) => {
+export const PaymentLayout = ({ professionalProfile, loadProfessionalProfile, profile, location, loadProfile, getTimeLimits, children }) => {
   // TODO: Check if it work on build production as location is not ready
   const slug = Query.getParams(location).slug;
   // const { t } = useTranslation();
@@ -32,6 +35,13 @@ export const PaymentLayout = ({ professionalProfile, loadProfessionalProfile, lo
       }
     }
   }, [loadProfessionalProfile, location, professionalProfile.id, slug]);
+
+  useEffect(() => {
+    if (!profile.details) {
+      loadProfile();
+    }
+    getTimeLimits();
+  }, [loadProfile, profile, getTimeLimits]);
 
   const profileDetails = professionalProfile.details || {};
 

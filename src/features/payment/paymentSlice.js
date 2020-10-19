@@ -4,13 +4,14 @@ const paymentSlice = createSlice({
   name: 'payment',
   initialState: {
     'status': 'pending',
-		'details': null
+    'credits': null,
+    'checkoutDetails': null
 	},
   reducers: {
     reserve: state => {
       state.status = 'processing';
     },
-    pay: state => {
+    checkout: state => {
       state.status = 'processing';
     },
     success: state => {
@@ -18,10 +19,16 @@ const paymentSlice = createSlice({
     },
     failed: state => {
       state.status = 'pending';
+    },
+    updateCredits: (state, action) => {
+      state.credits = action.payload;
+    },
+    updatePaymentCheckoutDetails: (state, action) => {
+      state.checkoutDetails = action.payload;
     }
   }
 });
 
-export const { reserve, pay, success, failed } = paymentSlice.actions;
+export const { reserve, checkout, success, failed, updateCredits, updatePaymentCheckoutDetails } = paymentSlice.actions;
 
 export default paymentSlice.reducer;
