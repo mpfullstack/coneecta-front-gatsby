@@ -26,7 +26,7 @@ function* onReserve() {
       yield put(failed());
     } else {
       yield put(success());
-      yield navigate('/profile/payment_confirmed/someid');
+      yield navigate('/profile/payment_ok/someid');
     }
   });
 }

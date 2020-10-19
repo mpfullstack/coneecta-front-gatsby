@@ -10,6 +10,7 @@ const signUpUrl = `${base}/signup`;
 const profileUrl = `${base}/user`;
 const reserveUrl = `${base}/reserve`;
 const checkoutUrl = `${base}/payment/checkout`;
+const paymentStatusUrl = `${base}/payment/status?id=:id`;
 const timeLimitsUrl = `${base}/timelimits`;
 const sessionsUrl = `${base}/sessions?page=:page`;
 const sessionDetailUrl = `${base}/sessions/detail?id=:id`;
@@ -28,6 +29,7 @@ export {
   saveProfileUrl,
   reserveUrl,
   checkoutUrl,
+  paymentStatusUrl,
   logoutUrl,
   timeLimitsUrl,
   sessionsUrl,

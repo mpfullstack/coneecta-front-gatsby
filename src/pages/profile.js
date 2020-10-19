@@ -23,7 +23,8 @@ export default () => {
             <PrivateRoute path="/bookings/:id/:action" component={ProfileBookings} />
             <PrivateRoute path="/payment" component={Payment} />
             <PrivateRoute path="/payment_checkout" component={PaymentCheckout} />
-            <PrivateRoute path="/payment_confirmed/:id" component={PaymentConfirmed} />
+            <PrivateRoute path="/payment_ok" component={PaymentConfirmed} />
+            <PrivateRoute path="/payment_ok/:id" component={PaymentConfirmed} />
           </Router>
         </Layout>
       </PersistGate>
