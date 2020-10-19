@@ -94,7 +94,7 @@ async function saveProfile(data) {
   return await SuperFetch.post(saveProfileUrl, data);
 }
 
-async function checkout({ credits }) {
+async function checkout(credits) {
   return await SuperFetch.post(checkoutUrl,
     {
       credits

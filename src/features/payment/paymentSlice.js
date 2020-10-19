@@ -11,7 +11,7 @@ const paymentSlice = createSlice({
     reserve: state => {
       state.status = 'processing';
     },
-    checkout: (state, action) => {
+    checkout: state => {
       state.status = 'processing';
     },
     success: state => {
