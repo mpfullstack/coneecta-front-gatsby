@@ -4,7 +4,7 @@ const paymentSlice = createSlice({
   name: 'payment',
   initialState: {
     'status': 'pending',
-    'credtis': null,
+    'credits': null,
     'checkoutDetails': null
 	},
   reducers: {

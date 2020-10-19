@@ -33,7 +33,7 @@ const mapStateToProps = ({ profile, payment, booking, professionalProfile }) => 
     availableCredits: profileDetails.credits,
     creditsToPay: serviceModality.credits,
     defaultCredits,
-    creditsToBuy: payment.credits,
+    creditsToBuy: payment.credits || defaultCredits,
     directReserve: profileDetails.credits >= serviceModality.credits ? true : false
   }
 }
@@ -86,6 +86,7 @@ const Payment = ({
               if (directReserve) {
                 reserve(buildReservationData());
               } else {
+                updateCredits(creditsToBuy);
                 checkout(creditsToBuy);
               }
             }}/>
