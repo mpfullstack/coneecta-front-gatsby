@@ -13,7 +13,7 @@ const ProfileBookings = ({ id }) => {
           <ProfileLayout {...props}>
             <SEO title="Datos personales" />
             <h1 className='title'>Datos personales</h1>
-            <Row className={`justify-content-md-center`} style={{marginTop: '30px'}}>
+            <Row className={`justify-content-md-center`}>
               <Col xs='12' md='10'>
                 <UserForm />
               </Col>

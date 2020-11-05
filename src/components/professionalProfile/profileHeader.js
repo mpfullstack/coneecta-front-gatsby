@@ -36,6 +36,7 @@ const ProfileHeaderWrapper = styled.div`
   .desktop {
     margin-top: 20px;
   }
+  a,
   .dv-star-rating {
     cursor: pointer;
   }

@@ -19,7 +19,8 @@ import { hideApiError } from '../features/global/globalSlice';
 
 const LayoutWrapper = styled.div`
   .layout-inner {
-    margin: 65px auto 0 auto;
+    margin: 55px auto 0 auto;
+    padding-top: 10px;
     max-width: ${theme.SIZES.maxWidth};
     width: 100%;
     background-color: ${theme.backgroundColor};
@@ -60,11 +61,11 @@ const Layout = ({ children, global, hideApiError }) => {
 
   // useEffect hook to set theme mode background-color style to body element
   useEffect(() => {
-    if (isDevice()) {
+    // if (isDevice()) {
       document.body.style.backgroundColor = theme.backgroundColor({theme: {mode}});
-    } else {
-      document.body.style.backgroundColor = '#fffff';
-    }
+    // } else {
+    //   document.body.style.backgroundColor = '#fffff';
+    // }
   });
 
   let alert;

@@ -3,7 +3,9 @@ import styled from 'styled-components';
 import theme from '../../theme';
 
 const ActionButtons = styled.div`
+  margin-top: 20px;
   @media only screen and (max-width: ${theme.SIZES.M}) {
+    margin-top: 0;
     position: fixed;
     left: 0;
     bottom: 0;
