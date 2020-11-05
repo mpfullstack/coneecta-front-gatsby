@@ -19,7 +19,7 @@ import { hideApiError } from '../features/global/globalSlice';
 
 const LayoutWrapper = styled.div`
   .layout-inner {
-    margin: 0 auto;
+    margin: 65px auto 0 auto;
     max-width: ${theme.SIZES.maxWidth};
     width: 100%;
     background-color: ${theme.backgroundColor};
