@@ -4,18 +4,15 @@ import PropTypes from 'prop-types';
 import { useStaticQuery, graphql } from 'gatsby';
 import { useTranslation } from 'react-i18next';
 import Header from './header';
+import { hideApiError, hideAlert } from '../features/global/globalSlice';
 import styled, { ThemeProvider } from 'styled-components';
 import theme from '../theme';
 import { Alert } from 'react-bootstrap';
 import Modal from './modal';
 import '../locales/i18n';
-import { isDevice } from '../helpers/helpers';
-
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './layout.scss';
-// Animate CSS
 import 'animate.css';
-import { hideApiError } from '../features/global/globalSlice';
 
 const LayoutWrapper = styled.div`
   .layout-inner {
@@ -35,7 +32,8 @@ const LayoutWrapper = styled.div`
 `;
 
 const mapDispatchToProps = {
-  hideApiError
+  hideApiError,
+  hideAlert
 };
 const mapStateToProps = state => {
   return {
@@ -43,7 +41,7 @@ const mapStateToProps = state => {
   }
 }
 
-const Layout = ({ children, global, hideApiError }) => {
+const Layout = ({ children, global, hideApiError, hideAlert }) => {
   const { t } = useTranslation();
 
   const data = useStaticQuery(graphql`
@@ -69,8 +67,16 @@ const Layout = ({ children, global, hideApiError }) => {
   });
 
   let alert;
-  if (global.apiError) {
+  let apiErrorAlert;
+  if (global.alert) {
     alert = <Modal>
+      <Alert variant={global.alert.variant} onClose={hideAlert} dismissible>
+        {t(global.alert.message)}
+      </Alert>
+    </Modal>
+  }
+  if (global.apiError) {
+    apiErrorAlert = <Modal>
       <Alert variant={'danger'} onClose={hideApiError} dismissible>
         {t(global.apiError)}
       </Alert>
@@ -87,6 +93,7 @@ const Layout = ({ children, global, hideApiError }) => {
           </footer>
         </div>
         {alert}
+        {apiErrorAlert}
       </LayoutWrapper>
     </ThemeProvider>
   )

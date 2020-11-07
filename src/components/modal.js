@@ -10,6 +10,14 @@ const ModalWrapper = styled.div`
   width: 100%;
   text-align: center;
   z-index: 100000;
+  .alert {
+    padding: 1rem 1.25rem;
+    &.alert-dismissible {
+      .close {
+        padding: 1rem 1.25rem;
+      }
+    }
+  }
 `;
 
 export default ({ children }) => {

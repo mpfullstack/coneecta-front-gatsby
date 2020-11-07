@@ -150,15 +150,8 @@ const SignUpForm = ({ signUp, timezones, timezone, signUpStatus, signUpErrors })
             <span className='privacy-policy invalid-feedback'>{t('mustAcceptPrivacyPolicy')}</span> : null}
         </RBForm.Row>
         <ActionButtons>
-          <PrimaryButton className='confirm-button' variant='primary' size='lg' disabled={!isFormValid(formState)}
-            onClick={() => {
-                signUp({
-                  ...formState.values,
-                  privacy_policy: formState.values.privacy_policy ? 1 : 0,
-                  newsletter_subscriber: formState.values.newsletter_subscriber ? 1 : 0
-                })
-              }
-            }>
+          <PrimaryButton type='submit' className='confirm-button' variant='primary'
+          size='lg' disabled={!isFormValid(formState)}>
               {signUpStatus === 'loading' ? t('signingmeup') : t('signmeup')}
           </PrimaryButton>
         </ActionButtons>
@@ -167,7 +160,18 @@ const SignUpForm = ({ signUp, timezones, timezone, signUpStatus, signUpErrors })
   }
 
   return (
-    <Form formData={formData} renderForm={renderForm} isFormValid={isFormValid} errors={signUpErrors} />
+    <Form
+      formData={formData}
+      renderForm={renderForm}
+      isFormValid={isFormValid}
+      errors={signUpErrors}
+      onSubmit={
+        (e, values) => signUp({
+          ...values,
+          privacy_policy: values.privacy_policy ? 1 : 0,
+          newsletter_subscriber: values.newsletter_subscriber ? 1 : 0
+        })
+      } />
   );
 };
 

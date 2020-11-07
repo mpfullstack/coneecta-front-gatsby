@@ -284,8 +284,8 @@ const UserForm = ({ formData, timezones, formStatus, saveProfile, profileErrors 
         </RBForm.Row>
 
         <ActionButtons>
-          <PrimaryButton className='confirm-button' variant='primary' size='lg' disabled={!isFormValid(formState)}
-            onClick={() => saveProfile({ ...formState.values })}>
+          <PrimaryButton type='submit' className='confirm-button'
+            variant='primary' size='lg' disabled={!isFormValid(formState)}>
               {formStatus === 'loading' ? t('saving') : t('save')}
           </PrimaryButton>
         </ActionButtons>
@@ -294,7 +294,12 @@ const UserForm = ({ formData, timezones, formStatus, saveProfile, profileErrors 
   }
 
   return (
-    <Form formData={formData} renderForm={renderForm} isFormValid={isFormValid} errors={profileErrors} />
+    <Form
+      formData={formData}
+      renderForm={renderForm}
+      isFormValid={isFormValid}
+      errors={profileErrors}
+      onSubmit={(e, values) => saveProfile({ ...values })} />
   );
 };
 
