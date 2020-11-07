@@ -7,6 +7,7 @@ import SEO from '../../components/seo';
 import api from '../../api';
 import PaymentLayout from '../../components/paymentLayout';
 import { Location } from '@reach/router';
+import { PaymentError } from './paymentError';
 import { CheckCircle, InfoCircle, Envelope } from '../../components/icons/icons';
 
 const mapDispatchToProps = {};
@@ -75,7 +76,7 @@ const PaymentConfirmed = ({ id }) => {
     <Location>
       {props => {
         return (
-          <PaymentLayout {...props} showProfesionalProfile={false}>
+          <PaymentLayout {...props} showProfesionalProfile={false} showBooking={false}>
             <PaymentConfirmedWrapper>
               {paymentStatus === 'accepted'
                 ?
@@ -113,16 +114,19 @@ const PaymentConfirmed = ({ id }) => {
                       </Col>
                     </Row>
                   </Container>
-                  : paymentStatus === 'failed'
+                  : paymentStatus === 'cancelled'
                     ?
                     <Container>
-                      <SEO title='Pago fallido' />
+                      <SEO title='Pago cancelado' />
                       <Row className='justify-content-center text-center'>
                         <Col xs='9'>
-                          <p className='verifying-text'>El pago no se ha podido completar correctamente.</p>
+                          <p className='verifying-text'>El pago ha sido cancelado.</p>
                         </Col>
                       </Row>
-                    </Container> : null}
+                    </Container>
+                    : paymentStatus === 'error'
+                      ?
+                        <PaymentError id={id} /> : null}
             </PaymentConfirmedWrapper>
           </PaymentLayout>
         );

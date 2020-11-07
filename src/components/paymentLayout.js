@@ -25,7 +25,8 @@ const PaymentWrapper = styled.div`
 
 export const PaymentLayout = ({
   professionalProfile, loadProfessionalProfile, profile,
-  location, loadProfile, getTimeLimits, showProfesionalProfile = true, children
+  location, loadProfile, getTimeLimits,
+  showProfesionalProfile = true, showBooking = true, children
 }) => {
   // TODO: Check if it work on build production as location is not ready
   const slug = Query.getParams(location).slug;
@@ -56,7 +57,7 @@ export const PaymentLayout = ({
           : null}
         <Row className='justify-content-md-center'>
           <Col xs='12' md='10'>
-            <Booking slug={slug} />
+            {showBooking ? <Booking slug={slug} /> : null}
             {children}
           </Col>
         </Row>
