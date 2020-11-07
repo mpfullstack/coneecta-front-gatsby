@@ -5,7 +5,7 @@ import SEO from "../../components/seo";
 import ProfileLayout from '../../components/profileLayout';
 import UserForm from './userForm';
 
-const ProfileBookings = ({ id }) => {
+const Profile = ({ id }) => {
   return (
     <Location>
       {props => {
@@ -25,4 +25,4 @@ const ProfileBookings = ({ id }) => {
   );
 }
 
-export default ProfileBookings;
+export default Profile;
