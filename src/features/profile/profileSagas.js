@@ -7,9 +7,10 @@ import {
   profileUpdated, saveProfileError
 } from './profileSlice';
 import { logout } from '../loginSignUp/loginSignUpSlice';
-import { showApiError, updateCountries } from '../global/globalSlice';
+import { showApiError, updateCountries, showAlert } from '../global/globalSlice';
 import api from '../../api';
 import { login } from '../../helpers/authentication';
+import i18n from '../../locales/i18n';
 
 function* onLoadProfile() {
   yield takeLatest(loadProfile, function* ({ payload }) {
@@ -96,6 +97,7 @@ function* onSaveProfile() {
       }
     } else {
       // Handle response
+      yield put(showAlert({message: i18n.t('personalDataSavedSuccessfully'), variant: 'success'}))
       yield put(profileUpdated(result));
     }
   });

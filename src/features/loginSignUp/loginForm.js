@@ -109,9 +109,9 @@ const LoginForm = ({ login, timezones, timezone, loginStatus, loginErrors }) => 
             })} />
         </RBForm.Row>
         <ActionButtons>
-          <PrimaryButton className='confirm-button' variant='primary' size='lg' disabled={!isFormValid(formState)}
-            onClick={() => login({...formState.values})}>
-              {loginStatus === 'loading' ? t('loggingmein') : t('logmein')}
+          <PrimaryButton type='submit' className='confirm-button'
+            variant='primary' size='lg' disabled={!isFormValid(formState)}>
+            {loginStatus === 'loading' ? t('loggingmein') : t('logmein')}
           </PrimaryButton>
         </ActionButtons>
       </FormWrapper>
@@ -119,7 +119,10 @@ const LoginForm = ({ login, timezones, timezone, loginStatus, loginErrors }) => 
   }
 
   return (
-    <Form formData={formData} renderForm={renderForm} isFormValid={isFormValid} errors={loginErrors} />
+    <Form
+      formData={formData} renderForm={renderForm}
+      isFormValid={isFormValid} errors={loginErrors}
+      onSubmit={(e, values) => login({ ...values })} />
   );
 };
 

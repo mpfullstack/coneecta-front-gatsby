@@ -26,8 +26,9 @@ const RegisterWrapper = styled.div`
     justify-content: center;
     margin: 10px 0 12px 0;
     a {
-      font-size: 20px;
+      font-size: 18px;
       display: inline-block;
+      text-transform: uppercase;
       &:first-child:after {
         content: '|';
         position: relative;

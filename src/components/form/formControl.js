@@ -5,6 +5,9 @@ import theme from '../../theme';
 
 const FormControlWrapper = styled.div`
   width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   .form-control:focus {
       border-color: ${theme.inputBorderColorFocus};
       box-shadow: 0 0 0 0.2rem ${theme.inputBoxShadowColorFocus};
@@ -22,7 +25,7 @@ const FormControlWrapper = styled.div`
 export default ({ label, placeholder, name, error, isValid, as = 'input', children = null, ...rest}) => {
   return (
     <FormControlWrapper>
-      <RBForm.Group as={Col} md='4' controlId={name}>
+      <RBForm.Group as={Col} md='4' lg='8' controlId={name}>
         {label ? <RBForm.Label>{label}</RBForm.Label> : null}
         <RBForm.Control placeholder={placeholder} {...isValid} as={as} {...rest}>{children}</RBForm.Control>
         {isValid ? <RBForm.Control.Feedback type={isValid.isValid ? 'valid' : 'invalid'}>

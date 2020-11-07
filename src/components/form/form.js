@@ -1,11 +1,19 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { useFormState } from 'react-use-form-state';
+import theme from '../../theme';
 
 const FormWrapper = styled.div`
   .form-group {
     margin-bottom: 0;
     min-height: 70px;
+  }
+  .form-row {
+    justify-content: center;
+    align-items: center;
+    @media only screen and (max-width: ${theme.SIZES.M}) {
+      justify-content: flex-start;
+    }
   }
 `;
 

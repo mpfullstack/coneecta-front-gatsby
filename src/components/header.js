@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { Link } from 'gatsby';
 import styled from 'styled-components';
 import theme from '../theme';
 import Logo from './logo';
@@ -8,21 +9,24 @@ import UserProfileMenu from './userProfileMenu';
 
 const HeaderWrapper = styled.header`
   width: 100%;
-  background-color: '#fff';
-  height: 55px;
-  @media only screen and (max-width: ${theme.SIZES.M}) {
-  height: 48px;
-    background-color: ${theme.backgroundHeaderColor};
-  }
+  background-color: ${theme.backgroundHeaderColor};
+
+  box-shadow: rgba(51,51,51,0.15) 0px 4px 6px 0;
+  position: fixed;
+  top: 0;
+  z-index: 1000;
   .header-inner {
+    height: 55px;
     margin: 0 auto;
     max-width: ${theme.SIZES.maxWidth};
     width: 100%;
     display: flex;
-    align-items: center;
     justify-content: center;
-    .title-logo {
-      margin-top: 5px;
+    align-items: center;
+    a {
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
   }
 `;
@@ -34,9 +38,9 @@ const Header = ({ siteTitle }) => (
         <Row className='justify-content-center text-center'>
           <Col xs='12' className='title-logo'>
             <h1 style={{ margin: 0 }}>
-              <a target='_blank' href='https://coneecta.com/' rel='noreferrer noopener'>
+              <Link to='/profile'>
                 <Logo />
-              </a>
+              </Link>
             </h1>
           </Col>
         </Row>

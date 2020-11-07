@@ -4,6 +4,7 @@ const globalSlice = createSlice({
   name: 'global',
   initialState: {
     'apiError': null,
+    'alert': null,
     'countries': []
 	},
   reducers: {
@@ -14,6 +15,12 @@ const globalSlice = createSlice({
     hideApiError: state => {
       state.apiError = null;
     },
+    showAlert: (state, action) => {
+      state.alert = action.payload;
+    },
+    hideAlert: state => {
+      state.alert = null;
+    },
     // TODO: May not be necessary as click event on logo will take user
     // to coneecta.com page
     handleHeaderClick: state => state,
@@ -23,7 +30,10 @@ const globalSlice = createSlice({
   }
 });
 
-export const { showApiError, hideApiError, handleHeaderClick, updateCountries } = globalSlice.actions
+export const {
+  showApiError, hideApiError, handleHeaderClick,
+  updateCountries, showAlert, hideAlert
+} = globalSlice.actions
 
 export const API_ERROR_DURATION = 10000;
 

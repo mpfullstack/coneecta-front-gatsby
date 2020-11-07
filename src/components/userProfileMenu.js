@@ -4,7 +4,8 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { Dropdown } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
-import { UserCircle, User, Calendar, Wallet, Logout } from './icons';
+import { User, Calendar, Wallet, Logout } from './icons';
+import MenuIcon from './menuIcon';
 import theme from '../theme';
 import { isLoggedIn } from '../helpers/authentication';
 import { logout } from '../features/loginSignUp/loginSignUpSlice';
@@ -25,6 +26,11 @@ const UserProfileMenuWrapper = styled.div`
   position: fixed;
   top: 0;
   right: 0;
+  height: 55px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   .dropdown {
     .dropdown-toggle {
       background-color: transparent;
@@ -96,7 +102,7 @@ const UserProfileMenu = ({ profileDetails, logout }) => {
       <UserProfileMenuWrapper>
         <Dropdown>
           <Dropdown.Toggle id='user-profile-icon'>
-            <UserCircle />
+            <MenuIcon />
           </Dropdown.Toggle>
           <Dropdown.Menu rootCloseEvent='click' onClick={() => document.body.click()}>
             <MenuItem

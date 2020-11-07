@@ -60,6 +60,8 @@ const PaymentCheckout = ({ url, fields }) => {
   // Submit the form to post the checkout details to tpv url
   useEffect(() => {
     setTimeout(() => document.getElementById('submit-button').click(), 250);
+    // NOTE: For testing purpose
+    // window.location.href = '/profile/payment_ok/30';
   }, []);
 
   return (

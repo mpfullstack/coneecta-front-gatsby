@@ -55,7 +55,7 @@ const backgroundColor = theme('mode', {
 });
 
 const backgroundHeaderColor = theme('mode', {
-  light: COLORS.secondary,
+  light: COLORS.quaternary,
   dark: COLORS.primary
 });
 

@@ -93,5 +93,7 @@
   "floor": "Planta/piso",
   "door": "Puerta",
 
+  "personalDataSavedSuccessfully": "Datos personales guardados correctamente.",
+
   "typeAddressToSearch": "Escribe la dirección completa que quieres añadir e intentaremos encontrarla."
 }
