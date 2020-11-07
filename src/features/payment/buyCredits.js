@@ -22,12 +22,15 @@ const BuyCreditsWrapper = styled.div`
 `;
 
 const BuyCredits = ({ credits, defaultCredits, onChange }) => {
+  if (!credits) {
+    credits = defaultCredits;
+  }
   return (
     <BuyCreditsWrapper>
       <Row className='buy-credits'>
         <Col xs='6'><strong>Comprar</strong></Col>
         <Col xs='6'>
-          <Form.Control as="select" name='buyCredits' className='select-credits' onChange={onChange} value={credits} defaultValue={defaultCredits}>
+          <Form.Control as="select" name='buyCredits' className='select-credits' onChange={onChange} value={credits}>
             {Array.from({length: 60}, (x, i) => {
               return <option className='credit-option' key={`credits_${i}`} value={i*5}>{i*5} créditos</option>
             })}
