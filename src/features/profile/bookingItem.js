@@ -22,6 +22,7 @@ const BookingItemWrapper = styled.div`
   }
   .status {
     width: auto;
+    height: auto;
     border-radius: 5px;
     padding: 5px 10px;
     color: ${theme.statusTextColor};

@@ -69,7 +69,9 @@ function* onLogout() {
       // Handle logout OK
       yield put(resetProfile());
       yield logoutUser();
-      // yield navigate(`/login`);
+      if (payload.redirect) {
+        yield navigate(`/login`);
+      }
     }
   });
 }

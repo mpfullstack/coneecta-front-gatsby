@@ -71,6 +71,7 @@
 
   "accept_modification": "Aceptar modificación",
   "cancel_session": "Cancelar reserva",
+  "start_session": "Iniciar sesión",
   "suggest_modification": "Sugerir modificación",
   "unavailable_session": "Sesión no disponible",
   "operation_not_allowed": "Acción no permitida",
