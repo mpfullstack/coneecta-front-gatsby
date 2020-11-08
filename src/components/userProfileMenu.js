@@ -111,7 +111,7 @@ const UserProfileMenu = ({ profileDetails, logout }) => {
               icon={<Calendar />} to='/profile/bookings' text={t('bookings').toUpperCase()} />
             <MenuItem
               icon={<Wallet />} to='/profile/wallet' text={t('wallet').toUpperCase()} />
-            <Dropdown.Item onClick={logout}><Logout />{t('logout').toUpperCase()}</Dropdown.Item>
+            <Dropdown.Item onClick={() => logout({ redirect: true })}><Logout />{t('logout').toUpperCase()}</Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
       </UserProfileMenuWrapper>
