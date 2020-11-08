@@ -31,7 +31,7 @@ export const ProfileLayout = ({ profile, loadProfile, children, getTimeLimits })
       loadProfile();
     }
     getTimeLimits();
-  }, [loadProfile, profile, getTimeLimits]);
+  }, [profile.details, loadProfile, getTimeLimits]);
 
   return (
     <ProfileLayoutWrapper>
