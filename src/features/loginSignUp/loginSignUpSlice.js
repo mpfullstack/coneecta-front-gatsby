@@ -12,7 +12,7 @@ const loginSignUpSlice = createSlice({
     login: state => {
       state.loginStatus = 'loading';
     },
-    logout: state => {},
+    logout: () => {},
     loggedIn: state => {
       state.loginStatus = 'idle';
     },
