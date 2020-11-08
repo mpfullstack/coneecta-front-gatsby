@@ -17,7 +17,7 @@ function* onLoadProfile() {
     const result = yield call(api.getProfile);
     if (result.error) {
       if (result.status === 403) {
-        yield put(logout());
+        yield put(logout({ redirect: true }));
       } else {
         yield put(showApiError(result.error));
       }
@@ -36,11 +36,7 @@ function* onLoadSessions() {
   yield takeLatest(loadSessions, function* ({ payload = {} }) {
     const result = yield call(api.getSessions, payload);
     if (result.error) {
-      if (result.status === 403) {
-        yield put(logout());
-      } else {
-        yield put(showApiError(result.error));
-      }
+      yield put(showApiError(result.error));
     } else {
       yield put(initSessions(result));
       yield put(sessionsLoaded());
@@ -52,11 +48,7 @@ function* onLoadSessionDetail() {
   yield takeLatest(loadSessionDetail, function* ({ payload }) {
     const result = yield call(api.getSessionDetail, payload);
     if (result.error) {
-      if (result.status === 403) {
-        yield put(logout());
-      } else {
-        yield put(showApiError(result.error));
-      }
+      yield put(showApiError(result.error));
     } else {
       yield put(initSessionDetail(result));
       yield put(sessionsLoaded());
@@ -68,17 +60,15 @@ function* onPerformSessionAction() {
   yield takeLatest(performSessionAction, function* ({ payload }) {
     const result = yield call(api.performSessionAction, payload);
     if (result.error) {
-      if (result.status === 403) {
-        yield put(logout());
-      } else {
-        yield put(showApiError(result.error));
-      }
+      yield put(showApiError(result.error));
     } else {
       // TODO: Handle response based on the action performed and result
       const { action } = payload;
       if (action === 'review_session') {
         yield put(loadSessionDetail(payload.id));
         yield navigate(`/profile/bookings/${payload.id}/review_session_success`);
+      } else if (action === 'start_session') {
+        window.open(result.classroom_url, '_blank');
       } else {
         yield navigate(`/profile/bookings/${payload.id}/success`);
       }
@@ -90,10 +80,10 @@ function* onSaveProfile() {
   yield takeLatest(saveProfile, function* ({ payload }) {
     const result = yield call(api.saveProfile, payload);
     if (result.error) {
-      if (result.status === 403) {
-        yield put(logout());
-      } else if (result.error.code === 'invalid_user_data') {
+      if (result.error.code === 'invalid_user_data') {
         yield put(saveProfileError(result.error.details));
+      } else {
+        yield put(showApiError(result.error));
       }
     } else {
       // Handle response
