@@ -62,13 +62,15 @@ function* onPerformSessionAction() {
     if (result.error) {
       yield put(showApiError(result.error));
     } else {
-      // TODO: Handle response based on the action performed and result
+      // Handle response based on the action performed and result
       const { action } = payload;
       if (action === 'review_session') {
         yield put(loadSessionDetail(payload.id));
         yield navigate(`/profile/bookings/${payload.id}/review_session_success`);
       } else if (action === 'start_session') {
         window.open(result.classroom_url, '_blank');
+      } else if (action === 'claim_session') {
+        yield navigate(`/profile/bookings/${payload.id}/claimed`);
       } else {
         yield navigate(`/profile/bookings/${payload.id}/success`);
       }

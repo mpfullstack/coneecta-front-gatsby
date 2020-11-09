@@ -102,6 +102,12 @@ const BookingDetailAction = ({
           <p className='detail-text'>Muchas gracias</p>
         </div>
       );
+    } else if (action === 'claimed') {
+      return (
+        <div>
+          <p className='detail-text'><strong>Tu solicitud ha sido enviada</strong></p>
+        </div>
+      );
     }
   }
 

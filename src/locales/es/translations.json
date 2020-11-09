@@ -71,7 +71,8 @@
 
   "accept_modification": "Aceptar modificación",
   "cancel_session": "Cancelar reserva",
-  "start_session": "Iniciar sesión",
+  "start_session": "Entrar a la sala",
+  "claim_session": "Reclamar",
   "suggest_modification": "Sugerir modificación",
   "unavailable_session": "Sesión no disponible",
   "operation_not_allowed": "Acción no permitida",
