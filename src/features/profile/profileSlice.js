@@ -7,7 +7,7 @@ const profileSlice = createSlice({
     'details': null,
     'sessions': null,
     'sessionDetail': null,
-    'loadingSessions': true,
+    'loadingSessions': false,
     'performingSessionAction': false,
     'formStatus': 'idle',
     'profileErrors': []

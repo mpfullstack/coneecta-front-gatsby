@@ -11,6 +11,7 @@ import Skeleton from '../../components/skeleton';
 import BookingItem from './bookingItem';
 import PrimaryButton from '../../components/buttons/primaryButton';
 import BookingDetailAction from './bookingDetailAction';
+import useContentLoaded from '../../components/hooks/useContentLoaded';
 
 const mapDispatchToProps = { loadSessionDetail, performSessionAction };
 const mapStateToProps = ({ profile }) => {
@@ -70,33 +71,34 @@ const BookingDetail = ({ id, action, sessionDetail, loading, loadSessionDetail, 
   const advices = sessionDetail ? sessionDetail.advices : null;
   const actions = sessionDetail ? sessionDetail.actions : null;
 
+  const loaded = useContentLoaded(loading);
+
   return (
     <BookingDetailWrapper>
       <SEO title="Datos de la reserva" />
       <h1 className='title'>Datos de la reserva</h1>
       <Row className={`justify-content-md-center`} style={{marginTop: '30px'}}>
         <Col xs='12' md='10'>
-          <BookingItem session={session} linkable={false} />
+          <BookingItem session={loaded ? session : null} linkable={false} />
         </Col>
       </Row>
       {action
         ?
           <Row className={`justify-content-md-center`}>
             <Col xs='12' md='10'>
-              <BookingDetailAction id={id} action={action} />
+              {loaded ? <BookingDetailAction id={id} action={action} /> : <Skeleton height={250} />}
             </Col>
           </Row>
         :
           <Row className={`justify-content-md-center`}>
             <Col xs='12' md='10'>
               <div className='advices'>
-                {advices ?
+                {loaded ?
                   advices.map((advice, i) => <p className='advice-item' key={`advice_${i}`}>{parse(advice)}</p>)
                   :
-                  loading ? <Skeleton height={100} /> : null
-                }
+                  <Skeleton height={100} />}
               </div>
-              <BookingActions id={id} actions={actions} performAction={payload => performSessionAction(payload)} />
+              <BookingActions id={id} actions={loaded ? actions : null} performAction={payload => performSessionAction(payload)} />
             </Col>
           </Row>
         }
