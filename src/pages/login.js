@@ -5,7 +5,7 @@ import { Location } from '@reach/router';
 import { Provider } from 'react-redux';
 import store, { persistor } from '../redux/store';
 import { PersistGate } from 'redux-persist/integration/react';
-import Login from '../features/login';
+import Login from '../features/loginSignUp/login';
 
 export default () => {
   return (

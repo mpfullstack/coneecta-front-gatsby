@@ -4,11 +4,20 @@ import { useEffect } from 'react';
 import styled from 'styled-components';
 
 const ModalWrapper = styled.div`
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   text-align: center;
+  z-index: 100000;
+  .alert {
+    padding: 1rem 1.25rem;
+    &.alert-dismissible {
+      .close {
+        padding: 1rem 1.25rem;
+      }
+    }
+  }
 `;
 
 export default ({ children }) => {

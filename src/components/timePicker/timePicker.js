@@ -6,9 +6,9 @@ import { LowAvailability } from '../icons';
 
 const TimePickerWrapper = styled.div`
   position: relative;
-  border: 1px solid ${theme.dateTimePickerBackgroundColor};
+  border: 1px solid ${theme.boxBackgroundColor};
   border-radius: 5px;
-  background-color: ${theme.dateTimePickerBackgroundColor};
+  background-color: ${theme.boxBackgroundColor};
   .picker-container {
     width: 94%;
     margin: 0 auto;

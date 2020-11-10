@@ -7,7 +7,15 @@ import {
   faAngleUp,
   faAngleDown,
   faEdit,
-  faExclamationCircle
+  faExclamationCircle,
+  faCheckCircle,
+  faInfoCircle,
+  faEnvelope,
+  faUserCircle,
+  faUser,
+  faCalendarAlt,
+  faWallet,
+  faSignOutAlt
  } from "@fortawesome/free-solid-svg-icons";
 
 const ArrowLeft = () => <FontAwesomeIcon icon={faAngleLeft} />;
@@ -16,7 +24,14 @@ const ArrowUp = () => <FontAwesomeIcon icon={faAngleUp} />;
 const ArrowDown = () => <FontAwesomeIcon icon={faAngleDown} />;
 const Edit = () => <FontAwesomeIcon icon={faEdit} />;
 const ExclamationCircle = () => <FontAwesomeIcon icon={faExclamationCircle} />;
-
+const CheckCircle = () => <FontAwesomeIcon icon={faCheckCircle} />;
+const InfoCircle = () => <FontAwesomeIcon icon={faInfoCircle} />;
+const Envelope = () => <FontAwesomeIcon icon={faEnvelope} />;
+const UserCircle = () => <FontAwesomeIcon icon={faUserCircle} />;
+const User = () => <FontAwesomeIcon icon={faUser} />;
+const Calendar = () => <FontAwesomeIcon icon={faCalendarAlt} />;
+const Wallet = () => <FontAwesomeIcon icon={faWallet} />;
+const Logout = () => <FontAwesomeIcon icon={faSignOutAlt} />;
 
 const LowAvailabilityWrapper = styled.span`
   display: inline;
@@ -39,5 +54,13 @@ export {
   ArrowDown,
   Edit,
   ExclamationCircle,
-  LowAvailability
+  LowAvailability,
+  CheckCircle,
+  InfoCircle,
+  Envelope,
+  UserCircle,
+  User,
+  Calendar,
+  Wallet,
+  Logout
 }

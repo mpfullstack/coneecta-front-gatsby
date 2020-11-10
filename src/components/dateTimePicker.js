@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+import { connect } from 'react-redux';
 import { navigate } from 'gatsby';
 import styled from 'styled-components';
 import { Row, Col } from 'react-bootstrap';
@@ -11,14 +12,32 @@ import {
   isDateAvailable,
   adaptTimeZonesToArray,
   getAvailableTimes,
-  splitTimeZoneName
+  splitTimeZoneName,
+  isWithinCancellationLimits
 } from '../helpers/data';
+import {
+  selectDate, selectTime, showCancelSessionAlert,
+  fetchAvailableTimeZones, selectTimeZone
+} from '../features/booking/bookingSlice';
 import DatePicker from './datePicker/datePicker';
 import TimePicker from './timePicker/timePicker';
 import TimeZonePicker from './timePicker/timeZonePicker';
 import ActionButtons from '../components/buttons/actionButtons';
 import PrimaryButton from '../components/buttons/primaryButton';
 import BookingReview from './bookingReview';
+
+const mapDispatchToProps = {
+  selectDate,
+  selectTime,
+  selectTimeZone,
+  fetchAvailableTimeZones,
+  showCancelSessionAlert
+};
+const mapStateToProps = state => {
+  return {
+    booking: state.booking
+  }
+}
 
 const DateTimePickerWrapper = styled.div`
   padding-bottom: 40px;
@@ -32,9 +51,9 @@ const DateTimePickerWrapper = styled.div`
 `;
 
 const DatePickerWrapper = styled.div`
-  border: 1px solid ${theme.dateTimePickerBackgroundColor};
+  border: 1px solid ${theme.boxBackgroundColor};
   border-radius: 5px;
-  background-color: ${theme.dateTimePickerBackgroundColor};
+  background-color: ${theme.boxBackgroundColor};
   margin-bottom: 6px;
 
   #container {
@@ -62,33 +81,51 @@ const DatePickerWrapper = styled.div`
   }
 `;
 
-const ConfirmButton = ({ date, time, fetchingAvailableDates, id }) => {
+function confirmBooking({ slug, timelimits, timezone, date, time, showAlert, onConfirm }) {
+  if (isWithinCancellationLimits(new Date(date), time, timezone, timelimits.cancel_session)) {
+    // Show cancellation alert before continue
+    showAlert();
+  } else { // Continue as normal
+    if (typeof onConfirm === 'function' ) {
+      onConfirm();
+    } else {
+      navigate(`/profile/payment${slug ? `?slug=${slug}` : ''}`);
+    }
+  }
+}
+
+const ConfirmButton = ({ date, time, fetchingAvailableDates, slug, timezone, timelimits, showAlert, onConfirm, text }) => {
   const { t } = useTranslation();
 
   let disabled = true;
   if (date && time && !fetchingAvailableDates) {
     disabled = false;
   }
-  return <PrimaryButton onClick={() => navigate(`/login${id ? `/?id=${id}` : ''}`)}
+  return <PrimaryButton
+    onClick={() => confirmBooking({ slug, date, time, timezone, timelimits, showAlert, onConfirm })}
     className='confirm-button' variant='primary' size='lg' disabled={disabled}>
-      {t('Book')}
+      {text || t('Book')}
   </PrimaryButton>;
 }
 
-const DateTimePicker = ({ profile, booking, onSelectDate, onSelectTime, fetchAvailableTimeZones, onSelectTimeZone }) => {
+const DateTimePicker = ({
+  booking, selectDate, selectTime, fetchAvailableTimeZones,
+  showCancelSessionAlert, selectTimeZone, slug, onConfirm,
+  onConfirmButtonText = '', timeZoneDisabled = false
+}) => {
   const { t } = useTranslation();
 
   useEffect(() => {
     const jstz = require('jstimezonedetect');
     const timezone = jstz.determine().name();
     if (timezone) {
-      onSelectTimeZone(timezone);
+      selectTimeZone(timezone);
     }
     fetchAvailableTimeZones();
-  }, [fetchAvailableTimeZones, onSelectTimeZone]);
+  }, [fetchAvailableTimeZones, selectTimeZone]);
 
   return (
-    <DateTimePickerWrapper>
+    <DateTimePickerWrapper className='date-time-picker-container'>
       <Row>
         <Col>
           {booking.fetchingAvailableDates ?
@@ -96,7 +133,7 @@ const DateTimePicker = ({ profile, booking, onSelectDate, onSelectTime, fetchAva
             :
             <DatePickerWrapper>
               <DatePicker
-                getSelectedDay={value => onSelectDate(String(value))}
+                getSelectedDay={value => selectDate(String(value))}
                 fromDate={getFromDate(booking.availableDates)}
                 endDate={getAmountOfDaysToEnd(booking.availableDates)}
                 isDateAvailable={date => isDateAvailable(date, booking.availableDates)}
@@ -111,9 +148,10 @@ const DateTimePicker = ({ profile, booking, onSelectDate, onSelectTime, fetchAva
             <Skeleton height={121} count={1} />
             :
             <TimeZonePicker
+              disabled={timeZoneDisabled}
               timezones={adaptTimeZonesToArray(booking.timezones, { value: null, label: t('Select the timezone') })}
               selected={booking.timezone}
-              onSelectTimeZone={onSelectTimeZone}
+              onSelectTimeZone={selectTimeZone}
               {...splitTimeZoneName(booking.timezones, booking.timezone)}/>
           }
           {/* TODO: Add edit icon */}
@@ -125,7 +163,7 @@ const DateTimePicker = ({ profile, booking, onSelectDate, onSelectTime, fetchAva
             <TimePicker
               valueGroups={{time: booking.time || '' }}
               optionGroups={{ time: getAvailableTimes(booking.availableDates, booking.date, { value: null, label: t('Select the time') }) }}
-              onSelectTime={onSelectTime}
+              onSelectTime={selectTime}
               showAvailabilityIcon={true}
               isTimeAvailable={booking.isTimeAvailable} />
           }
@@ -137,10 +175,10 @@ const DateTimePicker = ({ profile, booking, onSelectDate, onSelectTime, fetchAva
         </Col>
       </Row>
       <ActionButtons>
-        <ConfirmButton {...booking} id={profile.id} />
+        <ConfirmButton {...booking} slug={slug} showAlert={showCancelSessionAlert} onConfirm={onConfirm} text={onConfirmButtonText} />
       </ActionButtons>
     </DateTimePickerWrapper>
   )
 }
 
-export default DateTimePicker;
+export default connect(mapStateToProps, mapDispatchToProps)(DateTimePicker);

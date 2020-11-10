@@ -4,6 +4,11 @@
   "These are my services": "Estos son mis servicios",
   "Pick the modality": "Escoge la modalidad que prefieras",
   "When do you want your booking for?": "¿Para cuando quieres hacer tu reserva?",
+  "When do you want to change your booking for?": "¿Para cuando quieres cambiar tu reserva?",
+  "How was your booking?": "¿Qué tal ha estado la sesión?",
+  "Leave your review": "Déjanos tu valoración",
+  "Send review": "Enviar valoración",
+  "Send claim": "Enviar reclamación",
 
   "videoconference": "Video conferencia",
   "audioconference": "Audio conferencia",
@@ -11,16 +16,96 @@
   "student_home": "A domicilio",
 
   "Book": "Reservar",
+  "Confirm": "Confirmar",
   "Timezone": "Zona horaria",
   "Select": "Seleccionar",
+
+  "personalData": "Datos personales",
+  "bookings": "Reservas",
+  "youHaveNoBookings": "No tienes ninguna reserva",
+  "wallet": "Monedero",
 
   "Professional reviews": "Valoraciones del profesional",
   "Reviews": "Valoraciones",
 
   "unavailable_profile": "Lo sentimos, este perfil no está disponible",
 
+  "login": "Acceso",
+  "logout": "Cerrar sesión",
+  "logmein": "Acceder",
+  "loggingmein": "Accediendo...",
+  "signup": "Registro",
+  "signmeup": "Registrarme",
+  "signingmeup": "Registrando...",
+  "pay": "Pagar",
+  "processingPayment": "Procesando...",
+
+  "toClickOn": "Al hacer clic en",
+  "willProcessYourBooking": "procesaremos tu reserva descontando los créditos del saldo disponible en tu cuenta.",
+
   "Select the timezone": "Selecciona la zona horaria",
   "Select the time": "Selecciona la hora",
 
-  "lowAvailabilityMessage": "Horario de baja disponibilidad, es posible que el profesional no pueda aceptar tu reserva."
+  "lowAvailabilityMessage": "Horario de baja disponibilidad, es posible que el profesional no pueda aceptar tu reserva.",
+
+  "name": "Nombre",
+  "email": "Correo electrónico",
+  "password": "Contraseña",
+  "newsletterSignUp": "Deseo recibir información comercial relacionada con mis intereses",
+  "accept": "Acepto la",
+  "privacyPolicy": "política de privacidad",
+  "ofConeecta": "de Coneecta",
+  "mustAcceptPrivacyPolicy": "Debes aceptar la política de privacidad",
+
+  "isRequired": "Este campo es obligatorio",
+  "wrongEmailFormat": "El formato del correo electrónico no es válido",
+  "_unique": "El correo electrónico ya está registrado",
+  "invalid_authentication_data": "Los datos son incorrectos",
+  "invalid_timezone": "La zona horaria es incorrecta",
+  "_empty": "Este campo es obligatorio",
+
+  "unexpectedError": "Lo sentimos, se ha producido un error con la conexión. Vuelve a intentarlo o recarga la página.",
+  "invalid_reservation_data": "Los datos de la reserva no son válidos.",
+
+  "cancel": "Cancelar",
+  "continue": "Continuar",
+  "cancelSessionAlert": "Estas realizando una reserva con menos de {{hours}} horas de antelación. Ten en cuenta que para esta reserva no se admitirán cambios de fecha y su cancelación tendrá penalización.",
+
+  "accept_modification": "Aceptar modificación",
+  "cancel_session": "Cancelar reserva",
+  "start_session": "Entrar a la sala",
+  "claim_session": "Reclamar",
+  "suggest_modification": "Sugerir modificación",
+  "unavailable_session": "Sesión no disponible",
+  "operation_not_allowed": "Acción no permitida",
+  "not_valid_parameters": "Parámetros no válidos",
+  "unexpected_error": "Lo sentimos, se ha producido un error con la conexión. Vuelve a intentarlo o recarga la página.",
+  "save": "Guardar",
+  "saving": "Guardando...",
+
+  "leaveSomeComments": "Deja aquí tu comentario",
+  "comments": "Comentarios",
+
+  "typeYourAddress": "Introduce tu dirección",
+
+  "streetName": "Nombre de la vía",
+  "streetNumber": "Número",
+  "province": "Provincia",
+  "country": "País",
+  "postalCode": "Código postal",
+  "city": "Ciudad",
+  "floor": "Planta/piso",
+  "door": "Puerta",
+
+  "personalDataSavedSuccessfully": "Datos personales guardados correctamente.",
+
+  "typeAddressToSearch": "Escribe la dirección completa que quieres añadir e intentaremos encontrarla.",
+
+  "unapproved": "Pendiente de aceptar",
+  "approved": "Acceptada",
+  "progress": "En progreso",
+  "unreviewed": "Pendiente de revisar",
+  "finalized": "Finalizada",
+  "cancelled": "Cancelada",
+  "claimed": "Reclamada"
 }

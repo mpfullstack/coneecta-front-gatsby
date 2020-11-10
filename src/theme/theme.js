@@ -4,6 +4,7 @@ import theme from 'styled-theming';
 // ------------------------------------------------------
 const COLORS = {
   fuchsia: '#ff1f54',
+  fuchsiaLight: '#ff9bb3',
   darkBlue: '#003855',
   blue: '#499db4',
   lightBlue: '#00385525',
@@ -15,12 +16,18 @@ const COLORS = {
   lightGrey: '#bbbbbb',
   pearl: '#f1e9cd',
   superLightPearl: '#fffcf3',
-  lightPearl: '#f6f2e3'
+  lightPearl: '#f6f2e3',
+  green: '#178530',
+  yellow: '#b79c0a',
+  orange: '#ff7119',
+  purple: '#5f0ab7',
+  red: '#b70a47'
 }
 
 COLORS.primary = COLORS.darkBlue;
 COLORS.secondary = COLORS.superLightPearl;
 COLORS.tertiary = COLORS.fuchsia;
+COLORS.tertiaryLight = COLORS.fuchsiaLight;
 COLORS.quaternary = COLORS.lightPearl;
 COLORS.quinary = COLORS.pearl;
 
@@ -48,7 +55,7 @@ const backgroundColor = theme('mode', {
 });
 
 const backgroundHeaderColor = theme('mode', {
-  light: COLORS.secondary,
+  light: COLORS.quaternary,
   dark: COLORS.primary
 });
 
@@ -87,11 +94,10 @@ const dateTimePickerColor = theme('mode', {
   dark: COLORS.lightBlue
 });
 
-const dateTimePickerBackgroundColor = theme('mode', {
+const boxBackgroundColor = theme('mode', {
   light: COLORS.quaternary,
   dark: COLORS.lightBlue
 });
-
 
 const dateTimePickerButtonsColor = theme('mode', {
   light: COLORS.tertiary,
@@ -113,6 +119,26 @@ const primaryButtonTextColor = theme('mode', {
   dark: COLORS.primary
 });
 
+const primaryDisabledButtonColor = theme('mode', {
+  light: COLORS.tertiaryLight,
+  dark: COLORS.secondary
+});
+
+const secondaryButtonColor = theme('mode', {
+  light: COLORS.lightGrey,
+  dark: COLORS.secondary
+});
+
+const secondaryButtonTextColor = theme('mode', {
+  light: COLORS.superLightGrey,
+  dark: COLORS.primary
+});
+
+const secondaryDisabledButtonColor = theme('mode', {
+  light: COLORS.superLightGrey,
+  dark: COLORS.secondary
+});
+
 const skeletonColor = theme('mode', {
   light: COLORS.lightPearl,
   dark: COLORS.primary
@@ -121,6 +147,66 @@ const skeletonColor = theme('mode', {
 const skeletonHighlightColor = theme('mode', {
   light: COLORS.superLightPearl,
   dark: COLORS.superLightBlue
+});
+
+const inputBorderColorFocus = theme('mode', {
+  light: COLORS.quinary,
+  dark: COLORS.superLightBlue
+});
+
+const inputBoxShadowColorFocus = theme('mode', {
+  light: `${COLORS.quinary}90`,
+  dark: COLORS.superLightBlue
+});
+
+const borderDropdownItemColor = theme('mode', {
+  light: COLORS.quinary,
+  dark: COLORS.superLightBlue
+});
+
+const iconDropdownItemColor = theme('mode', {
+  light: COLORS.primary,
+  dark: COLORS.superLightBlue
+});
+
+const deaultStatusColor = theme('mode', {
+  light: COLORS.lightGrey,
+  dark: COLORS.green
+});
+
+const approvedStatusColor = theme('mode', {
+  light: COLORS.green,
+  dark: COLORS.green
+});
+
+const unapprovedStatusColor = theme('mode', {
+  light: COLORS.yellow,
+  dark: COLORS.yellow
+});
+
+const progressStatusColor = theme('mode', {
+  light: COLORS.orange,
+  dark: COLORS.orange
+});
+
+const unreviewedStatusColor = theme('mode', {
+  light: COLORS.purple,
+  dark: COLORS.purple
+});
+
+const finalizedStatusColor = theme('mode', {
+  light: COLORS.blue,
+  dark: COLORS.blue
+});
+
+const claimedStatusColor = theme('mode', {
+  light: COLORS.red,
+  dark: COLORS.rend
+});
+
+const statusTextColor = theme('mode', {
+  light: COLORS.lightPearl,
+  dark: COLORS.darkGrey
 });
 
 // Transitions
@@ -140,14 +226,30 @@ export default {
   textServiceCardHeaderColor,
   borderCardColor,
   dateTimePickerColor,
-  dateTimePickerBackgroundColor,
+  boxBackgroundColor,
   dateTimePickerButtonsColor,
   dateTimePickerSelectedTextColor,
   primaryButtonColor,
   primaryButtonTextColor,
+  primaryDisabledButtonColor,
+  secondaryButtonColor,
+  secondaryButtonTextColor,
+  secondaryDisabledButtonColor,
   iconColor,
   skeletonColor,
   skeletonHighlightColor,
+  inputBorderColorFocus,
+  inputBoxShadowColorFocus,
+  borderDropdownItemColor,
+  iconDropdownItemColor,
+  deaultStatusColor,
+  approvedStatusColor,
+  statusTextColor,
+  unapprovedStatusColor,
+  progressStatusColor,
+  unreviewedStatusColor,
+  finalizedStatusColor,
+  claimedStatusColor,
   // Constants
   COLORS,
   SIZES,

@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { navigate } from '@reach/router';
+import { navigate } from 'gatsby';
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
 import { Row, Col } from 'react-bootstrap';
@@ -19,7 +19,7 @@ const mapStateToProps = state => {
   }
 }
 
-export const Booking = ({ profile, booking, changeSection }) => {
+export const Booking = ({ profile, booking, changeSection, slug }) => {
   if (profile.services && booking.serviceId) {
     const service = getServiceById(profile.services, booking.serviceId);
     const modality = getServiceByModalityType(service, booking.modalityType);
@@ -33,7 +33,7 @@ export const Booking = ({ profile, booking, changeSection }) => {
                 modality={modality}
                 onClick={() => {
                   changeSection('serviceList');
-                  navigate(`/professional/?id=${profile.id}`)
+                  navigate(`/u/${slug}`);
                 }} />
               <DateTimeCard
                 date={capitalise(format(new Date(booking.date), "EEEE dd 'de' LLLL 'de' yyyy", { locale: es }))}
@@ -41,7 +41,7 @@ export const Booking = ({ profile, booking, changeSection }) => {
                 timezone={booking.timezone}
                 onClick={() => {
                   changeSection('datePicker');
-                  navigate(`/professional/?id=${profile.id}`)
+                  navigate(`/u/${slug}`);
                 }} />
             </Col>
           </Row>

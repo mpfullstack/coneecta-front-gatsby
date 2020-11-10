@@ -1,3 +1,5 @@
+import { getAuthMechanism, COOKIE } from "./authentication";
+
 const customHeader = () => ({
   'Content-Type': 'application/json',
   'Accept': 'application/json'
@@ -15,12 +17,10 @@ const handleFetchResponse = (response, customHandle) => {
     return new Promise((resolve, reject) => {
       resolve(response.json());
     })
-    .then(({ code }) => {
+    .then((responseError) => {
       return {
         status: response.status,
-        error: {
-          code
-        }
+        error: responseError
       };
     })
     .catch(error => {
@@ -47,9 +47,9 @@ const base = (method, url, data, customHandle, customOptions) => {
   //   options.headers.Authorization = `JWT ${sessionStorage.getItem('idToken')}`;
   // }
 
-  // if (siteConfig.authMechanism === authentication.COOKIE) {
-  //   options.credentials = 'same-origin';
-  // }
+  if (getAuthMechanism() === COOKIE) {
+    options.credentials = 'same-origin';
+  }
 
   // Set body request
   if (data) {
@@ -79,7 +79,7 @@ const base = (method, url, data, customHandle, customOptions) => {
       return {
         status: error.status,
         error: {
-          name: 'unexpectedError',
+          code: 'unexpectedError',
           description: error
         }
       };

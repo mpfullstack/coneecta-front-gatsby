@@ -7,9 +7,9 @@ import TimePicker from './timePicker';
 import PrimaryButton from '../buttons/primaryButton';
 
 const TimeZonePickerWrapper = styled.div`
-  border: 1px solid ${theme.dateTimePickerBackgroundColor};
+  border: 1px solid ${theme.boxBackgroundColor};
   border-radius: 5px;
-  background-color: ${theme.dateTimePickerBackgroundColor};
+  background-color: ${theme.boxBackgroundColor};
   .timezone {
     cursor: pointer;
     height: 120px;
@@ -49,13 +49,13 @@ const TimeZoneModalWrapper = styled.div`
     }
   }
   .modal-footer {
-    background-color: ${theme.dateTimePickerBackgroundColor};
+    background-color: ${theme.boxBackgroundColor};
     border-top: none;
     justify-content: center;
   }
 `;
 
-const TimeZonePicker = ({ timezones, selected, onSelectTimeZone, name, gmt }) => {
+const TimeZonePicker = ({ timezones, selected, onSelectTimeZone, name, gmt, disabled }) => {
   const { t } = useTranslation();
 
   const [show, showModal] = useState(false);
@@ -68,7 +68,7 @@ const TimeZonePicker = ({ timezones, selected, onSelectTimeZone, name, gmt }) =>
 
   return (
     <TimeZonePickerWrapper>
-      <div className='timezone' onClick={() => showModal(!show)} role='button' tabIndex={0}
+      <div className='timezone' onClick={() => disabled ? null : showModal(!show)} role='button' tabIndex={0}
       onKeyDown={() => null}>
         <span className='item label'>{t('Timezone')}</span>
         <span className='item region'>{name}</span>

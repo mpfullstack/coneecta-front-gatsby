@@ -1,4 +1,5 @@
 import React from 'react';
+import { navigate } from 'gatsby';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
@@ -6,26 +7,27 @@ import { Animated } from 'react-animated-css';
 import { Row, Col } from 'react-bootstrap';
 import Skeleton from '../../components/skeleton';
 import { changeSection, showService, collapseProfileHeader } from './professionalProfileSlice';
-import { selectService, selectDate, selectTime, fetchAvailableTimeZones, selectTimeZone } from '../booking/bookingSlice';
+import { selectService, hideCancelSessionAlert } from '../booking/bookingSlice';
 import ProfessionalServices from './professionalServices';
 import DateTimePicker from '../../components/dateTimePicker';
 import ServiceCard from '../../components/services/serviceCard';
 import { getServiceById, getServiceByModalityType } from '../../helpers/data';
+import AlertPopUp from '../../components/alertPopUp';
 
 const mapDispatchToProps = {
   selectService,
   changeSection,
-  selectDate,
-  selectTime,
-  selectTimeZone,
   showService,
   collapseProfileHeader,
-  fetchAvailableTimeZones
+  hideCancelSessionAlert
 };
 const mapStateToProps = state => {
+  const booking = state.booking;
   return {
     profile: state.professionalProfile,
-    booking: state.booking
+    booking,
+    cancelSessionHoursLimit: booking && booking.timelimits ?
+      booking.timelimits.cancel_session / 60 / 60 : 24
   }
 }
 
@@ -50,11 +52,10 @@ const ProfessionalProfileSection = ({
   showService,
   selectService,
   changeSection,
-  selectTimeZone,
-  selectDate,
-  selectTime,
   booking,
-  fetchAvailableTimeZones
+  slug,
+  cancelSessionHoursLimit,
+  hideCancelSessionAlert
 }) => {
   const { t } = useTranslation();
   const profileServices = profile.services && profile.services.length ? profile.services : null;
@@ -115,11 +116,18 @@ const ProfessionalProfileSection = ({
         </Row>
         <Row>
           <Col>
-            <DateTimePicker profile={profile} booking={booking}
-              onSelectDate={selectDate} onSelectTime={selectTime} onSelectTimeZone={selectTimeZone}
-              fetchAvailableTimeZones={fetchAvailableTimeZones} />
+            <DateTimePicker slug={slug} />
           </Col>
         </Row>
+        <AlertPopUp
+          className='cancel-session-alert'
+          show={booking.showCancelSessionAlert}
+          body={t('cancelSessionAlert', { hours: cancelSessionHoursLimit })}
+          onCancel={hideCancelSessionAlert}
+          onAccept={() => {
+            hideCancelSessionAlert();
+            navigate(`/profile/payment${slug ? `?slug=${slug}` : ''}`);
+          }} />
       </>
     );
   }
