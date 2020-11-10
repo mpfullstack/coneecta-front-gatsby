@@ -58,6 +58,10 @@ const BookingDetailAction = ({
         rating: Number(ratingReviewValue),
         comments: document.getElementById('comments').value
       }
+    } else if (actionToPerform === 'claim_session') {
+      payload.data = {
+        comments: document.getElementById('comments').value
+      }
     }
     return payload;
   }
@@ -84,6 +88,17 @@ const BookingDetailAction = ({
           <div className='action-button'>
             <PrimaryButton onClick={() => performSessionAction(buildPayload('review_session'))}>
               {t('Send review')}
+            </PrimaryButton>
+          </div>
+        </div>
+      );
+    } else if (action === 'claim') {
+      return (
+        <div>
+          <FormControl label={t('leaveSomeComments')} name={'comments'} as='textarea' />
+          <div className='action-button'>
+            <PrimaryButton onClick={() => performSessionAction(buildPayload('claim_session'))}>
+              {t('Send claim')}
             </PrimaryButton>
           </div>
         </div>

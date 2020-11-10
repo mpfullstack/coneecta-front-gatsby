@@ -39,6 +39,8 @@ const BookingActions = ({ actions, id, performAction }) => {
             <PrimaryButton onClick={() => {
               if (action === 'suggest_modification') {
                 navigate(`/profile/bookings/${id}/modify`);
+              } else if (action === 'claim_session') {
+                navigate(`/profile/bookings/${id}/claim`);
               } else {
                 performAction({ action, id });
               }
