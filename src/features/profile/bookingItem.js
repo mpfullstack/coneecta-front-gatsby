@@ -5,6 +5,7 @@ import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
 import Skeleton from '../../components/skeleton';
 import theme from '../../theme';
+import { useTranslation } from 'react-i18next';
 
 const BookingItemWrapper = styled.div`
   margin-bottom: 20px;
@@ -53,11 +54,13 @@ const BookingItemWrapper = styled.div`
 `;
 
 const BookingItem = ({ linkable = true, session = null }) => {
+  const { t } = useTranslation();
+
   if (session) {
     const item = (
       <>
         <div className={`status ${session.status}`}>
-          {session.status}
+          {t(session.status)}
         </div>
         <div className='text date'>
           {format(new Date(session.date), "d 'de' LLLL 'de' yyyy · H:mm 'horas'", { locale: es })}

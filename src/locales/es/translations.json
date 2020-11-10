@@ -99,5 +99,13 @@
 
   "personalDataSavedSuccessfully": "Datos personales guardados correctamente.",
 
-  "typeAddressToSearch": "Escribe la dirección completa que quieres añadir e intentaremos encontrarla."
+  "typeAddressToSearch": "Escribe la dirección completa que quieres añadir e intentaremos encontrarla.",
+
+  "unapproved": "Pendiente de acceptar",
+  "approved": "Acceptada",
+  "progress": "En progreso",
+  "unreviewed": "Pendiente de revisar",
+  "finalized": "Finalizada",
+  "cancelled": "Cancelada",
+  "claimed": "Reclamada"
 }
