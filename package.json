@@ -1,8 +1,8 @@
 {
   "name": "coneecta-front",
   "private": true,
-  "description": "Web platform to connect professionals and users",
-  "version": "1.0.0-beta",
+  "description": "Online platform to connect professional services with users online",
+  "version": "1.0.0-beta1",
   "author": "Marc Perez <info@marcperez.cat>",
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "1.2.28",
