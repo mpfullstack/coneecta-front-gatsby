@@ -70,6 +70,7 @@ function* onPerformSessionAction() {
       } else if (action === 'start_session') {
         window.open(result.classroom_url, '_blank');
       } else if (action === 'claim_session') {
+        yield put(loadSessionDetail(payload.id));
         yield navigate(`/profile/bookings/${payload.id}/claimed`);
       } else {
         yield navigate(`/profile/bookings/${payload.id}/success`);
