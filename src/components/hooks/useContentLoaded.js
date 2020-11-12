@@ -1,12 +1,5 @@
-import { useState, useEffect, useRef } from 'react';
-
-function usePrevious(value) {
-  const ref = useRef();
-  useEffect(() => {
-    ref.current = value;
-  });
-  return ref.current;
-}
+import usePrevious from './usePrevious';
+import { useState, useEffect } from 'react';
 
 export default loading => {
   const [loaded, setLoaded] = useState(false);
