@@ -18,14 +18,15 @@ const mapDispatchToProps = {
   updateCredits
 };
 const mapStateToProps = ({ profile, payment, booking, professionalProfile }) => {
-  const serviceModality = getServiceByModalityType(
-    getServiceById(professionalProfile.services, booking.serviceId),
-    booking.modalityType
-  );
+  const service = getServiceById(professionalProfile.services, booking.serviceId);
+  let defaultCredits = '';
+  let serviceModality = {};
   const profileDetails = profile.details || {};
-  let defaultCredits;
-  if (profileDetails.credits < serviceModality.credits) {
-    defaultCredits = serviceModality.credits - profileDetails.credits;
+  if (service) {
+    serviceModality = getServiceByModalityType(service, booking.modalityType);
+    if (profileDetails.credits < serviceModality.credits) {
+      defaultCredits = serviceModality.credits - profileDetails.credits;
+    }
   }
   return {
     booking,
@@ -43,14 +44,6 @@ const Payment = ({
   defaultCredits, creditsToBuy, checkout, reserve, booking, updateCredits
 }) => {
   const { t } = useTranslation();
-
-  function buildReservationData() {
-    return {
-      'service': booking.serviceId,
-      'modality': booking.modalityType,
-      'datetime': `${format(new Date(booking.date), 'yyyyMMdd')}${booking.time.replace(':','')}`
-    };
-  }
 
   function renderPaymentOption() {
     if (directReserve) {
@@ -74,6 +67,8 @@ const Payment = ({
     }
   }
 
+  // TODO: Redirect to /u/[slug] if no booking.serviceId selected ??
+
   return (
     <Location>
       {props => {
@@ -84,7 +79,7 @@ const Payment = ({
             {renderPaymentOption()}
             <PaymentButton status={payment.status} onClick={() => {
               if (directReserve) {
-                reserve(buildReservationData());
+                reserve(buildReservationData(booking));
               } else {
                 updateCredits(creditsToBuy);
                 checkout(creditsToBuy);
@@ -95,6 +90,14 @@ const Payment = ({
       }}
     </Location>
   );
+}
+
+export function buildReservationData(booking) {
+  return {
+    'service': booking.serviceId,
+    'modality': booking.modalityType,
+    'datetime': `${format(new Date(booking.date), 'yyyyMMdd')}${booking.time.replace(':','')}`
+  };
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Payment);
