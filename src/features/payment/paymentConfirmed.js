@@ -3,20 +3,19 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { Container, Row, Col } from 'react-bootstrap';
 // import { useTranslation } from 'react-i18next';
+import { reserve } from './paymentSlice';
 import SEO from '../../components/seo';
 import api from '../../api';
 import PaymentLayout from '../../components/paymentLayout';
+import { buildReservationData } from './payment';
 import { Location } from '@reach/router';
 import { PaymentError } from './paymentError';
 import { CheckCircle, InfoCircle, Envelope } from '../../components/icons/icons';
 
-const mapDispatchToProps = {};
-const mapStateToProps = ({ profile, payment }) => {
-  return {
-    profile,
-    payment
-  }
-}
+const mapDispatchToProps = { reserve };
+const mapStateToProps = ({ booking }) => ({
+  booking
+});
 
 const PaymentConfirmedWrapper = styled.div`
   .fa-check-circle {
@@ -40,8 +39,10 @@ const PaymentConfirmedWrapper = styled.div`
   }
 `;
 
-const PaymentConfirmed = ({ id }) => {
+const PaymentConfirmed = ({ id, reserve, booking }) => {
   // const { t } = useTranslation();
+
+  // const previousPaymentStatus = usePrevious(paymentStatus);
 
   const [paymentStatus, setPaymentStatus] = useState(() => {
     if (id) {
@@ -52,15 +53,17 @@ const PaymentConfirmed = ({ id }) => {
   });
 
   const getPaymentStatus = useCallback((id, tries) => {
-    return new Promise(resolve => {
+    return new Promise((resolve, reject) => {
       api.getPaymentStatus(id)
         .then(result => {
-          if (tries > 0 && result.status === 'pending') {
+          if (result.error) {
+            reject(result);
+          } else if (tries > 0 && result.status === 'pending') {
             setTimeout(() => getPaymentStatus(id, tries-1), 4000);
           } else {
             resolve(result.status);
           }
-        });
+        })
     });
   }, []);
 
@@ -68,9 +71,19 @@ const PaymentConfirmed = ({ id }) => {
     if (id) {
       const tries = 4;
       getPaymentStatus(id, tries)
-        .then(status => setPaymentStatus(status));
+        .then(status => {
+          // Build reservation data if booking exists and call reserve action
+          if (status === 'accepted' && booking.serviceId) {
+            reserve({ id, ...buildReservationData(booking)});
+          } else {
+            setPaymentStatus(status);
+          }
+        })
+        .catch(e => {
+          setPaymentStatus('error');
+        });
     }
-  }, [id, getPaymentStatus]);
+  }, [id, getPaymentStatus, booking, reserve]);
 
   return (
     <Location>
@@ -78,14 +91,21 @@ const PaymentConfirmed = ({ id }) => {
         return (
           <PaymentLayout {...props} showProfesionalProfile={false} showBooking={false}>
             <PaymentConfirmedWrapper>
-              {paymentStatus === 'accepted'
+              {
+              /**
+               * ACCEPTED payment
+               * ------------------------------------------------------------------------ */
+              paymentStatus === 'accepted'
                 ?
                 <Container>
                   <SEO title='Pago confirmado' />
                   <Row className='justify-content-center text-center'>
                     <Col>
                       <CheckCircle />
-                      <p className='confirm-text'><strong>Compra confirmada<br />({id})</strong></p>
+                      <p className='confirm-text'>
+                        <strong>Compra confirmada</strong>
+                        {id ? <span><br />({id})</span> : null}
+                      </p>
                     </Col>
                   </Row>
                   <Row className='justify-content-center text-center'>
@@ -104,7 +124,11 @@ const PaymentConfirmed = ({ id }) => {
                     <Col xs='8'>Recuerda que desde tu zona de usuario tambien puedes consultar toda esta información siempre que lo necesites.</Col>
                   </Row>
                 </Container>
-                : paymentStatus === 'pending'
+                :
+                /**
+                 * PENDING payment
+                 * ------------------------------------------------------------------------ */
+                paymentStatus === 'pending'
                   ?
                   <Container>
                     <SEO title='Verificando estado de la compra' />
@@ -114,7 +138,11 @@ const PaymentConfirmed = ({ id }) => {
                       </Col>
                     </Row>
                   </Container>
-                  : paymentStatus === 'cancelled'
+                  :
+                  /**
+                   * CANCELLED payment
+                   * ------------------------------------------------------------------------ */
+                  paymentStatus === 'cancelled'
                     ?
                     <Container>
                       <SEO title='Pago cancelado' />
@@ -124,9 +152,11 @@ const PaymentConfirmed = ({ id }) => {
                         </Col>
                       </Row>
                     </Container>
-                    : paymentStatus === 'error'
-                      ?
-                        <PaymentError id={id} /> : null}
+                    :
+                    /**
+                     * ERROR payment
+                     * ------------------------------------------------------------------------ */
+                    paymentStatus === 'error' ? <PaymentError id={id} /> : null}
             </PaymentConfirmedWrapper>
           </PaymentLayout>
         );

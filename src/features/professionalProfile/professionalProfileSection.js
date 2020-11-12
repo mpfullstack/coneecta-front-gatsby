@@ -97,7 +97,7 @@ const ProfessionalProfileSection = ({
           <Skeleton height={45} count={3} />}
       </>
     );
-  } else if (profile.section === 'datePicker') {
+  } else if (profile.section === 'datePicker' && booking.serviceId) {
     const service = getServiceById(profile.services, booking.serviceId);
     const modality = getServiceByModalityType(service, booking.modalityType);
     sectionContent = (
@@ -132,7 +132,11 @@ const ProfessionalProfileSection = ({
     );
   }
 
-  return <SectionContentWrapper>{sectionContent}</SectionContentWrapper>;
+  if (sectionContent) {
+    return <SectionContentWrapper>{sectionContent}</SectionContentWrapper>;
+  } else {
+    return null;
+  }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProfessionalProfileSection);

@@ -30,7 +30,10 @@ export const PaymentError = ({ id }) => {
         <Row className='justify-content-center text-center'>
           <Col>
             <ExclamationCircle />
-            <p className='confirm-text'><strong>¡Algo no ha ido bien!<br />({id})</strong></p>
+            <p className='confirm-text'>
+              <strong>¡Algo no ha ido bien!</strong>
+              {id ? <span><br />({id})</span> : null}
+            </p>
           </Col>
         </Row>
         <Row className='justify-content-center text-center'>

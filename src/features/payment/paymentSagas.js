@@ -1,5 +1,7 @@
 import { all, takeLatest, put, call, fork } from 'redux-saga/effects';
 import { navigate } from 'gatsby';
+import { changeSection } from '../professionalProfile/professionalProfileSlice';
+import { clearBooking } from '../booking/bookingSlice';
 import { checkout, reserve, success, failed, updatePaymentCheckoutDetails } from './paymentSlice';
 import { showApiError } from '../global/globalSlice';
 import api from '../../api';
@@ -20,13 +22,20 @@ function* onCheckout() {
 
 function* onReserve() {
   yield takeLatest(reserve, function* ({ payload }) {
-    const result = yield call(api.reserve, payload);
+    const { id, ...bookingData } = payload;
+    const result = yield call(api.reserve, bookingData);
     if (result.error) {
       yield put(showApiError(result.error));
       yield put(failed());
+      // Redirect to payment_ko as we are coming from a payment checkout transaction
+      if (Number(id)) {
+        yield navigate(`/profile/payment_ko`);
+      }
     } else {
       yield put(success());
-      yield navigate('/profile/payment_ok/someid');
+      yield put(clearBooking());
+      yield put(changeSection('serviceList'));
+      yield navigate('/profile/payment_ok');
     }
   });
 }
