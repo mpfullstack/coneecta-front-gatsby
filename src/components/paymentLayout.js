@@ -38,14 +38,14 @@ export const PaymentLayout = ({
         loadProfessionalProfile({id: slug});
       }
     }
-  }, [loadProfessionalProfile, location, professionalProfile, slug]);
+  }, [loadProfessionalProfile, location, professionalProfile.id, slug]);
 
   useEffect(() => {
     if (!profile.details) {
       loadProfile();
     }
     getTimeLimits();
-  }, [loadProfile, profile, getTimeLimits]);
+  }, [loadProfile, profile.details, getTimeLimits]);
 
   const profileDetails = professionalProfile.details || {};
 
