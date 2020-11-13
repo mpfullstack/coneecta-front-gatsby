@@ -7,13 +7,14 @@ import { Row, Col } from 'react-bootstrap';
 import SEO from "../../components/seo";
 import { useTranslation } from 'react-i18next';
 import { loadSessionDetail, performSessionAction } from './profileSlice';
+import { selectService } from '../booking/bookingSlice';
 import Skeleton from '../../components/skeleton';
 import BookingItem from './bookingItem';
 import PrimaryButton from '../../components/buttons/primaryButton';
 import BookingDetailAction from './bookingDetailAction';
 import useContentLoaded from '../../components/hooks/useContentLoaded';
 
-const mapDispatchToProps = { loadSessionDetail, performSessionAction };
+const mapDispatchToProps = { loadSessionDetail, performSessionAction, selectService };
 const mapStateToProps = ({ profile }) => {
   return {
     sessionDetail: profile.sessionDetail,
@@ -28,7 +29,7 @@ const BookingActionsWrapper = styled.div`
   }
 `;
 
-const BookingActions = ({ actions, id, performAction }) => {
+const BookingActions = ({ actions, id, performAction, selectService, serviceId, modalityType }) => {
   const { t } = useTranslation();
 
   return (
@@ -36,8 +37,9 @@ const BookingActions = ({ actions, id, performAction }) => {
       {actions ?
         actions.map(action => {
           return (
-            <PrimaryButton onClick={() => {
+            <PrimaryButton key={`action_${action}_${id}`} onClick={() => {
               if (action === 'suggest_modification') {
+                selectService({ serviceId, modalityType });
                 navigate(`/profile/bookings/${id}/modify`);
               } else if (action === 'claim_session') {
                 navigate(`/profile/bookings/${id}/claim`);
@@ -64,7 +66,7 @@ const BookingDetailWrapper = styled.div`
   }
 `;
 
-const BookingDetail = ({ id, action, sessionDetail, loading, loadSessionDetail, performSessionAction }) => {
+const BookingDetail = ({ id, action, sessionDetail, loading, loadSessionDetail, performSessionAction, selectService }) => {
   useEffect(() => {
     loadSessionDetail(id);
   }, [loadSessionDetail, id]);
@@ -100,7 +102,11 @@ const BookingDetail = ({ id, action, sessionDetail, loading, loadSessionDetail, 
                   :
                   <Skeleton height={100} />}
               </div>
-              <BookingActions id={id} actions={loaded ? actions : null} performAction={payload => performSessionAction(payload)} />
+              <BookingActions id={id} actions={loaded ? actions : null}
+                serviceId={468/* TODO: Set real serviceId */}
+                modalityType={loaded ? session.modality : ''}
+                selectService={selectService}
+                performAction={payload => performSessionAction(payload)} />
             </Col>
           </Row>
         }
