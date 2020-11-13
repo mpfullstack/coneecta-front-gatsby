@@ -7,14 +7,14 @@ import { Row, Col } from 'react-bootstrap';
 import SEO from "../../components/seo";
 import { useTranslation } from 'react-i18next';
 import { loadSessionDetail, performSessionAction } from './profileSlice';
-import { selectService } from '../booking/bookingSlice';
+import { selectService, setBookingId } from '../booking/bookingSlice';
 import Skeleton from '../../components/skeleton';
 import BookingItem from './bookingItem';
 import PrimaryButton from '../../components/buttons/primaryButton';
 import BookingDetailAction from './bookingDetailAction';
 import useContentLoaded from '../../components/hooks/useContentLoaded';
 
-const mapDispatchToProps = { loadSessionDetail, performSessionAction, selectService };
+const mapDispatchToProps = { loadSessionDetail, performSessionAction, selectService, setBookingId };
 const mapStateToProps = ({ profile }) => {
   return {
     sessionDetail: profile.sessionDetail,
@@ -29,7 +29,7 @@ const BookingActionsWrapper = styled.div`
   }
 `;
 
-const BookingActions = ({ actions, id, performAction, selectService, serviceId, modalityType }) => {
+const BookingActions = ({ actions, id, performAction, selectService, setBookingId, serviceId, modalityType }) => {
   const { t } = useTranslation();
 
   return (
@@ -39,6 +39,7 @@ const BookingActions = ({ actions, id, performAction, selectService, serviceId, 
           return (
             <PrimaryButton key={`action_${action}_${id}`} onClick={() => {
               if (action === 'suggest_modification') {
+                setBookingId(id)
                 selectService({ serviceId, modalityType });
                 navigate(`/profile/bookings/${id}/modify`);
               } else if (action === 'claim_session') {
@@ -66,7 +67,7 @@ const BookingDetailWrapper = styled.div`
   }
 `;
 
-const BookingDetail = ({ id, action, sessionDetail, loading, loadSessionDetail, performSessionAction, selectService }) => {
+const BookingDetail = ({ id, action, sessionDetail, loading, loadSessionDetail, performSessionAction, selectService, setBookingId }) => {
   useEffect(() => {
     loadSessionDetail(id);
   }, [loadSessionDetail, id]);
@@ -106,6 +107,7 @@ const BookingDetail = ({ id, action, sessionDetail, loading, loadSessionDetail, 
                 serviceId={468/* TODO: Set real serviceId */}
                 modalityType={loaded ? session.modality : ''}
                 selectService={selectService}
+                setBookingId={setBookingId}
                 performAction={payload => performSessionAction(payload)} />
             </Col>
           </Row>
