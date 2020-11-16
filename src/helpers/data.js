@@ -1,4 +1,4 @@
-import { differenceInDays, format, addMinutes } from 'date-fns'
+import { differenceInDays, format, addMinutes, isBefore, add } from 'date-fns'
 import { utcToZonedTime } from 'date-fns-tz'
 
 export function getServiceById(services, id) {
@@ -141,4 +141,17 @@ export function getCountryNameByCode(countries, code) {
   } else {
     return '';
   }
+}
+
+export function generateAvailableDates(bookingDate, days = 15) {
+  const availableDates = {};
+  if (bookingDate) {
+    let from = new Date(Math.min(new Date().getTime(), bookingDate.getTime()));
+    let to = add(new Date(Math.max(new Date().getTime(), bookingDate.getTime())), { days });
+    while (isBefore(from, to)) {
+      availableDates[format(from, 'yyyyMMdd')] = Array(48).join("1");
+      from = add(from, {days: 1});
+    }
+  }
+  return availableDates;
 }
