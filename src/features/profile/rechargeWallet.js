@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { Row, Col } from 'react-bootstrap';
 import ProfileLayout from '../../components/profileLayout';
 import SEO from "../../components/seo";
-import { useTranslation } from 'react-i18next';
+// import { useTranslation } from 'react-i18next';
 // import Skeleton from '../../components/skeleton';
 // import Pagination from '../../components/pagination';
 // import useContentLoaded from '../../components/hooks/useContentLoaded';
@@ -18,11 +18,11 @@ const mapStateToProps = ({ profile }) => {
 const RechargeWalletWrapper = styled.div``;
 
 const RechargeWallet = ({ clearBooking }) => {
-  const { t } = useTranslation();
+  // const { t } = useTranslation();
 
-  // useEffect(() => {
-  //   clearBooking();
-  // }, [clearBooking]);
+  useEffect(() => {
+    clearBooking();
+  }, [clearBooking]);
 
   // const loaded = useContentLoaded(loading);
 

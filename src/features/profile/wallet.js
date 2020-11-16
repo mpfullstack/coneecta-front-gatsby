@@ -5,19 +5,19 @@ import { Row, Col } from 'react-bootstrap';
 import ProfileLayout from '../../components/profileLayout';
 import SEO from "../../components/seo";
 import { useTranslation } from 'react-i18next';
-// import Skeleton from '../../components/skeleton';
-// import Pagination from '../../components/pagination';
-// import useContentLoaded from '../../components/hooks/useContentLoaded';
-import { clearBooking } from '../booking/bookingSlice';
+import Skeleton from '../../components/skeleton';
+import Pagination from '../../components/pagination';
+import useContentLoaded from '../../components/hooks/useContentLoaded';
 import { Link } from 'gatsby';
 import PrimaryButton from '../../components/buttons/primaryButton';
-
 import WalletMovement from '../../components/walletMovement';
+import { loadWalletMovements } from './profileSlice';
 
-const mapDispatchToProps = { clearBooking };
+const mapDispatchToProps = { loadWalletMovements };
 const mapStateToProps = ({ profile }) => {
   return {
-    profile
+    movements: profile.walletMovements,
+    loading: profile.loadingWalletMovements
   };
 }
 
@@ -46,40 +46,17 @@ const WalletWrapper = styled.div`
   }
 `;
 
-const Wallet = ({ profile, clearBooking }) => {
+const Wallet = ({ movements, loading, loadWalletMovements }) => {
   const { t } = useTranslation();
 
-  // useEffect(() => {
-  //   clearBooking();
-  // }, [clearBooking]);
+  useEffect(() => {
+    loadWalletMovements();
+  }, [loadWalletMovements]);
 
-  // const loaded = useContentLoaded(loading);
+  const movementsPagination = movements ? movements.pagination : null;
+  const profileMovements = movements ? movements.items : null;
 
-  // TODO: Get from API
-  const movements = [
-    {
-      date: new Date(),
-      name: 'Sesion personalizada',
-      teacher: "Isabela Reinket",
-      modality: {
-        type: "online",
-        duration: 30,
-        credits: 200,
-        credits_in_euros: 45
-      }
-    },
-    {
-      date: new Date(),
-      name: 'Sesion personalizada',
-      teacher: "Isabela Reinket",
-      modality: {
-        type: "online",
-        duration: 30,
-        credits: 200,
-        credits_in_euros: 45
-      }
-    }
-  ]
+  const loaded = useContentLoaded(loading);
 
   return (
     <ProfileLayout>
@@ -99,7 +76,24 @@ const Wallet = ({ profile, clearBooking }) => {
         <h2 className='sub-title'>Movimientos</h2>
         <Row>
           <Col xs='12' md='10' className='movements'>
-            {movements.map(movement => <WalletMovement movement={movement} />)}
+            {loaded ?
+              profileMovements.length ?
+              profileMovements.map(movement => <WalletMovement movement={movement} />)
+                :
+                <p className='no-bookings'>{t('youHaveNoMovements')}</p>
+              :
+              Array.from({length: 2}).map((u, i) => <WalletMovement key={`movement-${i}`} />)
+            }
+          </Col>
+        </Row>
+        <Row className={`justify-content-md-center`} style={{marginTop: '30px'}}>
+          <Col xs='12' md='10'>
+            {movementsPagination && loaded && movementsPagination.total_pages > 0 ?
+              <Pagination
+                pages={movementsPagination.total_pages}
+                currentPage={movementsPagination.current_page}
+                onPaginationClick={page => loadWalletMovements({ page })} /> :
+                loading ? <Skeleton height={25} /> : null}
           </Col>
         </Row>
       </WalletWrapper>

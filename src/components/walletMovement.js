@@ -4,7 +4,7 @@ import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
 import Skeleton from './skeleton';
 import theme from '../theme';
-import { useTranslation } from 'react-i18next';
+// import { useTranslation } from 'react-i18next';
 import { Modality } from './services/serviceModalities';
 
 const WalletMovementWrapper = styled.div`
@@ -46,7 +46,7 @@ const WalletMovementWrapper = styled.div`
 `;
 
 const WalletMovement = ({ movement = null }) => {
-  const { t } = useTranslation();
+  // const { t } = useTranslation();
 
   if (movement) {
     return (
