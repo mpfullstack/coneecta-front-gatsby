@@ -12,6 +12,8 @@ import { clearBooking } from '../booking/bookingSlice';
 import { Link } from 'gatsby';
 import PrimaryButton from '../../components/buttons/primaryButton';
 
+import WalletMovement from '../../components/walletMovement';
+
 const mapDispatchToProps = { clearBooking };
 const mapStateToProps = ({ profile }) => {
   return {
@@ -22,6 +24,12 @@ const mapStateToProps = ({ profile }) => {
 const WalletWrapper = styled.div`
   .title {
     margin-bottom: 20px;
+  }
+  .sub-title {
+    font-weight: 800;
+    margin: 30px 0 20px;
+    font-size: 18px;
+    text-align: center;
   }
   .current-amount-text {
     text-align: center;
@@ -47,6 +55,32 @@ const Wallet = ({ profile, clearBooking }) => {
 
   // const loaded = useContentLoaded(loading);
 
+  // TODO: Get from API
+  const movements = [
+    {
+      date: new Date(),
+      name: 'Sesion personalizada',
+      teacher: "Isabela Reinket",
+      modality: {
+        type: "online",
+        duration: 30,
+        credits: 200,
+        credits_in_euros: 45
+      }
+    },
+    {
+      date: new Date(),
+      name: 'Sesion personalizada',
+      teacher: "Isabela Reinket",
+      modality: {
+        type: "online",
+        duration: 30,
+        credits: 200,
+        credits_in_euros: 45
+      }
+    }
+  ]
+
   return (
     <ProfileLayout>
       <WalletWrapper>
@@ -60,6 +94,12 @@ const Wallet = ({ profile, clearBooking }) => {
         <Row>
           <Col xs='12' md='10' className='buy-credits'>
             <Link to='/profile/wallet/recharge'><PrimaryButton>Comprar créditos</PrimaryButton></Link>
+          </Col>
+        </Row>
+        <h2 className='sub-title'>Movimientos</h2>
+        <Row>
+          <Col xs='12' md='10' className='movements'>
+            {movements.map(movement => <WalletMovement movement={movement} />)}
           </Col>
         </Row>
       </WalletWrapper>
