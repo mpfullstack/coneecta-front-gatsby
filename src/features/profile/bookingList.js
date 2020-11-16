@@ -9,8 +9,9 @@ import Skeleton from '../../components/skeleton';
 import Pagination from '../../components/pagination';
 import BookingItem from './bookingItem';
 import useContentLoaded from '../../components/hooks/useContentLoaded';
+import { clearBooking } from '../booking/bookingSlice';
 
-const mapDispatchToProps = { loadSessions };
+const mapDispatchToProps = { loadSessions, clearBooking };
 const mapStateToProps = ({ profile }) => {
   return {
     sessions: profile.sessions,
@@ -27,12 +28,13 @@ const BookingListWrapper = styled.div`
   }
 `;
 
-const BookingList = ({ loadSessions, sessions, loading }) => {
+const BookingList = ({ clearBooking, loadSessions, sessions, loading }) => {
   const { t } = useTranslation();
 
   useEffect(() => {
+    clearBooking();
     loadSessions();
-  }, [loadSessions]);
+  }, [loadSessions, clearBooking]);
 
   const sessionsPagination = sessions ? sessions.pagination : null;
   const profileSessions = sessions ? sessions.items : null;

@@ -7,13 +7,15 @@ import { Row, Col } from 'react-bootstrap';
 import SEO from "../../components/seo";
 import { useTranslation } from 'react-i18next';
 import { loadSessionDetail, performSessionAction } from './profileSlice';
+import { initAvailableDates, setBookingId } from '../booking/bookingSlice';
 import Skeleton from '../../components/skeleton';
 import BookingItem from './bookingItem';
 import PrimaryButton from '../../components/buttons/primaryButton';
 import BookingDetailAction from './bookingDetailAction';
 import useContentLoaded from '../../components/hooks/useContentLoaded';
+import { generateAvailableDates } from '../../helpers/data';
 
-const mapDispatchToProps = { loadSessionDetail, performSessionAction };
+const mapDispatchToProps = { loadSessionDetail, performSessionAction, setBookingId, initAvailableDates };
 const mapStateToProps = ({ profile }) => {
   return {
     sessionDetail: profile.sessionDetail,
@@ -28,7 +30,7 @@ const BookingActionsWrapper = styled.div`
   }
 `;
 
-const BookingActions = ({ actions, id, performAction }) => {
+const BookingActions = ({ actions, id, performAction, initAvailableDates, setBookingId, date }) => {
   const { t } = useTranslation();
 
   return (
@@ -36,8 +38,10 @@ const BookingActions = ({ actions, id, performAction }) => {
       {actions ?
         actions.map(action => {
           return (
-            <PrimaryButton onClick={() => {
+            <PrimaryButton key={`action_${action}_${id}`} onClick={() => {
               if (action === 'suggest_modification') {
+                setBookingId(id);
+                initAvailableDates(generateAvailableDates(date));
                 navigate(`/profile/bookings/${id}/modify`);
               } else if (action === 'claim_session') {
                 navigate(`/profile/bookings/${id}/claim`);
@@ -64,7 +68,7 @@ const BookingDetailWrapper = styled.div`
   }
 `;
 
-const BookingDetail = ({ id, action, sessionDetail, loading, loadSessionDetail, performSessionAction }) => {
+const BookingDetail = ({ id, action, sessionDetail, loading, loadSessionDetail, performSessionAction, initAvailableDates, setBookingId }) => {
   useEffect(() => {
     loadSessionDetail(id);
   }, [loadSessionDetail, id]);
@@ -100,7 +104,11 @@ const BookingDetail = ({ id, action, sessionDetail, loading, loadSessionDetail, 
                   :
                   <Skeleton height={100} />}
               </div>
-              <BookingActions id={id} actions={loaded ? actions : null} performAction={payload => performSessionAction(payload)} />
+              <BookingActions id={id} actions={loaded ? actions : null}
+                date={loaded ? new Date(session.date) : null}
+                initAvailableDates={initAvailableDates}
+                setBookingId={setBookingId}
+                performAction={payload => performSessionAction(payload)} />
             </Col>
           </Row>
         }

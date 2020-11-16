@@ -27,14 +27,16 @@ function* onSelectTimeZone() {
   // We have selected timezone on payload
   yield takeLatest(selectTimeZone, function* ({ payload }) {
     const state = yield select();
-    const result = yield call(api.getAvailableDates, {
-      timezone: payload,
-      serviceId: state.booking.serviceId
-    });
-    if (result.error) {
-      yield put(showApiError(result.error));
-    } else {
-      yield put(initAvailableDates(result));
+    if (state.booking.serviceId) {
+      const result = yield call(api.getAvailableDates, {
+        timezone: payload,
+        serviceId: state.booking.serviceId
+      });
+      if (result.error) {
+        yield put(showApiError(result.error));
+      } else {
+        yield put(initAvailableDates(result));
+      }
     }
   });
 }

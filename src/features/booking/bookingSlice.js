@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit'
 const bookingSlice = createSlice({
   name: 'booking',
   initialState: {
+    'id': null, // Holds a session id (a booking already done)
 		'serviceId': null, // Selected service
     'modalityType': '', // Modality of the service
     'timezones': [], // Time zones available to choose
@@ -17,6 +18,9 @@ const bookingSlice = createSlice({
     'showCancelSessionAlert': false
 	},
   reducers: {
+    setBookingId: (state, action) => {
+      state.id = action.payload;
+    },
     selectService: (state, action) => {
       state.serviceId = action.payload.serviceId;
       state.modalityType = action.payload.modalityType;
@@ -35,7 +39,9 @@ const bookingSlice = createSlice({
       state.isTimeAvailable = action.payload.available;
     },
     fetchAvailableTimeZones: state => {
-      state.fetchingAvailableDates = true;
+      if (state.serviceId) {
+        state.fetchingAvailableDates = true;
+      }
       state.fetchingTimeZones = true;
     },
     initAvailableTimeZones: (state, action) => {
@@ -44,7 +50,9 @@ const bookingSlice = createSlice({
     },
     selectTimeZone: (state, action) => {
       state.timezone = action.payload;
-      state.fetchingAvailableDates = true;
+      if (state.serviceId) {
+        state.fetchingAvailableDates = true;
+      }
     },
     getTimeLimits: () => {},
     setTimeLimits: (state, action) => {
@@ -57,6 +65,7 @@ const bookingSlice = createSlice({
       state.showCancelSessionAlert = false;
     },
     clearBooking: state => {
+      state.id = null;
       state.serviceId = null;
       state.modalityType = '';
       state.date = '';
@@ -68,6 +77,7 @@ const bookingSlice = createSlice({
 });
 
 export const {
+  setBookingId,
   selectService,
   selectDate,
   selectTime,

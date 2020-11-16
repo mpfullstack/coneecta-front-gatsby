@@ -117,12 +117,14 @@ const DateTimePicker = ({
 
   useEffect(() => {
     const jstz = require('jstimezonedetect');
-    const timezone = jstz.determine().name();
-    if (timezone) {
-      selectTimeZone(timezone);
+    const currentTimeZone = jstz.determine().name();
+    if (!booking.timezone && currentTimeZone) {
+      selectTimeZone(currentTimeZone);
+    } else if (booking.timezone) {
+      selectTimeZone(booking.timezone);
     }
     fetchAvailableTimeZones();
-  }, [fetchAvailableTimeZones, selectTimeZone]);
+  }, [fetchAvailableTimeZones, selectTimeZone, booking.timezone]);
 
   return (
     <DateTimePickerWrapper className='date-time-picker-container'>
