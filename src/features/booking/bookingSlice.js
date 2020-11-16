@@ -39,7 +39,9 @@ const bookingSlice = createSlice({
       state.isTimeAvailable = action.payload.available;
     },
     fetchAvailableTimeZones: state => {
-      state.fetchingAvailableDates = true;
+      if (state.serviceId) {
+        state.fetchingAvailableDates = true;
+      }
       state.fetchingTimeZones = true;
     },
     initAvailableTimeZones: (state, action) => {
@@ -48,7 +50,9 @@ const bookingSlice = createSlice({
     },
     selectTimeZone: (state, action) => {
       state.timezone = action.payload;
-      state.fetchingAvailableDates = true;
+      if (state.serviceId) {
+        state.fetchingAvailableDates = true;
+      }
     },
     getTimeLimits: () => {},
     setTimeLimits: (state, action) => {
