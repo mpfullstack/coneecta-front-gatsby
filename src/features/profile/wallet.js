@@ -21,6 +21,24 @@ const mapStateToProps = ({ profile }) => {
   };
 }
 
+const CurrentWalletAmountWrapper = styled.p`
+  text-align: center;
+  font-size: 16px;
+  .amount {
+    font-weight: 800;
+    font-size: 24px;
+    margin-left: 5px;
+  }
+`;
+
+export const CurrentWalletAmount = ({ amount }) => {
+  return (
+    <CurrentWalletAmountWrapper>
+      Saldo disponible en tu cuenta <span className='amount'>{`${amount}€`}</span>
+    </CurrentWalletAmountWrapper>
+  );
+}
+
 const WalletWrapper = styled.div`
   .title {
     margin-bottom: 20px;
@@ -30,15 +48,6 @@ const WalletWrapper = styled.div`
     margin: 30px 0 20px;
     font-size: 18px;
     text-align: center;
-  }
-  .current-amount-text {
-    text-align: center;
-    font-size: 16px;
-    .amount {
-      font-weight: 800;
-      font-size: 24px;
-      margin-left: 5px;
-    }
   }
   .buy-credits {
     display: flex;
@@ -65,7 +74,7 @@ const Wallet = ({ movements, loading, loadWalletMovements }) => {
         <h1 className='title'>Monedero</h1>
         <Row>
           <Col xs='12' md='10'>
-            <p className='current-amount-text'>Saldo disponible en tu cuenta <span className='amount'>350€</span></p>
+            <CurrentWalletAmount amount={350} />
           </Col>
         </Row>
         <Row>
