@@ -71,12 +71,15 @@ api.getProfessionalProfile = jest.fn().mockImplementation(() => Promise.resolve(
   ]
 }));
 
+// Mock fetch
+global.fetch = jest.fn(() => Promise.resolve());
+
 describe('My Connected React-Redux Component', () => {
   let component;
 
   beforeEach(() => {
     // Mock current location query string to make ProfessionalProfile work properly
-    const location = { search: '?id=1' };
+    const location = { pathname: '/u/javimarrero' };
     component = <Provider store={store}>
       <ProfessionalProfile location={location} />
     </Provider>
