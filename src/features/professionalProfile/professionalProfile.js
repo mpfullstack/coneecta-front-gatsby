@@ -8,13 +8,6 @@ import ProfileHeader from '../../components/professionalProfile/profileHeader';
 import ProfessionalProfileSection from './professionalProfileSection';
 import { getTimeLimits } from '../booking/bookingSlice';
 
-// https://github.com/buildo/react-placeholder
-// https://github.com/dvtng/react-loading-skeleton
-
-
-// Stars rating component
-// https://www.npmjs.com/package/react-star-rating-component
-
 const mapDispatchToProps = { loadProfessionalProfile, collapseProfileHeader, loadProfile, getTimeLimits };
 const mapStateToProps = state => {
   return {
