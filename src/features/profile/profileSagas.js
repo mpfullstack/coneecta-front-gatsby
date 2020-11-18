@@ -4,7 +4,8 @@ import {
   loadProfile, initProfile, loadSessions,
   initSessions, sessionsLoaded, loadSessionDetail,
   initSessionDetail, performSessionAction, saveProfile,
-  profileUpdated, saveProfileError
+  profileUpdated, saveProfileError, loadWalletMovements,
+  initWalletMovements, walletMovementsLoaded
 } from './profileSlice';
 import { logout } from '../loginSignUp/loginSignUpSlice';
 import { showApiError, updateCountries, showAlert } from '../global/globalSlice';
@@ -96,12 +97,25 @@ function* onSaveProfile() {
   });
 }
 
+function* onLoadWalletMovements() {
+  yield takeLatest(loadWalletMovements, function* ({ payload = {} }) {
+    const result = yield call(api.getWalletMovements, payload);
+    if (result.error) {
+      yield put(showApiError(result.error));
+    } else {
+      yield put(initWalletMovements(result));
+      yield put(walletMovementsLoaded());
+    }
+  });
+}
+
 export default function* () {
   yield all([
     fork(onLoadProfile),
     fork(onLoadSessions),
     fork(onLoadSessionDetail),
     fork(onPerformSessionAction),
-    fork(onSaveProfile)
+    fork(onSaveProfile),
+    fork(onLoadWalletMovements)
   ])
 };

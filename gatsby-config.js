@@ -40,24 +40,12 @@ module.exports = {
       options: { prefixes: [`/profile/*`, `/u/*`] },
     },
     {
-      resolve: `gatsby-plugin-prefetch-google-fonts`,
+      resolve: `gatsby-plugin-google-fonts`,
       options: {
         fonts: [
-          {
-            family: `Roboto Condensed`,
-            subsets: [`latin`],
-            variants: [`300`, `400`, `700`]
-          },
-          {
-            family: `Roboto`,
-            subsets: [`latin`],
-            variants: [`300`, `400`, `400italic`, `700`]
-          },
-          {
-            family: `Lato`,
-            subsets: [`latin`],
-            variants: [`300`, `400`, `700`]
-          }
+          `Roboto Condensed\:300,400,700`,
+          `Roboto\:300,400,400i,700`,
+          `Lato\:300,400,700`
         ]
       }
     }

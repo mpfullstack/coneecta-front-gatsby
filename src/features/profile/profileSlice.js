@@ -9,6 +9,8 @@ const profileSlice = createSlice({
     'sessionDetail': null,
     'loadingSessions': false,
     'performingSessionAction': false,
+    'walletMovements': null,
+    'loadingWalletMovements': false,
     'formStatus': 'idle',
     'profileErrors': []
 	},
@@ -25,6 +27,9 @@ const profileSlice = createSlice({
       state.details = null;
       state.sessions = null;
       state.sessionDetail = null;
+      state.loadingSessions = false;
+      state.walletMovements = null;
+      state.loadingWalletMovements = false;
       state.formStatus = 'idle';
     },
     loadSessions: state => {
@@ -55,6 +60,15 @@ const profileSlice = createSlice({
     saveProfileError: (state, action) => {
       state.formStatus = 'error';
       state.profileErrors = action.payload;
+    },
+    loadWalletMovements: state => {
+      state.loadingWalletMovements = true;
+    },
+    initWalletMovements: (state, action) => {
+      state.walletMovements = action.payload;
+    },
+    walletMovementsLoaded: state => {
+      state.loadingWalletMovements = false;
     }
   }
 });
@@ -64,7 +78,8 @@ export const {
   loadSessions, initSessions, sessionsLoaded,
   loadSessionDetail, initSessionDetail,
   performSessionAction, saveProfile, profileUpdated,
-  saveProfileError
+  saveProfileError, loadWalletMovements, initWalletMovements,
+  walletMovementsLoaded
 } = profileSlice.actions;
 
 export default profileSlice.reducer;
