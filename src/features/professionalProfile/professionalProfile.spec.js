@@ -93,7 +93,7 @@ describe('My Connected React-Redux Component', () => {
   });
 
   test('Show professional profile service details on click', async () => {
-    const { getByText, findByText } = render(component);
+    const { getByText } = render(component);
 
     expect(getByText("Lectura del tarot")).toBeInTheDocument();
 
