@@ -1,7 +1,4 @@
-import React from 'react'
+import React from 'react';
+import { Redirect } from "@reach/router";
 
-const IndexPage = () => {
-  return <p>404 Not found</p>;
-}
-
-export default IndexPage
+export default () => <Redirect to='/profile' noThrow />;

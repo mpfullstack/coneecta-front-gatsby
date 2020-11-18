@@ -1,6 +1,6 @@
 import React from 'react';
 import Layout from '../components/layout';
-import { Router } from "@reach/router";
+import { Redirect, Router } from "@reach/router";
 import { Provider } from 'react-redux';
 import store, { persistor } from '../redux/store';
 import { PersistGate } from 'redux-persist/integration/react';
@@ -16,6 +16,7 @@ export default () => {
             <ProfessionalProfile path='/:slug' />
             <ProfessionalReviews path='/:slug/reviews' />
             <ProfessionalProfile path='/:slug/:serviceSlug' />
+            <Redirect from='/' to='/profile' noThrow />
           </Router>
         </Layout>
       </PersistGate>
