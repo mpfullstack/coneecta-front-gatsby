@@ -63,8 +63,17 @@ function* onLogout() {
   yield takeLatest(logout, function* ({ payload }) {
     const result = yield call(api.logout);
     if (result.error) {
-      // TODO: Handle error.
-      // NOTE: We do nothing so far.
+      // User is already logged out
+      if (result.status === 403) {
+        yield put(resetProfile());
+        yield logoutUser();
+        if (payload.redirect) {
+          yield navigate(`/login`);
+        }
+      } else {
+        // TODO: Handle error.
+        // NOTE: We do nothing so far.
+      }
     } else {
       // Handle logout OK
       yield put(resetProfile());

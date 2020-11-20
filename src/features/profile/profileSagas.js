@@ -37,7 +37,11 @@ function* onLoadSessions() {
   yield takeLatest(loadSessions, function* ({ payload = {} }) {
     const result = yield call(api.getSessions, payload);
     if (result.error) {
-      yield put(showApiError(result.error));
+      if (result.status === 403) {
+        yield put(loadProfile());
+      } else {
+        yield put(showApiError(result.error));
+      }
     } else {
       yield put(initSessions(result));
       yield put(sessionsLoaded());
@@ -49,7 +53,11 @@ function* onLoadSessionDetail() {
   yield takeLatest(loadSessionDetail, function* ({ payload }) {
     const result = yield call(api.getSessionDetail, payload);
     if (result.error) {
-      yield put(showApiError(result.error));
+      if (result.status === 403) {
+        yield put(loadProfile());
+      } else {
+        yield put(showApiError(result.error));
+      }
     } else {
       yield put(initSessionDetail(result));
       yield put(sessionsLoaded());
@@ -61,7 +69,11 @@ function* onPerformSessionAction() {
   yield takeLatest(performSessionAction, function* ({ payload }) {
     const result = yield call(api.performSessionAction, payload);
     if (result.error) {
-      yield put(showApiError(result.error));
+      if (result.status === 403) {
+        yield put(loadProfile());
+      } else {
+        yield put(showApiError(result.error));
+      }
     } else {
       // Handle response based on the action performed and result
       const { action } = payload;
@@ -87,7 +99,11 @@ function* onSaveProfile() {
       if (result.error.code === 'invalid_user_data') {
         yield put(saveProfileError(result.error.details));
       } else {
-        yield put(showApiError(result.error));
+        if (result.status === 403) {
+          yield put(loadProfile());
+        } else {
+          yield put(showApiError(result.error));
+        }
       }
     } else {
       // Handle response
@@ -101,7 +117,11 @@ function* onLoadWalletMovements() {
   yield takeLatest(loadWalletMovements, function* ({ payload = {} }) {
     const result = yield call(api.getWalletMovements, payload);
     if (result.error) {
-      yield put(showApiError(result.error));
+      if (result.status === 403) {
+        yield put(loadProfile());
+      } else {
+        yield put(showApiError(result.error));
+      }
     } else {
       yield put(initWalletMovements(result));
       yield put(walletMovementsLoaded());
