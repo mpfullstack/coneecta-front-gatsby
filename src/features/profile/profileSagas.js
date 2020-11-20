@@ -15,10 +15,11 @@ import i18n from '../../locales/i18n';
 
 function* onLoadProfile() {
   yield takeLatest(loadProfile, function* ({ payload }) {
+    const { redirect = true } = payload;
     const result = yield call(api.getProfile);
     if (result.error) {
       if (result.status === 403) {
-        yield put(logout({ redirect: true }));
+        yield put(logout({ redirect }));
       } else {
         yield put(showApiError(result.error));
       }
