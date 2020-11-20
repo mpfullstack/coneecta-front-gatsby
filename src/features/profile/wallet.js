@@ -16,6 +16,7 @@ import { loadWalletMovements } from './profileSlice';
 const mapDispatchToProps = { loadWalletMovements };
 const mapStateToProps = ({ profile }) => {
   return {
+    credits: profile.details ? profile.details.credits : '',
     movements: profile.walletMovements,
     loading: profile.loadingWalletMovements
   };
@@ -34,7 +35,7 @@ const CurrentWalletAmountWrapper = styled.p`
 export const CurrentWalletAmount = ({ amount }) => {
   return (
     <CurrentWalletAmountWrapper>
-      Saldo disponible en tu cuenta <span className='amount'>{`${amount}€`}</span>
+      Saldo disponible en tu cuenta <span className='amount'>{`${amount}cr.`}</span>
     </CurrentWalletAmountWrapper>
   );
 }
@@ -55,7 +56,7 @@ const WalletWrapper = styled.div`
   }
 `;
 
-const Wallet = ({ movements, loading, loadWalletMovements }) => {
+const Wallet = ({ movements, loading, loadWalletMovements, credits }) => {
   const { t } = useTranslation();
 
   useEffect(() => {
@@ -74,7 +75,7 @@ const Wallet = ({ movements, loading, loadWalletMovements }) => {
         <h1 className='title'>Monedero</h1>
         <Row>
           <Col xs='12' md='10'>
-            <CurrentWalletAmount amount={350} />
+            <CurrentWalletAmount amount={`${credits}`} />
           </Col>
         </Row>
         <Row>
