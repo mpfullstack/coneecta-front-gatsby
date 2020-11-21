@@ -22,7 +22,7 @@ export const ProfessionalProfile = ({
   slug, serviceSlug, loadProfile, getTimeLimits
 }) => {
   useEffect(() => {
-    loadProfile();
+    loadProfile({ redirect: false });
     getTimeLimits();
     if (slug !== '') {
       loadProfessionalProfile({id: slug, sid: serviceSlug});

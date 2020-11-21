@@ -47,8 +47,8 @@ const BookingList = ({ clearBooking, loadSessions, sessions, loading }) => {
       <h1 className='title'>Reservas</h1>
       <Row className={`justify-content-md-center`} style={{marginTop: '30px'}}>
         <Col xs='12' md='10'>
-          {loaded ?
-            profileSessions.length ?
+          {loaded && profileSessions ?
+             profileSessions.length ?
               profileSessions.map(session => <BookingItem key={`session-${session.id}`} session={session} />)
               :
               <p className='no-bookings'>{t('youHaveNoBookings')}</p>
