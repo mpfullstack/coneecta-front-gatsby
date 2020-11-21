@@ -14,7 +14,7 @@ import { login } from '../../helpers/authentication';
 import i18n from '../../locales/i18n';
 
 function* onLoadProfile() {
-  yield takeLatest(loadProfile, function* ({ payload }) {
+  yield takeLatest(loadProfile, function* ({ payload = {} }) {
     const { redirect = true } = payload;
     const result = yield call(api.getProfile);
     if (result.error) {
