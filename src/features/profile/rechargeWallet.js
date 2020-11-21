@@ -28,7 +28,7 @@ const RechargeWalletWrapper = styled.div`
   }
 `;
 
-const RechargeWallet = ({ clearBooking, credits, paymentStatus, checkout }) => {
+const RechargeWallet = ({ clearBooking, credits, paymentStatus, updateCredits, checkout }) => {
   // const { t } = useTranslation();
 
   useEffect(() => {
@@ -44,6 +44,7 @@ const RechargeWallet = ({ clearBooking, credits, paymentStatus, checkout }) => {
         <h1 className='title'>Recargar monedero</h1>
         <Row>
           <Col xs='12' md='10'>
+            {/* TODO: Set correct ammount */}
             <CurrentWalletAmount amount={350} />
           </Col>
         </Row>

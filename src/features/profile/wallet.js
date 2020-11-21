@@ -35,7 +35,7 @@ const CurrentWalletAmountWrapper = styled.p`
 export const CurrentWalletAmount = ({ amount }) => {
   return (
     <CurrentWalletAmountWrapper>
-      Saldo disponible en tu cuenta <span className='amount'>{`${amount}cr.`}</span>
+      Saldo disponible <span className='amount'>{`${amount} créditos`}</span>
     </CurrentWalletAmountWrapper>
   );
 }
@@ -86,9 +86,9 @@ const Wallet = ({ movements, loading, loadWalletMovements, credits }) => {
         <h2 className='sub-title'>Movimientos</h2>
         <Row>
           <Col xs='12' md='10' className='movements'>
-            {loaded ?
+            {loaded && profileMovements ?
               profileMovements.length ?
-              profileMovements.map(movement => <WalletMovement movement={movement} />)
+                profileMovements.map(movement => <WalletMovement movement={movement} />)
                 :
                 <p className='no-bookings'>{t('youHaveNoMovements')}</p>
               :

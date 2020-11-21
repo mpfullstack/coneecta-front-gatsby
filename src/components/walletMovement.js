@@ -5,7 +5,6 @@ import { es } from 'date-fns/locale';
 import Skeleton from './skeleton';
 import theme from '../theme';
 // import { useTranslation } from 'react-i18next';
-import { Modality } from './services/serviceModalities';
 
 const WalletMovementWrapper = styled.div`
   margin-bottom: 20px;
@@ -28,20 +27,13 @@ const WalletMovementWrapper = styled.div`
   .date {
     font-style: italic;
   }
-  .name {
+  .movement-title {
     font-weight: 800;
+    margin-bottom: 0px;
+    text-align: left;
   }
-  .modality {
-    margin: 5px 0 0 0;
-    cursor: pointer;
-    .modality-item {
-      white-space: nowrap;
-      text-align: right;
-      padding: 5px 0;
-      &:first-child {
-        text-align: left;
-      }
-    }
+  .credits {
+    font-weight: 800;
   }
 `;
 
@@ -51,12 +43,12 @@ const WalletMovement = ({ movement = null }) => {
   if (movement) {
     return (
       <WalletMovementWrapper>
+        <div className='text movement-title'>{movement.title}</div>
+        <div className='text description'>{movement.description}</div>
         <div className='text date'>
           {format(new Date(movement.date), "d 'de' LLLL 'de' yyyy · H:mm 'horas'", { locale: es })}
         </div>
-        <div className='text name'>{movement.name}</div>
-        <div className='text teacher'>{movement.teacher}</div>
-        <Modality modality={movement.modality} onClick={() => null} />
+        <div className='credits'>{`${Math.abs(movement.credits)} créditos`}</div>
       </WalletMovementWrapper>
     );
   } else {
