@@ -7,8 +7,10 @@ import {
   selectTime,
   fetchAvailableTimeZones,
   getTimeLimits,
-  setTimeLimits
+  setTimeLimits,
+  clearBooking
 } from './bookingSlice';
+import { changeSection } from '../professionalProfile/professionalProfileSlice';
 import { getFirstAvailableTime, isTimeAvailable } from '../../helpers/data';
 import { showApiError } from '../global/globalSlice';
 import api from '../../api';
@@ -65,11 +67,18 @@ function* onRequestTimeLimits() {
   });
 }
 
+function* onClearBooking() {
+  yield takeLatest(clearBooking, function* ({ payload }) {
+    yield put(changeSection('serviceList'));
+  });
+}
+
 export default function* () {
   yield all([
     fork(onSelectTimeZone),
     fork(onFetchAvailableTimeZones),
     fork(onSelectDate),
-    fork(onRequestTimeLimits)
+    fork(onRequestTimeLimits),
+    fork(onClearBooking)
   ])
 };

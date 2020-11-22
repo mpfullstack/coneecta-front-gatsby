@@ -1,6 +1,5 @@
 import { all, takeLatest, put, call, fork } from 'redux-saga/effects';
 import { navigate } from 'gatsby';
-import { changeSection } from '../professionalProfile/professionalProfileSlice';
 import { clearBooking } from '../booking/bookingSlice';
 import { checkout, reserve, success, failed, updatePaymentCheckoutDetails } from './paymentSlice';
 import { showApiError } from '../global/globalSlice';
@@ -34,7 +33,6 @@ function* onReserve() {
     } else {
       yield put(success());
       yield put(clearBooking());
-      yield put(changeSection('serviceList'));
       yield navigate('/profile/payment_ok');
     }
   });
