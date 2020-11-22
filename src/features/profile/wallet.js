@@ -16,9 +16,28 @@ import { loadWalletMovements } from './profileSlice';
 const mapDispatchToProps = { loadWalletMovements };
 const mapStateToProps = ({ profile }) => {
   return {
+    credits: profile.details ? profile.details.credits : '',
     movements: profile.walletMovements,
     loading: profile.loadingWalletMovements
   };
+}
+
+const CurrentWalletAmountWrapper = styled.p`
+  text-align: center;
+  font-size: 16px;
+  .amount {
+    font-weight: 800;
+    font-size: 24px;
+    margin-left: 5px;
+  }
+`;
+
+export const CurrentWalletAmount = ({ amount }) => {
+  return (
+    <CurrentWalletAmountWrapper>
+      Saldo disponible <span className='amount'>{`${amount} créditos`}</span>
+    </CurrentWalletAmountWrapper>
+  );
 }
 
 const WalletWrapper = styled.div`
@@ -31,22 +50,13 @@ const WalletWrapper = styled.div`
     font-size: 18px;
     text-align: center;
   }
-  .current-amount-text {
-    text-align: center;
-    font-size: 16px;
-    .amount {
-      font-weight: 800;
-      font-size: 24px;
-      margin-left: 5px;
-    }
-  }
   .buy-credits {
     display: flex;
     justify-content: center;
   }
 `;
 
-const Wallet = ({ movements, loading, loadWalletMovements }) => {
+const Wallet = ({ movements, loading, loadWalletMovements, credits }) => {
   const { t } = useTranslation();
 
   useEffect(() => {
@@ -65,7 +75,7 @@ const Wallet = ({ movements, loading, loadWalletMovements }) => {
         <h1 className='title'>Monedero</h1>
         <Row>
           <Col xs='12' md='10'>
-            <p className='current-amount-text'>Saldo disponible en tu cuenta <span className='amount'>350€</span></p>
+            <CurrentWalletAmount amount={`${credits}`} />
           </Col>
         </Row>
         <Row>
@@ -76,9 +86,9 @@ const Wallet = ({ movements, loading, loadWalletMovements }) => {
         <h2 className='sub-title'>Movimientos</h2>
         <Row>
           <Col xs='12' md='10' className='movements'>
-            {loaded ?
+            {loaded && profileMovements ?
               profileMovements.length ?
-              profileMovements.map(movement => <WalletMovement movement={movement} />)
+                profileMovements.map(movement => <WalletMovement movement={movement} />)
                 :
                 <p className='no-bookings'>{t('youHaveNoMovements')}</p>
               :

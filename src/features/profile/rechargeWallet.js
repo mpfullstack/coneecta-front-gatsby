@@ -8,16 +8,28 @@ import SEO from "../../components/seo";
 // import Skeleton from '../../components/skeleton';
 // import Pagination from '../../components/pagination';
 // import useContentLoaded from '../../components/hooks/useContentLoaded';
+import { updateCredits, checkout } from '../payment/paymentSlice';
 import { clearBooking } from '../booking/bookingSlice';
+import BuyCredits from '../payment/buyCredits';
+import PaymentButton from '../payment/paymentButton';
+import { CurrentWalletAmount } from './wallet';
 
-const mapDispatchToProps = { clearBooking };
-const mapStateToProps = ({ profile }) => {
-  return {};
+const mapDispatchToProps = { clearBooking, updateCredits, checkout };
+const mapStateToProps = ({ profile, payment }) => {
+  return {
+    paymentStatus: payment.status,
+    credits: payment.credits,
+    availableCredits: profile.details ? profile.details.credits : '',
+  };
 }
 
-const RechargeWalletWrapper = styled.div``;
+const RechargeWalletWrapper = styled.div`
+  .title {
+    margin-bottom: 20px;
+  }
+`;
 
-const RechargeWallet = ({ clearBooking }) => {
+const RechargeWallet = ({ clearBooking, credits, paymentStatus, updateCredits, checkout, availableCredits }) => {
   // const { t } = useTranslation();
 
   useEffect(() => {
@@ -31,9 +43,18 @@ const RechargeWallet = ({ clearBooking }) => {
       <RechargeWalletWrapper>
         <SEO title="Recargar monedero" />
         <h1 className='title'>Recargar monedero</h1>
+        <Row>
+          <Col xs='12' md='10'>
+            <CurrentWalletAmount amount={availableCredits} />
+          </Col>
+        </Row>
         <Row className={`justify-content-md-center`} style={{marginTop: '30px'}}>
           <Col xs='12' md='10'>
-
+            <BuyCredits credits={credits} onChange={e => updateCredits(e.target.value)} />
+            <PaymentButton status={paymentStatus} value={'Comprar'} onClick={() => {
+                updateCredits(credits);
+                checkout(credits);
+              }} />
           </Col>
         </Row>
       </RechargeWalletWrapper>
