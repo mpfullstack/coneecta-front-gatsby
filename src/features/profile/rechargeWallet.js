@@ -15,10 +15,11 @@ import PaymentButton from '../payment/paymentButton';
 import { CurrentWalletAmount } from './wallet';
 
 const mapDispatchToProps = { clearBooking, updateCredits, checkout };
-const mapStateToProps = ({ payment }) => {
+const mapStateToProps = ({ profile, payment }) => {
   return {
     paymentStatus: payment.status,
-    credits: payment.credits
+    credits: payment.credits,
+    availableCredits: profile.details ? profile.details.credits : '',
   };
 }
 
@@ -28,7 +29,7 @@ const RechargeWalletWrapper = styled.div`
   }
 `;
 
-const RechargeWallet = ({ clearBooking, credits, paymentStatus, updateCredits, checkout }) => {
+const RechargeWallet = ({ clearBooking, credits, paymentStatus, updateCredits, checkout, availableCredits }) => {
   // const { t } = useTranslation();
 
   useEffect(() => {
@@ -44,8 +45,7 @@ const RechargeWallet = ({ clearBooking, credits, paymentStatus, updateCredits, c
         <h1 className='title'>Recargar monedero</h1>
         <Row>
           <Col xs='12' md='10'>
-            {/* TODO: Set correct ammount */}
-            <CurrentWalletAmount amount={350} />
+            <CurrentWalletAmount amount={availableCredits} />
           </Col>
         </Row>
         <Row className={`justify-content-md-center`} style={{marginTop: '30px'}}>
