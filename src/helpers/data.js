@@ -130,6 +130,21 @@ export function isWithinCancellationLimits(date, time, timezone, cancelSession) 
   }
 }
 
+export function isPastTime(date, time, timezone) {
+  // Calculate if user is booking a past date time
+  const times = time.split(':');
+  date.setHours(times[0]);
+  date.setMinutes(times[1]);
+  const bookingDate = utcToZonedTime(date, timezone);
+  const now = utcToZonedTime(new Date(), timezone);
+  const hoursDiff = (bookingDate - now) / 1000 / 60 / 60;
+  if (hoursDiff <= 0) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
 export function getCountryByCode(countries, code) {
   return countries.find(country => country.code === code);
 }

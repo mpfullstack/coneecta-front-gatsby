@@ -5,18 +5,18 @@ import { Row, Col } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { format } from 'date-fns';
 import { performSessionAction } from './profileSlice';
-import { clearBooking, hideCancelSessionAlert } from '../booking/bookingSlice';
+import { clearBooking, hideSessionAlert } from '../booking/bookingSlice';
 import DateTimePicker from '../../components/dateTimePicker';
 import AlertPopUp from '../../components/alertPopUp';
 import FormControl from '../../components/form/formControl';
 import RatingReview from './ratingReview';
 import PrimaryButton from '../../components/buttons/primaryButton';
 
-const mapDispatchToProps = { performSessionAction, hideCancelSessionAlert, clearBooking };
+const mapDispatchToProps = { performSessionAction, hideSessionAlert, clearBooking };
 const mapStateToProps = ({ booking }) => {
   return {
     booking,
-    showCancelSessionAlert: booking ? booking.showCancelSessionAlert : false,
+    showSessionAlert: booking ? booking.showSessionAlert : false,
     cancelSessionHoursLimit: booking && booking.timelimits ?
       booking.timelimits.cancel_session / 60 / 60 : 24
   }
@@ -38,7 +38,7 @@ const BookingDetailActionWrapper = styled.div`
 
 const BookingDetailAction = ({
   id, action, performSessionAction, booking, clearBooking,
-  cancelSessionHoursLimit, hideCancelSessionAlert, showCancelSessionAlert
+  cancelSessionHoursLimit, hideSessionAlert, showSessionAlert
 }) => {
   const { t } = useTranslation();
   let ratingReviewValue;
@@ -138,12 +138,14 @@ const BookingDetailAction = ({
       </Row>
       <AlertPopUp
         className='cancel-session-alert'
-        show={showCancelSessionAlert}
-        body={t('cancelSessionAlert', { hours: cancelSessionHoursLimit })}
-        onCancel={hideCancelSessionAlert}
+        show={showSessionAlert}
+        body={booking.sessionAlertMessage}
+        onCancel={hideSessionAlert}
         onAccept={() => {
-          hideCancelSessionAlert();
-          performSessionAction(buildPayload('suggest_modification'))
+          hideSessionAlert();
+          if (booking.keepGoingAfterShowingAlert) {
+            performSessionAction(buildPayload('suggest_modification'))
+          }
         }} />
     </BookingDetailActionWrapper>
   );
