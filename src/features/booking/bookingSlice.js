@@ -15,7 +15,9 @@ const bookingSlice = createSlice({
     'fetchingTimeZones': true,
     'fetchingAvailableDates': true,
     'timelimits': {}, // Some time limits to take into account on booking actions
-    'showCancelSessionAlert': false
+    'showSessionAlert': false,
+    'sessionAlertMessage': '', // Alert message content
+    'keepGoingAfterShowingAlert': false // Indicates if user should continue navigation after showing alert
 	},
   reducers: {
     setBookingId: (state, action) => {
@@ -58,11 +60,15 @@ const bookingSlice = createSlice({
     setTimeLimits: (state, action) => {
       state.timelimits = action.payload;
     },
-    showCancelSessionAlert: state => {
-      state.showCancelSessionAlert = true;
+    showSessionAlert: (state, action) => {
+      state.showSessionAlert = true;
+      state.sessionAlertMessage = action.payload.message;
+      state.keepGoingAfterShowingAlert = action.payload.keepGoing;
     },
-    hideCancelSessionAlert: state => {
-      state.showCancelSessionAlert = false;
+    hideSessionAlert: state => {
+      state.showSessionAlert = false;
+      state.sessionAlertMessage = '';
+      state.keepGoingAfterShowingAlert = false;
     },
     clearBooking: state => {
       state.id = null;
@@ -87,8 +93,8 @@ export const {
   initAvailableTimeZones,
   getTimeLimits,
   setTimeLimits,
-  showCancelSessionAlert,
-  hideCancelSessionAlert,
+  showSessionAlert,
+  hideSessionAlert,
   clearBooking
 } = bookingSlice.actions
 

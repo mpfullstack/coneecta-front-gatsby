@@ -13,10 +13,11 @@ import {
   adaptTimeZonesToArray,
   getAvailableTimes,
   splitTimeZoneName,
-  isWithinCancellationLimits
+  isWithinCancellationLimits,
+  isPastTime
 } from '../helpers/data';
 import {
-  selectDate, selectTime, showCancelSessionAlert,
+  selectDate, selectTime, showSessionAlert,
   fetchAvailableTimeZones, selectTimeZone
 } from '../features/booking/bookingSlice';
 import DatePicker from './datePicker/datePicker';
@@ -31,11 +32,13 @@ const mapDispatchToProps = {
   selectTime,
   selectTimeZone,
   fetchAvailableTimeZones,
-  showCancelSessionAlert
+  showSessionAlert
 };
-const mapStateToProps = state => {
+const mapStateToProps = ({ booking }) => {
   return {
-    booking: state.booking
+    booking,
+    cancelSessionHoursLimit: booking && booking.timelimits ?
+      booking.timelimits.cancel_session / 60 / 60 : 24
   }
 }
 
@@ -81,39 +84,45 @@ const DatePickerWrapper = styled.div`
   }
 `;
 
-function confirmBooking({ slug, timelimits, timezone, date, time, showAlert, onConfirm }) {
-  if (isWithinCancellationLimits(new Date(date), time, timezone, timelimits.cancel_session)) {
-    // Show cancellation alert before continue
-    showAlert();
-  } else { // Continue as normal
-    if (typeof onConfirm === 'function' ) {
-      onConfirm();
-    } else {
-      navigate(`/profile/payment${slug ? `?slug=${slug}` : ''}`);
-    }
-  }
-}
-
-const ConfirmButton = ({ date, time, fetchingAvailableDates, slug, timezone, timelimits, showAlert, onConfirm, text }) => {
-  const { t } = useTranslation();
-
-  let disabled = true;
-  if (date && time && !fetchingAvailableDates) {
-    disabled = false;
-  }
-  return <PrimaryButton
-    onClick={() => confirmBooking({ slug, date, time, timezone, timelimits, showAlert, onConfirm })}
-    className='confirm-button' variant='primary' size='lg' disabled={disabled}>
-      {text || t('Book')}
-  </PrimaryButton>;
-}
-
 const DateTimePicker = ({
   booking, selectDate, selectTime, fetchAvailableTimeZones,
-  showCancelSessionAlert, selectTimeZone, slug, onConfirm,
-  onConfirmButtonText = '', timeZoneDisabled = false
+  showSessionAlert, selectTimeZone, slug, onConfirm,
+  onConfirmButtonText = '', timeZoneDisabled = false, cancelSessionHoursLimit
 }) => {
   const { t } = useTranslation();
+
+  function confirmBooking({ timelimits, timezone, date, time }) {
+    if (isPastTime(new Date(date), time, timezone)) {
+      showSessionAlert({
+        message: t('pastTimeSessionAlert'),
+        keepGoing: false
+      });
+    } else if (isWithinCancellationLimits(new Date(date), time, timezone, timelimits.cancel_session)) {
+      // Show cancellation alert before continue
+      showSessionAlert({
+        message: t('cancelSessionAlert', { hours: cancelSessionHoursLimit }),
+        keepGoing: true
+      });
+    } else { // Continue as normal
+      if (typeof onConfirm === 'function' ) {
+        onConfirm();
+      } else {
+        navigate(`/profile/payment${slug ? `?slug=${slug}` : ''}`);
+      }
+    }
+  }
+
+  const ConfirmButton = ({ date, time, timezone, timelimits, text }) => {
+    let disabled = true;
+    if (date && time && !booking.fetchingAvailableDates) {
+      disabled = false;
+    }
+    return <PrimaryButton
+      onClick={() => confirmBooking({ date, time, timezone, timelimits })}
+      className='confirm-button' variant='primary' size='lg' disabled={disabled}>
+        {text || t('Book')}
+    </PrimaryButton>;
+  }
 
   useEffect(() => {
     const jstz = require('jstimezonedetect');
@@ -177,7 +186,7 @@ const DateTimePicker = ({
         </Col>
       </Row>
       <ActionButtons>
-        <ConfirmButton {...booking} slug={slug} showAlert={showCancelSessionAlert} onConfirm={onConfirm} text={onConfirmButtonText} />
+        <ConfirmButton {...booking} text={onConfirmButtonText} />
       </ActionButtons>
     </DateTimePickerWrapper>
   )

@@ -7,7 +7,7 @@ import { Animated } from 'react-animated-css';
 import { Row, Col } from 'react-bootstrap';
 import Skeleton from '../../components/skeleton';
 import { changeSection, showService, collapseProfileHeader } from './professionalProfileSlice';
-import { selectService, hideCancelSessionAlert } from '../booking/bookingSlice';
+import { selectService, hideSessionAlert } from '../booking/bookingSlice';
 import ProfessionalServices from './professionalServices';
 import DateTimePicker from '../../components/dateTimePicker';
 import ServiceCard from '../../components/services/serviceCard';
@@ -19,15 +19,13 @@ const mapDispatchToProps = {
   changeSection,
   showService,
   collapseProfileHeader,
-  hideCancelSessionAlert
+  hideSessionAlert
 };
 const mapStateToProps = state => {
   const booking = state.booking;
   return {
     profile: state.professionalProfile,
-    booking,
-    cancelSessionHoursLimit: booking && booking.timelimits ?
-      booking.timelimits.cancel_session / 60 / 60 : 24
+    booking
   }
 }
 
@@ -55,7 +53,7 @@ const ProfessionalProfileSection = ({
   booking,
   slug,
   cancelSessionHoursLimit,
-  hideCancelSessionAlert
+  hideSessionAlert
 }) => {
   const { t } = useTranslation();
   const profileServices = profile.services && profile.services.length ? profile.services : null;
@@ -121,12 +119,14 @@ const ProfessionalProfileSection = ({
         </Row>
         <AlertPopUp
           className='cancel-session-alert'
-          show={booking.showCancelSessionAlert}
-          body={t('cancelSessionAlert', { hours: cancelSessionHoursLimit })}
-          onCancel={hideCancelSessionAlert}
+          show={booking.showSessionAlert}
+          body={booking.sessionAlertMessage}
+          onCancel={hideSessionAlert}
           onAccept={() => {
-            hideCancelSessionAlert();
-            navigate(`/profile/payment${slug ? `?slug=${slug}` : ''}`);
+            hideSessionAlert();
+            if (booking.keepGoingAfterShowingAlert) {
+              navigate(`/profile/payment${slug ? `?slug=${slug}` : ''}`);
+            }
           }} />
       </>
     );
