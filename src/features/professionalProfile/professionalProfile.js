@@ -7,6 +7,7 @@ import { Container, Row, Col } from 'react-bootstrap';
 import ProfileHeader from '../../components/professionalProfile/profileHeader';
 import ProfessionalProfileSection from './professionalProfileSection';
 import { getTimeLimits } from '../booking/bookingSlice';
+import { navigate } from 'gatsby';
 
 const mapDispatchToProps = { loadProfessionalProfile, collapseProfileHeader, loadProfile, getTimeLimits };
 const mapStateToProps = state => {
@@ -24,10 +25,11 @@ export const ProfessionalProfile = ({
   useEffect(() => {
     loadProfile({ redirect: false });
     getTimeLimits();
-    if (slug !== '') {
+    if (slug !== '' && slug !== 'undefined') {
       loadProfessionalProfile({id: slug, sid: serviceSlug});
     } else {
-      // TODO: Handle if no professional id is present in URL
+      // Handle if no professional id is present in URL
+      navigate('/profile/');
     }
   }, [loadProfessionalProfile, location, slug, serviceSlug, loadProfile, getTimeLimits]);
 

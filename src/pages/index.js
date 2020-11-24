@@ -1,4 +1,7 @@
-import React from 'react';
-import { Redirect } from "@reach/router";
+import { useEffect } from 'react';
+import { navigate } from 'gatsby';
 
-export default () => <Redirect to='/profile' noThrow />;
+export default () => {
+  useEffect(() => navigate('/profile/'), []);
+  return null;
+}
