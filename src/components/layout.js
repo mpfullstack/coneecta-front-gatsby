@@ -66,6 +66,14 @@ const Layout = ({ children, global, hideApiError, hideAlert }) => {
     // }
   });
 
+  // Hide api error message on click any where in body element
+  useEffect(() => {
+    document.body.addEventListener('click', hideApiError);
+    return function cleanup() {
+      window.removeEventListener('click', hideApiError);
+    }
+  }, [hideApiError]);
+
   let alert;
   let apiErrorAlert;
   if (global.alert) {
