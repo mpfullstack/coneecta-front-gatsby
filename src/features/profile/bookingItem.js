@@ -44,6 +44,10 @@ const BookingItemWrapper = styled.div`
   .text {
     font-size: 17px;
     color: ${theme.textColor};
+    a {
+      border-bottom: 2px solid ${theme.textColor};
+      display: inline;
+    }
   }
   .date {
     font-style: italic;
@@ -69,7 +73,7 @@ const BookingItem = ({ linkable = true, session = null }) => {
           {session.name}
         </div>
         <div className='text teacher'>
-          {session.teacher}
+          <Link to={`/u/${session.slug}`}>{session.teacher}</Link>
         </div>
       </>
     );
