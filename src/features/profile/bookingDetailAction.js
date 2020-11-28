@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { Row, Col } from 'react-bootstrap';
@@ -37,14 +37,14 @@ const BookingDetailActionWrapper = styled.div`
 `;
 
 const BookingDetailAction = ({
-  id, action, performSessionAction, booking, clearBooking,
-  cancelSessionHoursLimit, hideSessionAlert, showSessionAlert
+  id, action, performSessionAction, booking, clearBooking, hideSessionAlert, showSessionAlert
 }) => {
+  const [formError, setFormError] = useState({});
   const { t } = useTranslation();
   let ratingReviewValue;
 
   function buildPayload(actionToPerform) {
-    const payload = {
+    let payload = {
       id: Number(id),
       action: actionToPerform
     };
@@ -59,8 +59,16 @@ const BookingDetailAction = ({
         comments: document.getElementById('comments').value
       }
     } else if (actionToPerform === 'claim_session') {
-      payload.data = {
-        comments: document.getElementById('comments').value
+      if (!document.getElementById('comments').value) {
+        setFormError({
+          isValid: { isValid: false, isInvalid: true },
+          error: t('isRequired')
+        });
+        payload = null;
+      } else {
+        payload.data = {
+          comments: document.getElementById('comments').value
+        }
       }
     }
     return payload;
@@ -75,7 +83,10 @@ const BookingDetailAction = ({
             timeZoneDisabled={true}
             onConfirm={() => {
               clearBooking();
-              performSessionAction(buildPayload('suggest_modification'))
+              const payload = buildPayload('suggest_modification');
+              if (payload) {
+                performSessionAction(payload);
+              }
             }}
             onConfirmButtonText={t('Confirm')} />
           <FormControl label={t('leaveSomeComments')} name={'comments'} as='textarea' />
@@ -98,7 +109,7 @@ const BookingDetailAction = ({
     } else if (action === 'claim') {
       return (
         <div>
-          <FormControl label={t('leaveSomeComments')} name={'comments'} as='textarea' />
+          <FormControl label={t('leaveSomeComments')} name={'comments'} as='textarea' {...formError}/>
           <div className='action-button'>
             <PrimaryButton onClick={() => performSessionAction(buildPayload('claim_session'))}>
               {t('Send claim')}
