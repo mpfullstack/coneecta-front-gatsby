@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { navigate } from 'gatsby';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
@@ -95,6 +95,8 @@ const BookingDetailWrapper = styled.div`
 `;
 
 const BookingDetail = ({ id, action, sessionDetail, loading, loadSessionDetail, performSessionAction, initAvailableDates, setBookingId }) => {
+  const [formError, setFormError] = useState({});
+
   useEffect(() => {
     loadSessionDetail(id);
   }, [loadSessionDetail, id]);
@@ -138,19 +140,31 @@ const BookingDetail = ({ id, action, sessionDetail, loading, loadSessionDetail, 
                 setBookingId={setBookingId}
                 performAction={payload => performSessionAction(payload)} />
             </Col>
+            <Col xs='12' md='10'>
+              <h2 className='sub-title'>Chat</h2>
+              <FormControl label={t('writeYourMessage')} name={'message'} as='textarea' {...formError} />
+              <div className='action-button'>
+                <PrimaryButton onClick={() => {
+                  const message = document.getElementById('message').value;
+                  if (!message) {
+                    setFormError({
+                      isValid: { isValid: false, isInvalid: true },
+                      error: t('isRequired')
+                    });
+                  } else {
+                    setFormError({
+                      isValid: { isValid: true, isInvalid: false },
+                      error: null
+                    });
+                    performSessionAction({ action: 'message', data: { session: Number(id), message } });
+                  }
+                }}>
+                  {t('sendMessage')}
+                </PrimaryButton>
+              </div>
+            </Col>
           </Row>
         }
-        <h2 className='sub-title'>Chat</h2>
-        <Row className={`justify-content-md-center`} style={{marginTop: '10px'}}>
-          <Col xs='12' md='10'>
-            <FormControl label={t('writeYourMessage')} name={'message'} as='textarea' />
-            <div className='action-button'>
-              <PrimaryButton onClick={() => null}>
-                {t('sendMessage')}
-              </PrimaryButton>
-            </div>
-          </Col>
-        </Row>
     </BookingDetailWrapper>
   );
 }

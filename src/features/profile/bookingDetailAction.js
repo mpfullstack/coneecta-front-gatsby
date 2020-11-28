@@ -23,7 +23,6 @@ const mapStateToProps = ({ booking }) => {
 }
 
 const BookingDetailActionWrapper = styled.div`
-  padding-bottom: 50px;
   .date-time-picker-container {
     padding-bottom: 0;
   }
@@ -33,6 +32,15 @@ const BookingDetailActionWrapper = styled.div`
   .action-button {
     display: flex;
     justify-content: center;
+    width: 100%;
+    & > div {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+      .btn {
+        width: 80%;
+      }
+    }
   }
 `;
 
