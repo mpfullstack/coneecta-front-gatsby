@@ -15,6 +15,7 @@ import BookingDetailAction from './bookingDetailAction';
 import FormControl from '../../components/form/formControl';
 import useContentLoaded from '../../components/hooks/useContentLoaded';
 import { generateAvailableDates } from '../../helpers/data';
+import SessionActivity from './sessionActivity';
 
 const mapDispatchToProps = { loadSessionDetail, performSessionAction, setBookingId, initAvailableDates, loadSessionActivities };
 const mapStateToProps = ({ profile }) => {
@@ -147,35 +148,48 @@ const BookingDetail = ({
                 setBookingId={setBookingId}
                 performAction={payload => performSessionAction(payload)} />
             </Col>
-            <Col xs='12' md='10'>
-              {loaded ?
-                <>
-                  <h2 className='sub-title'>Chat</h2>
-                  <FormControl label={t('writeYourMessage')} name={'message'} as='textarea' {...formError} />
-                  <div className='action-button'>
-                    <PrimaryButton onClick={() => {
-                      const message = document.getElementById('message').value;
-                      if (!message) {
-                        setFormError({
-                          isValid: { isValid: false, isInvalid: true },
-                          error: t('isRequired')
-                        });
-                      } else {
-                        setFormError({
-                          isValid: { isValid: true, isInvalid: false },
-                          error: null
-                        });
-                        performSessionAction({ action: 'message', data: { session: Number(id), message } });
-                      }
-                    }}>
-                      {t('sendMessage')}
-                    </PrimaryButton>
-                  </div>
-                </>
-                : <Skeleton height={200} />}
-            </Col>
           </Row>
         }
+        <Row>
+          <Col xs='12' md='10'>
+            {loaded ?
+              <>
+                <h2 className='sub-title'>Chat</h2>
+                <FormControl label={t('writeYourMessage')} name={'message'} as='textarea' {...formError} />
+                <div className='action-button'>
+                  <PrimaryButton onClick={() => {
+                    const message = document.getElementById('message').value;
+                    if (!message) {
+                      setFormError({
+                        isValid: { isValid: false, isInvalid: true },
+                        error: t('isRequired')
+                      });
+                    } else {
+                      setFormError({
+                        isValid: { isValid: true, isInvalid: false },
+                        error: null
+                      });
+                      performSessionAction({ action: 'message', data: { session: Number(id), message } });
+                    }
+                  }}>
+                    {t('sendMessage')}
+                  </PrimaryButton>
+                </div>
+              </>
+              : <Skeleton height={200} />}
+          </Col>
+          <Col xs='12' md='10' className='activities'>
+            <h2 className='sub-title'>Actividad</h2>
+            {loaded && activities ?
+              activities.length ?
+                activities.map((activity, i) => <SessionActivity key={`activity-${i}`} activity={activity} />)
+                :
+                <p className='no-activities'>{t('thereAreNoActivities')}</p>
+              :
+              Array.from({length: 2}).map((u, i) => <SessionActivity key={`activity-${i}`} />)
+            }
+          </Col>
+        </Row>
     </BookingDetailWrapper>
   );
 }
