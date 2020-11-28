@@ -5,7 +5,8 @@ import {
   initSessions, sessionsLoaded, loadSessionDetail,
   initSessionDetail, performSessionAction, saveProfile,
   profileUpdated, saveProfileError, loadWalletMovements,
-  initWalletMovements, walletMovementsLoaded
+  initWalletMovements, walletMovementsLoaded, loadSessionActivities,
+  initSessionActivities, activitiesLoaded
 } from './profileSlice';
 import { logout } from '../loginSignUp/loginSignUpSlice';
 import { showApiError, updateCountries, showAlert } from '../global/globalSlice';
@@ -62,6 +63,22 @@ function* onLoadSessionDetail() {
     } else {
       yield put(initSessionDetail(result));
       yield put(sessionsLoaded());
+    }
+  });
+}
+
+function* onLoadSessionActivities() {
+  yield takeLatest(loadSessionActivities, function* ({ payload }) {
+    const result = yield call(api.getSessionActivities, payload);
+    if (result.error) {
+      if (result.status === 403) {
+        yield put(loadProfile());
+      } else {
+        yield put(showApiError(result.error));
+      }
+    } else {
+      yield put(initSessionActivities(result));
+      yield put(activitiesLoaded());
     }
   });
 }
@@ -135,6 +152,7 @@ export default function* () {
     fork(onLoadProfile),
     fork(onLoadSessions),
     fork(onLoadSessionDetail),
+    fork(onLoadSessionActivities),
     fork(onPerformSessionAction),
     fork(onSaveProfile),
     fork(onLoadWalletMovements)

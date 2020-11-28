@@ -14,6 +14,7 @@ const paymentStatusUrl = `${base}/payment/status?id=:id`;
 const timeLimitsUrl = `${base}/timelimits`;
 const sessionsUrl = `${base}/sessions?page=:page`;
 const sessionDetailUrl = `${base}/sessions/detail?id=:id`;
+const sessionActivitiesUrl = `${base}/activities?id=:id&page=:page`;
 const sessionActionsUrl = `${base}/sessions/:action`;
 const walletMovementsUrl = `${base}/movements?page=:page`;
 const saveProfileUrl = `${profileUrl}/update`;
@@ -35,6 +36,7 @@ export {
   timeLimitsUrl,
   sessionsUrl,
   sessionDetailUrl,
+  sessionActivitiesUrl,
   sessionActionsUrl,
   countriesUrl,
   walletMovementsUrl

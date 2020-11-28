@@ -6,7 +6,7 @@ import parse from 'html-react-parser';
 import { Row, Col } from 'react-bootstrap';
 import SEO from "../../components/seo";
 import { useTranslation } from 'react-i18next';
-import { loadSessionDetail, performSessionAction } from './profileSlice';
+import { loadSessionDetail, performSessionAction, loadSessionActivities } from './profileSlice';
 import { initAvailableDates, setBookingId } from '../booking/bookingSlice';
 import Skeleton from '../../components/skeleton';
 import BookingItem from './bookingItem';
@@ -16,11 +16,12 @@ import FormControl from '../../components/form/formControl';
 import useContentLoaded from '../../components/hooks/useContentLoaded';
 import { generateAvailableDates } from '../../helpers/data';
 
-const mapDispatchToProps = { loadSessionDetail, performSessionAction, setBookingId, initAvailableDates };
+const mapDispatchToProps = { loadSessionDetail, performSessionAction, setBookingId, initAvailableDates, loadSessionActivities };
 const mapStateToProps = ({ profile }) => {
   return {
     sessionDetail: profile.sessionDetail,
-    loading: profile.loadingSessions
+    sessionActivities: profile.activities,
+    loading: profile.loadingSessions && profile.loadingActivities
   }
 }
 
@@ -94,18 +95,24 @@ const BookingDetailWrapper = styled.div`
   }
 `;
 
-const BookingDetail = ({ id, action, sessionDetail, loading, loadSessionDetail, performSessionAction, initAvailableDates, setBookingId }) => {
+const BookingDetail = ({
+  id, action, sessionDetail, loading, loadSessionDetail, performSessionAction,
+  initAvailableDates, setBookingId, loadSessionActivities, sessionActivities
+}) => {
   const [formError, setFormError] = useState({});
 
   useEffect(() => {
-    loadSessionDetail(id);
-  }, [loadSessionDetail, id]);
+    loadSessionDetail({ id });
+    loadSessionActivities({ id });
+  }, [loadSessionDetail, loadSessionActivities, id]);
 
   const { t } = useTranslation();
 
   const session = sessionDetail ? sessionDetail.info : null;
   const advices = sessionDetail ? sessionDetail.advices : null;
   const actions = sessionDetail ? sessionDetail.actions : null;
+  const activities = sessionActivities ? sessionActivities.items : null;
+  const activitiesPagination = sessionActivities ? sessionActivities.pagination : null;
 
   const loaded = useContentLoaded(loading);
 
@@ -141,27 +148,31 @@ const BookingDetail = ({ id, action, sessionDetail, loading, loadSessionDetail, 
                 performAction={payload => performSessionAction(payload)} />
             </Col>
             <Col xs='12' md='10'>
-              <h2 className='sub-title'>Chat</h2>
-              <FormControl label={t('writeYourMessage')} name={'message'} as='textarea' {...formError} />
-              <div className='action-button'>
-                <PrimaryButton onClick={() => {
-                  const message = document.getElementById('message').value;
-                  if (!message) {
-                    setFormError({
-                      isValid: { isValid: false, isInvalid: true },
-                      error: t('isRequired')
-                    });
-                  } else {
-                    setFormError({
-                      isValid: { isValid: true, isInvalid: false },
-                      error: null
-                    });
-                    performSessionAction({ action: 'message', data: { session: Number(id), message } });
-                  }
-                }}>
-                  {t('sendMessage')}
-                </PrimaryButton>
-              </div>
+              {loaded ?
+                <>
+                  <h2 className='sub-title'>Chat</h2>
+                  <FormControl label={t('writeYourMessage')} name={'message'} as='textarea' {...formError} />
+                  <div className='action-button'>
+                    <PrimaryButton onClick={() => {
+                      const message = document.getElementById('message').value;
+                      if (!message) {
+                        setFormError({
+                          isValid: { isValid: false, isInvalid: true },
+                          error: t('isRequired')
+                        });
+                      } else {
+                        setFormError({
+                          isValid: { isValid: true, isInvalid: false },
+                          error: null
+                        });
+                        performSessionAction({ action: 'message', data: { session: Number(id), message } });
+                      }
+                    }}>
+                      {t('sendMessage')}
+                    </PrimaryButton>
+                  </div>
+                </>
+                : <Skeleton height={200} />}
             </Col>
           </Row>
         }
