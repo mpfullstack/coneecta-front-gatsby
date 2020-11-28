@@ -12,6 +12,7 @@ import Skeleton from '../../components/skeleton';
 import BookingItem from './bookingItem';
 import PrimaryButton from '../../components/buttons/primaryButton';
 import BookingDetailAction from './bookingDetailAction';
+import FormControl from '../../components/form/formControl';
 import useContentLoaded from '../../components/hooks/useContentLoaded';
 import { generateAvailableDates } from '../../helpers/data';
 
@@ -24,9 +25,18 @@ const mapStateToProps = ({ profile }) => {
 }
 
 const BookingActionsWrapper = styled.div`
-  .btn {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  div {
     width: 100%;
+    display: flex;
+    justify-content: center;
     margin-bottom: 10px;
+    .btn {
+      width: 80%;
+    }
   }
 `;
 
@@ -66,12 +76,30 @@ const BookingDetailWrapper = styled.div`
       text-align: center;
     }
   }
+  .sub-title {
+    font-weight: 800;
+    margin: 30px 0 0;
+    font-size: 18px;
+    text-align: center;
+  }
+  .action-button {
+    margin-bottom: 20px;
+    & > div {
+      display: flex;
+      justify-content: center;
+      .btn {
+        width: 80%;
+      }
+    }
+  }
 `;
 
 const BookingDetail = ({ id, action, sessionDetail, loading, loadSessionDetail, performSessionAction, initAvailableDates, setBookingId }) => {
   useEffect(() => {
     loadSessionDetail(id);
   }, [loadSessionDetail, id]);
+
+  const { t } = useTranslation();
 
   const session = sessionDetail ? sessionDetail.info : null;
   const advices = sessionDetail ? sessionDetail.advices : null;
@@ -112,6 +140,17 @@ const BookingDetail = ({ id, action, sessionDetail, loading, loadSessionDetail, 
             </Col>
           </Row>
         }
+        <h2 className='sub-title'>Chat</h2>
+        <Row className={`justify-content-md-center`} style={{marginTop: '10px'}}>
+          <Col xs='12' md='10'>
+            <FormControl label={t('writeYourMessage')} name={'message'} as='textarea' />
+            <div className='action-button'>
+              <PrimaryButton onClick={() => null}>
+                {t('sendMessage')}
+              </PrimaryButton>
+            </div>
+          </Col>
+        </Row>
     </BookingDetailWrapper>
   );
 }
