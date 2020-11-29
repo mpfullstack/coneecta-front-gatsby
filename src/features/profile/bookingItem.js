@@ -73,7 +73,7 @@ const BookingItem = ({ linkable = true, session = null }) => {
           {session.name}
         </div>
         <div className='text teacher'>
-          <Link to={`/u/${session.slug}`}>{session.teacher}</Link>
+          <Link to={`/u/${session.teacher.slug}`}>{session.teacher.name}</Link>
         </div>
       </>
     );

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { navigate } from 'gatsby';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
@@ -6,27 +6,40 @@ import parse from 'html-react-parser';
 import { Row, Col } from 'react-bootstrap';
 import SEO from "../../components/seo";
 import { useTranslation } from 'react-i18next';
-import { loadSessionDetail, performSessionAction } from './profileSlice';
+import { loadSessionDetail, performSessionAction, loadSessionActivities } from './profileSlice';
 import { initAvailableDates, setBookingId } from '../booking/bookingSlice';
 import Skeleton from '../../components/skeleton';
 import BookingItem from './bookingItem';
 import PrimaryButton from '../../components/buttons/primaryButton';
 import BookingDetailAction from './bookingDetailAction';
+import FormControl from '../../components/form/formControl';
 import useContentLoaded from '../../components/hooks/useContentLoaded';
 import { generateAvailableDates } from '../../helpers/data';
+import SessionActivity from './sessionActivity';
+import Pagination from '../../components/pagination';
 
-const mapDispatchToProps = { loadSessionDetail, performSessionAction, setBookingId, initAvailableDates };
+const mapDispatchToProps = { loadSessionDetail, performSessionAction, setBookingId, initAvailableDates, loadSessionActivities };
 const mapStateToProps = ({ profile }) => {
   return {
     sessionDetail: profile.sessionDetail,
-    loading: profile.loadingSessions
+    sessionActivities: profile.activities,
+    loading: profile.loadingSessions && profile.loadingActivities
   }
 }
 
 const BookingActionsWrapper = styled.div`
-  .btn {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  div {
     width: 100%;
+    display: flex;
+    justify-content: center;
     margin-bottom: 10px;
+    .btn {
+      width: 80%;
+    }
   }
 `;
 
@@ -66,16 +79,47 @@ const BookingDetailWrapper = styled.div`
       text-align: center;
     }
   }
+  .sub-title {
+    font-weight: 800;
+    margin: 30px 0 10px 0;
+    font-size: 18px;
+    text-align: center;
+  }
+  .action-button {
+    margin-bottom: 20px;
+    & > div {
+      display: flex;
+      justify-content: center;
+      .btn {
+        width: 80%;
+      }
+    }
+  }
+  .activities {
+    .sub-title {
+      margin-bottom: 20px;
+    }
+  }
 `;
 
-const BookingDetail = ({ id, action, sessionDetail, loading, loadSessionDetail, performSessionAction, initAvailableDates, setBookingId }) => {
+const BookingDetail = ({
+  id, action, sessionDetail, loading, loadSessionDetail, performSessionAction,
+  initAvailableDates, setBookingId, loadSessionActivities, sessionActivities
+}) => {
+  const [formError, setFormError] = useState({});
+
   useEffect(() => {
-    loadSessionDetail(id);
-  }, [loadSessionDetail, id]);
+    loadSessionDetail({ id });
+    loadSessionActivities({ id });
+  }, [loadSessionDetail, loadSessionActivities, id]);
+
+  const { t } = useTranslation();
 
   const session = sessionDetail ? sessionDetail.info : null;
   const advices = sessionDetail ? sessionDetail.advices : null;
   const actions = sessionDetail ? sessionDetail.actions : null;
+  const activities = sessionActivities ? sessionActivities.items : null;
+  const activitiesPagination = sessionActivities ? sessionActivities.pagination : null;
 
   const loaded = useContentLoaded(loading);
 
@@ -112,6 +156,58 @@ const BookingDetail = ({ id, action, sessionDetail, loading, loadSessionDetail, 
             </Col>
           </Row>
         }
+        {action !== 'modify' ?
+          <Row>
+            <Col xs='12' md='10'>
+              {loaded ?
+                <>
+                  <h2 id='chat' className='sub-title'>Chat</h2>
+                  <FormControl label={t('writeYourMessage')} name={'message'} as='textarea' {...formError} />
+                  <div className='action-button'>
+                    <PrimaryButton onClick={() => {
+                      const message = document.getElementById('message').value;
+                      if (!message) {
+                        setFormError({
+                          isValid: { isValid: false, isInvalid: true },
+                          error: t('isRequired')
+                        });
+                      } else {
+                        setFormError({
+                          isValid: { isValid: true, isInvalid: false },
+                          error: null
+                        });
+                        performSessionAction({ id, action: 'message', data: { session: Number(id), message } });
+                      }
+                    }}>
+                      {t('sendMessage')}
+                    </PrimaryButton>
+                  </div>
+                </>
+                : <Skeleton height={200} />}
+            </Col>
+            <Col xs='12' md='10' className='activities'>
+              <h2 className='sub-title'>Actividad</h2>
+              {loaded && activities ?
+                activities.length ?
+                  activities.map((activity, i) => <SessionActivity key={`activity-${i}`} activity={activity} />)
+                  :
+                  <p className='no-activities'>{t('thereAreNoActivities')}</p>
+                :
+                Array.from({length: 2}).map((u, i) => <SessionActivity key={`activity-${i}`} />)
+              }
+            </Col>
+          </Row> : null}
+          {action !== 'modify' ?
+            <Row className={`justify-content-md-center`} style={{marginTop: '30px'}}>
+              <Col xs='12' md='10'>
+                {loaded && activitiesPagination && activitiesPagination.total_pages > 0 ?
+                  <Pagination
+                    pages={activitiesPagination.total_pages}
+                    currentPage={activitiesPagination.current_page}
+                    onPaginationClick={page => loadSessionActivities({ id, page })} /> :
+                    loading ? <Skeleton height={25} /> : null}
+              </Col>
+            </Row> : null}
     </BookingDetailWrapper>
   );
 }

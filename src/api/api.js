@@ -5,7 +5,7 @@ import {
   professionalProfileReviewsUrl, loginUrl, signUpUrl, profileUrl,
   reserveUrl, logoutUrl, timeLimitsUrl, sessionsUrl, sessionDetailUrl,
   sessionActionsUrl, saveProfileUrl, countriesUrl, checkoutUrl,
-  paymentStatusUrl, walletMovementsUrl
+  paymentStatusUrl, walletMovementsUrl, sessionActivitiesUrl
 } from './urls';
 
 const CACHE_EXPIRATION = 1000 * 60 * 10; // Expires in 10 minutes
@@ -81,6 +81,13 @@ async function getSessionDetail(id) {
   return await SuperFetch.get(sessionDetailUrl.replace(':id', id));
 }
 
+async function getSessionActivities({ id, page = 1 }) {
+  return await SuperFetch.get(sessionActivitiesUrl
+    .replace(':id', id)
+    .replace(':page', page)
+  );
+}
+
 async function performSessionAction({ action, id, data = {} }) {
   return await SuperFetch.post(
     sessionActionsUrl.replace(':action', action),
@@ -125,6 +132,7 @@ const api = {
   getTimeLimits,
   getSessions,
   getSessionDetail,
+  getSessionActivities,
   performSessionAction,
   saveProfile,
   getCountries,

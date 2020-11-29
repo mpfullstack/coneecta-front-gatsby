@@ -5,7 +5,8 @@ import {
   initSessions, sessionsLoaded, loadSessionDetail,
   initSessionDetail, performSessionAction, saveProfile,
   profileUpdated, saveProfileError, loadWalletMovements,
-  initWalletMovements, walletMovementsLoaded
+  initWalletMovements, walletMovementsLoaded, loadSessionActivities,
+  initSessionActivities, activitiesLoaded
 } from './profileSlice';
 import { logout } from '../loginSignUp/loginSignUpSlice';
 import { showApiError, updateCountries, showAlert } from '../global/globalSlice';
@@ -52,7 +53,7 @@ function* onLoadSessions() {
 
 function* onLoadSessionDetail() {
   yield takeLatest(loadSessionDetail, function* ({ payload }) {
-    const result = yield call(api.getSessionDetail, payload);
+    const result = yield call(api.getSessionDetail, payload.id);
     if (result.error) {
       if (result.status === 403) {
         yield put(loadProfile());
@@ -62,6 +63,22 @@ function* onLoadSessionDetail() {
     } else {
       yield put(initSessionDetail(result));
       yield put(sessionsLoaded());
+    }
+  });
+}
+
+function* onLoadSessionActivities() {
+  yield takeLatest(loadSessionActivities, function* ({ payload }) {
+    const result = yield call(api.getSessionActivities, payload);
+    if (result.error) {
+      if (result.status === 403) {
+        yield put(loadProfile());
+      } else {
+        yield put(showApiError(result.error));
+      }
+    } else {
+      yield put(initSessionActivities(result));
+      yield put(activitiesLoaded());
     }
   });
 }
@@ -79,13 +96,16 @@ function* onPerformSessionAction() {
       // Handle response based on the action performed and result
       const { action } = payload;
       if (action === 'review_session') {
-        yield put(loadSessionDetail(payload.id));
+        yield put(loadSessionDetail(payload));
         yield navigate(`/profile/bookings/${payload.id}/review_session_success`);
       } else if (action === 'start_session') {
         window.open(result.classroom_url, '_blank');
       } else if (action === 'claim_session') {
-        yield put(loadSessionDetail(payload.id));
+        yield put(loadSessionDetail(payload));
         yield navigate(`/profile/bookings/${payload.id}/claimed`);
+      } else if (action === 'message') {
+        yield put(loadSessionActivities(payload));
+        yield navigate(`/profile/bookings/${payload.id}?page=1#chat`);
       } else {
         yield navigate(`/profile/bookings/${payload.id}/success`);
       }
@@ -135,6 +155,7 @@ export default function* () {
     fork(onLoadProfile),
     fork(onLoadSessions),
     fork(onLoadSessionDetail),
+    fork(onLoadSessionActivities),
     fork(onPerformSessionAction),
     fork(onSaveProfile),
     fork(onLoadWalletMovements)

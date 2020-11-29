@@ -33,6 +33,15 @@ const BookingDetailActionWrapper = styled.div`
   .action-button {
     display: flex;
     justify-content: center;
+    width: 100%;
+    & > div {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+      .btn {
+        width: 80%;
+      }
+    }
   }
 `;
 
