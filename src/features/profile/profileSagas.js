@@ -53,7 +53,7 @@ function* onLoadSessions() {
 
 function* onLoadSessionDetail() {
   yield takeLatest(loadSessionDetail, function* ({ payload }) {
-    const result = yield call(api.getSessionDetail, payload);
+    const result = yield call(api.getSessionDetail, payload.id);
     if (result.error) {
       if (result.status === 403) {
         yield put(loadProfile());
@@ -96,13 +96,16 @@ function* onPerformSessionAction() {
       // Handle response based on the action performed and result
       const { action } = payload;
       if (action === 'review_session') {
-        yield put(loadSessionDetail(payload.id));
+        yield put(loadSessionDetail(payload));
         yield navigate(`/profile/bookings/${payload.id}/review_session_success`);
       } else if (action === 'start_session') {
         window.open(result.classroom_url, '_blank');
       } else if (action === 'claim_session') {
-        yield put(loadSessionDetail(payload.id));
+        yield put(loadSessionDetail(payload));
         yield navigate(`/profile/bookings/${payload.id}/claimed`);
+      } else if (action === 'message') {
+        yield put(loadSessionActivities(payload));
+        yield navigate(`/profile/bookings/${payload.id}?page=1#chat`);
       } else {
         yield navigate(`/profile/bookings/${payload.id}/success`);
       }

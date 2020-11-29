@@ -16,6 +16,7 @@ import FormControl from '../../components/form/formControl';
 import useContentLoaded from '../../components/hooks/useContentLoaded';
 import { generateAvailableDates } from '../../helpers/data';
 import SessionActivity from './sessionActivity';
+import Pagination from '../../components/pagination';
 
 const mapDispatchToProps = { loadSessionDetail, performSessionAction, setBookingId, initAvailableDates, loadSessionActivities };
 const mapStateToProps = ({ profile }) => {
@@ -80,7 +81,7 @@ const BookingDetailWrapper = styled.div`
   }
   .sub-title {
     font-weight: 800;
-    margin: 30px 0 0;
+    margin: 30px 0 10px 0;
     font-size: 18px;
     text-align: center;
   }
@@ -92,6 +93,11 @@ const BookingDetailWrapper = styled.div`
       .btn {
         width: 80%;
       }
+    }
+  }
+  .activities {
+    .sub-title {
+      margin-bottom: 20px;
     }
   }
 `;
@@ -154,7 +160,7 @@ const BookingDetail = ({
           <Col xs='12' md='10'>
             {loaded ?
               <>
-                <h2 className='sub-title'>Chat</h2>
+                <h2 id='chat' className='sub-title'>Chat</h2>
                 <FormControl label={t('writeYourMessage')} name={'message'} as='textarea' {...formError} />
                 <div className='action-button'>
                   <PrimaryButton onClick={() => {
@@ -169,7 +175,7 @@ const BookingDetail = ({
                         isValid: { isValid: true, isInvalid: false },
                         error: null
                       });
-                      performSessionAction({ action: 'message', data: { session: Number(id), message } });
+                      performSessionAction({ id, action: 'message', data: { session: Number(id), message } });
                     }
                   }}>
                     {t('sendMessage')}
@@ -188,6 +194,16 @@ const BookingDetail = ({
               :
               Array.from({length: 2}).map((u, i) => <SessionActivity key={`activity-${i}`} />)
             }
+          </Col>
+        </Row>
+        <Row className={`justify-content-md-center`} style={{marginTop: '30px'}}>
+          <Col xs='12' md='10'>
+            {loaded && activitiesPagination && activitiesPagination.total_pages > 0 ?
+              <Pagination
+                pages={activitiesPagination.total_pages}
+                currentPage={activitiesPagination.current_page}
+                onPaginationClick={page => loadSessionActivities({ id, page })} /> :
+                loading ? <Skeleton height={25} /> : null}
           </Col>
         </Row>
     </BookingDetailWrapper>
