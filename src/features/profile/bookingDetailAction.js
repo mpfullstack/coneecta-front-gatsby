@@ -23,6 +23,7 @@ const mapStateToProps = ({ booking }) => {
 }
 
 const BookingDetailActionWrapper = styled.div`
+  padding-bottom: 50px;
   .date-time-picker-container {
     padding-bottom: 0;
   }

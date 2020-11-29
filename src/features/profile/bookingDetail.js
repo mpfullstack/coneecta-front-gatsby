@@ -156,56 +156,58 @@ const BookingDetail = ({
             </Col>
           </Row>
         }
-        <Row>
-          <Col xs='12' md='10'>
-            {loaded ?
-              <>
-                <h2 id='chat' className='sub-title'>Chat</h2>
-                <FormControl label={t('writeYourMessage')} name={'message'} as='textarea' {...formError} />
-                <div className='action-button'>
-                  <PrimaryButton onClick={() => {
-                    const message = document.getElementById('message').value;
-                    if (!message) {
-                      setFormError({
-                        isValid: { isValid: false, isInvalid: true },
-                        error: t('isRequired')
-                      });
-                    } else {
-                      setFormError({
-                        isValid: { isValid: true, isInvalid: false },
-                        error: null
-                      });
-                      performSessionAction({ id, action: 'message', data: { session: Number(id), message } });
-                    }
-                  }}>
-                    {t('sendMessage')}
-                  </PrimaryButton>
-                </div>
-              </>
-              : <Skeleton height={200} />}
-          </Col>
-          <Col xs='12' md='10' className='activities'>
-            <h2 className='sub-title'>Actividad</h2>
-            {loaded && activities ?
-              activities.length ?
-                activities.map((activity, i) => <SessionActivity key={`activity-${i}`} activity={activity} />)
+        {action !== 'modify' ?
+          <Row>
+            <Col xs='12' md='10'>
+              {loaded ?
+                <>
+                  <h2 id='chat' className='sub-title'>Chat</h2>
+                  <FormControl label={t('writeYourMessage')} name={'message'} as='textarea' {...formError} />
+                  <div className='action-button'>
+                    <PrimaryButton onClick={() => {
+                      const message = document.getElementById('message').value;
+                      if (!message) {
+                        setFormError({
+                          isValid: { isValid: false, isInvalid: true },
+                          error: t('isRequired')
+                        });
+                      } else {
+                        setFormError({
+                          isValid: { isValid: true, isInvalid: false },
+                          error: null
+                        });
+                        performSessionAction({ id, action: 'message', data: { session: Number(id), message } });
+                      }
+                    }}>
+                      {t('sendMessage')}
+                    </PrimaryButton>
+                  </div>
+                </>
+                : <Skeleton height={200} />}
+            </Col>
+            <Col xs='12' md='10' className='activities'>
+              <h2 className='sub-title'>Actividad</h2>
+              {loaded && activities ?
+                activities.length ?
+                  activities.map((activity, i) => <SessionActivity key={`activity-${i}`} activity={activity} />)
+                  :
+                  <p className='no-activities'>{t('thereAreNoActivities')}</p>
                 :
-                <p className='no-activities'>{t('thereAreNoActivities')}</p>
-              :
-              Array.from({length: 2}).map((u, i) => <SessionActivity key={`activity-${i}`} />)
-            }
-          </Col>
-        </Row>
-        <Row className={`justify-content-md-center`} style={{marginTop: '30px'}}>
-          <Col xs='12' md='10'>
-            {loaded && activitiesPagination && activitiesPagination.total_pages > 0 ?
-              <Pagination
-                pages={activitiesPagination.total_pages}
-                currentPage={activitiesPagination.current_page}
-                onPaginationClick={page => loadSessionActivities({ id, page })} /> :
-                loading ? <Skeleton height={25} /> : null}
-          </Col>
-        </Row>
+                Array.from({length: 2}).map((u, i) => <SessionActivity key={`activity-${i}`} />)
+              }
+            </Col>
+          </Row> : null}
+          {action !== 'modify' ?
+            <Row className={`justify-content-md-center`} style={{marginTop: '30px'}}>
+              <Col xs='12' md='10'>
+                {loaded && activitiesPagination && activitiesPagination.total_pages > 0 ?
+                  <Pagination
+                    pages={activitiesPagination.total_pages}
+                    currentPage={activitiesPagination.current_page}
+                    onPaginationClick={page => loadSessionActivities({ id, page })} /> :
+                    loading ? <Skeleton height={25} /> : null}
+              </Col>
+            </Row> : null}
     </BookingDetailWrapper>
   );
 }
