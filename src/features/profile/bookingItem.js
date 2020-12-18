@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'gatsby';
+import { Link, navigate } from 'gatsby';
 import styled from 'styled-components';
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
@@ -14,6 +14,9 @@ const BookingItemWrapper = styled.div`
   background-color: ${theme.boxBackgroundColor};
   padding: 10px;
   min-height: 131px;
+  .linkable {
+    cursor: pointer;
+  }
   a {
     display: block;
     width: 100%;
@@ -73,7 +76,7 @@ const BookingItem = ({ linkable = true, session = null }) => {
           {session.name}
         </div>
         <div className='text teacher'>
-          <Link to={`/u/${session.teacher.slug}`}>{session.teacher.name}</Link>
+          <Link onClick={e => e.stopPropagation()} to={`/u/${session.teacher.slug}`}>{session.teacher.name}</Link>
         </div>
       </>
     );
@@ -89,9 +92,9 @@ const BookingItem = ({ linkable = true, session = null }) => {
     return (
       <BookingItemWrapper>
         {linkable ?
-          <Link to={link}>
+          <div className='linkable' aria-hidden="true" onClick={() => navigate(link)} onKeyDown={e => null}>
             {item}
-          </Link>
+          </div>
         : item}
       </BookingItemWrapper>
     );
