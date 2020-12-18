@@ -54,6 +54,9 @@ const WalletWrapper = styled.div`
     display: flex;
     justify-content: center;
   }
+  .no-bookings {
+    text-align: center;
+  }
 `;
 
 const Wallet = ({ movements, loading, loadWalletMovements, credits }) => {
