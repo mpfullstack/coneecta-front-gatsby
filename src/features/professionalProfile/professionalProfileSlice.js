@@ -4,6 +4,7 @@ const professionalProfileSlice = createSlice({
   name: 'professionalProfile',
   initialState: {
     'id': null,
+    'loading': false,
     'collapseProfileHeader': false,
 		'details': null,
     'services': [],
@@ -12,11 +13,14 @@ const professionalProfileSlice = createSlice({
     'section': 'serviceList' // serviceList, datePicker
 	},
   reducers: {
-    loadProfessionalProfile: state => state,
+    loadProfessionalProfile: state => {
+      state.loading = true;
+    },
     initProfile: (state, action) => {
       state.id = action.payload.id;
       state.details = action.payload.details;
       state.services = action.payload.services;
+      state.loading = false;
     },
     loadProfessionalProfileReviews: state => {},
     initProfileReviews: (state, action) => {

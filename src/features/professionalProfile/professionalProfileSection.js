@@ -10,6 +10,7 @@ import { changeSection, showService, collapseProfileHeader } from './professiona
 import { selectService, hideSessionAlert } from '../booking/bookingSlice';
 import ProfessionalServices from './professionalServices';
 import DateTimePicker from '../../components/dateTimePicker';
+import useContentLoaded from '../../components/hooks/useContentLoaded';
 import ServiceCard from '../../components/services/serviceCard';
 import { getServiceById, getServiceByModalityType } from '../../helpers/data';
 import AlertPopUp from '../../components/alertPopUp';
@@ -25,6 +26,7 @@ const mapStateToProps = state => {
   const booking = state.booking;
   return {
     profile: state.professionalProfile,
+    loading: state.professionalProfile.loading,
     booking
   }
 }
@@ -52,11 +54,14 @@ const ProfessionalProfileSection = ({
   changeSection,
   booking,
   slug,
-  cancelSessionHoursLimit,
-  hideSessionAlert
+  hideSessionAlert,
+  loading
 }) => {
   const { t } = useTranslation();
-  const profileServices = profile.services && profile.services.length ? profile.services : null;
+
+  const loaded = useContentLoaded(loading);
+
+  const profileServices = loaded && profile.services && profile.services.length ? profile.services : null;
 
   function onSelectService(e, payload) {
     collapseProfileHeader(true);
