@@ -105,6 +105,7 @@ function* onPerformSessionAction() {
         yield navigate(`/profile/bookings/${payload.id}/claimed`);
       } else if (action === 'message') {
         yield put(loadSessionActivities(payload));
+        yield put(showAlert({message: i18n.t('messageSentCorrectly'), variant: 'success'}))
         yield navigate(`/profile/bookings/${payload.id}?page=1#chat`);
       } else {
         yield navigate(`/profile/bookings/${payload.id}/success`);

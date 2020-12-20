@@ -172,8 +172,8 @@ const BookingDetail = ({
                           error: t('isRequired')
                         });
                       } else {
+                        document.getElementById('message').value = '';
                         setFormError({
-                          isValid: { isValid: true, isInvalid: false },
                           error: null
                         });
                         performSessionAction({ id, action: 'message', data: { session: Number(id), message } });

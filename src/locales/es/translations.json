@@ -51,6 +51,7 @@
   "Select the time": "Selecciona la hora",
 
   "lowAvailabilityMessage": "Horario de baja disponibilidad, es posible que el profesional no pueda aceptar tu reserva.",
+  "messageSentCorrectly": "El mensaje se envío correctamente",
 
   "name": "Nombre",
   "email": "Correo electrónico",
