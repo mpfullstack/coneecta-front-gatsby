@@ -143,13 +143,12 @@ const BookingDetail = ({
           <Row className={`justify-content-md-center`}>
             <Col xs='12' md='10'>
               <div className='advices'>
-                {loaded ?
+                {loaded && advices && advices.length ?
                   advices.map((advice, i) => <p className='advice-item' key={`advice_${i}`}>{parse(advice)}</p>)
-                  :
-                  <Skeleton height={100} />}
+                  : loaded ? null : <Skeleton height={100} />}
               </div>
               <BookingActions id={id} actions={loaded ? actions : null}
-                date={loaded ? new Date(session.date) : null}
+                date={loaded && session ? new Date(session.date) : null}
                 initAvailableDates={initAvailableDates}
                 setBookingId={setBookingId}
                 performAction={payload => performSessionAction(payload)} />
