@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Col, Form as RBForm } from 'react-bootstrap';
 import theme from '../../theme';
 
-const FormControlWrapper = styled.div`
+export const FormControlWrapper = styled.div`
   width: 100%;
   display: flex;
   align-items: center;
