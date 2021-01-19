@@ -77,15 +77,16 @@ const UserForm = ({ formData, timezones, formStatus, saveProfile, profileErrors 
     'floor': validateRequired,
     'door': validateRequired
   };
+  const requiredFields = [
+    'name', 'timezone', 'street_name', 'street_number', 'province', 'country',
+    'postal_code', 'city', 'floor', 'door'
+  ];
 
   function isFormValid(formState) {
     let valid =  Object.keys(formState.validity).every(key => {
       return formState.validity[key];
     });
-    let requiredFields = [
-      'name', 'timezone', 'street_name', 'street_number', 'province', 'country',
-      'postal_code', 'city', 'floor', 'door'
-    ];
+
     let requiredValidation = requiredFields.every(fieldname => {
       if (fieldname in formState.errors && formState.errors[fieldname] !== undefined) {
         return false;
@@ -120,7 +121,14 @@ const UserForm = ({ formData, timezones, formStatus, saveProfile, profileErrors 
             isValid: valid === undefined
           };
         } else {
-          return {}
+          if (name in formState.validity) {
+            return {
+              isInvalid: !formState.validity[name],
+              isValid: formState.validity[name]
+            }
+          } else {
+            return {};
+          }
         }
       }
     }
@@ -160,6 +168,7 @@ const UserForm = ({ formData, timezones, formStatus, saveProfile, profileErrors 
       const postalCode = findAttribute(place.address_components, 'postal_code');
       const country = findAttribute(place.address_components, 'country');
       const countryCode = findAttribute(place.address_components, 'country', 'short_name');
+
       formState.setField('street_name', streetName);
       formState.setField('street_number', streetNumber);
       formState.setField('city', city);
@@ -169,6 +178,15 @@ const UserForm = ({ formData, timezones, formStatus, saveProfile, profileErrors 
       formState.setField('country_code', countryCode);
       formState.setField('location_lat', place.geometry.location.lat());
       formState.setField('location_long', place.geometry.location.lng());
+
+      Object.keys(formState.values).forEach(fieldName => {
+        if (fieldName in fieldValidators) {
+          const error = fieldValidators[fieldName](formState.values[fieldName]);
+          if (error) {
+            formState.setFieldError(fieldName, error);
+          }
+        }
+      });
     }
 
     return (
