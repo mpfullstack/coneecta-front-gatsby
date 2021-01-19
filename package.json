@@ -46,6 +46,7 @@
     "react-helmet": "^6.1.0",
     "react-i18next": "11.4.0",
     "react-loading-skeleton": "^2.0.1",
+    "react-numeric-input": "2.2.3",
     "react-redux": "^7.2.0",
     "react-star-rating-component": "1.4.1",
     "react-use-form-state": "0.13.1",
