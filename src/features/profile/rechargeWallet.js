@@ -45,7 +45,7 @@ const RechargeWallet = ({ clearBooking, credits, paymentStatus, updateCredits, c
         </Row>
         <Row className={`justify-content-md-center`} style={{marginTop: '30px'}}>
           <Col xs='12' md='10'>
-            <BuyCredits credits={credits} onChange={e => updateCredits(e.target.value)} />
+            <BuyCredits credits={credits} onChange={value => updateCredits(value)} />
             <PaymentButton status={paymentStatus} value={t('buy')} onClick={() => {
                 updateCredits(credits);
                 checkout(credits);

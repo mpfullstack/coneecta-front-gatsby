@@ -58,9 +58,8 @@ const Payment = ({
       return (
         <Row>
           <Col>
-            <BuyCredits credits={creditsToBuy} defaultCredits={defaultCredits} onChange={
-              e => updateCredits(e.target.value)
-            }/>
+            <BuyCredits
+              credits={creditsToBuy} defaultCredits={defaultCredits} onChange={value => updateCredits(value)} />
           </Col>
         </Row>
       );
