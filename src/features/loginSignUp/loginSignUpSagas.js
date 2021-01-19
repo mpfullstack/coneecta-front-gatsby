@@ -7,8 +7,9 @@ import {
   resetLoginStatus, resetSignUpStatus
 } from './loginSignUpSlice';
 import { initProfile, resetProfile } from '../profile/profileSlice';
-import { showApiError, updateCountries } from '../global/globalSlice';
+import { showApiError, showAlert, updateCountries } from '../global/globalSlice';
 import api from '../../api';
+import i18n from '../../locales/i18n';
 
 function* onLogin() {
   yield takeLatest(login, function* ({ payload }) {
@@ -50,6 +51,7 @@ function* onSignUp() {
       }
     } else {
       // Handle singup OK
+      yield put(showAlert({message: i18n.t('signedUpSuccessfully'), variant: 'success'}))
       yield put(signedUp());
       yield put(initProfile(result));
       yield loginUser();
