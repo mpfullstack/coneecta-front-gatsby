@@ -91,12 +91,34 @@ const Payment = ({
   );
 }
 
+
+function formatDateTime(date, time) {
+  return `${format(new Date(date), 'yyyyMMdd')}${time.replace(':','')}`;
+}
+
+const reservationData = {};
+
 export function buildReservationData(booking) {
-  return {
-    'service': booking.serviceId,
-    'modality': booking.modalityType,
-    'datetime': `${format(new Date(booking.date), 'yyyyMMdd')}${booking.time.replace(':','')}`
-  };
+  if (booking.serviceId && booking.modalityType && booking.date && booking.time) {
+    if (
+      booking.serviceId !== reservationData.service
+      ||
+      booking.modalityType !== reservationData.modality
+      ||
+      reservationData.date !== booking.date
+      ||
+      reservationData.time !== booking.time
+    ) {
+      reservationData.service = booking.serviceId;
+      reservationData.modality = booking.modalityType;
+      reservationData.datetime = formatDateTime(booking.date, booking.time);
+    }
+  } else {
+    reservationData.service = null;
+    reservationData.modality = null;
+    reservationData.datetime = null;
+  }
+  return reservationData;
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Payment);

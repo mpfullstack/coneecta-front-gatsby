@@ -40,32 +40,28 @@ const PaymentConfirmedWrapper = styled.div`
 `;
 
 const PaymentConfirmed = ({ id, reserve, booking }) => {
-  // const { t } = useTranslation();
-
-  // const previousPaymentStatus = usePrevious(paymentStatus);
-
-  const [paymentStatus, setPaymentStatus] = useState(() => {
-    if (id) {
-      return 'pending';
-    } else {
-      return 'accepted';
-    }
-  });
 
   const getPaymentStatus = useCallback((id, tries) => {
-    return new Promise((resolve, reject) => {
+    return new Promise(resolve => {
       api.getPaymentStatus(id)
         .then(result => {
           if (result.error) {
-            reject(result);
+            throw new Error('error');
           } else if (tries > 0 && result.status === 'pending') {
             setTimeout(() => getPaymentStatus(id, tries-1), 4000);
+          } else if (tries === 0 && result.status === 'pending') {
+            throw new Error('error');
           } else {
             resolve(result.status);
           }
         })
+        .catch(e => {
+          setPaymentStatus('error');
+        });
     });
   }, []);
+
+  const reservationData = buildReservationData(booking);
 
   useEffect(() => {
     if (id) {
@@ -73,8 +69,8 @@ const PaymentConfirmed = ({ id, reserve, booking }) => {
       getPaymentStatus(id, tries)
         .then(status => {
           // Build reservation data if booking exists and call reserve action
-          if (status === 'accepted' && booking.serviceId) {
-            reserve({ id, ...buildReservationData(booking)});
+          if (status === 'accepted' && reservationData.service) {
+            reserve({ id, ...reservationData});
           } else {
             setPaymentStatus(status);
           }
@@ -83,7 +79,15 @@ const PaymentConfirmed = ({ id, reserve, booking }) => {
           setPaymentStatus('error');
         });
     }
-  }, [id, getPaymentStatus, booking, reserve]);
+  }, [id, getPaymentStatus, reserve, reservationData]);
+
+  const [paymentStatus, setPaymentStatus] = useState(() => {
+    if (id) {
+      return 'pending';
+    } else {
+      return 'accepted';
+    }
+  });
 
   return (
     <Location>
