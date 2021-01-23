@@ -21,6 +21,7 @@ const mapStateToProps = ({ professionalProfile, booking, global, profile }) => {
 }
 
 const PaymentWrapper = styled.div`
+  padding-bottom: 60px;
 `;
 
 export const PaymentLayout = ({

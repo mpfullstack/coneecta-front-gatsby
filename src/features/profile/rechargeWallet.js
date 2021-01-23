@@ -21,6 +21,7 @@ const mapStateToProps = ({ profile, payment }) => {
 }
 
 const RechargeWalletWrapper = styled.div`
+  padding-bottom: 60px;
   .title {
     margin-bottom: 20px;
   }

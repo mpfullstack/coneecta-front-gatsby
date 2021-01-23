@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Row, Col } from 'react-bootstrap';
 import NumericInput from 'react-numeric-input';
 import styled from 'styled-components';
@@ -24,9 +24,14 @@ const BuyCreditsWrapper = styled.div`
 `;
 
 const BuyCredits = ({ credits, defaultCredits, onChange }) => {
-  if (!credits) {
-    credits = defaultCredits;
-  }
+  const [creditsValue, setCredits] = useState(credits);
+
+  useEffect(() => {
+    if (!creditsValue) {
+      setCredits(defaultCredits);
+    }
+  }, [creditsValue, defaultCredits]);
+
   return (
     <BuyCreditsWrapper>
       <Row className='buy-credits'>
@@ -34,7 +39,10 @@ const BuyCredits = ({ credits, defaultCredits, onChange }) => {
         <Col xs='6'>
           <FormControlWrapper>
             <NumericInput
-              className='form-control' parse={parseInt} onChange={onChange} value={credits} strict={true} />
+              className='form-control' parse={parseInt} onChange={value => {
+                setCredits(value);
+                onChange(value);
+              }} value={creditsValue} strict={true} />
           </FormControlWrapper>
         </Col>
       </Row>
