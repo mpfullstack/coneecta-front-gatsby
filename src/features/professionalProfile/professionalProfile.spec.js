@@ -1,6 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { render, waitFor, fireEvent } from '@testing-library/react';
+import { render, screen, waitFor, fireEvent } from '@testing-library/react';
 import api from '../../api';
 import ProfessionalProfile from './professionalProfile';
 import store from '../../redux/store';
@@ -86,31 +86,33 @@ describe('My Connected React-Redux Component', () => {
   });
 
   test('Renders professional profile details', async () => {
-    const { findByText } = render(component);
+    render(component);
 
-    expect(await findByText("Isabela Reinket")).toBeInTheDocument();
-    expect(await findByText("Lectura del tarot")).toBeInTheDocument();
+    expect(await screen.findByText("Isabela Reinket")).toBeInTheDocument();
+
+    expect(await screen.findByText("Lectura del tarot")).toBeInTheDocument();
   });
 
   test('Show professional profile service details on click', async () => {
-    const { getByText } = render(component);
+    render(component);
 
-    expect(getByText("Lectura del tarot")).toBeInTheDocument();
+    expect(await screen.findByText("Lectura del tarot")).toBeInTheDocument();
 
-    fireEvent.click(getByText("Lectura del tarot"));
+    fireEvent.click(await screen.findByText("Lectura del tarot"));
 
-    expect(getByText(/Escoge la modalidad/i)).toBeInTheDocument();
+    expect(await screen.findByText(/Escoge la modalidad/i)).toBeInTheDocument();
   });
 
   test('Show date time picker page for selected service modality', async () => {
-    const { getByText } = render(component);
+    render(component);
 
-    fireEvent.click(getByText("Lectura del tarot"));
-    fireEvent.click(getByText("Video conferencia"));
+    fireEvent.click(await screen.findByText("Lectura del tarot"));
+
+    fireEvent.click(await screen.findByText("Video conferencia"));
 
     await waitFor(() => {
-      expect(getByText(/hacer tu reserva/i)).toBeInTheDocument();
-      expect(getByText("Reservar")).toBeInTheDocument();
+      expect(screen.getByText(/hacer tu reserva/i)).toBeInTheDocument();
+      expect(screen.getByText("Reservar")).toBeInTheDocument();
     });
   });
 });
