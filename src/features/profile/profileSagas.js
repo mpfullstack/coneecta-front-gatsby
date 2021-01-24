@@ -8,6 +8,7 @@ import {
   initWalletMovements, walletMovementsLoaded, loadSessionActivities,
   initSessionActivities, activitiesLoaded
 } from './profileSlice';
+import { clearBooking } from '../booking/bookingSlice';
 import { logout } from '../loginSignUp/loginSignUpSlice';
 import Query from '../../helpers/query';
 import { showApiError, updateCountries, showAlert } from '../global/globalSlice';
@@ -115,6 +116,7 @@ function* onPerformSessionAction() {
         yield navigate(`/profile/bookings/${payload.id}?page=1#chat`);
       } else {
         yield navigate(`/profile/bookings/${payload.id}/success`);
+        yield put(clearBooking());
       }
     }
   });

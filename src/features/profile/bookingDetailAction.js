@@ -5,14 +5,14 @@ import { Row, Col } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { format } from 'date-fns';
 import { performSessionAction } from './profileSlice';
-import { clearBooking, hideSessionAlert } from '../booking/bookingSlice';
+import { hideSessionAlert } from '../booking/bookingSlice';
 import DateTimePicker from '../../components/dateTimePicker';
 import AlertPopUp from '../../components/alertPopUp';
 import FormControl from '../../components/form/formControl';
 import RatingReview from './ratingReview';
 import PrimaryButton from '../../components/buttons/primaryButton';
 
-const mapDispatchToProps = { performSessionAction, hideSessionAlert, clearBooking };
+const mapDispatchToProps = { performSessionAction, hideSessionAlert };
 const mapStateToProps = ({ booking }) => {
   return {
     booking,
@@ -51,7 +51,7 @@ const BookingDetailActionWrapper = styled.div`
 `;
 
 const BookingDetailAction = ({
-  id, action, performSessionAction, booking, clearBooking, hideSessionAlert, showSessionAlert
+  id, action, performSessionAction, booking, hideSessionAlert, showSessionAlert
 }) => {
   const [formError, setFormError] = useState({});
   const { t } = useTranslation();
@@ -96,7 +96,6 @@ const BookingDetailAction = ({
           <DateTimePicker
             timeZoneDisabled={true}
             onConfirm={() => {
-              clearBooking();
               const payload = buildPayload('suggest_modification');
               if (payload) {
                 performSessionAction(payload);

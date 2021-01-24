@@ -77,7 +77,6 @@ const bookingSlice = createSlice({
       state.date = '';
       state.time = '';
       state.isTimeAvailable = false;
-      state.availableDates = [];
     }
   }
 });
