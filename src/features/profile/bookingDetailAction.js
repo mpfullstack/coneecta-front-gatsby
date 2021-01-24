@@ -30,6 +30,11 @@ const BookingDetailActionWrapper = styled.div`
   .detail-text {
     text-align: center;
   }
+  .tip-text {
+    text-align: center;
+    font-style: italic;
+    margin: 2px 0;
+  }
   .action-button {
     display: flex;
     justify-content: center;
@@ -106,6 +111,7 @@ const BookingDetailAction = ({
         <div>
           <p className='detail-text'><strong>{t('How was your booking?')}</strong></p>
           <p className='detail-text'>{t('Leave your review')}</p>
+          <p className='tip-text'>{t('reivewTipMessage')}</p>
           <RatingReview onChange={value => ratingReviewValue = value } />
           <FormControl label={t('leaveSomeComments')} name={'comments'} as='textarea' />
           <div className='action-button'>
