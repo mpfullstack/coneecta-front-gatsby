@@ -64,10 +64,19 @@ function* onLoadSessionDetail() {
       }
     } else {
       yield put(initSessionDetail(result));
-      // Redirect to /profile/bookings/{sessionId}/review if booking status is unreviewed and path is not that yet
+      // Redirect to /profile/bookings/:id/review if booking status is unreviewed and path is not that yet
       if (result.info.status === 'unreviewed' && Query.getPath(window.location).indexOf('review') === -1) {
         yield navigate(`/profile/bookings/${payload.id}/review`);
-      } else if (['approved', 'unapproved'].every(status => result.info.status !== status) && Query.getPath(window.location).indexOf('modify') !== -1) {
+      }
+      // Redirect to booking detail /profiles/booking/:id when path is in review but booking status doesn't allow it
+      else if(['unreviewed'].every(status => result.info.status !== status) && Query.getPath(window.location).indexOf('review') !== -1) {
+        yield navigate(`/profile/bookings/${payload.id}`);
+      }
+      // Redirect to booking detail /profiles/booking/:id when path is in modify but booking status doesn't allow it
+      else if (['approved', 'unapproved'].every(status => result.info.status !== status) && Query.getPath(window.location).indexOf('modify') !== -1) {
+        yield navigate(`/profile/bookings/${payload.id}`);
+      // Redirect to booking detail /profiles/booking/:id when path is in claim but booking status doesn't allow it
+      } else if (result.info.status !== 'progress' && Query.getPath(window.location).indexOf('claim') !== -1) {
         yield navigate(`/profile/bookings/${payload.id}`);
       } else {
         yield put(sessionsLoaded());
