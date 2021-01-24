@@ -4,8 +4,13 @@ function getParams(location) {
   return queryString.parse(location.search);
 }
 
+function getPath(location) {
+  return location.pathname;
+}
+
 const Query = {
-  getParams
+  getParams,
+  getPath
 }
 
 export default Query;

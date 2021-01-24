@@ -9,6 +9,7 @@ import {
   initSessionActivities, activitiesLoaded
 } from './profileSlice';
 import { logout } from '../loginSignUp/loginSignUpSlice';
+import Query from '../../helpers/query';
 import { showApiError, updateCountries, showAlert } from '../global/globalSlice';
 import api from '../../api';
 import { login } from '../../helpers/authentication';
@@ -62,7 +63,12 @@ function* onLoadSessionDetail() {
       }
     } else {
       yield put(initSessionDetail(result));
-      yield put(sessionsLoaded());
+      // Redirect to /profile/bookings/{sessionId}/review if booking status is unreviewed and path is not that yet
+      if (result.info.status === 'unreviewed' && Query.getPath(window.location).indexOf('review') === -1) {
+        yield navigate(`/profile/bookings/${payload.id}/review`);
+      } else {
+        yield put(sessionsLoaded());
+      }
     }
   });
 }
