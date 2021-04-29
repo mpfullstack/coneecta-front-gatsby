@@ -156,7 +156,7 @@ const BookingDetail = ({
           </Row>
         }
         {action !== 'modify' ?
-          <Row>
+          <Row className={`justify-content-md-center`}>
             <Col xs='12' md='10'>
               {loaded ?
                 <>
