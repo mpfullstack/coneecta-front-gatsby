@@ -5,7 +5,12 @@ import { isLoggedIn } from '../helpers/authentication';
 const PrivateRoute = ({ component: Component, location, ...rest }) => {
   if (!isLoggedIn() && location.pathname !== `/login`) {
     if (typeof(window) === 'object') {
-      navigate(`/login${location.search}`);
+      let parameters = [];
+      if (location.search) {
+        parameters = [location.search.replace(/^\?+/gmi,"")];
+      }
+      parameters.push(`r=${encodeURIComponent(location.pathname)}`);
+      navigate(`/login?${parameters.join("&")}`);
     }
     return null;
   }
