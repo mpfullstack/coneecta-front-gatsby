@@ -53,7 +53,7 @@ export const RegisterLayout = ({ professionalProfile, loadProfessionalProfile, l
     // If user is logged in, navigate to /profile/payment
     if (isLoggedIn()) {
       navigate(`/profile/payment?slug=${slug}`);
-    } else if (slug !== '') {
+    } else if (slug !== '' && slug !== undefined) {
       if (!professionalProfile.id) {
         loadProfessionalProfile({id: slug});
       }
