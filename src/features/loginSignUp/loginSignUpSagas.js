@@ -34,7 +34,11 @@ function* onLogin() {
       yield put(initProfile(result));
       yield loginUser();
       const params = Query.getParams(window.location);
-      yield navigate(`/profile/payment?slug=${params.slug}`);
+      if (params.r) {
+        yield navigate(params.r);
+      } else {
+        yield navigate(`/profile/payment?slug=${params.slug}`);
+      }
     }
   });
 }
