@@ -33,7 +33,7 @@ const FormWrapper = styled.div`
   }
 `;
 
-const LoginForm = ({ login, timezones, timezone, loginStatus, loginErrors }) => {
+const LoginForm = ({ login, loginStatus, loginErrors }) => {
   const { t } = useTranslation();
   const formData = {
     email: '',

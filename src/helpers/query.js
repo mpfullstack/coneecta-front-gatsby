@@ -5,7 +5,8 @@ function getParams(location) {
 }
 
 function getPath(location) {
-  return location.pathname;
+  const pathPrefix = process.env.PATH_PREFIX;
+  return location.pathname.replace(pathPrefix, "");
 }
 
 const Query = {
