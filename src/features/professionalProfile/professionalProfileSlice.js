@@ -4,6 +4,7 @@ const professionalProfileSlice = createSlice({
   name: 'professionalProfile',
   initialState: {
     'id': null,
+    'slug': '', // Holds the slug of the professional being booked
     'loading': false,
     'collapseProfileHeader': false,
 		'details': null,
@@ -20,6 +21,7 @@ const professionalProfileSlice = createSlice({
       state.id = action.payload.id;
       state.details = action.payload.details;
       state.services = action.payload.services;
+      state.slug = action.payload.slug;
       state.loading = false;
     },
     loadProfessionalProfileReviews: state => {},
