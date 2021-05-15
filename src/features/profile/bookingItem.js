@@ -13,7 +13,7 @@ const BookingItemWrapper = styled.div`
   border-radius: 5px;
   background-color: ${theme.boxBackgroundColor};
   padding: 10px;
-  min-height: 131px;
+  min-height: 100px;
   .linkable {
     cursor: pointer;
   }
@@ -60,26 +60,34 @@ const BookingItemWrapper = styled.div`
   }
 `;
 
-const BookingItem = ({ linkable = true, session = null }) => {
+export const BookingItemData = ({ status, date, serviceName, slug, professionalName }) => {
   const { t } = useTranslation();
+  return (
+    <BookingItemWrapper>
+      {status ? <div className={`status ${status}`}>
+        {t(status)}
+      </div> : null}
+      <div className='text date'>
+        {format(new Date(date), "d 'de' LLLL 'de' yyyy · H:mm 'horas'", { locale: es })}
+      </div>
+      <div className='text name'>
+        {serviceName}
+      </div>
+      <div className='text teacher'>
+        <Link onClick={e => e.stopPropagation()} to={`/u/${slug}`}>{professionalName}</Link>
+      </div>
+    </BookingItemWrapper>
+  );
+}
 
+const BookingItem = ({ linkable = true, session = null }) => {
   if (session) {
-    const item = (
-      <>
-        <div className={`status ${session.status}`}>
-          {t(session.status)}
-        </div>
-        <div className='text date'>
-          {format(new Date(session.date), "d 'de' LLLL 'de' yyyy · H:mm 'horas'", { locale: es })}
-        </div>
-        <div className='text name'>
-          {session.name}
-        </div>
-        <div className='text teacher'>
-          <Link onClick={e => e.stopPropagation()} to={`/u/${session.teacher.slug}`}>{session.teacher.name}</Link>
-        </div>
-      </>
-    );
+    const item = <BookingItemData
+      status={session.status}
+      date={session.date}
+      serviceName={session.name}
+      slug={session.teacher.slug}
+      professionalName={session.teacher.name} />;
 
     let link = '';
     if (linkable) {
@@ -90,13 +98,13 @@ const BookingItem = ({ linkable = true, session = null }) => {
     }
 
     return (
-      <BookingItemWrapper>
+      <>
         {linkable ?
           <div className='linkable' aria-hidden="true" onClick={() => navigate(link)} onKeyDown={e => null}>
             {item}
           </div>
         : item}
-      </BookingItemWrapper>
+      </>
     );
   } else {
     return (
