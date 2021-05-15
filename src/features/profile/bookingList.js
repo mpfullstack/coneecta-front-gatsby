@@ -38,7 +38,6 @@ const BookingList = ({ clearBooking, services, professionalName, slug, booking, 
   const { t } = useTranslation();
 
   useEffect(() => {
-    // clearBooking();
     loadSessions();
   }, [loadSessions]);
 
