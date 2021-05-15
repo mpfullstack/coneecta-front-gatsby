@@ -170,3 +170,7 @@ export function generateAvailableDates(bookingDate, days = 15) {
   }
   return availableDates;
 }
+
+export function getIsBookingPending({ serviceId, date, time, slug }) {
+  return serviceId && date && time && slug;
+}

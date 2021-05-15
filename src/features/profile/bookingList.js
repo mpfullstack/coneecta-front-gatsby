@@ -8,14 +8,20 @@ import { useTranslation } from 'react-i18next';
 import Skeleton from '../../components/skeleton';
 import Pagination from '../../components/pagination';
 import BookingItem from './bookingItem';
+import PendingBooking from './pendingBooking';
 import useContentLoaded from '../../components/hooks/useContentLoaded';
 import { clearBooking } from '../booking/bookingSlice';
+import { getIsBookingPending, getServiceById } from '../../helpers/data';
 
 const mapDispatchToProps = { loadSessions, clearBooking };
-const mapStateToProps = ({ profile }) => {
+const mapStateToProps = ({ booking, profile, professionalProfile }) => {
   return {
     sessions: profile.sessions,
-    loading: profile.loadingSessions
+    loading: profile.loadingSessions,
+    booking,
+    slug: professionalProfile.slug,
+    services: professionalProfile.services,
+    professionalName: professionalProfile.details?.name
   }
 }
 
@@ -28,22 +34,31 @@ const BookingListWrapper = styled.div`
   }
 `;
 
-const BookingList = ({ clearBooking, loadSessions, sessions, loading }) => {
+const BookingList = ({ clearBooking, services, professionalName, slug, booking, loadSessions, sessions, loading }) => {
   const { t } = useTranslation();
 
   useEffect(() => {
-    clearBooking();
     loadSessions();
-  }, [loadSessions, clearBooking]);
+  }, [loadSessions]);
 
   const sessionsPagination = sessions ? sessions.pagination : null;
   const profileSessions = sessions ? sessions.items : null;
+  const isBookingPending = getIsBookingPending({ ...booking, slug });
+  const service = getServiceById(services, booking.serviceId);
 
   const loaded = useContentLoaded(loading);
 
   return (
     <BookingListWrapper>
       <SEO title="Reservas" />
+      {isBookingPending ?
+        <PendingBooking
+          date={booking.date}
+          serviceName={service.name}
+          slug={slug}
+          professionalName={professionalName}
+          onDiscard={() => clearBooking()} /> : null}
+
       <h1 className='title'>Reservas</h1>
       <Row className={`justify-content-md-center`} style={{marginTop: '30px'}}>
         <Col xs='12' md='10'>
