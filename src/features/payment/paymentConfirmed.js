@@ -71,8 +71,10 @@ const PaymentConfirmed = ({ id, reserve, booking }) => {
           // Build reservation data if booking exists and call reserve action
           if (status === 'accepted' && reservationData.service) {
             reserve({ id, ...reservationData});
+            setIsBooking(true);
           } else {
             setPaymentStatus(status);
+            setIsBooking(false);
           }
         })
         .catch(e => {
@@ -88,6 +90,8 @@ const PaymentConfirmed = ({ id, reserve, booking }) => {
       return 'accepted';
     }
   });
+
+  const [isBooking, setIsBooking] = useState(true);
 
   return (
     <Location>
@@ -112,21 +116,25 @@ const PaymentConfirmed = ({ id, reserve, booking }) => {
                       </p>
                     </Col>
                   </Row>
-                  <Row className='justify-content-center text-center'>
-                    <Col xs='9'>
-                      <p>Tu reserva ha sido registrada correctamente y ya hemos solicitado a Javier Marrero su confirmación.</p>
-                    </Col>
-                  </Row>
-                  <Row className='icon-text'>
-                    <Col xs='1'></Col>
-                    <Col xs='2'><Envelope /></Col>
-                    <Col xs='8'>Hemos enviado a tu correo electrónico un resumen con todos los detalles de tu reserva.</Col>
-                  </Row>
-                  <Row className='icon-text'>
-                    <Col xs='1'></Col>
-                    <Col xs='2'><InfoCircle /></Col>
-                    <Col xs='8'>Recuerda que desde tu zona de usuario tambien puedes consultar toda esta información siempre que lo necesites.</Col>
-                  </Row>
+                  {isBooking ?
+                    <>
+                      <Row className='justify-content-center text-center'>
+                        <Col xs='9'>
+                          <p>Tu reserva ha sido registrada correctamente y ya hemos solicitado a Javier Marrero su confirmación.</p>
+                        </Col>
+                      </Row>
+                      <Row className='icon-text'>
+                        <Col xs='1'></Col>
+                        <Col xs='2'><Envelope /></Col>
+                        <Col xs='8'>Hemos enviado a tu correo electrónico un resumen con todos los detalles de tu reserva.</Col>
+                      </Row>
+                      <Row className='icon-text'>
+                        <Col xs='1'></Col>
+                        <Col xs='2'><InfoCircle /></Col>
+                        <Col xs='8'>Recuerda que desde tu zona de usuario tambien puedes consultar toda esta información siempre que lo necesites.</Col>
+                      </Row>
+                    </>
+                    : null}
                 </Container>
                 :
                 /**
