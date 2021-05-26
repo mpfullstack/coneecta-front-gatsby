@@ -7,8 +7,9 @@ import {
   resetLoginStatus, resetSignUpStatus
 } from './loginSignUpSlice';
 import { initProfile, resetProfile } from '../profile/profileSlice';
-import { showApiError, updateCountries } from '../global/globalSlice';
+import { showApiError, showAlert, updateCountries } from '../global/globalSlice';
 import api from '../../api';
+import i18n from '../../locales/i18n';
 
 function* onLogin() {
   yield takeLatest(login, function* ({ payload }) {
@@ -33,7 +34,11 @@ function* onLogin() {
       yield put(initProfile(result));
       yield loginUser();
       const params = Query.getParams(window.location);
-      yield navigate(`/profile/payment?slug=${params.slug}`);
+      if (params.r) {
+        yield navigate(params.r);
+      } else {
+        yield navigate(`/profile/payment?slug=${params.slug}`);
+      }
     }
   });
 }
@@ -50,6 +55,7 @@ function* onSignUp() {
       }
     } else {
       // Handle singup OK
+      yield put(showAlert({message: i18n.t('signedUpSuccessfully'), variant: 'success'}))
       yield put(signedUp());
       yield put(initProfile(result));
       yield loginUser();
@@ -63,8 +69,17 @@ function* onLogout() {
   yield takeLatest(logout, function* ({ payload }) {
     const result = yield call(api.logout);
     if (result.error) {
-      // TODO: Handle error.
-      // NOTE: We do nothing so far.
+      // User is already logged out
+      if (result.status === 403) {
+        yield put(resetProfile());
+        yield logoutUser();
+        if (payload.redirect) {
+          yield navigate(`/login`);
+        }
+      } else {
+        // TODO: Handle error.
+        // NOTE: We do nothing so far.
+      }
     } else {
       // Handle logout OK
       yield put(resetProfile());

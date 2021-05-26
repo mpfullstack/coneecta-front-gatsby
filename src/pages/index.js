@@ -1,7 +1,7 @@
-import React from 'react'
+import { useEffect } from 'react';
+import { navigate } from 'gatsby';
 
-const IndexPage = () => {
-  return <p>404 Not found</p>;
+export default () => {
+  useEffect(() => navigate('/profile/'), []);
+  return null;
 }
-
-export default IndexPage

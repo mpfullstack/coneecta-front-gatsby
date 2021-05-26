@@ -23,9 +23,9 @@ const createStore = (preloadedState = {}) => {
   const store = configureStore({
     reducer: combineReducers({
       global: rootReducer.global,
-      professionalProfile: persistReducer({ key: 'professionalProfile', storage }, rootReducer.professionalProfile),
+      professionalProfile: persistReducer({ key: 'professionalProfile', version: '1.0.0', storage }, rootReducer.professionalProfile),
       profile: rootReducer.profile,
-      booking: persistReducer({ key: 'booking', storage }, rootReducer.booking),
+      booking: persistReducer({ key: 'booking', version: '1.0.0', storage }, rootReducer.booking),
       loginSignUp: rootReducer.loginSignUp,
       payment: rootReducer.payment
     }),

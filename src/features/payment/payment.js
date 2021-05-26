@@ -18,14 +18,15 @@ const mapDispatchToProps = {
   updateCredits
 };
 const mapStateToProps = ({ profile, payment, booking, professionalProfile }) => {
-  const serviceModality = getServiceByModalityType(
-    getServiceById(professionalProfile.services, booking.serviceId),
-    booking.modalityType
-  );
+  const service = getServiceById(professionalProfile.services, booking.serviceId);
+  let defaultCredits = '';
+  let serviceModality = {};
   const profileDetails = profile.details || {};
-  let defaultCredits;
-  if (profileDetails.credits < serviceModality.credits) {
-    defaultCredits = serviceModality.credits - profileDetails.credits;
+  if (service) {
+    serviceModality = getServiceByModalityType(service, booking.modalityType);
+    if (profileDetails.credits < serviceModality.credits) {
+      defaultCredits = serviceModality.credits - profileDetails.credits;
+    }
   }
   return {
     booking,
@@ -44,14 +45,6 @@ const Payment = ({
 }) => {
   const { t } = useTranslation();
 
-  function buildReservationData() {
-    return {
-      'service': booking.serviceId,
-      'modality': booking.modalityType,
-      'datetime': `${format(new Date(booking.date), 'yyyyMMdd')}${booking.time.replace(':','')}`
-    };
-  }
-
   function renderPaymentOption() {
     if (directReserve) {
       return (
@@ -65,14 +58,15 @@ const Payment = ({
       return (
         <Row>
           <Col>
-            <BuyCredits credits={creditsToBuy} defaultCredits={defaultCredits} onChange={
-              e => updateCredits(e.target.value)
-            }/>
+            <BuyCredits
+              credits={creditsToBuy} defaultCredits={defaultCredits} onChange={value => updateCredits(value)} />
           </Col>
         </Row>
       );
     }
   }
+
+  // TODO: Redirect to /u/[slug] if no booking.serviceId selected ??
 
   return (
     <Location>
@@ -84,7 +78,7 @@ const Payment = ({
             {renderPaymentOption()}
             <PaymentButton status={payment.status} onClick={() => {
               if (directReserve) {
-                reserve(buildReservationData());
+                reserve(buildReservationData(booking));
               } else {
                 updateCredits(creditsToBuy);
                 checkout(creditsToBuy);
@@ -95,6 +89,36 @@ const Payment = ({
       }}
     </Location>
   );
+}
+
+
+function formatDateTime(date, time) {
+  return `${format(new Date(date), 'yyyyMMdd')}${time.replace(':','')}`;
+}
+
+const reservationData = {};
+
+export function buildReservationData(booking) {
+  if (booking.serviceId && booking.modalityType && booking.date && booking.time) {
+    if (
+      booking.serviceId !== reservationData.service
+      ||
+      booking.modalityType !== reservationData.modality
+      ||
+      reservationData.date !== booking.date
+      ||
+      reservationData.time !== booking.time
+    ) {
+      reservationData.service = booking.serviceId;
+      reservationData.modality = booking.modalityType;
+      reservationData.datetime = formatDateTime(booking.date, booking.time);
+    }
+  } else {
+    reservationData.service = null;
+    reservationData.modality = null;
+    reservationData.datetime = null;
+  }
+  return reservationData;
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Payment);

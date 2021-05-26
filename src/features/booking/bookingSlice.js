@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit'
 const bookingSlice = createSlice({
   name: 'booking',
   initialState: {
-		'id': null, // null if is a new booking
+    'id': null, // Holds a session id (a booking already done)
 		'serviceId': null, // Selected service
     'modalityType': '', // Modality of the service
     'timezones': [], // Time zones available to choose
@@ -15,9 +15,14 @@ const bookingSlice = createSlice({
     'fetchingTimeZones': true,
     'fetchingAvailableDates': true,
     'timelimits': {}, // Some time limits to take into account on booking actions
-    'showCancelSessionAlert': false
+    'showSessionAlert': false,
+    'sessionAlertMessage': '', // Alert message content
+    'keepGoingAfterShowingAlert': false // Indicates if user should continue navigation after showing alert
 	},
   reducers: {
+    setBookingId: (state, action) => {
+      state.id = action.payload;
+    },
     selectService: (state, action) => {
       state.serviceId = action.payload.serviceId;
       state.modalityType = action.payload.modalityType;
@@ -36,7 +41,9 @@ const bookingSlice = createSlice({
       state.isTimeAvailable = action.payload.available;
     },
     fetchAvailableTimeZones: state => {
-      state.fetchingAvailableDates = true;
+      if (state.serviceId) {
+        state.fetchingAvailableDates = true;
+      }
       state.fetchingTimeZones = true;
     },
     initAvailableTimeZones: (state, action) => {
@@ -45,22 +52,37 @@ const bookingSlice = createSlice({
     },
     selectTimeZone: (state, action) => {
       state.timezone = action.payload;
-      state.fetchingAvailableDates = true;
+      if (state.serviceId) {
+        state.fetchingAvailableDates = true;
+      }
     },
     getTimeLimits: () => {},
     setTimeLimits: (state, action) => {
       state.timelimits = action.payload;
     },
-    showCancelSessionAlert: state => {
-      state.showCancelSessionAlert = true;
+    showSessionAlert: (state, action) => {
+      state.showSessionAlert = true;
+      state.sessionAlertMessage = action.payload.message;
+      state.keepGoingAfterShowingAlert = action.payload.keepGoing;
     },
-    hideCancelSessionAlert: state => {
-      state.showCancelSessionAlert = false;
+    hideSessionAlert: state => {
+      state.showSessionAlert = false;
+      state.sessionAlertMessage = '';
+      state.keepGoingAfterShowingAlert = false;
+    },
+    clearBooking: state => {
+      state.id = null;
+      state.serviceId = null;
+      state.modalityType = '';
+      state.date = '';
+      state.time = '';
+      state.isTimeAvailable = false;
     }
   }
 });
 
 export const {
+  setBookingId,
   selectService,
   selectDate,
   selectTime,
@@ -70,8 +92,9 @@ export const {
   initAvailableTimeZones,
   getTimeLimits,
   setTimeLimits,
-  showCancelSessionAlert,
-  hideCancelSessionAlert
+  showSessionAlert,
+  hideSessionAlert,
+  clearBooking
 } = bookingSlice.actions
 
 export default bookingSlice.reducer;

@@ -7,9 +7,10 @@ import { Animated } from 'react-animated-css';
 import { Row, Col } from 'react-bootstrap';
 import Skeleton from '../../components/skeleton';
 import { changeSection, showService, collapseProfileHeader } from './professionalProfileSlice';
-import { selectService, hideCancelSessionAlert } from '../booking/bookingSlice';
+import { selectService, hideSessionAlert } from '../booking/bookingSlice';
 import ProfessionalServices from './professionalServices';
 import DateTimePicker from '../../components/dateTimePicker';
+import useContentLoaded from '../../components/hooks/useContentLoaded';
 import ServiceCard from '../../components/services/serviceCard';
 import { getServiceById, getServiceByModalityType } from '../../helpers/data';
 import AlertPopUp from '../../components/alertPopUp';
@@ -19,15 +20,14 @@ const mapDispatchToProps = {
   changeSection,
   showService,
   collapseProfileHeader,
-  hideCancelSessionAlert
+  hideSessionAlert
 };
 const mapStateToProps = state => {
   const booking = state.booking;
   return {
     profile: state.professionalProfile,
-    booking,
-    cancelSessionHoursLimit: booking && booking.timelimits ?
-      booking.timelimits.cancel_session / 60 / 60 : 24
+    loading: state.professionalProfile.loading,
+    booking
   }
 }
 
@@ -54,11 +54,14 @@ const ProfessionalProfileSection = ({
   changeSection,
   booking,
   slug,
-  cancelSessionHoursLimit,
-  hideCancelSessionAlert
+  hideSessionAlert,
+  loading
 }) => {
   const { t } = useTranslation();
-  const profileServices = profile.services && profile.services.length ? profile.services : null;
+
+  const loaded = useContentLoaded(loading);
+
+  const profileServices = loaded && profile.services && profile.services.length ? profile.services : null;
 
   function onSelectService(e, payload) {
     collapseProfileHeader(true);
@@ -97,7 +100,7 @@ const ProfessionalProfileSection = ({
           <Skeleton height={45} count={3} />}
       </>
     );
-  } else if (profile.section === 'datePicker') {
+  } else if (profile.section === 'datePicker' && booking.serviceId) {
     const service = getServiceById(profile.services, booking.serviceId);
     const modality = getServiceByModalityType(service, booking.modalityType);
     sectionContent = (
@@ -121,18 +124,24 @@ const ProfessionalProfileSection = ({
         </Row>
         <AlertPopUp
           className='cancel-session-alert'
-          show={booking.showCancelSessionAlert}
-          body={t('cancelSessionAlert', { hours: cancelSessionHoursLimit })}
-          onCancel={hideCancelSessionAlert}
+          show={booking.showSessionAlert}
+          body={booking.sessionAlertMessage}
+          onCancel={hideSessionAlert}
           onAccept={() => {
-            hideCancelSessionAlert();
-            navigate(`/profile/payment${slug ? `?slug=${slug}` : ''}`);
+            hideSessionAlert();
+            if (booking.keepGoingAfterShowingAlert) {
+              navigate(`/profile/payment${slug ? `?slug=${slug}` : ''}`);
+            }
           }} />
       </>
     );
   }
 
-  return <SectionContentWrapper>{sectionContent}</SectionContentWrapper>;
+  if (sectionContent) {
+    return <SectionContentWrapper>{sectionContent}</SectionContentWrapper>;
+  } else {
+    return null;
+  }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProfessionalProfileSection);

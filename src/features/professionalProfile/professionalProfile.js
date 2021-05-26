@@ -7,38 +7,37 @@ import { Container, Row, Col } from 'react-bootstrap';
 import ProfileHeader from '../../components/professionalProfile/profileHeader';
 import ProfessionalProfileSection from './professionalProfileSection';
 import { getTimeLimits } from '../booking/bookingSlice';
-
-// https://github.com/buildo/react-placeholder
-// https://github.com/dvtng/react-loading-skeleton
-
-
-// Stars rating component
-// https://www.npmjs.com/package/react-star-rating-component
+import useContentLoaded from '../../components/hooks/useContentLoaded';
+import { navigate } from 'gatsby';
 
 const mapDispatchToProps = { loadProfessionalProfile, collapseProfileHeader, loadProfile, getTimeLimits };
 const mapStateToProps = state => {
   return {
     profile: state.professionalProfile,
     global: state.global,
-    booking: state.booking
+    booking: state.booking,
+    loading: state.professionalProfile.loading
   }
 }
 
 export const ProfessionalProfile = ({
   profile, loadProfessionalProfile, collapseProfileHeader, location,
-  slug, serviceSlug, loadProfile, getTimeLimits
+  slug, serviceSlug, loadProfile, getTimeLimits, loading
 }) => {
   useEffect(() => {
-    loadProfile();
+    loadProfile({ redirect: false });
     getTimeLimits();
-    if (slug !== '') {
+    if (slug !== '' && slug !== 'undefined') {
       loadProfessionalProfile({id: slug, sid: serviceSlug});
     } else {
-      // TODO: Handle if no professional id is present in URL
+      // Handle if no professional id is present in URL
+      navigate('/profile/');
     }
   }, [loadProfessionalProfile, location, slug, serviceSlug, loadProfile, getTimeLimits]);
 
-  const profileDetails = profile.details || {};
+  const loaded = useContentLoaded(loading);
+
+  const profileDetails = loaded && profile.details ? profile.details : {};
 
   return (
     <Container>

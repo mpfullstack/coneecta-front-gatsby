@@ -1,22 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { Row, Col } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { format } from 'date-fns';
 import { performSessionAction } from './profileSlice';
-import { hideCancelSessionAlert } from '../booking/bookingSlice';
+import { hideSessionAlert } from '../booking/bookingSlice';
 import DateTimePicker from '../../components/dateTimePicker';
 import AlertPopUp from '../../components/alertPopUp';
 import FormControl from '../../components/form/formControl';
 import RatingReview from './ratingReview';
 import PrimaryButton from '../../components/buttons/primaryButton';
 
-const mapDispatchToProps = { performSessionAction, hideCancelSessionAlert };
+const mapDispatchToProps = { performSessionAction, hideSessionAlert };
 const mapStateToProps = ({ booking }) => {
   return {
     booking,
-    showCancelSessionAlert: booking ? booking.showCancelSessionAlert : false,
+    showSessionAlert: booking ? booking.showSessionAlert : false,
     cancelSessionHoursLimit: booking && booking.timelimits ?
       booking.timelimits.cancel_session / 60 / 60 : 24
   }
@@ -30,21 +30,35 @@ const BookingDetailActionWrapper = styled.div`
   .detail-text {
     text-align: center;
   }
+  .tip-text {
+    text-align: center;
+    font-style: italic;
+    margin: 2px 0;
+  }
   .action-button {
     display: flex;
     justify-content: center;
+    width: 100%;
+    & > div {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+      .btn {
+        width: 80%;
+      }
+    }
   }
 `;
 
 const BookingDetailAction = ({
-  id, action, performSessionAction, booking,
-  cancelSessionHoursLimit, hideCancelSessionAlert, showCancelSessionAlert
+  id, action, performSessionAction, booking, hideSessionAlert, showSessionAlert
 }) => {
+  const [formError, setFormError] = useState({});
   const { t } = useTranslation();
   let ratingReviewValue;
 
   function buildPayload(actionToPerform) {
-    const payload = {
+    let payload = {
       id: Number(id),
       action: actionToPerform
     };
@@ -59,8 +73,16 @@ const BookingDetailAction = ({
         comments: document.getElementById('comments').value
       }
     } else if (actionToPerform === 'claim_session') {
-      payload.data = {
-        comments: document.getElementById('comments').value
+      if (!document.getElementById('comments').value) {
+        setFormError({
+          isValid: { isValid: false, isInvalid: true },
+          error: t('isRequired')
+        });
+        payload = null;
+      } else {
+        payload.data = {
+          comments: document.getElementById('comments').value
+        }
       }
     }
     return payload;
@@ -73,7 +95,12 @@ const BookingDetailAction = ({
           <p className='detail-text'>{t('When do you want to change your booking for?')}</p>
           <DateTimePicker
             timeZoneDisabled={true}
-            onConfirm={() => performSessionAction(buildPayload('suggest_modification'))}
+            onConfirm={() => {
+              const payload = buildPayload('suggest_modification');
+              if (payload) {
+                performSessionAction(payload);
+              }
+            }}
             onConfirmButtonText={t('Confirm')} />
           <FormControl label={t('leaveSomeComments')} name={'comments'} as='textarea' />
         </div>
@@ -83,6 +110,7 @@ const BookingDetailAction = ({
         <div>
           <p className='detail-text'><strong>{t('How was your booking?')}</strong></p>
           <p className='detail-text'>{t('Leave your review')}</p>
+          <p className='tip-text'>{t('reivewTipMessage')}</p>
           <RatingReview onChange={value => ratingReviewValue = value } />
           <FormControl label={t('leaveSomeComments')} name={'comments'} as='textarea' />
           <div className='action-button'>
@@ -95,7 +123,7 @@ const BookingDetailAction = ({
     } else if (action === 'claim') {
       return (
         <div>
-          <FormControl label={t('leaveSomeComments')} name={'comments'} as='textarea' />
+          <FormControl label={t('leaveSomeComments')} name={'comments'} as='textarea' {...formError}/>
           <div className='action-button'>
             <PrimaryButton onClick={() => performSessionAction(buildPayload('claim_session'))}>
               {t('Send claim')}
@@ -135,12 +163,14 @@ const BookingDetailAction = ({
       </Row>
       <AlertPopUp
         className='cancel-session-alert'
-        show={showCancelSessionAlert}
-        body={t('cancelSessionAlert', { hours: cancelSessionHoursLimit })}
-        onCancel={hideCancelSessionAlert}
+        show={showSessionAlert}
+        body={booking.sessionAlertMessage}
+        onCancel={hideSessionAlert}
         onAccept={() => {
-          hideCancelSessionAlert();
-          performSessionAction(buildPayload('suggest_modification'))
+          hideSessionAlert();
+          if (booking.keepGoingAfterShowingAlert) {
+            performSessionAction(buildPayload('suggest_modification'))
+          }
         }} />
     </BookingDetailActionWrapper>
   );

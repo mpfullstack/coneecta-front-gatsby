@@ -10,7 +10,7 @@ const FormWrapper = styled.div`
   }
   .form-row {
     justify-content: center;
-    align-items: center;
+    align-items: top;
     @media only screen and (max-width: ${theme.SIZES.M}) {
       justify-content: flex-start;
     }

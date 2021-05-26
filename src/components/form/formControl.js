@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Col, Form as RBForm } from 'react-bootstrap';
 import theme from '../../theme';
 
-const FormControlWrapper = styled.div`
+export const FormControlWrapper = styled.div`
   width: 100%;
   display: flex;
   align-items: center;
@@ -25,7 +25,7 @@ const FormControlWrapper = styled.div`
 export default ({ label, placeholder, name, error, isValid, as = 'input', children = null, ...rest}) => {
   return (
     <FormControlWrapper>
-      <RBForm.Group as={Col} md='4' lg='8' controlId={name}>
+      <RBForm.Group as={Col} md='10' lg='8' controlId={name}>
         {label ? <RBForm.Label>{label}</RBForm.Label> : null}
         <RBForm.Control placeholder={placeholder} {...isValid} as={as} {...rest}>{children}</RBForm.Control>
         {isValid ? <RBForm.Control.Feedback type={isValid.isValid ? 'valid' : 'invalid'}>

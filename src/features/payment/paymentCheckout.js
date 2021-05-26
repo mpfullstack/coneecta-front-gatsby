@@ -8,8 +8,7 @@ import { useTranslation } from 'react-i18next';
 const mapDispatchToProps = {};
 const mapStateToProps = ({ payment }) => {
   return {
-    url: payment.checkoutDetails.url,
-    fields: payment.checkoutDetails.fields
+    url: payment.checkoutDetails.url
   }
 }
 
@@ -54,24 +53,23 @@ const PaymentCheckoutWrapper = styled.div`
   }
 `;
 
-const PaymentCheckout = ({ url, fields }) => {
+const PaymentCheckout = ({ url }) => {
   const { t } = useTranslation();
 
-  // Submit the form to post the checkout details to tpv url
+  // Redirect user to tpv url
   useEffect(() => {
-    setTimeout(() => document.getElementById('submit-button').click(), 250);
+    setTimeout(() => window.location.href = url, 250);
     // NOTE: For testing purpose
     // window.location.href = '/profile/payment_ok/30';
-  }, []);
+  }, [url]);
 
   return (
     <PaymentCheckoutWrapper>
       <p className='message'>{t('processingPayment')}</p>
-      <p className='message-info'>Si en unos segundos no aparece la página  del banco para realizar el pago, pulse el boton "ENVIAR"</p>
-      <form id='checkout-form' className='form' action={url} method='post'>
-        {parse(fields)}
-        <input id='submit-button' type='submit' name='submit' value='Enviar' className='submit' />
-      </form>
+      <p className='message-info'>
+        Si en unos segundos no aparece la página  del banco para realizar el pago,
+        pulse en el siguiente <a href={`${url}`}>enlace</a>.
+      </p>
     </PaymentCheckoutWrapper>
   );
 }

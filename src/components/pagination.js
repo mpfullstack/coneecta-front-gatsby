@@ -32,13 +32,15 @@ const PaginationWrapper = styled.div`
 export default ({ pages, currentPage, onPaginationClick }) => {
   return (
     <PaginationWrapper>
-      <button className='prev' disabled={currentPage === 1} onClick={() => onPaginationClick(currentPage-1)}><ArrowLeft /></button>
+      <button aria-label='Previous page' className='prev'
+        disabled={currentPage === 1} onClick={() => onPaginationClick(currentPage-1)}><ArrowLeft /></button>
       <div className='pages'>
         <span className='pages-item current-page'>{currentPage}</span>
         <span className='pages-item separator-page'>/</span>
         <span className='pages-item total-pages'>{pages}</span>
       </div>
-      <button className='next' disabled={currentPage === pages} onClick={() => onPaginationClick(currentPage+1)}><ArrowRight /></button>
+      <button aria-label='Next page' className='next'
+        disabled={currentPage === pages} onClick={() => onPaginationClick(currentPage+1)}><ArrowRight /></button>
     </PaginationWrapper>
   );
 }

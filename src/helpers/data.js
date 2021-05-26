@@ -1,4 +1,4 @@
-import { differenceInDays, format, addMinutes } from 'date-fns'
+import { differenceInDays, format, addMinutes, isBefore, add } from 'date-fns'
 import { utcToZonedTime } from 'date-fns-tz'
 
 export function getServiceById(services, id) {
@@ -130,6 +130,21 @@ export function isWithinCancellationLimits(date, time, timezone, cancelSession) 
   }
 }
 
+export function isPastTime(date, time, timezone) {
+  // Calculate if user is booking a past date time
+  const times = time.split(':');
+  date.setHours(times[0]);
+  date.setMinutes(times[1]);
+  const bookingDate = utcToZonedTime(date, timezone);
+  const now = utcToZonedTime(new Date(), timezone);
+  const hoursDiff = (bookingDate - now) / 1000 / 60 / 60;
+  if (hoursDiff <= 0) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
 export function getCountryByCode(countries, code) {
   return countries.find(country => country.code === code);
 }
@@ -141,4 +156,21 @@ export function getCountryNameByCode(countries, code) {
   } else {
     return '';
   }
+}
+
+export function generateAvailableDates(bookingDate, days = 15) {
+  const availableDates = {};
+  if (bookingDate) {
+    let from = new Date(Math.min(new Date().getTime(), bookingDate.getTime()));
+    let to = add(new Date(Math.max(new Date().getTime(), bookingDate.getTime())), { days });
+    while (isBefore(from, to)) {
+      availableDates[format(from, 'yyyyMMdd')] = Array(48).join("1");
+      from = add(from, {days: 1});
+    }
+  }
+  return availableDates;
+}
+
+export function getIsBookingPending({ serviceId, date, time, slug }) {
+  return serviceId && date && time && slug;
 }

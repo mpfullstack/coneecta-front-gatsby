@@ -2,6 +2,8 @@ import { all, takeLatest, put, call, fork } from 'redux-saga/effects';
 import { loadProfessionalProfile, initProfile, loadProfessionalProfileReviews, initProfileReviews, showService } from './professionalProfileSlice';
 import { showApiError } from '../global/globalSlice';
 import api from '../../api';
+import { getSlugFromPath } from '../../helpers/helpers';
+import Query from '../../helpers/query';
 
 function* onLoadProfessionalProfile() {
   // We receive the professional id (id) an optionally service slug (sid) in payload
@@ -22,7 +24,12 @@ function* onLoadProfessionalProfile() {
       } else if (result.services.length === 1) {
         yield put(showService(Number(result.services[0].id)));
       }
-      yield put(initProfile(result));
+      // Get professional slug from URL
+      let slug = getSlugFromPath(Query.getPath(window.location));
+      if (!slug) {
+        slug = Query.getParams(window.location).slug;
+      }
+      yield put(initProfile({ ...result, slug }));
     }
   });
 }

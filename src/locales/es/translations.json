@@ -7,8 +7,10 @@
   "When do you want to change your booking for?": "¿Para cuando quieres cambiar tu reserva?",
   "How was your booking?": "¿Qué tal ha estado la sesión?",
   "Leave your review": "Déjanos tu valoración",
+  "reivewTipMessage": "Valora de 0 a 5 estrellas. Una valoración con 0 estrellas se convierte en una reclamación.",
   "Send review": "Enviar valoración",
   "Send claim": "Enviar reclamación",
+  "sendMessage": "Enviar mensaje",
 
   "videoconference": "Video conferencia",
   "audioconference": "Audio conferencia",
@@ -24,6 +26,9 @@
   "bookings": "Reservas",
   "youHaveNoBookings": "No tienes ninguna reserva",
   "wallet": "Monedero",
+  "rechargeWallet": "Recargar monedero",
+  "youHaveNoMovements": "No tienes ningún movimiento",
+  "buy": "Comprar",
 
   "Professional reviews": "Valoraciones del profesional",
   "Reviews": "Valoraciones",
@@ -35,6 +40,7 @@
   "logmein": "Acceder",
   "loggingmein": "Accediendo...",
   "signup": "Registro",
+  "signedUpSuccessfully": "Registro realizado correctamente.",
   "signmeup": "Registrarme",
   "signingmeup": "Registrando...",
   "pay": "Pagar",
@@ -47,6 +53,7 @@
   "Select the time": "Selecciona la hora",
 
   "lowAvailabilityMessage": "Horario de baja disponibilidad, es posible que el profesional no pueda aceptar tu reserva.",
+  "messageSentCorrectly": "El mensaje se envío correctamente",
 
   "name": "Nombre",
   "email": "Correo electrónico",
@@ -70,6 +77,7 @@
   "cancel": "Cancelar",
   "continue": "Continuar",
   "cancelSessionAlert": "Estas realizando una reserva con menos de {{hours}} horas de antelación. Ten en cuenta que para esta reserva no se admitirán cambios de fecha y su cancelación tendrá penalización.",
+  "pastTimeSessionAlert": "Estas realizando una reserva con para una fecha y hora ya pasadas. Por favor revisa tu elección.",
 
   "accept_modification": "Aceptar modificación",
   "cancel_session": "Cancelar reserva",
@@ -79,12 +87,16 @@
   "unavailable_session": "Sesión no disponible",
   "operation_not_allowed": "Acción no permitida",
   "not_valid_parameters": "Parámetros no válidos",
+  "insufficient_credits": "Créditos insuficientes",
+  "unavailable_modality": "Modalidad no disponible",
+  "student_primary_location_required": "No dispone de direccion introducida",
   "unexpected_error": "Lo sentimos, se ha producido un error con la conexión. Vuelve a intentarlo o recarga la página.",
   "save": "Guardar",
   "saving": "Guardando...",
 
   "leaveSomeComments": "Deja aquí tu comentario",
   "comments": "Comentarios",
+  "writeYourMessage": "Escribe tu mensaje",
 
   "typeYourAddress": "Introduce tu dirección",
 

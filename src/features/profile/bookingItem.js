@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'gatsby';
+import { Link, navigate } from 'gatsby';
 import styled from 'styled-components';
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
@@ -13,7 +13,10 @@ const BookingItemWrapper = styled.div`
   border-radius: 5px;
   background-color: ${theme.boxBackgroundColor};
   padding: 10px;
-  min-height: 131px;
+  min-height: 100px;
+  .linkable {
+    cursor: pointer;
+  }
   a {
     display: block;
     width: 100%;
@@ -44,6 +47,10 @@ const BookingItemWrapper = styled.div`
   .text {
     font-size: 17px;
     color: ${theme.textColor};
+    a {
+      border-bottom: 2px solid ${theme.textColor};
+      display: inline;
+    }
   }
   .date {
     font-style: italic;
@@ -53,26 +60,34 @@ const BookingItemWrapper = styled.div`
   }
 `;
 
-const BookingItem = ({ linkable = true, session = null }) => {
+export const BookingItemData = ({ status, date, serviceName, slug, professionalName }) => {
   const { t } = useTranslation();
+  return (
+    <BookingItemWrapper>
+      {status ? <div className={`status ${status}`}>
+        {t(status)}
+      </div> : null}
+      <div className='text date'>
+        {format(new Date(date), "d 'de' LLLL 'de' yyyy · H:mm 'horas'", { locale: es })}
+      </div>
+      <div className='text name'>
+        {serviceName}
+      </div>
+      <div className='text teacher'>
+        <Link onClick={e => e.stopPropagation()} to={`/u/${slug}`}>{professionalName}</Link>
+      </div>
+    </BookingItemWrapper>
+  );
+}
 
+const BookingItem = ({ linkable = true, session = null }) => {
   if (session) {
-    const item = (
-      <>
-        <div className={`status ${session.status}`}>
-          {t(session.status)}
-        </div>
-        <div className='text date'>
-          {format(new Date(session.date), "d 'de' LLLL 'de' yyyy · H:mm 'horas'", { locale: es })}
-        </div>
-        <div className='text name'>
-          {session.name}
-        </div>
-        <div className='text teacher'>
-          {session.teacher}
-        </div>
-      </>
-    );
+    const item = <BookingItemData
+      status={session.status}
+      date={session.date}
+      serviceName={session.name}
+      slug={session.teacher.slug}
+      professionalName={session.teacher.name} />;
 
     let link = '';
     if (linkable) {
@@ -83,13 +98,13 @@ const BookingItem = ({ linkable = true, session = null }) => {
     }
 
     return (
-      <BookingItemWrapper>
+      <>
         {linkable ?
-          <Link to={link}>
+          <div className='linkable' aria-hidden="true" onClick={() => navigate(link)} onKeyDown={e => null}>
             {item}
-          </Link>
+          </div>
         : item}
-      </BookingItemWrapper>
+      </>
     );
   } else {
     return (
