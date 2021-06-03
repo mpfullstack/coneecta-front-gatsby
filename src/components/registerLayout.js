@@ -45,6 +45,9 @@ const RegisterWrapper = styled.div`
   .text {
     padding: 0 20px;
   }
+  .form-check {
+    padding: 0 40px;
+  }
 `;
 
 export const RegisterLayout = ({ professionalProfile, loadProfessionalProfile, location, children }) => {
