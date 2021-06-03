@@ -72,6 +72,7 @@
   "invalid_authentication_data": "Los datos son incorrectos",
   "invalid_timezone": "La zona horaria es incorrecta",
   "_empty": "Este campo es obligatorio",
+  "invalidUserAccount": "Usuario inválido",
 
   "unexpectedError": "Lo sentimos, se ha producido un error con la conexión. Vuelve a intentarlo o recarga la página.",
   "invalid_reservation_data": "Los datos de la reserva no son válidos.",

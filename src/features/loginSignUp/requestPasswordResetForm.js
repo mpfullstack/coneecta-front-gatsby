@@ -15,11 +15,11 @@ import { resetPasswordUrl } from '../../api/urls';
 const mapDispatchToProps = { requestPasswordReset };
 const mapStateToProps = ({ loginSignUp }) => {
   return {
-    resetPasswordStatus: loginSignUp.resetPasswordStatus
-    // loginErrors: loginSignUp.loginErrors.map(error => ({
-    //   field: error.field,
-    //   error: i18n.t(error.error)
-    // }))
+    passwordResetStatus: loginSignUp.passwordResetStatus,
+    passwordResetErrors: loginSignUp.passwordResetErrors.map(error => ({
+      field: error.field,
+      error: i18n.t(error.error)
+    }))
   }
 }
 
@@ -32,7 +32,7 @@ const FormWrapper = styled.div`
   }
 `;
 
-const RequestPasswordResetForm = ({ requestPasswordReset, resetPasswordStatus }) => {
+const RequestPasswordResetForm = ({ requestPasswordReset, passwordResetStatus, passwordResetErrors }) => {
   const { t } = useTranslation();
   const formData = {
     email: ''
@@ -106,7 +106,7 @@ const RequestPasswordResetForm = ({ requestPasswordReset, resetPasswordStatus })
         <ActionButtons>
           <PrimaryButton type='submit' className='confirm-button'
             variant='primary' size='lg' disabled={!isFormValid(formState)}>
-            {resetPasswordStatus === 'loading' ? t('sending') : t('send')}
+            {passwordResetStatus === 'loading' ? t('sending') : t('send')}
           </PrimaryButton>
         </ActionButtons>
       </FormWrapper>
@@ -116,7 +116,7 @@ const RequestPasswordResetForm = ({ requestPasswordReset, resetPasswordStatus })
   return (
     <Form
       formData={formData} renderForm={renderForm}
-      isFormValid={isFormValid} errors={[]/* TODO: Reset password errors */}
+      isFormValid={isFormValid} errors={passwordResetErrors}
       onSubmit={(e, values) => requestPasswordReset({ ...values })} />
   );
 };
