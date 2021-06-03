@@ -42,6 +42,9 @@ const RegisterWrapper = styled.div`
       }
     }
   }
+  .text {
+    padding: 0 20px;
+  }
 `;
 
 export const RegisterLayout = ({ professionalProfile, loadProfessionalProfile, location, children }) => {

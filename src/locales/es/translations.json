@@ -43,6 +43,8 @@
   "signedUpSuccessfully": "Registro realizado correctamente.",
   "signmeup": "Registrarme",
   "signingmeup": "Registrando...",
+  "send": "Enviar",
+  "sending": "Enviando...",
   "pay": "Pagar",
   "processingPayment": "Procesando...",
 
@@ -110,6 +112,7 @@
   "door": "Puerta",
 
   "personalDataSavedSuccessfully": "Datos personales guardados correctamente.",
+  "dataSentSuccessfully": "Datos enviados correctamente.",
 
   "typeAddressToSearch": "Escribe la dirección completa que quieres añadir e intentaremos encontrarla.",
 

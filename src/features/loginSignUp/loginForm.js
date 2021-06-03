@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'gatsby';
 import styled from 'styled-components';
 import i18n from '../../locales/i18n';
 import { useTranslation } from 'react-i18next';
@@ -107,6 +108,9 @@ const LoginForm = ({ login, loginStatus, loginErrors }) => {
               name: 'password',
               validate: validatePassword
             })} />
+        </RBForm.Row>
+        <RBForm.Row>
+          <p className='text'><Link to='/password-reset-request'>He olvidado mi contraseña.</Link></p>
         </RBForm.Row>
         <ActionButtons>
           <PrimaryButton type='submit' className='confirm-button'
