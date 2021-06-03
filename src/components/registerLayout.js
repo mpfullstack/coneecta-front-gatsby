@@ -45,7 +45,8 @@ const RegisterWrapper = styled.div`
   .text {
     padding: 0 20px;
   }
-  .form-check {
+  .form-check,
+  .privacy-policy {
     padding: 0 40px;
   }
 `;

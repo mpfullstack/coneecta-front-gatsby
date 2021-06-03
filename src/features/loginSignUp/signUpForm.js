@@ -11,6 +11,7 @@ import ActionButtons from '../../components/buttons/actionButtons';
 import PrimaryButton from '../../components/buttons/primaryButton';
 import { adaptTimeZonesToArray } from '../../helpers/data';
 import { validateName, validateEmail, validatePassword, validatePrivacyPolicy } from '../../helpers/validators';
+import { isFormValid } from '../../helpers/helpers';
 
 const mapDispatchToProps = { signUp };
 const mapStateToProps = ({ booking, loginSignUp }) => {
@@ -50,28 +51,12 @@ const SignUpForm = ({ signUp, timezones, timezone, signUpStatus, signUpErrors })
     privacy_policy: false
   };
 
+  const requiredFields = ['name', 'email', 'password', 'privacy_policy'];
   const fieldValidators = {
     'name': validateName,
     'email': validateEmail,
     'password': validatePassword,
     'privacy_policy': validatePrivacyPolicy
-  }
-
-  function isFormValid(formState) {
-    let valid =  Object.keys(formState.validity).every(key => {
-      return formState.validity[key];
-    });
-    let requiredFields = ['name', 'email', 'password', 'privacy_policy'];
-    let requiredValidation = requiredFields.every(fieldname => {
-      if (fieldname in formState.errors) {
-        return false;
-      } else if (fieldname in fieldValidators && typeof fieldValidators[fieldname] === 'function') {
-        return fieldValidators[fieldname](formState.values[fieldname]) === undefined;
-      } else {
-        return false;
-      }
-    });
-    return valid && requiredValidation;
   }
 
   function renderForm(formState, input) {
@@ -151,7 +136,7 @@ const SignUpForm = ({ signUp, timezones, timezone, signUpStatus, signUpErrors })
         </RBForm.Row>
         <ActionButtons>
           <PrimaryButton type='submit' className='confirm-button' variant='primary'
-          size='lg' disabled={!isFormValid(formState)}>
+          size='lg' disabled={!isFormValid(formState, requiredFields, fieldValidators)}>
               {signUpStatus === 'loading' ? t('signingmeup') : t('signmeup')}
           </PrimaryButton>
         </ActionButtons>
@@ -163,7 +148,6 @@ const SignUpForm = ({ signUp, timezones, timezone, signUpStatus, signUpErrors })
     <Form
       formData={formData}
       renderForm={renderForm}
-      isFormValid={isFormValid}
       errors={signUpErrors}
       onSubmit={
         (e, values) => signUp({

@@ -11,6 +11,7 @@ import FormControl from '../../components/form/formControl';
 import ActionButtons from '../../components/buttons/actionButtons';
 import PrimaryButton from '../../components/buttons/primaryButton';
 import { validateEmail, validatePassword } from '../../helpers/validators';
+import { isFormValid } from '../../helpers/helpers';
 
 const mapDispatchToProps = { login };
 const mapStateToProps = ({ booking, loginSignUp }) => {
@@ -41,26 +42,10 @@ const LoginForm = ({ login, loginStatus, loginErrors }) => {
     password: ''
   };
 
+  const requiredFields = ['email', 'password'];
   const fieldValidators = {
     'email': validateEmail,
     'password': validatePassword
-  }
-
-  function isFormValid(formState) {
-    let valid =  Object.keys(formState.validity).every(key => {
-      return formState.validity[key];
-    });
-    let requiredFields = ['email', 'password'];
-    let requiredValidation = requiredFields.every(fieldname => {
-      if (fieldname in formState.errors) {
-        return false;
-      } else if (fieldname in fieldValidators && typeof fieldValidators[fieldname] === 'function') {
-        return fieldValidators[fieldname](formState.values[fieldname]) === undefined;
-      } else {
-        return false;
-      }
-    });
-    return valid && requiredValidation;
   }
 
   function renderForm(formState, input) {
@@ -114,7 +99,7 @@ const LoginForm = ({ login, loginStatus, loginErrors }) => {
         </RBForm.Row>
         <ActionButtons>
           <PrimaryButton type='submit' className='confirm-button'
-            variant='primary' size='lg' disabled={!isFormValid(formState)}>
+            variant='primary' size='lg' disabled={!isFormValid(formState, requiredFields, fieldValidators)}>
             {loginStatus === 'loading' ? t('loggingmein') : t('logmein')}
           </PrimaryButton>
         </ActionButtons>
@@ -124,8 +109,9 @@ const LoginForm = ({ login, loginStatus, loginErrors }) => {
 
   return (
     <Form
-      formData={formData} renderForm={renderForm}
-      isFormValid={isFormValid} errors={loginErrors}
+      formData={formData}
+      renderForm={renderForm}
+      errors={loginErrors}
       onSubmit={(e, values) => login({ ...values })} />
   );
 };

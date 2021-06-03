@@ -9,8 +9,8 @@ import { requestPasswordReset } from './loginSignUpSlice';
 import FormControl from '../../components/form/formControl';
 import ActionButtons from '../../components/buttons/actionButtons';
 import PrimaryButton from '../../components/buttons/primaryButton';
-import { validateEmail, validatePassword } from '../../helpers/validators';
-import { resetPasswordUrl } from '../../api/urls';
+import { validateEmail } from '../../helpers/validators';
+import { isFormValid } from '../../helpers/helpers';
 
 const mapDispatchToProps = { requestPasswordReset };
 const mapStateToProps = ({ loginSignUp }) => {
@@ -38,26 +38,10 @@ const RequestPasswordResetForm = ({ requestPasswordReset, passwordResetStatus, p
     email: ''
   };
 
+  const requiredFields = ['email'];
   const fieldValidators = {
     'email': validateEmail
-  }
-
-  function isFormValid(formState) {
-    let valid =  Object.keys(formState.validity).every(key => {
-      return formState.validity[key];
-    });
-    let requiredFields = ['email'];
-    let requiredValidation = requiredFields.every(fieldname => {
-      if (fieldname in formState.errors) {
-        return false;
-      } else if (fieldname in fieldValidators && typeof fieldValidators[fieldname] === 'function') {
-        return fieldValidators[fieldname](formState.values[fieldname]) === undefined;
-      } else {
-        return false;
-      }
-    });
-    return valid && requiredValidation;
-  }
+  };
 
   function renderForm(formState, input) {
     function isValid(name, valdidateFunc) {
@@ -105,7 +89,7 @@ const RequestPasswordResetForm = ({ requestPasswordReset, passwordResetStatus, p
         </RBForm.Row>
         <ActionButtons>
           <PrimaryButton type='submit' className='confirm-button'
-            variant='primary' size='lg' disabled={!isFormValid(formState)}>
+            variant='primary' size='lg' disabled={!isFormValid(formState, requiredFields, fieldValidators)}>
             {passwordResetStatus === 'loading' ? t('sending') : t('send')}
           </PrimaryButton>
         </ActionButtons>
@@ -115,8 +99,9 @@ const RequestPasswordResetForm = ({ requestPasswordReset, passwordResetStatus, p
 
   return (
     <Form
-      formData={formData} renderForm={renderForm}
-      isFormValid={isFormValid} errors={passwordResetErrors}
+      formData={formData}
+      renderForm={renderForm}
+      errors={passwordResetErrors}
       onSubmit={(e, values) => requestPasswordReset({ ...values })} />
   );
 };
