@@ -6,7 +6,9 @@ const loginSignUpSlice = createSlice({
     'loginStatus': 'idle', // Login status: idle, loading, error
     'loginErrors': [], // Holds an array of errors in login form fields
     'signUpStatus': 'idle', // SignUp status: idle, loading, error
-    'signUpErrors': [] // Holds an array of errors in signup form fields
+    'signUpErrors': [], // Holds an array of errors in signup form fields
+    'resetPasswordStatus': 'idle', // Reset password status: idle, loading, error
+    'resetPasswordErrors': [] // Holds an array of errors in reset password form fields
 	},
   reducers: {
     login: state => {
@@ -35,6 +37,16 @@ const loginSignUpSlice = createSlice({
     },
     resetSignUpStatus: state => {
       state.signUpStatus = 'idle';
+    },
+    requestPasswordReset: state => {
+      state.resetPasswordStatus = 'loading';
+    },
+    passwordResetRequested: state => {
+      state.resetPasswordStatus = 'idle';
+    },
+    passwordResetError: (state, action) => {
+      state.resetPasswordStatus = 'error';
+      state.resetPasswordErrors = action.payload;
     }
   }
 });
@@ -48,7 +60,9 @@ export const {
   signUp,
   signedUp,
   signUpError,
-  resetSignUpStatus
+  resetSignUpStatus,
+  requestPasswordReset,
+  passwordResetRequested
 } = loginSignUpSlice.actions
 
 export default loginSignUpSlice.reducer;

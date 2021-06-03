@@ -4,7 +4,7 @@ import { navigate } from 'gatsby';
 import { login as loginUser, logout as logoutUser } from '../../helpers/authentication';
 import {
   login, logout, loggedIn, loginError, signUp, signedUp, signUpError,
-  resetLoginStatus, resetSignUpStatus
+  resetLoginStatus, resetSignUpStatus, passwordResetRequested, passwordResetError, requestPasswordReset
 } from './loginSignUpSlice';
 import { initProfile, resetProfile } from '../profile/profileSlice';
 import { showApiError, showAlert, updateCountries } from '../global/globalSlice';
@@ -91,10 +91,28 @@ function* onLogout() {
   });
 }
 
+function* onRequestPasswordReset() {
+  yield takeLatest(requestPasswordReset, function* ({ payload }) {
+    const result = yield call(api.requestPasswordReset, payload);
+    if (result.error) {
+      if (result.error.code === 'invalid_data') {
+        yield put(passwordResetError(result.error.details));
+      } else {
+        yield put(showApiError(result.error));
+      }
+    } else {
+      // Handle response
+      yield put(showAlert({message: i18n.t('dataSentSuccessfully'), variant: 'success'}))
+      yield put(passwordResetRequested());
+    }
+  });
+}
+
 export default function* () {
   yield all([
     fork(onLogin),
     fork(onSignUp),
-    fork(onLogout)
+    fork(onLogout),
+    fork(onRequestPasswordReset)
   ])
 };
