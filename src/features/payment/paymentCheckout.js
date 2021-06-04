@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import parse from 'html-react-parser';
 import styled from 'styled-components';
 import theme from '../../theme';
 import { useTranslation } from 'react-i18next';

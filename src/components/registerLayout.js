@@ -42,6 +42,13 @@ const RegisterWrapper = styled.div`
       }
     }
   }
+  .text {
+    padding: 0 20px;
+  }
+  .form-check,
+  .privacy-policy {
+    padding: 0 40px;
+  }
 `;
 
 export const RegisterLayout = ({ professionalProfile, loadProfessionalProfile, location, children }) => {
@@ -53,7 +60,7 @@ export const RegisterLayout = ({ professionalProfile, loadProfessionalProfile, l
     // If user is logged in, navigate to /profile/payment
     if (isLoggedIn()) {
       navigate(`/profile/payment?slug=${slug}`);
-    } else if (slug !== '' && slug !== undefined) {
+    } else if (slug !== '' && slug !== 'undefined' && slug != null) {
       if (!professionalProfile.id) {
         loadProfessionalProfile({id: slug});
       }

@@ -23,7 +23,7 @@ export const PendingBooking = ({ date, serviceName, slug, professionalName, onDi
         slug={slug}
         professionalName={professionalName} />
 
-      <div class="actions">
+      <div className="actions">
         <PrimaryButton  onClick={() => navigate(`/u/${slug}`)}>Continuar</PrimaryButton>
         <SecondaryButton  onClick={() => onDiscard()}>Descartar</SecondaryButton>
       </div>
