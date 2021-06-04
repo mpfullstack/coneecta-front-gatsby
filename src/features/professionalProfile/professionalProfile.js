@@ -27,7 +27,7 @@ export const ProfessionalProfile = ({
   useEffect(() => {
     loadProfile({ redirect: false });
     getTimeLimits();
-    if (slug !== '' && slug !== 'undefined') {
+    if (slug !== '' && slug !== 'undefined' && slug != null) {
       loadProfessionalProfile({id: slug, sid: serviceSlug});
     } else {
       // Handle if no professional id is present in URL

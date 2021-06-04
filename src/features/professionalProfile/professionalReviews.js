@@ -78,7 +78,7 @@ export const ProfessionalReviews = ({ profile, loadProfessionalProfile, loadProf
 
   useEffect(() => {
     if (!profileId) {
-      if (slug !== '') {
+      if (slug !== '' && slug !== 'undefined' && slug != null) {
         loadProfessionalProfile({id: slug, sid: serviceSlug}); // Get sid from path instead of querystring
       } else {
         // TODO: Handle if no professional id is present in URL
