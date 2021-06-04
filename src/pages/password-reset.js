@@ -5,7 +5,7 @@ import { Location } from '@reach/router';
 import { Provider } from 'react-redux';
 import store, { persistor } from '../redux/store';
 import { PersistGate } from 'redux-persist/integration/react';
-// import PasswordReset from '../features/loginSignUp/passwordResetForm';
+import PasswordReset from '../features/loginSignUp/passwordReset';
 
 export default () => {
   return (
@@ -13,9 +13,9 @@ export default () => {
       <PersistGate loading={null} persistor={persistor}>
         <Layout>
           <SEO title='Password reset' />
-          {/* <Location>
+          <Location>
             {props => <PasswordReset {...props} />}
-          </Location> */}
+          </Location>
         </Layout>
       </PersistGate>
     </Provider>

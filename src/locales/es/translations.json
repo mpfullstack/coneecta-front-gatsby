@@ -60,6 +60,7 @@
   "name": "Nombre",
   "email": "Correo electrónico",
   "password": "Contraseña",
+  "repeatPassword": "Repetir contraseña",
   "newsletterSignUp": "Deseo recibir información comercial relacionada con mis intereses",
   "accept": "Acepto la",
   "privacyPolicy": "política de privacidad",
@@ -73,6 +74,9 @@
   "invalid_timezone": "La zona horaria es incorrecta",
   "_empty": "Este campo es obligatorio",
   "invalidUserAccount": "Usuario inválido",
+  "passwordDontMach": "La contraseña no coincide",
+  "minimumCharactersRequired": "La contraseña debe contener como mínimo 8 caracteres.",
+  "_required": "Este campo es obligatorio",
 
   "unexpectedError": "Lo sentimos, se ha producido un error con la conexión. Vuelve a intentarlo o recarga la página.",
   "invalid_reservation_data": "Los datos de la reserva no son válidos.",
