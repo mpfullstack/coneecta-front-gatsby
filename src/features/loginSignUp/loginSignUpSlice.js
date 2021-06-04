@@ -47,6 +47,9 @@ const loginSignUpSlice = createSlice({
     passwordResetError: (state, action) => {
       state.passordResetStatus = 'error';
       state.passwordResetErrors = action.payload;
+    },
+    passwordReset: (state) => {
+      state.passordResetStatus = 'loading';
     }
   }
 });
@@ -63,7 +66,8 @@ export const {
   resetSignUpStatus,
   requestPasswordReset,
   passwordResetRequested,
-  passwordResetError
+  passwordResetError,
+  passwordReset
 } = loginSignUpSlice.actions
 
 export default loginSignUpSlice.reducer;
