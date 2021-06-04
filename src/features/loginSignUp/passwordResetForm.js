@@ -50,10 +50,9 @@ const FormWrapper = styled.div`
       margin-top: 8px;
     }
   }
-  .privacy-policy {
-    &.invalid-feedback {
-      display: inline-block;
-    }
+  .text-wrapper {
+    display: flex;
+    justify-content: center;
   }
 `;
 
@@ -109,7 +108,7 @@ const PasswordResetForm = ({ passwordReset, passwordResetStatus, passwordResetEr
 
     return (
       <FormWrapper>
-        <RBForm.Row>
+        <RBForm.Row className='text-wrapper'>
           <p className='text'>
             Introduce tu nueva contraseña.
           </p>

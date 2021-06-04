@@ -29,6 +29,7 @@ const mapStateToProps = ({ booking, loginSignUp }) => {
 const FormWrapper = styled.div`
   padding-bottom: 100px;
   .privacy-policy {
+    text-align: center;
     &.invalid-feedback {
       display: inline-block;
     }
