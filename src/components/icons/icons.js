@@ -15,7 +15,9 @@ import {
   faUser,
   faCalendarAlt,
   faWallet,
-  faSignOutAlt
+  faSignOutAlt,
+  faEye,
+  faEyeSlash
  } from "@fortawesome/free-solid-svg-icons";
 
 const ArrowLeft = () => <FontAwesomeIcon icon={faAngleLeft} />;
@@ -32,6 +34,8 @@ const User = () => <FontAwesomeIcon icon={faUser} />;
 const Calendar = () => <FontAwesomeIcon icon={faCalendarAlt} />;
 const Wallet = () => <FontAwesomeIcon icon={faWallet} />;
 const Logout = () => <FontAwesomeIcon icon={faSignOutAlt} />;
+const Eye = () => <FontAwesomeIcon icon={faEye} />;
+const EyeSlash = () => <FontAwesomeIcon icon={faEyeSlash} />;
 
 const LowAvailabilityWrapper = styled.span`
   display: inline;
@@ -62,5 +66,7 @@ export {
   User,
   Calendar,
   Wallet,
-  Logout
+  Logout,
+  Eye,
+  EyeSlash
 }

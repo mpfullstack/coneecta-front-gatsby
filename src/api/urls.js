@@ -19,6 +19,8 @@ const sessionActionsUrl = `${base}/sessions/:action`;
 const walletMovementsUrl = `${base}/movements?page=:page`;
 const saveProfileUrl = `${profileUrl}/update`;
 const countriesUrl = `${base}/countries`;
+const requestPasswordResetUrl = `${base}/password-reset-request`;
+const passwordResetUrl = `${base}/password-reset`;
 
 export {
   professionalProfileUrl,
@@ -39,5 +41,7 @@ export {
   sessionActivitiesUrl,
   sessionActionsUrl,
   countriesUrl,
-  walletMovementsUrl
+  walletMovementsUrl,
+  requestPasswordResetUrl,
+  passwordResetUrl
 };

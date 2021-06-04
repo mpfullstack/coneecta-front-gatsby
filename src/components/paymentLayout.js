@@ -34,7 +34,7 @@ export const PaymentLayout = ({
   // const { t } = useTranslation();
 
   useEffect(() => {
-    if (slug !== '') {
+    if (slug !== '' && slug !== 'undefined' && slug != null) {
       if (!professionalProfile.id) {
         loadProfessionalProfile({id: slug});
       }

@@ -1,25 +1,22 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'gatsby';
 import styled from 'styled-components';
 import i18n from '../../locales/i18n';
 import { useTranslation } from 'react-i18next';
 import { Form as RBForm } from 'react-bootstrap';
-import Form from '../../components/form';
-import { login } from './loginSignUpSlice';
+import Form from '../../components/form/form';
+import { requestPasswordReset } from './loginSignUpSlice';
 import FormControl from '../../components/form/formControl';
 import ActionButtons from '../../components/buttons/actionButtons';
 import PrimaryButton from '../../components/buttons/primaryButton';
-import { validateEmail, validatePassword } from '../../helpers/validators';
+import { validateEmail } from '../../helpers/validators';
 import { isFormValid } from '../../helpers/helpers';
 
-const mapDispatchToProps = { login };
-const mapStateToProps = ({ booking, loginSignUp }) => {
+const mapDispatchToProps = { requestPasswordReset };
+const mapStateToProps = ({ loginSignUp }) => {
   return {
-    timezone: booking.timezone,
-    timezones: booking.timezones,
-    loginStatus: loginSignUp.loginStatus,
-    loginErrors: loginSignUp.loginErrors.map(error => ({
+    passwordResetStatus: loginSignUp.passwordResetStatus,
+    passwordResetErrors: loginSignUp.passwordResetErrors.map(error => ({
       field: error.field,
       error: i18n.t(error.error)
     }))
@@ -35,18 +32,16 @@ const FormWrapper = styled.div`
   }
 `;
 
-const LoginForm = ({ login, loginStatus, loginErrors }) => {
+const RequestPasswordResetForm = ({ requestPasswordReset, passwordResetStatus, passwordResetErrors }) => {
   const { t } = useTranslation();
   const formData = {
-    email: '',
-    password: ''
+    email: ''
   };
 
-  const requiredFields = ['email', 'password'];
+  const requiredFields = ['email'];
   const fieldValidators = {
-    'email': validateEmail,
-    'password': validatePassword
-  }
+    'email': validateEmail
+  };
 
   function renderForm(formState, input) {
     function isValid(name, valdidateFunc) {
@@ -81,26 +76,21 @@ const LoginForm = ({ login, loginStatus, loginErrors }) => {
     return (
       <FormWrapper>
         <RBForm.Row>
+          <p className='text'>
+            Introduce tu correo electrónico y te mandadremos un e-mail para poder resetear tu contraseña.
+          </p>
+        </RBForm.Row>
+        <RBForm.Row>
           <FormControl placeholder={t('email')} name={'email'} error={getError('email')} isValid={isValid('email', validateEmail)}
             {...input.email({
               name: 'email',
               validate: validateEmail
             })} />
         </RBForm.Row>
-        <RBForm.Row>
-          <FormControl placeholder={t('password')} name={'password'} error={getError('password')} isValid={isValid('password', validatePassword)}
-            {...input.password({
-              name: 'password',
-              validate: validatePassword
-            })} />
-        </RBForm.Row>
-        <RBForm.Row>
-          <p className='text'><Link to='/password-reset-request'>He olvidado mi contraseña.</Link></p>
-        </RBForm.Row>
         <ActionButtons>
           <PrimaryButton type='submit' className='confirm-button'
             variant='primary' size='lg' disabled={!isFormValid(formState, requiredFields, fieldValidators)}>
-            {loginStatus === 'loading' ? t('loggingmein') : t('logmein')}
+            {passwordResetStatus === 'loading' ? t('sending') : t('send')}
           </PrimaryButton>
         </ActionButtons>
       </FormWrapper>
@@ -111,9 +101,9 @@ const LoginForm = ({ login, loginStatus, loginErrors }) => {
     <Form
       formData={formData}
       renderForm={renderForm}
-      errors={loginErrors}
-      onSubmit={(e, values) => login({ ...values })} />
+      errors={passwordResetErrors}
+      onSubmit={(e, values) => requestPasswordReset({ ...values })} />
   );
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);
+export default connect(mapStateToProps, mapDispatchToProps)(RequestPasswordResetForm);

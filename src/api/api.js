@@ -5,7 +5,8 @@ import {
   professionalProfileReviewsUrl, loginUrl, signUpUrl, profileUrl,
   reserveUrl, logoutUrl, timeLimitsUrl, sessionsUrl, sessionDetailUrl,
   sessionActionsUrl, saveProfileUrl, countriesUrl, checkoutUrl,
-  paymentStatusUrl, walletMovementsUrl, sessionActivitiesUrl
+  paymentStatusUrl, walletMovementsUrl, sessionActivitiesUrl,
+  requestPasswordResetUrl, passwordResetUrl
 } from './urls';
 
 const CACHE_EXPIRATION = 1000 * 60 * 10; // Expires in 10 minutes
@@ -118,6 +119,14 @@ async function getWalletMovements({ page = 1 }) {
   return await SuperFetch.get(walletMovementsUrl.replace(':page', page));
 }
 
+async function requestPasswordReset(data) {
+  return await SuperFetch.post(requestPasswordResetUrl, data);
+}
+
+async function passwordReset(data) {
+  return await SuperFetch.post(passwordResetUrl, data);
+}
+
 const api = {
   getProfessionalProfile,
   getAvailableTimezones,
@@ -137,7 +146,9 @@ const api = {
   saveProfile,
   getCountries,
   getPaymentStatus,
-  getWalletMovements
+  getWalletMovements,
+  requestPasswordReset,
+  passwordReset
 };
 
 export default api;
