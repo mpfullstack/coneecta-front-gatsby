@@ -1,17 +1,17 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
-import Autocomplete from 'react-google-autocomplete';
+// import Autocomplete from 'react-google-autocomplete';
 import i18n from '../../locales/i18n';
 import { useTranslation } from 'react-i18next';
-import { Form as RBForm, Col } from 'react-bootstrap';
+import { Form as RBForm } from 'react-bootstrap';
 import { saveProfile } from './profileSlice';
 import Form from '../../components/form';
 import FormControl from '../../components/form/formControl';
 import ActionButtons from '../../components/buttons/actionButtons';
 import PrimaryButton from '../../components/buttons/primaryButton';
 import { adaptTimeZonesToArray, getCountryNameByCode } from '../../helpers/data';
-import { validateName, validateRequired } from '../../helpers/validators';
+import { validateName } from '../../helpers/validators';
 import { isFormValid } from '../../helpers/helpers';
 
 const mapDispatchToProps = { saveProfile };
