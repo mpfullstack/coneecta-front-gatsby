@@ -1,17 +1,17 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
-import Autocomplete from 'react-google-autocomplete';
+// import Autocomplete from 'react-google-autocomplete';
 import i18n from '../../locales/i18n';
 import { useTranslation } from 'react-i18next';
-import { Form as RBForm, Col } from 'react-bootstrap';
+import { Form as RBForm } from 'react-bootstrap';
 import { saveProfile } from './profileSlice';
 import Form from '../../components/form';
 import FormControl from '../../components/form/formControl';
 import ActionButtons from '../../components/buttons/actionButtons';
 import PrimaryButton from '../../components/buttons/primaryButton';
 import { adaptTimeZonesToArray, getCountryNameByCode } from '../../helpers/data';
-import { validateName, validateRequired } from '../../helpers/validators';
+import { validateName } from '../../helpers/validators';
 import { isFormValid } from '../../helpers/helpers';
 
 const mapDispatchToProps = { saveProfile };
@@ -68,19 +68,20 @@ const UserForm = ({ formData, timezones, formStatus, saveProfile, profileErrors 
 
   const fieldValidators = {
     'name': validateName,
-    'timezone': validateName,
-    'street_name': validateRequired,
-    'street_number': validateRequired,
-    'province': validateRequired,
-    'country': validateRequired,
-    'postal_code': validateRequired,
-    'city': validateRequired,
-    'floor': validateRequired,
-    'door': validateRequired
+    'timezone': validateName
+    // 'street_name': validateRequired,
+    // 'street_number': validateRequired,
+    // 'province': validateRequired,
+    // 'country': validateRequired,
+    // 'postal_code': validateRequired,
+    // 'city': validateRequired,
+    // 'floor': validateRequired,
+    // 'door': validateRequired
   };
   const requiredFields = [
-    'name', 'timezone', 'street_name', 'street_number', 'province', 'country',
-    'postal_code', 'city', 'floor', 'door'
+    'name', 'timezone'
+    /*, 'street_name', 'street_number', 'province', 'country',
+    'postal_code', 'city', 'floor', 'door'*/
   ];
 
   function renderForm(formState, input) {
@@ -125,53 +126,53 @@ const UserForm = ({ formData, timezones, formStatus, saveProfile, profileErrors 
       }
     }
 
-    function findAttribute(items, type, attribute = 'long_name') {
-      if (items) {
-        const foundItem = items.find(item => {
-          if (item.types.includes(type)) {
-            return item;
-          } else {
-            return null;
-          }
-        });
-        if (foundItem) {
-          return foundItem[attribute];
-        } else {
-          return '';
-        }
-      } else {
-        return '';
-      }
-    }
+    // function findAttribute(items, type, attribute = 'long_name') {
+    //   if (items) {
+    //     const foundItem = items.find(item => {
+    //       if (item.types.includes(type)) {
+    //         return item;
+    //       } else {
+    //         return null;
+    //       }
+    //     });
+    //     if (foundItem) {
+    //       return foundItem[attribute];
+    //     } else {
+    //       return '';
+    //     }
+    //   } else {
+    //     return '';
+    //   }
+    // }
 
-    function setAddressValues(place) {
-      const streetName = findAttribute(place.address_components, 'route');
-      const streetNumber = findAttribute(place.address_components, 'street_number');
-      const city = findAttribute(place.address_components, 'locality');
-      const province = findAttribute(place.address_components, 'administrative_area_level_2');
-      const postalCode = findAttribute(place.address_components, 'postal_code');
-      const country = findAttribute(place.address_components, 'country');
-      const countryCode = findAttribute(place.address_components, 'country', 'short_name');
+    // function setAddressValues(place) {
+    //   const streetName = findAttribute(place.address_components, 'route');
+    //   const streetNumber = findAttribute(place.address_components, 'street_number');
+    //   const city = findAttribute(place.address_components, 'locality');
+    //   const province = findAttribute(place.address_components, 'administrative_area_level_2');
+    //   const postalCode = findAttribute(place.address_components, 'postal_code');
+    //   const country = findAttribute(place.address_components, 'country');
+    //   const countryCode = findAttribute(place.address_components, 'country', 'short_name');
 
-      formState.setField('street_name', streetName);
-      formState.setField('street_number', streetNumber);
-      formState.setField('city', city);
-      formState.setField('province', province);
-      formState.setField('postal_code', postalCode);
-      formState.setField('country', country);
-      formState.setField('country_code', countryCode);
-      formState.setField('location_lat', place.geometry.location.lat());
-      formState.setField('location_long', place.geometry.location.lng());
+    //   formState.setField('street_name', streetName);
+    //   formState.setField('street_number', streetNumber);
+    //   formState.setField('city', city);
+    //   formState.setField('province', province);
+    //   formState.setField('postal_code', postalCode);
+    //   formState.setField('country', country);
+    //   formState.setField('country_code', countryCode);
+    //   formState.setField('location_lat', place.geometry.location.lat());
+    //   formState.setField('location_long', place.geometry.location.lng());
 
-      Object.keys(formState.values).forEach(fieldName => {
-        if (fieldName in fieldValidators) {
-          const error = fieldValidators[fieldName](formState.values[fieldName]);
-          if (error) {
-            formState.setFieldError(fieldName, error);
-          }
-        }
-      });
-    }
+    //   Object.keys(formState.values).forEach(fieldName => {
+    //     if (fieldName in fieldValidators) {
+    //       const error = fieldValidators[fieldName](formState.values[fieldName]);
+    //       if (error) {
+    //         formState.setFieldError(fieldName, error);
+    //       }
+    //     }
+    //   });
+    // }
 
     return (
       <FormWrapper>
@@ -196,7 +197,7 @@ const UserForm = ({ formData, timezones, formStatus, saveProfile, profileErrors 
               )}
           </FormControl>
         </RBForm.Row>
-        <RBForm.Row className='google-places-container'>
+        {/*<RBForm.Row className='google-places-container'>
           <label className='form-label'>{t('typeAddressToSearch')}</label>
           <Autocomplete
             onPlaceSelected={(place) => {
@@ -283,7 +284,7 @@ const UserForm = ({ formData, timezones, formStatus, saveProfile, profileErrors 
           <FormControl label={t('comments')} name={'extra'} as='textarea' {...input.textarea({
             name: 'extra'
           })} />
-        </RBForm.Row>
+        </RBForm.Row>*/}
 
         <ActionButtons>
           <PrimaryButton type='submit' className='confirm-button'
