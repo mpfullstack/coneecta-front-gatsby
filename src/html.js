@@ -12,7 +12,7 @@ export default function HTML(props) {
           content="width=device-width, initial-scale=1, shrink-to-fit=no"
         />
         {props.headComponents}
-        <script type="text/javascript" src={`https://maps.googleapis.com/maps/api/js?key=${process.env.GOOGLE_API_KEY}&libraries=places`}></script>
+        {/* <script type="text/javascript" src={`https://maps.googleapis.com/maps/api/js?key=${process.env.GOOGLE_API_KEY}&libraries=places`}></script> */}
       </head>
       <body {...props.bodyAttributes}>
         {props.preBodyComponents}
