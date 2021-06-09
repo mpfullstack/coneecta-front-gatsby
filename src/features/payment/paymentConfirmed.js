@@ -13,8 +13,9 @@ import { PaymentError } from './paymentError';
 import { CheckCircle, InfoCircle, Envelope } from '../../components/icons/icons';
 
 const mapDispatchToProps = { reserve };
-const mapStateToProps = ({ booking }) => ({
-  booking
+const mapStateToProps = ({ booking, professionalProfile }) => ({
+  booking,
+  professionalName: professionalProfile?.details?.name
 });
 
 const PaymentConfirmedWrapper = styled.div`
@@ -39,7 +40,7 @@ const PaymentConfirmedWrapper = styled.div`
   }
 `;
 
-const PaymentConfirmed = ({ id, reserve, booking }) => {
+const PaymentConfirmed = ({ id, reserve, booking, professionalName }) => {
 
   const getPaymentStatus = useCallback((id, tries) => {
     return new Promise(resolve => {
@@ -120,7 +121,7 @@ const PaymentConfirmed = ({ id, reserve, booking }) => {
                     <>
                       <Row className='justify-content-center text-center'>
                         <Col xs='9'>
-                          <p>Tu reserva ha sido registrada correctamente y ya hemos solicitado a Javier Marrero su confirmación.</p>
+                          <p>Tu reserva ha sido registrada correctamente y ya hemos solicitado a {professionalName} su confirmación.</p>
                         </Col>
                       </Row>
                       <Row className='icon-text'>
