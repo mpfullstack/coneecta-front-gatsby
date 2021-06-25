@@ -3,22 +3,26 @@
 1.  **MINIMUM REQUIREMENTES.**
 
     Node >= 10.14.1
+
     NPM >= 6.4.1
 
 1.  **INSTALLATION.**
 
     Clone this repository. You will need node and npm installed globally on your machine.
+
     Once the repository is cloned run the next command from the root of the project.
 
     ```shell
     # Install all project dependencies
     npm install
     ```
+
 1.  **SETUP.**
 
     Create the necessary .env files in the root directory of the project with the content below.
 
     **.env.development** file to work locally for development
+
     **.env.production** for production builds
 
     Fill each of them with the appropiate envars values for each environment.
