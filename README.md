@@ -16,7 +16,7 @@
     ```
 1.  **SETUP.**
 
-    Create the necessary .env files in the root directory of the project.
+    Create the necessary .env files in the root directory of the project with the content below.
 
     **.env.development** file to work locally for development
     **.env.production** for production builds
@@ -56,10 +56,6 @@
     npm run build
     # Build for production if app is served from a subdirectory web server
     npm run build -- --prefix-paths
-    `
-    ```shell
-    cd my-default-starter/
-    gatsby develop
     ```
 
     The build is done in /public directory
